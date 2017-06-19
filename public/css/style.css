@@ -1,0 +1,596 @@
+/*  Gris : #575757     Orange : #F29200     Marron : #7B6A57     Vert : #94C11D     Fuschia : #D84591    Mauve : #951A80   */
+
+/* Police importée de Google fonts */
+/* (positionner cet import sur la 1ère ligne du fichier CSS, sinon ça peut bugger) */
+@import url('https://fonts.googleapis.com/css?family=Advent+Pro:400,700');
+
+/* Supprimer toutes les marges de toutes les balises */
+*{
+	margin: 0;
+	padding: 0;
+	border: solid orange 0rem;
+}
+
+/* Configurer l'utilisation des "rem" => 1 rem = 10 px */
+html{ font-size: 62.5%; }  /* => associé à body{ font-size: 1.5rem; } */
+
+/* les crochets [] permettent d'identifier un ATTRIBUT */
+a:not([target]){ text-decoration: none; }
+
+/* img = 100% de la largeur du parent */
+img{
+	max-width: 100%;
+}
+
+body{
+	font-size: 1.8rem;
+
+	/* ligne associée à l'import de la police Google fonts */
+	font-family: 'Advent Pro', sans-serif;
+ 	text-align: center;/* étant donné que le texte est majoritairement centré dans tout le doc */
+ 	background-color: white;
+ 	max-width: 95rem;
+ 	margin: auto;
+}
+
+h1{
+	font-size: 2.5rem; /* titre de la page : Pharmacie Le Reste */
+}
+h1 p{
+	font-size: 1.5rem; /* sous-titre de la page : Nantes, ... */
+}
+h2{
+	font-size: 2.5rem; /* titres des vignettes de la page Index + intro du form. de contact */
+}
+.vignettes article h2 span{
+	font-size: 1.7rem; /* sous-titre des vignettes de la page Index */
+}
+.fa{
+	font-size: 2rem; /* taille des icônes font-awesome : tel, fax et mail */
+}
+.champsForm input, .champsForm textarea{
+	font-size: 1.8rem;
+}
+.champsForm aside{
+	font-size: 1.3rem; /* pour les éventuels messages d'erreurs */
+}
+.droite h2{
+	font-size: 2rem; /* message de réussite ou d'échec après l'envoi du formulaire */
+}
+.droite p{
+	font-size: 1.4rem; /* pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
+}
+footer section:first-of-type{
+	font-size: 1.3rem; /* Pharmacie Le Reste ... */
+}
+
+
+/* ******************************************************************************************** */
+/* ******************************        Bandeau du haut         ****************************** */
+/* ******************************************************************************************** */
+
+/* Image de fond */
+header section{
+	background-image: url("../img/fond1.jpg");
+	background-size: cover;
+	margin: auto;
+	padding-top: 15%;
+	padding-bottom: 15%;
+	position: relative; /* pour positionner le h1 et la croix en haut à gauche */
+}
+
+/* Image de la croix positionnée en haut à gauche */
+header section img{
+	width: 11%;
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+}
+
+/* titre : Pharmacie ... */
+h1{
+	font-weight: 700;
+	color: #951A80;
+	position : absolute;
+	top: 0;
+	left: 16%;
+}
+
+/* sous-titre : Nantes ... */
+h1 p{
+	font-weight: 400;
+}
+
+/* ******************************************************************************************** */
+/* *******************************       Menu de navigation       ***************************** */
+/* ******************************************************************************************** */
+nav{
+	background-color: #94C11D;
+	text-align: right;
+	padding: 0.5rem;
+}
+
+nav a{
+	color: white;
+}
+
+ul{
+	margin:	auto;
+	position: relative; /* à cause du "first li" */
+}
+
+li{
+	display: inline-block;
+	margin-right: 0rem;
+	padding-left: .4rem;
+	font-weight: 400;
+}
+
+li:first-child{
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin-left: 0; /* Bien qu'il y ait un "left 0" juste au dessus, ça semble nécessaire ... */
+	padding-left: 0;
+}
+
+/* ******************************************************************************************** */
+/* ******************************           Page Index           ****************************** */
+/* ******************************************************************************************** */
+
+.intro{
+	padding: 2rem;
+}
+
+.vignettes article{
+	position: relative; /* pour que les <a> et les <img> soient superposés */
+
+}
+
+.vignettes article a{
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #94C11D;
+	color: white;
+	width: 100%;
+	height: 100%;
+	font-weight: 700;
+	line-height: 1.4em; /*   creuser pour voir l'effet ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+	opacity: 0;
+}
+
+.vignettes article a:hover, .vignettes article a:focus, .vignettes article a:active{
+	/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+	opacity: .7;
+}
+
+.vignettes article h2{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%); /* pour Chrome */
+	   -moz-transform: translate(-50%, -50%); /* pour Firefox */
+			transform: translate(-50%, -50%);
+	width: 100%;
+}
+
+.vignettes article h2 span{
+	display: block;
+}
+
+/* ******************************************************************************************** */
+/* ******************************          Page Contact          ****************************** */
+/* ******************************************************************************************** */
+
+/* espace entre le bandeau et les infos de contact */
+.formsContOrdo{
+	margin: 3rem 0;
+}
+
+/* ************     colonne de gauche : adresse et liens vers réseaux sociaux      ************ */
+
+.gauche p:nth-child(3){
+	margin-bottom: 2rem; 	/* marge en dessous de Nantes */
+}
+
+/* positions de tel, fax et mail */
+.gauche p:nth-child(4),
+.gauche p:nth-child(5),
+.gauche p:nth-child(6){
+	margin-bottom: 1rem;
+	position: relative;
+	top: 0;
+	left: -0.8rem;
+}
+
+/* on met juste le tel en gras */
+.gauche p:nth-child(4){
+	font-weight: bold;
+}
+
+
+/* soulignement et coloration du mail quand on passe dessus */
+.gauche p:nth-child(6) a{
+	text-decoration: underline;
+}
+
+.gauche p:nth-child(6) a:link, .gauche p:nth-child(6) a:visited{
+	color: black;
+}
+
+.gauche p:nth-child(6) a:hover, a:focus, a:active{
+	color: #F29200;
+}
+
+/* espace avant les liens FB et G+ */
+.gauche p:nth-child(6){
+	margin-bottom: 3rem;
+}
+
+
+/* fontawesome pour les icônes "tel", "fax" et "mail" */
+.fa{
+	margin-right: 2rem;
+	position: relative;
+	top: 0.2rem;
+	left: 0;
+}
+
+/* Icônes / liens vers Facebook et Google+ */
+
+.gauche p:nth-child(7), .gauche p:nth-child(8){
+	display: inline-block;
+	height: 3rem;
+	width: 3rem;
+	margin: 0 3rem; /* pour les espacer un peu */
+	position: relative;
+}
+
+.fbg{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.noir:hover, .noir:focus, .noir:active{
+	display: none;
+}
+
+/* j'ai essayé avec visibility, z-index ... dessus / dessous ... rien n'y fait, c'est toujours "oscillant" */
+
+
+
+/* ********************     colonne de droite : formulaire de contact      ******************** */
+
+.droite:before{
+	content: "";
+	display: block;
+	height: .2rem;
+	width: 4rem;
+	margin: 2rem auto;
+	background-color: #951A80;
+}
+
+/* message d'introduction au formulaire */
+.droite h2:first-child{
+	margin-bottom: 2rem;
+}
+
+/* pour que les lignes fines entre les champs ne fassent pas toute la largeur de la colonne */
+.droite section{
+	margin: 0 1rem;
+}
+
+/* lignes fines entre les champs, taille des champs ... */
+.champsForm{
+	border: none;
+	border-top: .1rem solid #951A80;
+	margin-right: 1rem;
+	padding: 1.5rem 0;
+	width: 100%;
+	text-align: right;
+}
+
+/* proportions entre label et input pour les champs du formulaire */
+.champsForm input, .champsForm textarea{
+	font-weight: bold;
+	font-family: 'Advent Pro', sans-serif;
+	width: 65%;
+	margin-right: 1.5%;
+}
+.champsForm textarea{
+	padding-top: .7rem;
+}
+
+.champsForm textarea{
+	min-width: 65%;
+	max-width: 65%
+}
+
+/* label "Message" calé en haut, ligne fine sous le message */
+.champsForm [for="idMessage"]{
+	vertical-align: top;
+}
+
+.droite form div:nth-child(4){
+	border-bottom: .1rem solid #951A80;
+}
+
+/* pour les éventuels messages d'erreurs */
+.champsForm aside{
+	text-align: right;
+	margin-right: 1.2rem;
+	color: red;
+}
+/*pour les astérisques et la légende de l'astérisque */
+.champsForm span{
+	vertical-align: super;
+}
+
+/* légende pour l'astérisque (*) */
+.droite p{
+	text-align: left;
+	margin-left: .5rem;
+}
+
+/* proportion entre label et button pour le bouton de validation */
+.envoyer{
+	text-align: right;
+}
+
+/* déco du bouton de validation du formulaire */
+.droite form button{
+	background-color: #7B6A57;
+	color: white;
+	width: auto;
+	font-weight: 400;
+	padding: 1rem;
+	margin-top: 2rem;
+	margin-right: 2rem;
+	border: none;
+
+	-webkit-border-radius: 5px; /* cf site border radius generator */
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.droite form button:hover{
+	background-color: #F29200;
+}
+
+/* Fin de Contact */
+
+/* ******************************************************************************************** */
+/* ******************************              Footer            ****************************** */
+/* ******************************************************************************************** */
+
+/* Pharmacie Le Reste ... */
+footer section:first-of-type{
+	text-align: center;
+}
+
+footer section:first-of-type p{
+	display: inline-block;
+	padding: .5rem 1rem;
+}
+
+/* Edition CLR */
+footer section:last-of-type{
+	padding: 1rem 0;
+	background-color: #575757;
+	color: white;
+}
+
+/* ******************************************************************************************** */
+/* ******************************          Media queries         ****************************** */
+/* ******************************************************************************************** */
+
+/* 																									460 px		*/
+@media screen and (min-width: 460px){
+
+	body{
+		font-size: 2rem; /* old 1.8 */
+	}
+	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
+	h1{
+		font-size: 2.7rem; /* old 2.5 titre de la page : Pharmacie Le Reste */
+		top: 4%;
+		left: 16%;
+	}
+	h1 p{
+		font-size: 1.7rem; /* old 1.5 sous-titre de la page : Nantes, ... */
+	}
+
+	/* page Index : on affiche 2 vignettes en largeur */
+	.vignettes article{
+		width: 50%;
+		float: left;
+	}
+	section:not(.vignettes){
+		/* Supprimer le flottement */
+		clear: both;
+	}
+
+	/* tailles des champs saisis dans le formulaire et des messages associés */
+
+	.champsForm input, .champsForm textarea{
+		font-size: 2rem; /* old 1.8 */
+	}
+	.champsForm aside{
+		font-size: 1.5rem; /* old 1.3 pour les éventuels messages d'erreurs */
+	}
+	.droite h2{
+		font-size: 2.2rem; /* old 2 message de réussite ou d'échec après l'envoi du formulaire */
+	}
+	.droite p{
+		font-size: 1.6rem; /* old 1.4 pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
+	}
+}
+
+/* 																									600 px		*/
+@media screen and (min-width: 600px){
+
+	/* On augmente encore un peu les tailles */
+	body{
+		font-size: 2.3rem; /* old 2 */
+	}
+	h1{
+		font-size: 3.8rem; /* old 2.7 titre de la page : Pharmacie Le Reste */
+		top: 7%;
+		left: 16%;
+	}
+	h1 p{
+		font-size: 2.5rem; /* old 1.7 sous-titre de la page : Nantes, ... */
+	}
+
+	nav{
+		padding: 1rem; /* hauteur du bandeau de nav */
+	}
+
+	li{
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin-right: 1rem; /* on éloigne un peu les mots du bord de droite */
+		padding-left: 1rem; /* et aussi entre eux */
+	}
+
+	li:first-child{
+		left: 0.5rem; /* on éloigne un peu Accueil du bord de gauche */
+		top: 0;
+	}
+
+	/* Formulaire de contact */
+
+	/* espace entre le bandeau et les infos de contact */
+	.formsContOrdo{
+		margin: 5rem 0; /* old 3 0 */
+	}
+	.gauche p:nth-child(3){
+		margin-bottom: 3rem; 	/* old 2 marge en dessous de Nantes */
+	}
+
+	/* positions de tel, fax et mail */
+	.gauche p:nth-child(4),
+	.gauche p:nth-child(5),
+	.gauche p:nth-child(6){
+		margin-bottom: 3rem; /* old 1 */
+	}
+	.droite:before{
+		content: none; /* on annule le trait avec le § précédent puisqu'on passe sur 2 colonnes */
+	}
+
+	/* pour que les lignes fines entre les champs ne soient pas trop près du bord de droite */
+	.droite section{
+		margin: 0 2rem 0 0;
+	}
+
+	.formsContOrdo{
+		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
+		vertical-align: top;
+	}
+
+	/* proportion colonne de gauche / colonne de droite */
+	.gauche{
+		width: 48%;
+	}
+
+	.droite{
+		width: 50%;
+	}
+
+	/* font-awesome pour les icônes "tel", "fax" et "mail" */
+	.fa{
+		font-size: 3rem; /* old 2 */
+	}
+
+	/* tailles des champs saisis dans le formulaire et des messages associés */
+
+	.champsForm input, .champsForm textarea{
+		font-size: 2.3rem; /* old 2 */
+	}
+	.champsForm aside{
+		font-size: 1.8rem; /* old 1.5 pour les éventuels messages d'erreurs */
+	}
+	.droite h2{
+		font-size: 2.5rem; /* old 2.2 message de réussite ou d'échec après l'envoi du formulaire */
+	}
+	.droite p{
+		font-size: 1.9rem; /* old 1.6 pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
+	}
+
+	/* Footer */
+
+	footer section:first-of-type{
+		font-size: 1.5rem; /* old 1.3 */
+	}
+
+	footer section:first-of-type p{
+		padding: 1rem 1rem; /* old .5rem 1rem */
+	}
+}
+
+/* 																									900 px		*/
+@media screen and (min-width: 900px){
+
+	body{
+		font-size: 2.5rem; /* old 2.3 */
+	}
+	/* on agrandit un peu la croix */
+	header section img{
+		width: 16%;
+		top: 2rem;
+		left: 2rem;
+	}
+
+	/* titre : Pharmacie ... */
+	h1{
+		font-size: 4.5rem; /* old 3.8 */
+		top: 8%;
+		left: 21%;
+	}
+
+	/* sous-titre : Nantes ... */
+	h1 p{
+		font-size: 2.8rem; /* old 2.5 */
+	}
+
+	/* page Index : on passe en 2 vignettes en largeur */
+	.vignettes article{
+		width: 33.33%;
+	}
+
+	/* Formulaire de contact */
+	
+	/* FB et G+ */
+	.gauche p:nth-child(7), .gauche p:nth-child(8){
+		display: inline-block;
+		height: 4rem;
+		width: 4rem;
+	}
+
+	/* tailles des champs saisis dans le formulaire et des messages associés */
+
+	.champsForm input, .champsForm textarea{
+		font-size: 2.5rem; /* old 2.3 */
+	}
+	.champsForm aside{
+		font-size: 2rem; /* old 1.8 pour les éventuels messages d'erreurs */
+	}
+	.droite h2{
+		font-size: 2.7rem; /* old 2.5 message de réussite ou d'échec après l'envoi du formulaire */
+	}
+	.droite p{
+		font-size: 2.1rem; /* old 1.9 pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
+	}
+
+	/* Footer */
+
+	footer section:first-of-type{
+		font-size: 1.8rem; /* old 1.5 */
+	}
+
+	footer section:first-of-type p{
+		padding: 1.5rem 1.5rem; /* old .5rem 1rem */
+	}
+}
