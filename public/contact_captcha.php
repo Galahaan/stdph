@@ -109,6 +109,13 @@
 		// print_r($_POST);
 		// echo "</pre>";
 
+		//  ********  PRENOM  ********
+
+		$prenom = htmlspecialchars(strip_tags($_POST['prenom']));
+		if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
+			$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
+		}
+
 		//  ********  NOM  ********
 
 		$nom = htmlspecialchars(strip_tags($_POST['nom']));
@@ -116,12 +123,9 @@
 			$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
 		}
 
-		//  ********  PRENOM  ********
-
-		$prenom = htmlspecialchars(strip_tags($_POST['prenom']));
-		if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
-			$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-		}
+		// on les écrit sous le format : Prénom NOM
+		$prenom = ucfirst(strtolower($prenom));
+		$nom = strtoupper($nom);
 
 		//  ********  MAIL  ********
 
@@ -275,12 +279,15 @@
 				$urlProvenance = $_SERVER['HTTP_REFERER'];
 
 				// enfin, construction du message complet :
-				$message =	$date . "<br>" .
-							$prenom . " " . $nom . "  -  " . $adrMailExp . "<br><br>" .
+				$message =	$date . " - " .	$prenom . " " . $nom . "  -  " . $adrMailExp . "<br><br>" .
 							nl2br($message) . "<br><br><br>" .
 							"URL provenance = " . $urlProvenance . "<br>" .
 							"IP  client     = " . $ipClient . "<br>" .
 							"FAI client     = " . $faiClientBrut;
+							// "REMOTE " . $_SERVER['REMOTE_ADDR'] . "<br>" . 
+							// "HTTP_X " . $_SERVER['REMOTE_ADDR'] . "<br>" . 
+							// "HTTP_C " . $_SERVER['REMOTE_ADDR'];
+
 
 				// ajout d'options pour le message :
 				$headers = "From: contact@pharmacielereste.fr\r\n" .
@@ -292,7 +299,7 @@
 
 				// L'objet du message sera constitué d'un préfixe (les 4 derniers car. de l'IP)
 				// suivi des prénom et nom de l'expéditeur :
-				$objet = "[" . substr($ipClient, -4, 4) . "]  " . $prenom . " " . $nom;
+				$objet = "Contact - [" . substr($ipClient, -4, 4) . "]  " . $prenom . " " . $nom;
 
 				if( mail(MAIL_DEST_TEST, $objet, $message, $headers) ){
 
@@ -341,7 +348,7 @@
 					</div>
 					<div class="champsForm">
 						<label for="idMessage">Message <span>*</span></label>
-								<textarea rows="5" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($message) ? $message : ""?></textarea>
+								<textarea rows="4" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($message) ? $message : ""?></textarea>
 					<?php if( isset($erreurs['message']) ) { echo "<span>" . $erreurs['message'] . "</span>"; } ?>
 					</div>
 
