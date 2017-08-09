@@ -325,8 +325,26 @@
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<p> Scannez et envoyez-nous votre ordonnace ...</p>
-				<p> Elle sera déjà préparée quand vous viendrez à la pharmacie !</p>
+				<p>Gagnez du temps !</p>
+				<p>Envoyez votre ordonnance à la pharmacie avec votre smartphone via le formulaire ci-dessous.</p>
+				<p>L'ordonnance sera alors aussitôt préparée et vous serez prévenu(e) par mail / sms de sa mise à disposition.</p>
+				<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h.</p>
+				<p>Il suffit de suivre ces 4 étapes :</p>
+				<p> 1) numériser votre ordonnace :</p>
+				<p>    - si vous sortez de chez le médecin avec votre document papier,</p>
+				<p>      vous pouvez simplement le photographier avec votre smartphone.</p>
+				<p>      Attention, prenez garde à bien cadrer l'ordonnance qui doit être visible en totalité.</p>
+				<p>    - si vous disposez d'une imprimante-scanner, vous pouvez donc numériser le document.</p>
+				<p>    - si l'ordonnance est déjà sous forme de document PDF, il n'y a rien de plus à faire.</p>
+				<p> </p>
+				<p> 2) remplir tous les champs obligatoires du formulaire.</p>
+				<p> </p>
+				<p> 3) joindre le document numérisé de votre ordonnance :</p>
+				<p>    - cliquer sur "Parcourir ..."</p>
+				<p>    - sélectionner le document de l'étape 1)</p>
+				<p> </p>
+				<p> 4) cliquer sur "Envoyer".</p>
+				<p> </p>
 
 				<form method="POST" enctype="multipart/form-data">
 					<div class="champsForm">

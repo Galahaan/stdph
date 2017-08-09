@@ -182,7 +182,10 @@
 		<section>
 			<a href="index.html">
 				<img src="img/croix_mauve.png">
-				<h1>Pharmacie Le Reste <p>Nantes, quartier Saint-Joseph de Porterie</p></h1>
+				<h1>Pharmacie Le Reste
+					<p>Nantes, quartier Saint-Joseph de Porterie</p>
+					<p>02 40 25 15 80</p>
+				</h1>
 			</a>
 		</section>
 		<nav>
