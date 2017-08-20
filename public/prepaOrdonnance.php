@@ -201,10 +201,10 @@
 		</section>
 		<nav>
 			<ul>
-				<li><a href="index.html"   >Accueil </a></li>
-				<li><a href="horaires.html">Horaires</a></li>
-				<li><a href="equipe.html"  >Équipe  </a></li>
-				<li><a href="contact.php"  >Contact </a></li>
+				<li class="navigation"><a href="index.html"   >Accueil </a></li>
+				<li class="navigation"><a href="horaires.html">Horaires</a></li>
+				<li class="navigation"><a href="equipe.html"  >Équipe  </a></li>
+				<li class="navigation"><a href="contact.php"  >Contact </a></li>
 			</ul>
 		</nav>
 
@@ -325,26 +325,49 @@
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<p>Gagnez du temps !</p>
-				<p>Envoyez votre ordonnance à la pharmacie avec votre smartphone via le formulaire ci-dessous.</p>
-				<p>L'ordonnance sera alors aussitôt préparée et vous serez prévenu(e) par mail / sms de sa mise à disposition.</p>
-				<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h.</p>
-				<p>Il suffit de suivre ces 4 étapes :</p>
-				<p> 1) numériser votre ordonnace :</p>
-				<p>    - si vous sortez de chez le médecin avec votre document papier,</p>
-				<p>      vous pouvez simplement le photographier avec votre smartphone.</p>
-				<p>      Attention, prenez garde à bien cadrer l'ordonnance qui doit être visible en totalité.</p>
-				<p>    - si vous disposez d'une imprimante-scanner, vous pouvez donc numériser le document.</p>
-				<p>    - si l'ordonnance est déjà sous forme de document PDF, il n'y a rien de plus à faire.</p>
-				<p> </p>
-				<p> 2) remplir tous les champs obligatoires du formulaire.</p>
-				<p> </p>
-				<p> 3) joindre le document numérisé de votre ordonnance :</p>
-				<p>    - cliquer sur "Parcourir ..."</p>
-				<p>    - sélectionner le document de l'étape 1)</p>
-				<p> </p>
-				<p> 4) cliquer sur "Envoyer".</p>
-				<p> </p>
+				<article class="ordoIntro">
+					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
+					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail / sms de leur mise à disposition.</p>
+					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h, sinon une demi-journée suffit en général.</p>
+
+					<p class="espaceVertical"></p>
+					
+					<ol>Il suffit de suivre ces 4 étapes :
+						<li>numériser l'ordonnace :
+							<ul>
+								<li>- si vous sortez de chez le médecin avec votre document papier,
+								      vous pouvez simplement le photographier avec votre smartphone.
+								      Attention, prenez garde à bien cadrer l'ordonnance qui doit être visible en totalité.</li>
+								<li>- de chez vous, si vous disposez d'une imprimante-scanner, vous pouvez numériser le document.</li>
+								<li>- si l'ordonnance est déjà sous forme de document PDF, il n'y a rien de plus à faire.</li>
+							</ul>
+						</li>
+
+						<p class="espaceVertical"></p>
+
+						<li>remplir tous les champs obligatoires du formulaire.</li>
+
+						<p class="espaceVertical"></p>
+
+						<li>joindre le document numérisé de votre ordonnance :
+							<ul>
+								<li>cliquer sur "Parcourir ..."</li>
+								<li>sélectionner le document créé à l'étape 1)</li>
+							</ul>
+						</li>
+
+						<p class="espaceVertical"></p>
+
+						<li>cliquer sur "Envoyer".</li>
+					</ol>
+
+					<p class="espaceVertical"></p>
+
+					<p> Nous nous occupons de la suite !</p>
+
+					<p class="espaceVertical"></p>
+
+				</article>
 
 				<form method="POST" enctype="multipart/form-data">
 					<div class="champsForm">
