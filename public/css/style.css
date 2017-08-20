@@ -47,6 +47,9 @@ h1{
 h1 p{
 	font-size: 1.5rem; /* sous-titre de la page : Nantes, ... */
 }
+#telIndex{
+	font-size: 1.5rem; /* sous-titre de la page : numéro de tel cliquable */
+}
 h2{
 	font-size: 2.5rem; /* titres des vignettes de la page Index + intro du form. de contact */
 }
@@ -108,6 +111,21 @@ h1{
 h1 p{
 	font-weight: 400;
 }
+
+/* numéro de téléphone cliquable */
+#telIndex{
+	text-decoration: underline;
+	color: #951A80;
+	font-weight: 400;
+	position: absolute;
+	top: 55%;
+	left: 35%;
+}
+
+#telIndex a:link, #telIndex a:visited, #telIndex a:hover, #telIndex a:focus, #telIndex a:active{
+	color: #951A80;
+}
+
 
 /* ******************************************************************************************** */
 /* *******************************       Menu de navigation       ***************************** */
@@ -214,10 +232,13 @@ ul{
 }
 
 /* on met juste le tel en gras */
-.gauche p:nth-child(4){
+#telContact{
 	font-weight: bold;
+	text-decoration: underline;
 }
-
+#telContact a:link, #telContact a:visited, #telContact a:hover, #telContact a:focus, #telContact a:active{
+	color: black;
+}
 
 /* soulignement et coloration du mail quand on passe dessus */
 .gauche p:nth-child(6) a{
@@ -425,6 +446,12 @@ footer section:last-of-type{
 	h1 p{
 		font-size: 1.7rem; /* old 1.5 sous-titre de la page : Nantes, ... */
 	}
+	#telIndex{
+		font-size: 1.7rem; /* old 1.5 sous-titre de la page : numéro de tel cliquable */
+		position: absolute;
+		top: 48%;
+		left: 32%;
+	}
 
 	/* page Index : on affiche 2 vignettes en largeur */
 	.vignettes article{
@@ -467,7 +494,12 @@ footer section:last-of-type{
 	h1 p{
 		font-size: 2.5rem; /* old 1.7 sous-titre de la page : Nantes, ... */
 	}
-
+	#telIndex{
+		font-size: 2.5rem; /* old 1.7 sous-titre de la page : numéro de tel cliquable */
+		position: absolute;
+		top: 50%;
+		left: 35%;
+	}
 	nav{
 		padding: 1rem; /* hauteur du bandeau de nav */
 	}
@@ -577,6 +609,12 @@ footer section:last-of-type{
 	/* sous-titre : Nantes ... */
 	h1 p{
 		font-size: 2.8rem; /* old 2.5 */
+	}
+	#telIndex{
+		font-size: 2.8rem; /* old 2.5 sous-titre de la page : numéro de tel cliquable */
+		position: absolute;
+		top: 45%;
+		left: 35%;
 	}
 
 	/* page Index : on passe en 2 vignettes en largeur */

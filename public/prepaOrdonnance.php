@@ -195,19 +195,21 @@
 	<header>
 		<section>
 			<a href="index.html">
-			<img src="img/croix_mauve.png">
-			<h1>Pharmacie Le Reste <p>Nantes, quartier Saint-Joseph de Porterie</p></h1>
+				<img src="img/croix_mauve.png" alt="">
+				<h1>Pharmacie Le Reste
+					<p>Nantes, quartier Saint-Joseph de Porterie</p>
+				</h1>
 			</a>
+			<p id="telIndex"><a href="tel:+33240251580">02 40 25 15 80</a></p>
 		</section>
-		<nav>
+		<nav class="navigation">
 			<ul>
-				<li class="navigation"><a href="index.html"   >Accueil </a></li>
-				<li class="navigation"><a href="horaires.html">Horaires</a></li>
-				<li class="navigation"><a href="equipe.html"  >Équipe  </a></li>
-				<li class="navigation"><a href="contact.php"  >Contact </a></li>
+				<li><a href="index.html"   >Accueil </a></li>
+				<li><a href="horaires.html">Horaires</a></li>
+				<li><a href="equipe.html"  >Équipe  </a></li>
+				<li><a href="contact.php"  >Contact </a></li>
 			</ul>
 		</nav>
-
 	</header>
 
 	<main>

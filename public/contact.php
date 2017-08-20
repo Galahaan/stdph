@@ -116,22 +116,21 @@
 	<header>
 		<section>
 			<a href="index.html">
-			<img src="img/croix_mauve.png">
+				<img src="img/croix_mauve.png" alt="">
 				<h1>Pharmacie Le Reste
 					<p>Nantes, quartier Saint-Joseph de Porterie</p>
-					<p>02 40 25 15 80</p>
 				</h1>
 			</a>
+			<p id="telIndex"><a href="tel:+33240251580">02 40 25 15 80</a></p>
 		</section>
-		<nav>
+		<nav class="navigation">
 			<ul>
-				<li class="navigation"><a href="index.html"   >Accueil </a></li>
-				<li class="navigation"><a href="horaires.html">Horaires</a></li>
-				<li class="navigation"><a href="equipe.html"  >Équipe  </a></li>
-				<li class="navigation"><a href="contact.php"  >Contact </a></li>
+				<li><a href="index.html"   >Accueil </a></li>
+				<li><a href="horaires.html">Horaires</a></li>
+				<li><a href="equipe.html"  >Équipe  </a></li>
+				<li><a href="contact.php"  >Contact </a></li>
 			</ul>
 		</nav>
-
 	</header>
 
 	<main>
@@ -140,7 +139,7 @@
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
 			<p>44300 Nantes</p>
-			<p><i class="fa fa-phone"    aria-hidden="true"></i>02 40 25 15 80</p>
+			<p id="telContact"><i class="fa fa-phone"    aria-hidden="true"></i><a href="tel:+33240251580">02 40 25 15 80</a></p>
 			<p><i class="fa fa-fax"      aria-hidden="true"></i>02 40 30 06 56</p>
 			<p><a href="mailto:contact@pharmacielereste.fr"><i class="fa fa-envelope" aria-hidden="true"></i>contact@pharmacielereste.fr</a></p>
 			<p>
