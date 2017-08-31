@@ -370,7 +370,7 @@ ul{
 }
 
 /* déco du bouton de validation du formulaire */
-.droite form button{
+.envoyer button{
 	background-color: #7B6A57;
 	color: white;
 	width: auto;
@@ -385,7 +385,7 @@ ul{
 	border-radius: 5px;
 }
 
-.droite form button:hover{
+.envoyer button:hover{
 	background-color: #F29200;
 }
 

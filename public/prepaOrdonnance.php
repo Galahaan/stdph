@@ -42,12 +42,12 @@
 	// taille max de la pièce jointe : 2 Mo = 2097152 octets
 	define("TAILLE_MAX_PJ", 2097152);
 
-	// tableau listant les extensions autorisées pour la pièce jointe :
-	$extensionsOK = array("jpg", "jpeg", "png", "gif", "pdf");
+	// extensions autorisées pour la pièce jointe : cf ligne : " switch ($extension) "
+	// "jpe", jpg", "jpeg", "png", "gif", "pdf"
 
 	// adresse mail destinataire :
 	define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
-	define("MAIL_DEST_TEST", "9byjpuk5k@use.startmail.com");
+	define("MAIL_DEST_TEST", "bk24tsxnt@use.startmail.com");
 
 	// Nombre de caractères min et max pour les nom et prénom :
 	define("NB_CAR_MIN", 2);
@@ -58,7 +58,7 @@
 	define("NB_CAR_MAX_HTM", 40);
 
 	// Nombre de caractères min et max pour le texte libre :
-	define("NB_CAR_MIN_MESSAGE", 40);
+	define("NB_CAR_MIN_MESSAGE", 0);
 	define("NB_CAR_MAX_MESSAGE", 1000);
 
 	// si on veut utiliser la vérification naturelle du HTML :
@@ -89,23 +89,25 @@
 		//  ********  MAIL  ********
 
 		// "nettoie" la valeur utilisateur :
-		$adrMailExp = filter_var($_POST['adrMailExp'], FILTER_SANITIZE_EMAIL);
+		$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
 
 		// teste la NON validité du format :
-		if( ! filter_var($adrMailExp, FILTER_VALIDATE_EMAIL) ){
-			$erreurs['adrMailExp'] = "(format incorrect)"; 
+		if( ! filter_var($adrMailClient, FILTER_VALIDATE_EMAIL) ){
+			$erreurs['adrMailClient'] = "(format incorrect)"; 
 		};
 
 		//  ********  MESSAGE  ********
 
 		// on traite volontairement le cas du message AVANT celui de la pièce jointe pour
-		// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les test.
-		$message = htmlspecialchars(strip_tags($_POST['message']));
-		if( (strlen($message) < NB_CAR_MIN_MESSAGE) || (strlen($message) > NB_CAR_MAX_MESSAGE ) ){
+		// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les tests.
+		$messageClientTxt = nl2br(htmlspecialchars(strip_tags($_POST['message'])));
+		if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
 			$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
 		}
+		// on se donne une version du message en format HTML (plus sympa à lire pour le client)
+		$messageClientHtml = "<b style=\"font-size: 18px;\">" . $messageClientTxt . "</b>";
 
-		//  ********  FICHIER  ********
+		//  ********  FICHIER JOINT  ********
 
 		$fichierInitial = $_FILES['pieceJointe'];
 		$taille         = $fichierInitial['size']; 	   // en OCTETS
@@ -131,18 +133,26 @@
 		// 3° => avant de stocker le fichier joint, s'il avait bien un nom, on lui en donne un nouveau,
 		//       constitué de la date, du nom du client, suivi de caractères aléatoires :
 		if( ! $nomInitial == "" ){
+			// avant d'écrire la date dans le nom du fichier, on définit le fuseau horaire par défaut à utiliser :
 			( date_default_timezone_set("Europe/Paris") ) ? $fuseau = "" : $fuseau = " (fuseau horaire invalide)";
-			$nouveauNom = date("Y-m-d_H:i:s_") . $nom . "_" . $prenom . "_" . bin2hex(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
+			$nouveauNom = date("Y-m-d_H:i:s_") . $prenom . "_" . $nom . "_" . bin2hex(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
 		}
 		else{
 			// le fichier n'avait pas de nom :
 			$erreurs['pieceJointe'] .= " [anonyme]";
 		}
 
-		// 4° => on vérifie que l'extension du fichier joint fait partie de celles autorisées :
-		//       ($extensionsOK définie dans les constantes en haut de ce fichier)
-		if( ! in_array($extension, $extensionsOK) ){
-			$erreurs['pieceJointe'] .= " [extension invalide]";
+		// 4° => on vérifie que l'extension du fichier joint fait partie de celles autorisées,
+		//       ET on prépare dès maintenant le "Content-type" du header du mail :
+		switch ($extension) {
+			case 'jpe' :
+			case 'jpg' :
+			case 'jpeg': $ContentType = "image/jpeg";      break;
+			case 'png' : $ContentType = "image/png";       break;
+			case 'gif' : $ContentType = "image/gif";       break;
+			case 'pdf' : $ContentType = "application/pdf"; break;
+			default:
+				$erreurs['pieceJointe'] .= " [extension invalide]";
 		}
 
 		// 5° => on vérifie qu'un fichier portant le même nom n'est pas déjà présent sur le serveur :
@@ -221,100 +231,218 @@
 
 				//    le formulaire a été rempli  ET  s'il n'y a pas d'erreurs
 				//
-				// => on envoie le mail ! (après avoir préparé les données)
+				//    => on envoie le mail ! (après avoir préparé les données)
 
-				// ajout de quelques infos dans le message :
+				/////////////////////////////////////////////////////
+				//
+				// préparation des infos ajoutées dans le mail
+				//
+				/////////////////////////////////////////////////////
 
-				// date :
-				$date = date('d/m/Y - H:h:i') . $fuseau; // $fuseau a été défini plus haut, en cas d'erreur (sinon il est vide)
+					// ===================  date  =================== //
 
-				// IP du client : (3 possibilités)
-				$ipClient = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
-				if( empty($ipClient) ){
-					$ipClient = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? "HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'] : "";
+					$date = date('\S\e\m. W - D d/m/Y - H:i:s') . $fuseau; // $fuseau a été défini plus haut, en cas d'erreur (sinon il est vide)
+
+					// ===============  IP du client  =============== //     (3 possibilités)
+
+					$ipClient = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
 					if( empty($ipClient) ){
-						$ipClient = isset($_SERVER['HTTP_CLIENT_IP']) ? "HTTP_C " . $_SERVER['HTTP_CLIENT_IP'] : "";	
-					}
-					else{
-						// si jamais HTTP_X... était remplie, on la compare avec HTTP_C... et
-						// si jamais les 2 sont différentes, on garde les 2 infos :
-						if( isset($_SERVER['HTTP_CLIENT_IP']) ){
-							if( strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['HTTP_CLIENT_IP']) != 0 ){
-								$ipClient .= " ■ HTTP_C " . $_SERVER['HTTP_CLIENT_IP'];
+						$ipClient = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? "HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'] : "";
+						if( empty($ipClient) ){
+							$ipClient = isset($_SERVER['HTTP_CLIENT_IP']) ? "HTTP_C " . $_SERVER['HTTP_CLIENT_IP'] : "";	
+						}
+						else{
+							// si jamais HTTP_X... était remplie, on la compare avec HTTP_C... et
+							// si jamais les 2 sont différentes, on garde les 2 infos :
+							if( isset($_SERVER['HTTP_CLIENT_IP']) ){
+								if( strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['HTTP_CLIENT_IP']) != 0 ){
+									$ipClient .= " ■ HTTP_C " . $_SERVER['HTTP_CLIENT_IP'];
+								}
 							}
 						}
 					}
-				}
-				else{
-					// si jamais REMOTE était remplie, on la compare avec HTTP_X... et
-					// si jamais les 2 sont différentes, on garde les 2 infos :
-					if( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ){
-						if( strcasecmp($ipClient, $_SERVER['HTTP_X_FORWARDED_FOR']) != 0 ){
-							$ipClient .= " ■ HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'];
+					else{
+						// si jamais REMOTE était remplie, on la compare avec HTTP_X... et
+						// si jamais les 2 sont différentes, on garde les 2 infos :
+						if( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ){
+							if( strcasecmp($ipClient, $_SERVER['HTTP_X_FORWARDED_FOR']) != 0 ){
+								$ipClient .= " ■ HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'];
+							}
 						}
 					}
-				}
 
-				// FAI :
-				$faiClientBrut = gethostbyaddr(getIpAdr());
-				// a priori, quand ça vient du réseau mobile, ce n'est pas le FAI mais l'IP,
-				// d'où le message plus explicite :
-				if( strcasecmp($faiClientBrut, $ipClient) == 0 ){
-					$faiClientBrut = "inconnu (message issu du réseau mobile)";
-				}
-				// else{
-				// $faiClientBrut contient, en plus du FAI, plusieurs autres infos, d'où :
-				// $faiClient = substr(stristr($faiClientBrut, "ipv"), 5);
-				// }
+					// ===================  FAI  ==================== //
 
-				// URL provenance :
-				$urlProvenance = $_SERVER['HTTP_REFERER'];
-
-				// enfin, construction du message complet :
-				$message =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailExp . "<br><br>" .
-							nl2br($message) . "<br><br><br>" .
-							"URL provenance = " . $urlProvenance . "<br>" .
-							"IP  client     = " . $ipClient . "<br>" .
-							"FAI client     = " . $faiClientBrut . "<br>";
-							// "REMOTE " . $_SERVER['REMOTE_ADDR'] . "<br>" . 
-							// "HTTP_X " . $_SERVER['REMOTE_ADDR'] . "<br>" . 
-							// "HTTP_C " . $_SERVER['REMOTE_ADDR'];
-
-				// adjonction de la pièce jointe :
-				// 1- on ouvre le fichier en lecture seule :
-				$fichier = fopen($repFinal.'/'.$nouveauNom.'.'.$extension, 'r');
-				// 2- on parcourt l'ensemble du fichier :
-				$pieceJointe = fread( $fichier, filesize($repFinal.'/'.$nouveauNom.'.'.$extension) );
-				// 3- on referme le fichier :
-				fclose($fichier);
-				// 4- on encode la pièce jointe :
-				$pieceJointe = chunk_split(base64_encode($pieceJointe));
+					$faiClientBrut = gethostbyaddr(getIpAdr());
+					// a priori, quand ça vient du réseau mobile, ce n'est pas le FAI mais l'IP,
+					// d'où le message plus explicite :
+					if( strcasecmp($faiClientBrut, $ipClient) == 0 ){
+						$faiClientBrut = "inconnu (message issu du réseau mobile)";
+					}
+					// else{
+					// $faiClientBrut contient, en plus du FAI, plusieurs autres infos, d'où :
+					// $faiClient = substr(stristr($faiClientBrut, "ipv"), 5);
+					// }
 
 
+				///////////////////////////////////////////////////////////
+				//
+				// ENFIN, construction du mail
+				//
+				// (en suivant qqs étapes préparatoires encore une fois)
+				//
+				///////////////////////////////////////////////////////////
 
-				// ajout d'options pour le message :
-				$headers = "From: contact@pharmacielereste.fr\r\n" .
-						   "Reply-To: $adrMailExp\r\n" .
-				           "MIME-Version: 1.0" . "\r\n" .
-				           "Content-type: multipart/mixed; charset=UTF-8" . "\r\n" .
-				           "Content-Transfer-Encoding: 8bit" . "\r\n" .
-				           "X-Mailer: PHP/" . phpversion();
+					// NB: Passage à la ligne dans un email = "\r\n", mais parfois "\n", voire "\r" ...
+					//     Si vraiment on veut que le mail puisse être lu sur n'importe quel webmail,
+					//     il faut ajouter un petit test pour filtrer les serveurs qui rencontrent des bugs :
+					$correspondance = preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", MAIL_DEST_TEST);
+					if( $correspondance !== false )
+					{
+						// preg_match n'a pas renvoyé d'erreur :
 
-				// L'objet du message sera constitué d'un préfixe (les 4 derniers car. de l'IP)
-				// suivi des prénom et nom de l'expéditeur :
-				$objet = "Ordonnance - [" . substr($ipClient, -4, 4) . "]  " . $prenom . " " . $nom;
+					    if( $correspondance === 1 ){
+							// le mail destinataire contient les chaînes recherchées :
+							$rc = "\n";	//     rc  =  retour chariot
+							$bigouig = "correspondance, donc 'n'";
+						}
+						else{
+					    	// le mail destinataire ne contient pas les chaînes recherchées :
+							$rc = "\r\n";
+							$bigouig = "pas de correspondance, donc 'r n'";
+						}
+					}
+					else{
+						// preg_match a renvoyé une erreur :
+						$rc = "\r\n";
+						$bigouig = "erreur, donc 'r n'";
+					}
 
-				if( mail(MAIL_DEST_TEST, $objet, $message, $headers) ){
+echo "rc = ";
+echo $bigouig;
 
-					echo "<p>Merci, votre ordonnance a bien été envoyée.</p>";
-					echo "<p>Nous vous répondrons dans les meilleurs délais, sous
-							réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-				}
-				else{
-					echo "<p>Aïe, il y a eu un problème ...</p>";
-					echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-				};
-				?>
+					// NB: Pour ce qui est du charset, le ISO-8859-1 est supporté par tous les webmails,
+					//     contrairement à l'UTF-8, mais ne permet sans doute pas tous les accents ...
+
+
+					// ===============  Objet du mail  ============== //
+
+					// L'objet du message est constitué d'un préfixe
+					// (les 4 derniers car. de l'IP)
+					// suivi des prénom et nom de l'expéditeur :
+					$objet = "Ordonnance - [" . substr($ipClient, -4, 4) . "]  " . $prenom . " " . $nom;
+
+					// pour l'instant, les accents ne passent pas (dans le nom ou le prénom)					+++++++++++++++++++++++++++++
+
+
+					// ==========  Création du séparateur  ========== //
+
+					// entre message et pièce jointe, 
+					// et/ou entre 2 parties du message de type différent : html / texte
+					
+					$boundary = "-----=".md5(rand());
+					$boundary2 = md5(uniqid(microtime(), TRUE));
+
+					echo "<br><br>" . $boundary . "<br>" . $boundary2 . "<br><br>";
+
+					// ============  Création du header  ============ //
+
+					// Le Content-Type doit être systématiquement précisé dans le header.
+					// Et, en fonction de la valeur indiquée, ie en fonction du contenu souhaité pour le mail,
+					// il peut être nécessaire d'ajouter des Content-Type dans le contenu du message.
+					//
+					// Si le Content-Type du HEADER vaut :
+					// - text/plain => ça veut dire que le mail ne contient que du texte brut
+					//					dans ce cas, pas besoin de Content-Type dans le message, celui du header suffit.
+					//
+					// - text/html  => ça veut dire que le mail ne contient que du texte au format HTML
+					//					dans ce cas, pas besoin de Content-Type dans le message, celui du header suffit.
+					//
+					// - multipart/alternative 		(SOIT brut, SOIT html)
+					//				=> ça veut dire que l'on va définir 2 alternatives du MEME CONTENU de type texte :
+					//					- la 1ère, par défaut, au format texte brut,
+					//					- la 2ème, au format HTML
+					//				=> chaque version sera alors introduite par son Content-Type spécifique :
+					//				   text/plain pour le 1e, et text/html pour le 2e
+					//				Et le mail sera alors affiché, en brut OU en html, en fonction des capacités du client mail ...
+					//       
+					// - multipart/mixed
+					//				=> ça veut dire que le mail contient une (ou +) pièce(s) jointe(s)
+					//				=> chaque pièce jointe sera alors introduite par son Content-Type spécifique
+					//				   par ex. : image/jpeg, ou image/gif, ou application/pdf, etc ...
+					//
+					//
+					// NB : quand le Content-Type du header est défini par "multipart/..."
+					//		=> il FAUT utiliser un "séparateur" de §, appelé "boundary" entre chaque partie
+					//			du mail : header / texte / pj1 / pj2 ...
+					//
+					// Pour info, le boundary commence par 2 tirets (--) et termine par un \r\n.
+					// Les 2 tirets sont obligatoires pour des raisons de compatibilité avec une ancienne norme qui est la RFC934.
+					// Le boundary doit être compris entre 1 et 70 caractères. C'est généralement une chaîne aléatoire.
+
+					$header =	"From: \"Site pharmacie\" <bigouigfiy@cluster020.hosting.ovh.net>" . $rc .
+								"Reply-To: $adrMailClient" . $rc .
+								"MIME-Version: 1.0" . $rc .
+								"X-Mailer: PHP/" . phpversion() . $rc .
+								// "Content-Type: text/html; charset=\"UTF-8\"" . $rc;
+
+								"Content-Type: multipart/alternative; boundary=" . $boundary . $rc;
+
+					// ============= Création du message ============= //
+
+					// version "TEXT"
+					$message =	"--" . $boundary . $rc .
+								"Content-Type: text/plain; charset=\"UTF-8\"" . $rc .
+								"Content-Transfer-Encoding: 8bit" . $rc .
+								$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
+								$messageClientTxt . $rc . $rc. $rc . $rc .
+								"IP  client     = " . $ipClient . $rc .
+								"FAI client     = " . $faiClientBrut . $rc;
+								// $rc . "--" . $boundary . $rc . $rc;
+
+					// version "HTML"
+					$message .=	"--" . $boundary . $rc .
+								"Content-Type: text/html; charset=\"UTF-8\"" . $rc .
+								"Content-Transfer-Encoding: 8bit" . $rc .
+								$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . "<br><br>" .
+								$messageClientHtml . "<br><br><br><br>" .
+								"IP  client     = " . $ipClient . "<br>" .
+								"FAI client     = " . $faiClientBrut . "<br>" . $rc .
+								"--" . $boundary . $rc;
+
+					// adjonction de la pièce jointe :
+					// 1- on ouvre le fichier en lecture seule :
+					$fichier = fopen($repFinal.'/'.$nouveauNom.'.'.$extension, 'r');
+					// 2- on parcourt l'ensemble du fichier :
+					$pieceJointe = fread( $fichier, filesize($repFinal.'/'.$nouveauNom.'.'.$extension) );
+					// 3- on referme le fichier :
+					fclose($fichier);
+					// 4- on encode la pièce jointe :
+					$pieceJointe = chunk_split(base64_encode($pieceJointe));
+
+											 // pour la pièce jointe, il faudra le Content-Disposition                      ************
+					// (le Content-type a été préparé au moment des vérifications sur la pièce jointe)
+
+
+					// Dernier "blindage" : si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
+					if( $_SERVER['HTTP_REFERER'] != 'http://bigouig.fr/prepaOrdonnance.php' )									//**********
+					{  
+					    header('Location: http://www.bigouig.fr/'); 
+					} 
+					else{
+					    // envoi de l'e-mail :
+						if( mail(MAIL_DEST_TEST, $objet, $message, $header) ){
+		
+							echo "<p>Merci, votre ordonnance a bien été envoyée.</p>";
+							echo "<p>Nous vous répondrons dans les meilleurs délais, sous
+								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
+						}
+						else{
+							echo "<p>Aïe, il y a eu un problème ...</p>";
+							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
+						}
+					}; 
+					?>
 
 			<?php else : ?>
 
@@ -329,7 +457,7 @@
 				?>
 				<article class="ordoIntro">
 					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
-					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail / sms de leur mise à disposition.</p>
+					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail de leur mise à disposition.</p>
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h, sinon une demi-journée suffit en général.</p>
 
 					<p class="espaceVertical"></p>
@@ -386,8 +514,8 @@
 
 					<div class="champsForm">
 						<label for="idMail">Mail <span>*</span></label>
-								<input type="email" id="idMail" name="adrMailExp" required <?= isset($adrMailExp) ? "value=" . $adrMailExp : ""?> >
-					<?php if( isset($erreurs['adrMailExp']) ) { echo "<span>" . $erreurs['adrMailExp'] . "</span>"; } ?>
+								<input type="email" id="idMail" name="adrMailClient" required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+					<?php if( isset($erreurs['adrMailClient']) ) { echo "<span>" . $erreurs['adrMailClient'] . "</span>"; } ?>
 					</div>
 					<div class="champsForm">
 						<label for="idPJ">Ordonnance <span>*</span></label>
@@ -402,10 +530,7 @@
 
 					<p><span>* saisie obligatoire</span></p>
 					<div class="envoyer">
-						<div class="caseDeGauche"></div>
-						<div class="caseDeDroite">
-							<button name="bouton">Envoyer</button>
-						</div>
+						<button name="bouton">Envoyer</button>
 					</div>
 				</form>
 			<?php endif ?>
