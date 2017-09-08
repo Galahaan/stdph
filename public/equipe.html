@@ -18,7 +18,7 @@
 					<p>Nantes, quartier Saint-Joseph de Porterie</p>
 				</h1>
 			</a>
-			<p id="telIndex"><a href="tel:+33240251580">02 40 25 15 80</a></p>
+			<p id="telIndex"><span>>> </span><a href="tel:+33240251580">02 40 25 15 80</a><span> <<</span></p>
 		</section>
 		<nav class="navigation">
 			<ul>
