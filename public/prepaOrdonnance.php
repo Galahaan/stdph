@@ -20,8 +20,8 @@
 	// On interdit l'inclusion de dossiers protégés par htaccess.
 	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 	// strpos() peut très bien le faire, et surtout plus vite !
+	// if( preg_match('admin', $page) ){
 	if( strpos($page, 'admin') ){
-	// if( preg_match('admin', $page) ){                        ok en PHP 5.6.30 mais plus en PHP 7.1.4  ********************
 		echo "Vous n'avez pas accès à ce répertoire";
 	}
 	else{
@@ -39,15 +39,32 @@
 
 	// Définition de quelques CONSTANTES :
 
+	// adresse de l'expéditeur des mails via l'hébergeur du site :
+	//define("ADR_EXP_HEBERGEUR", "à compléter");                              //     à compléter                            +++++++++
+	define("ADR_EXP_HEBERGEUR", "bigouigfiy@cluster020.hosting.ovh.net");
+
+	// nom explicite pour l'expéditeur des mails : (possible avec accents !)
+	define("LABEL_EXP", "Site pharmacie");
+
+	// adresse du site de la pharmacie :
+	define("ADRESSE_SITE_PHARMACIE", "http://bigouig.fr/");
+	define("S_ADRESSE_SITE_PHARMACIE", "https://bigouig.fr/");
+	define("W_ADRESSE_SITE_PHARMACIE", "http://www.bigouig.fr/");
+	define("SW_ADRESSE_SITE_PHARMACIE", "https://www.bigouig.fr/");
+	//define("ADRESSE_SITE_PHARMACIE", "http://pharmacielereste.fr/");
+	//define("S_ADRESSE_SITE_PHARMACIE", "https://pharmacielereste.fr/");
+	//define("W_ADRESSE_SITE_PHARMACIE", "http://www.pharmacielereste.fr/");
+	//define("SW_ADRESSE_SITE_PHARMACIE", "https://www.pharmacielereste.fr/");
+
+	// adresse mail de la pharmacie :
+	//define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
+	define("MAIL_DEST_PHARMA", "bk24tsxnt@use.startmail.com");
+
 	// taille max de la pièce jointe : 2 Mo = 2097152 octets
 	define("TAILLE_MAX_PJ", 2097152);
 
-	// extensions autorisées pour la pièce jointe : cf ligne : " switch ($extension) "
-	// "jpe", jpg", "jpeg", "png", "gif", "pdf"
-
-	// adresse mail destinataire :
-	define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
-	define("MAIL_DEST_TEST", "bk24tsxnt@use.startmail.com");
+	// extensions autorisées pour la pièce jointe : cf aussi ligne : " switch ($extension) "
+	define("LISTE_EXT_AUTORISEES", '".jpe, .jpg, .jpeg, .png, .gif, .pdf"');
 
 	// Nombre de caractères min et max pour les nom et prénom :
 	define("NB_CAR_MIN", 2);
@@ -58,33 +75,77 @@
 	define("NB_CAR_MAX_HTM", 40);
 
 	// Nombre de caractères min et max pour le texte libre :
-	define("NB_CAR_MIN_MESSAGE", 0);
+	define("NB_CAR_MIN_MESSAGE", 5);
 	define("NB_CAR_MAX_MESSAGE", 1000);
 
 	// si on veut utiliser la vérification naturelle du HTML :
-	define("NB_CAR_MIN_MESSAGE_HTM", 0);
+	define("NB_CAR_MIN_MESSAGE_HTM", 1);
 	define("NB_CAR_MAX_MESSAGE_HTM", 1000);
 
 	// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 	if( isset($_POST['bouton']) ){
 
+		//  *******  CIVILITE  *******
+		$civilite = $_POST['civilite'];
+
+		// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
+
+		// Méthode de remplacement de caractères utilisant str_replace().
+		// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
+		// (même indice) dans le tableau $nouveauCar.
+		// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
+		// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
+		// par le caractère vide : ''.
+		$trouverCar =
+		['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
+		 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
+		 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
+		$nouveauCar = ['-'];
+
+		// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
+		// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
+		$minusAccMajus =
+		['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
+		 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
+		 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
+		 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
+		 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
+		 'ç' => 'Ç', 'ñ' => 'Ñ'];
+
+		// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
+		// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
+
+
 		//  ********  PRENOM  ********
 
-		$prenom = htmlspecialchars(strip_tags($_POST['prenom']));
+		// supprime les balises HTML et PHP
+		$prenom = strip_tags($_POST['prenom']);
+		// cf explications sur le remplacement de car. ci-dessus
+		$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
+		// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
+		$prenom = SuperTrim($prenom);
+		// remplace les espaces ' ' par des tirets '-'
+		$prenom = str_replace(" ", "-", $prenom);
+		// 1ère lettre en majuscule, les autres en minuscules
+		$prenom = ucfirst(strtolower($prenom));
+		// test de la contrainte sur la longueur de la chaîne
 		if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
 			$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
 		}
 
 		//  ********  NOM  ********
 
-		$nom = htmlspecialchars(strip_tags($_POST['nom']));
+		$nom = strip_tags($_POST['nom']);
+		$nom = str_replace($trouverCar, $nouveauCar, $nom);
+		$nom = SuperTrim($nom);
+		$nom = str_replace(" ", "-", trim($nom));
+		// NOM en majuscule
+		$nom = strtoupper($nom);
+		$nom = strtr($nom, $minusAccMajus);
+
 		if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
 			$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
 		}
-
-		// on les écrit sous le format : Prénom NOM
-		$prenom = ucfirst(strtolower($prenom));
-		$nom = strtoupper($nom);
 
 		//  ********  MAIL  ********
 
@@ -100,12 +161,13 @@
 
 		// on traite volontairement le cas du message AVANT celui de la pièce jointe pour
 		// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les tests.
-		$messageClientTxt = nl2br(htmlspecialchars(strip_tags($_POST['message'])));
+		// (chunk_split limite la longueur d'une ligne à 76 car. pour respecter la RFC 2045)
+		$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
 		if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
 			$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
 		}
-		// on se donne une version du message en format HTML (plus sympa à lire pour le client)
-		$messageClientHtml = "<b style=\"font-size: 18px;\">" . $messageClientTxt . "</b>";
+		// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
+		$messageClientHtml = "<b style=\"font-size: 16px;\">" . nl2br($messageClientTxt) . "</b>";
 
 		//  ********  FICHIER JOINT  ********
 
@@ -114,7 +176,7 @@
 		$nomInitial     = $fichierInitial['name'];     // de la forme "fichier.txt"
 		// on extrait l'extension (que l'on force en minuscules) :
 		$extension      = strtolower( pathinfo($nomInitial, PATHINFO_EXTENSION) );
-		$repTempInitial = $fichierInitial['tmp_name']; // de la forme "/tmp/phpxxxxxx"
+		$nomTemporaire  = $fichierInitial['tmp_name']; // de la forme "/tmp/phpxxxxxx", ie que cela inclut le chemin
 		$type           = $fichierInitial['type'];
 		// ex. image/gif ou image/jpeg ou application/pdf ou text/plain ou application/vnd.ms-excel ou application/octet-stream
 
@@ -123,7 +185,7 @@
 
 		// 1° => on choisit et on protège l'emplacement de stockage sur le serveur :
 		// (penser à bien définir les droits d'accès en lecture / écriture
-		//  ainsi qu'un solide .htaccess qui interdira de voir l'index-of du répertoire en question) +++++++++++++++++++++++++++++
+		//  ainsi qu'un solide .htaccess qui interdira de voir l'index-of du répertoire en question)                                +++++++++++
 		$repFinal = "../ordonnances_jointes";
 
 		// 2° => on vérifie que la taille est bien positive mais ne dépasse pas X Mo (cf TAILLE_MAX_PJ) :
@@ -135,7 +197,7 @@
 		if( ! $nomInitial == "" ){
 			// avant d'écrire la date dans le nom du fichier, on définit le fuseau horaire par défaut à utiliser :
 			( date_default_timezone_set("Europe/Paris") ) ? $fuseau = "" : $fuseau = " (fuseau horaire invalide)";
-			$nouveauNom = date("Y-m-d_H:i:s_") . $prenom . "_" . $nom . "_" . bin2hex(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
+			$nouveauNom = date("Y-m-d_H-i-s_") . $prenom . "_" . $nom . "_" . bin2hex(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
 		}
 		else{
 			// le fichier n'avait pas de nom :
@@ -143,7 +205,7 @@
 		}
 
 		// 4° => on vérifie que l'extension du fichier joint fait partie de celles autorisées,
-		//       ET on prépare dès maintenant le "Content-type" du header du mail :
+		//       ET on prépare dès maintenant le "Content-type" de la pièce jointe du mail :
 		switch ($extension) {
 			case 'jpe' :
 			case 'jpg' :
@@ -161,11 +223,11 @@
 			$erreurs['pieceJointe'] = "Erreur serveur, veuillez renvoyer le formulaire svp.";
 		}
 
-		// Au final, s'il n'y a pas d'erreurs, ie ni pour la pièce jointe, ni pour les autres champs
+		// 6° => au final, s'il n'y a pas d'erreurs, ie ni pour la pièce jointe, ni pour les autres champs
 		// du formulaire, alors on déplace le fichier :
 		if( ! isset($erreurs) ){
 			// le fichier est validé, on le déplace à son emplacement définitif tout en le renommant :
-			$succes = move_uploaded_file($repTempInitial, $repFinal.'/'.$nouveauNom.'.'.$extension);
+			$succes = move_uploaded_file($nomTemporaire , $repFinal.'/'.$nouveauNom.'.'.$extension);
 		    if( ! $succes ){
 			    // le déplacement n'a pas pu se faire, on supprime le fichier du serveur :
 			    unlink($nomInitial);
@@ -173,6 +235,7 @@
 		    	$erreurs['pieceJointe'] = "[erreur de transfert ". $_FILES['pieceJointe']['error']. "]";
 		    	// la valeur de l'erreur renseigne sur sa signification :
 		    	// 0 = a priori ce sont les droits d'accès en écriture qui ne sont pas conformes ...
+		    	//     ou des caractères non autorisés dans le nom du fichier : ex. "/" ...
 		    	// 1 = UPLOAD_ERR_INI_SIZE - Taille du fichier téléchargé > upload_max_filesize dans le php.ini.
 				// 2 = UPLOAD_ERR_FORM_SIZE - Taille du fichier téléchargé > MAX_FILE_SIZE définie dans le formulaire HTML.
 				// 3 = UPLOAD_ERR_PARTIAL - Le fichier n'a été que partiellement téléchargé.
@@ -210,7 +273,7 @@
 					<p>Nantes, quartier Saint-Joseph de Porterie</p>
 				</h1>
 			</a>
-			<p id="telIndex"><a href="tel:+33240251580">02 40 25 15 80</a></p>
+			<p id="telIndex"><span>>> </span><a href="tel:+33240251580">02 40 25 15 80</a><span> <<</span></p>
 		</section>
 		<nav class="navigation">
 			<ul>
@@ -293,153 +356,137 @@
 				//
 				///////////////////////////////////////////////////////////
 
-					// NB: Passage à la ligne dans un email = "\r\n", mais parfois "\n", voire "\r" ...
-					//     Si vraiment on veut que le mail puisse être lu sur n'importe quel webmail,
-					//     il faut ajouter un petit test pour filtrer les serveurs qui rencontrent des bugs :
-					$correspondance = preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", MAIL_DEST_TEST);
-					if( $correspondance !== false )
-					{
-						// preg_match n'a pas renvoyé d'erreur :
-
-					    if( $correspondance === 1 ){
-							// le mail destinataire contient les chaînes recherchées :
-							$rc = "\n";	//     rc  =  retour chariot
-							$bigouig = "correspondance, donc 'n'";
-						}
-						else{
-					    	// le mail destinataire ne contient pas les chaînes recherchées :
-							$rc = "\r\n";
-							$bigouig = "pas de correspondance, donc 'r n'";
-						}
-					}
-					else{
-						// preg_match a renvoyé une erreur :
-						$rc = "\r\n";
-						$bigouig = "erreur, donc 'r n'";
-					}
-
-echo "rc = ";
-echo $bigouig;
+					// apparemment, à une époque, le CRLF était différent selon les clients mails (\r\n, ou \n, voire \r)
+					// mais après plusieurs tests au cours desquels j'ai essayé les 2 1ères versions,
+					// il semble qu'il n'y ait plus de problème, les 2 fonctionnent bien ... cf fichier texte "CRLF.txt"
+					$rc = "\r\n";
 
 					// NB: Pour ce qui est du charset, le ISO-8859-1 est supporté par tous les webmails,
-					//     contrairement à l'UTF-8, mais ne permet sans doute pas tous les accents ...
+					//     contrairement à l'UTF-8, mais ne permet pas les accents français,
+					//     alors que l'UTF-8 les supportent ... donc je choisis UTF-8
 
 
 					// ===============  Objet du mail  ============== //
 
-					// L'objet du message est constitué d'un préfixe
-					// (les 4 derniers car. de l'IP)
-					// suivi des prénom et nom de l'expéditeur :
-					$objet = "Ordonnance - [" . substr($ipClient, -4, 4) . "]  " . $prenom . " " . $nom;
-
-					// pour l'instant, les accents ne passent pas (dans le nom ou le prénom)					+++++++++++++++++++++++++++++
-
+					// L'objet du message est constitué d'un préfixe (les 4 derniers car. de l'IP) suivi des prénom et nom de l'expéditeur :
+					// (la fonction mb... sert à autoriser les caractères accentués)
+					$objet = mb_encode_mimeheader("Ordonnance - [" .
+													substr($ipClient, -4, 4) . "]  " .
+													$civilite . " " .
+													$prenom . " " .
+													$nom, "UTF-8", "B");
 
 					// ==========  Création du séparateur  ========== //
 
-					// entre message et pièce jointe, 
-					// et/ou entre 2 parties du message de type différent : html / texte
-					
-					$boundary = "-----=".md5(rand());
-					$boundary2 = md5(uniqid(microtime(), TRUE));
-
-					echo "<br><br>" . $boundary . "<br>" . $boundary2 . "<br><br>";
+					// ici il nous en faut 2 puisque nous devons séparer les 2 alternatives text : plain et html,
+					// ainsi que le message proprement dit et la pièce jointe
+					$boundary_A = md5(rand());
+					$boundary_B = md5(rand());
+					$separateur_A = $rc . "--" . $boundary_A . $rc; // on intègre les 2 "--" obligatoires et les CRLF
+					$separateur_B = $rc . "--" . $boundary_B . $rc;
 
 					// ============  Création du header  ============ //
 
-					// Le Content-Type doit être systématiquement précisé dans le header.
-					// Et, en fonction de la valeur indiquée, ie en fonction du contenu souhaité pour le mail,
-					// il peut être nécessaire d'ajouter des Content-Type dans le contenu du message.
-					//
-					// Si le Content-Type du HEADER vaut :
-					// - text/plain => ça veut dire que le mail ne contient que du texte brut
-					//					dans ce cas, pas besoin de Content-Type dans le message, celui du header suffit.
-					//
-					// - text/html  => ça veut dire que le mail ne contient que du texte au format HTML
-					//					dans ce cas, pas besoin de Content-Type dans le message, celui du header suffit.
-					//
-					// - multipart/alternative 		(SOIT brut, SOIT html)
-					//				=> ça veut dire que l'on va définir 2 alternatives du MEME CONTENU de type texte :
-					//					- la 1ère, par défaut, au format texte brut,
-					//					- la 2ème, au format HTML
-					//				=> chaque version sera alors introduite par son Content-Type spécifique :
-					//				   text/plain pour le 1e, et text/html pour le 2e
-					//				Et le mail sera alors affiché, en brut OU en html, en fonction des capacités du client mail ...
-					//       
-					// - multipart/mixed
-					//				=> ça veut dire que le mail contient une (ou +) pièce(s) jointe(s)
-					//				=> chaque pièce jointe sera alors introduite par son Content-Type spécifique
-					//				   par ex. : image/jpeg, ou image/gif, ou application/pdf, etc ...
-					//
-					//
-					// NB : quand le Content-Type du header est défini par "multipart/..."
-					//		=> il FAUT utiliser un "séparateur" de §, appelé "boundary" entre chaque partie
-					//			du mail : header / texte / pj1 / pj2 ...
-					//
-					// Pour info, le boundary commence par 2 tirets (--) et termine par un \r\n.
-					// Les 2 tirets sont obligatoires pour des raisons de compatibilité avec une ancienne norme qui est la RFC934.
-					// Le boundary doit être compris entre 1 et 70 caractères. C'est généralement une chaîne aléatoire.
-
-					$header =	"From: \"Site pharmacie\" <bigouigfiy@cluster020.hosting.ovh.net>" . $rc .
+					// cf dossier "envoi de mails en PHP"
+					$header =	"From: " .
+								mb_encode_mimeheader(LABEL_EXP, "UTF-8", "B") .
+								"<" . ADR_EXP_HEBERGEUR . ">" . $rc .
 								"Reply-To: $adrMailClient" . $rc .
 								"MIME-Version: 1.0" . $rc .
 								"X-Mailer: PHP/" . phpversion() . $rc .
-								// "Content-Type: text/html; charset=\"UTF-8\"" . $rc;
-
-								"Content-Type: multipart/alternative; boundary=" . $boundary . $rc;
+								"Content-Type: multipart/mixed; boundary=" . $boundary_A;
 
 					// ============= Création du message ============= //
 
+					// Texte placé entre le header et le message proprement dit,
+					// pour les clients mails ne supportant pas le type MIME (ça ne doit pas être très fréquent !..)
+	           		$message = $rc . "Type MIME non pris en charge par votre client mail ..." . $rc;
+
+					// on introduit les 2 versions alternatives :
+					$message .=	$separateur_A . 
+								"Content-Type: multipart/alternative; boundary=" . $boundary_B;
+
 					// version "TEXT"
-					$message =	"--" . $boundary . $rc .
+					$message .=	$separateur_B .
 								"Content-Type: text/plain; charset=\"UTF-8\"" . $rc .
 								"Content-Transfer-Encoding: 8bit" . $rc .
-								$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
+								$date . " - " . $civilite . " " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
 								$messageClientTxt . $rc . $rc. $rc . $rc .
 								"IP  client     = " . $ipClient . $rc .
-								"FAI client     = " . $faiClientBrut . $rc;
-								// $rc . "--" . $boundary . $rc . $rc;
+								"FAI client     = " . $faiClientBrut;
 
 					// version "HTML"
-					$message .=	"--" . $boundary . $rc .
+					$message .=	$separateur_B .
 								"Content-Type: text/html; charset=\"UTF-8\"" . $rc .
 								"Content-Transfer-Encoding: 8bit" . $rc .
-								$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . "<br><br>" .
+								$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br><br>" .
 								$messageClientHtml . "<br><br><br><br>" .
 								"IP  client     = " . $ipClient . "<br>" .
-								"FAI client     = " . $faiClientBrut . "<br>" . $rc .
-								"--" . $boundary . $rc;
+								"FAI client     = " . $faiClientBrut;
 
-					// adjonction de la pièce jointe :
+					// ======== Insertion de la pièce jointe ========= //
+
 					// 1- on ouvre le fichier en lecture seule :
-					$fichier = fopen($repFinal.'/'.$nouveauNom.'.'.$extension, 'r');
+					$flux = fopen($repFinal.'/'.$nouveauNom.'.'.$extension, 'r') or die("impossible à ouvrir !");
+
 					// 2- on parcourt l'ensemble du fichier :
-					$pieceJointe = fread( $fichier, filesize($repFinal.'/'.$nouveauNom.'.'.$extension) );
+					$pieceJointe = fread( $flux, filesize($repFinal.'/'.$nouveauNom.'.'.$extension) );
+
 					// 3- on referme le fichier :
-					fclose($fichier);
+					fclose($flux);
+
 					// 4- on encode la pièce jointe :
 					$pieceJointe = chunk_split(base64_encode($pieceJointe));
 
-											 // pour la pièce jointe, il faudra le Content-Disposition                      ************
-					// (le Content-type a été préparé au moment des vérifications sur la pièce jointe)
+					// 5- on ajoute la PJ dans le mail :
+					//    (le Content-type a été préparé au moment des vérifications sur la pièce jointe)
+					$message .= $separateur_A .
+								"Content-Type: " . $ContentType . "; name=" . $nouveauNom.'.'.$extension . $rc . // ex. "image/jpeg"
+								"Content-Transfer-Encoding: base64" . $rc .
+								"Content-Disposition: attachment; filename=" . $nouveauNom.'.'.$extension . $rc .
+								$pieceJointe;
 
+					// ============= Dernier "blindage" ============== //
 
-					// Dernier "blindage" : si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
-					if( $_SERVER['HTTP_REFERER'] != 'http://bigouig.fr/prepaOrdonnance.php' )									//**********
-					{  
+					// si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
+					if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . "prepaOrdonnance.php" ) != 0
+						&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . "prepaOrdonnance.php" ) != 0
+						&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . "prepaOrdonnance.php" ) != 0
+						&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . "prepaOrdonnance.php" ) != 0 ){
+
+						$headerAlerte =	"From: " .
+										mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .
+										"<" . ADR_EXP_HEBERGEUR . ">" . $rc .
+										"Reply-To: " . $rc .
+										"MIME-Version: 1.0" . $rc .
+										"X-Mailer: PHP/" . phpversion() . $rc .
+										"Content-Type: text/plain; charset=\"UTF-8\"" . $rc .
+										"Content-Transfer-Encoding: 8bit";
+						$messageAlerte =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
+											"Envoi du formulaire à partir d'un site web différent de celui de la pharmacie :" . $rc .
+											$_SERVER['HTTP_REFERER'] . $rc . $rc .
+											"IP  client     = " . $ipClient . $rc .
+											"FAI client     = " . $faiClientBrut;
+						mail(MAIL_DEST_PHARMA, "Tentative de piratage ?", $messageAlerte, $headerAlerte);
 					    header('Location: http://www.bigouig.fr/'); 
 					} 
 					else{
 					    // envoi de l'e-mail :
-						if( mail(MAIL_DEST_TEST, $objet, $message, $header) ){
-		
-							echo "<p>Merci, votre ordonnance a bien été envoyée.</p>";
+						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
+
+							echo "<article class='artIntroOrdo'><br><br><br>";
+							echo "<p>Merci, votre ordonnance a bien été envoyée.</p><br>";
 							echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
+							echo "<br><br><br><br><br>";
+							echo "</article>";
 						}
 						else{
+							echo "<article class='artIntroOrdo'><br><br><br>";
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
+							echo "<br><br><br><br><br>";
+							echo "</article>";
 						}
 					}; 
 					?>
@@ -455,80 +502,84 @@ echo $bigouig;
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<article class="ordoIntro">
+				<article class="artIntroOrdo">
 					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
 					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail de leur mise à disposition.</p>
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h, sinon une demi-journée suffit en général.</p>
-
-					<p class="espaceVertical"></p>
-					
-					<ol>Il suffit de suivre ces 4 étapes :
-						<li>numériser l'ordonnace :
-							<ul>
-								<li>- si vous sortez de chez le médecin avec votre document papier,
-								      vous pouvez simplement le photographier avec votre smartphone.
-								      Attention, prenez garde à bien cadrer l'ordonnance qui doit être visible en totalité.</li>
-								<li>- de chez vous, si vous disposez d'une imprimante-scanner, vous pouvez numériser le document.</li>
-								<li>- si l'ordonnance est déjà sous forme de document PDF, il n'y a rien de plus à faire.</li>
-							</ul>
-						</li>
-
-						<p class="espaceVertical"></p>
-
-						<li>remplir tous les champs obligatoires du formulaire.</li>
-
-						<p class="espaceVertical"></p>
-
-						<li>joindre le document numérisé de votre ordonnance :
-							<ul>
-								<li>cliquer sur "Parcourir ..."</li>
-								<li>sélectionner le document créé à l'étape 1)</li>
-							</ul>
-						</li>
-
-						<p class="espaceVertical"></p>
-
-						<li>cliquer sur "Envoyer".</li>
-					</ol>
-
-					<p class="espaceVertical"></p>
-
-					<p> Nous nous occupons de la suite !</p>
-
-					<p class="espaceVertical"></p>
-
 				</article>
 
+				<article>
+					<a href="#" id="idModeEmploi"><p>Mode d'emploi</p></a>
+
+					<article class="artModeEmploi">
+						<aside>Il suffit de suivre ces <span>4 étapes :</span></aside>
+						<ol>
+							<li><p>numériser l'ordonnance :</p>
+								<ul>
+									<li>si vous sortez de chez le médecin avec votre document papier,
+									    vous pouvez simplement le photographier avec votre smartphone.
+									    Attention, prenez garde à bien cadrer l'ordonnance qui doit être visible en totalité.</li>
+									<li>de chez vous, si vous disposez d'une imprimante-scanner, vous pouvez numériser le document.</li>
+									<li>si l'ordonnance est déjà sous forme de document PDF, il n'y a rien de plus à faire.</li>
+								</ul>
+							</li>
+
+							<li><p>remplir tous les champs du formulaire.</p></li>
+
+							<li><p>joindre le document numérisé de votre ordonnance :</p>
+								<ul>
+									<li>cliquer sur "Parcourir ..."</li>
+									<li>sélectionner le document créé à l'étape 1)</li>
+								</ul>
+							</li>
+
+							<li><p>cliquer sur "Envoyer".</p></li>
+
+							Nous nous occupons de la suite !
+						</ol>
+					</article>
+				</article>
+				<span>(la saisie de tous les champs est obligatoire)</span>
 				<form method="POST" enctype="multipart/form-data">
 					<div class="champsForm">
-						<label for="idPrenom">Prénom <span>*</span></label>
+						<input type="radio" id="idCiviliteMme" name="civilite" value="Mme" required
+							<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
+						<label for="idCiviliteMme">Mme</label>
+						<input type="radio" id="idCiviliteMlle" name="civilite" value="Mlle" required
+							<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
+						<label for="idCiviliteMlle">Melle</label>
+						<input type="radio" id="idCiviliteM" name="civilite" value="M." required
+							<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
+						<label for="idCiviliteM">M.</label>
+					</div>
+					<div class="champsForm">
+						<label for="idPrenom">Prénom</label>
 								<input type="text" id="idPrenom" name="prenom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($prenom) ? "value=" . $prenom : ""?> >
 					<?php if( isset($erreurs['prenom']) ) { echo "<span>" . $erreurs['prenom'] . "</span>"; } ?>
 					</div>
 
 					<div class="champsForm">
-						<label for="idNom">Nom <span>*</span></label>
+						<label for="idNom">Nom</label>
 								<input type="text" id="idNom" name="nom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($nom) ? "value=" . $nom : ""?> >
 					<?php if( isset($erreurs['nom']) ) { echo "<span>" . $erreurs['nom'] . "</span>"; } ?>
 					</div>
 
 					<div class="champsForm">
-						<label for="idMail">Mail <span>*</span></label>
+						<label for="idMail">Mail</label>
 								<input type="email" id="idMail" name="adrMailClient" required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
 					<?php if( isset($erreurs['adrMailClient']) ) { echo "<span>" . $erreurs['adrMailClient'] . "</span>"; } ?>
 					</div>
 					<div class="champsForm">
-						<label for="idPJ">Ordonnance <span>*</span></label>
-								<input type="file" id="idPJ" name="pieceJointe" required>
+						<label for="idPJ">Ordonnance</label>
+								<input type="file"	id="idPJ" name="pieceJointe" accept=<?= LISTE_EXT_AUTORISEES ?> required >
 					<?php if( isset($erreurs['pieceJointe']) ) { echo "<span>" . $erreurs['pieceJointe'] . "</span>"; } ?>
 					</div>
 					<div class="champsForm">
-						<label for="idMessage">Message <span>*</span></label>
-								<textarea rows="4" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($message) ? $message : ""?></textarea>
+						<label for="idMessage">Message</label>
+								<textarea rows="4" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
 					<?php if( isset($erreurs['message']) ) { echo "<span>" . $erreurs['message'] . "</span>"; } ?>
 					</div>
 
-					<p><span>* saisie obligatoire</span></p>
 					<div class="envoyer">
 						<button name="bouton">Envoyer</button>
 					</div>

@@ -20,8 +20,8 @@
 	// On interdit l'inclusion de dossiers protégés par htaccess.
 	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 	// strpos() peut très bien le faire, et surtout plus vite !
+	// if( preg_match('admin', $page) ){
 	if( strpos($page, 'admin') ){
-	// if( preg_match('admin', $page) ){                        ok en PHP 5.6.30 mais plus en PHP 7.1.4  ********************
 		echo "Vous n'avez pas accès à ce répertoire";
 	}
 	else{
@@ -39,66 +39,131 @@
 
 	// Définition de quelques CONSTANTES :
 
-	// adresse mail destinataire :
-	define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
-	define("MAIL_DEST_TEST", "9byjpuk5k@use.startmail.com");
+	// adresse de l'expéditeur des mails via l'hébergeur du site :
+	//define("ADR_EXP_HEBERGEUR", "à compléter");                              //     à compléter                            +++++++++
+	define("ADR_EXP_HEBERGEUR", "bigouigfiy@cluster020.hosting.ovh.net");
+
+	// nom explicite pour l'expéditeur des mails : (possible avec accents !)
+	define("LABEL_EXP", "Site pharmacie");
+
+	// adresse du site de la pharmacie :
+	define("ADRESSE_SITE_PHARMACIE", "http://bigouig.fr/");
+	define("S_ADRESSE_SITE_PHARMACIE", "https://bigouig.fr/");
+	define("W_ADRESSE_SITE_PHARMACIE", "http://www.bigouig.fr/");
+	define("SW_ADRESSE_SITE_PHARMACIE", "https://www.bigouig.fr/");
+	//define("ADRESSE_SITE_PHARMACIE", "http://pharmacielereste.fr/");
+	//define("S_ADRESSE_SITE_PHARMACIE", "https://pharmacielereste.fr/");
+	//define("W_ADRESSE_SITE_PHARMACIE", "http://www.pharmacielereste.fr/");
+	//define("SW_ADRESSE_SITE_PHARMACIE", "https://www.pharmacielereste.fr/");
+
+	// adresse mail de la pharmacie :
+	//define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
+	define("MAIL_DEST_PHARMA", "bk24tsxnt@use.startmail.com");
+
+	// taille max de la pièce jointe : 2 Mo = 2097152 octets
+	define("TAILLE_MAX_PJ", 2097152);
+
+	// extensions autorisées pour la pièce jointe : cf aussi ligne : " switch ($extension) "
+	define("LISTE_EXT_AUTORISEES", '".jpe, .jpg, .jpeg, .png, .gif, .pdf"');
 
 	// Nombre de caractères min et max pour les nom et prénom :
 	define("NB_CAR_MIN", 2);
 	define("NB_CAR_MAX", 40);
 
 	// si on veut utiliser la vérification naturelle du HTML :
-	define("NB_CAR_MIN_HTM", 1);
+	define("NB_CAR_MIN_HTM", 2);
 	define("NB_CAR_MAX_HTM", 40);
 
 	// Nombre de caractères min et max pour le texte libre :
-	define("NB_CAR_MIN_MESSAGE", 20);
+	define("NB_CAR_MIN_MESSAGE", 5);
 	define("NB_CAR_MAX_MESSAGE", 1000);
 
 	// si on veut utiliser la vérification naturelle du HTML :
-	define("NB_CAR_MIN_MESSAGE_HTM", 2);
+	define("NB_CAR_MIN_MESSAGE_HTM", 1);
 	define("NB_CAR_MAX_MESSAGE_HTM", 1000);
 
-	// Si le formulaire vient d'être validé, on "nettoie" les champs :
+	// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 	if( isset($_POST['bouton']) ){
-		// echo "<pre>";
-		// print_r($_POST);
-		// echo "</pre>";
+
+		//  *******  CIVILITE  *******
+		$civilite = $_POST['civilite'];
+
+		// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
+
+		// Méthode de remplacement de caractères utilisant str_replace().
+		// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
+		// (même indice) dans le tableau $nouveauCar.
+		// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
+		// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
+		// par le caractère vide : ''.
+		$trouverCar =
+		['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
+		 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
+		 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
+		$nouveauCar = ['-'];
+
+		// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
+		// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
+		$minusAccMajus =
+		['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
+		 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
+		 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
+		 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
+		 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
+		 'ç' => 'Ç', 'ñ' => 'Ñ'];
+
+		// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
+		// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
 
 		//  ********  PRENOM  ********
 
-		$prenom = htmlspecialchars(strip_tags($_POST['prenom']));
+		// supprime les balises HTML et PHP
+		$prenom = strip_tags($_POST['prenom']);
+		// cf explications sur le remplacement de car. ci-dessus
+		$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
+		// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
+		$prenom = SuperTrim($prenom);
+		// remplace les espaces ' ' par des tirets '-'
+		$prenom = str_replace(" ", "-", $prenom);
+		// 1ère lettre en majuscule, les autres en minuscules
+		$prenom = ucfirst(strtolower($prenom));
+		// test de la contrainte sur la longueur de la chaîne
 		if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
 			$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
 		}
 
 		//  ********  NOM  ********
 
-		$nom = htmlspecialchars(strip_tags($_POST['nom']));
+		$nom = strip_tags($_POST['nom']);
+		$nom = str_replace($trouverCar, $nouveauCar, $nom);
+		$nom = SuperTrim($nom);
+		$nom = str_replace(" ", "-", trim($nom));
+		// NOM en majuscule
+		$nom = strtoupper($nom);
+		$nom = strtr($nom, $minusAccMajus);
+
 		if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
 			$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
 		}
 
-		// on les écrit sous le format : Prénom NOM
-		$prenom = ucfirst(strtolower($prenom));
-		$nom = strtoupper($nom);
-
 		//  ********  MAIL  ********
 
 		// "nettoie" la valeur utilisateur :
-		$adrMailExp = filter_var($_POST['adrMailExp'], FILTER_SANITIZE_EMAIL);
+		$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
 
 		// teste la NON validité du format :
-		if( ! filter_var($adrMailExp, FILTER_VALIDATE_EMAIL) ){
-			$erreurs['adrMailExp'] = "(format incorrect)"; 
+		if( ! filter_var($adrMailClient, FILTER_VALIDATE_EMAIL) ){
+			$erreurs['adrMailClient'] = "(format incorrect)"; 
 		};
 
 		//  ********  MESSAGE  ********
 
-		$message = htmlspecialchars(strip_tags($_POST['message']));
-		if( (strlen($message) < NB_CAR_MIN_MESSAGE) || (strlen($message) > NB_CAR_MAX_MESSAGE ) ){
+		$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
+		if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
 			$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
 		}
+		// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
+		$messageClientHtml = "<b style=\"font-size: 16px;\">" . nl2br($messageClientTxt) . "</b>";
 	}
 ?>
 <!DOCTYPE html>
@@ -121,7 +186,7 @@
 					<p>Nantes, quartier Saint-Joseph de Porterie</p>
 				</h1>
 			</a>
-			<p id="telIndex"><a href="tel:+33240251580">02 40 25 15 80</a></p>
+			<p id="telIndex"><span>>> </span><a href="tel:+33240251580">02 40 25 15 80</a><span> <<</span></p>
 		</section>
 		<nav class="navigation">
 			<ul>
@@ -134,7 +199,6 @@
 	</header>
 
 	<main>
-
 		<section class="formsContOrdo gauche">
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
@@ -162,16 +226,22 @@
 
 				<?php
 
-				//    si le formulaire est rempli  ET  s'il n'y a pas d'erreurs
+				//    le formulaire a été rempli  ET  s'il n'y a pas d'erreurs
 				//
 				// => on envoie le mail ! (après avoir préparé les données)
 
-				// ajout de quelques infos dans le message :
+				/////////////////////////////////////////////////////
+				//
+				// préparation des infos ajoutées dans le mail
+				//
+				/////////////////////////////////////////////////////
 
-				// date :
-				$date = date('d')."/".date('m')."/".date('Y')." - ".date('H')."h".date('i');
+				// ===================  date  =================== //
 
-				// IP du client : (3 possibilités)
+				$date = date('\S\e\m. W - D d/m/Y - H:i:s') . $fuseau; // $fuseau a été défini plus haut, en cas d'erreur (sinon il est vide)
+
+				// ===============  IP du client  =============== //     (3 possibilités)
+
 				$ipClient = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
 				if( empty($ipClient) ){
 					$ipClient = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? "HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'] : "";
@@ -198,7 +268,8 @@
 					}
 				}
 
-				// FAI :
+				// ===================  FAI  ==================== //
+
 				$faiClientBrut = gethostbyaddr(getIpAdr());
 				// a priori, quand ça vient du réseau mobile, ce n'est pas le FAI mais l'IP,
 				// d'où le message plus explicite :
@@ -210,41 +281,99 @@
 				// $faiClient = substr(stristr($faiClientBrut, "ipv"), 5);
 				// }
 
-				// URL provenance :
-				$urlProvenance = $_SERVER['HTTP_REFERER'];
 
-				// enfin, construction du message complet :
-				$message =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailExp . "<br><br>" .
-							nl2br($message) . "<br><br><br>" .
-							"URL provenance = " . $urlProvenance . "<br>" .
+				///////////////////////////////////////////////////////////
+				//
+				// ENFIN, construction du mail
+				//
+				// (en suivant qqs étapes préparatoires encore une fois)
+				//
+				///////////////////////////////////////////////////////////
+
+				// apparemment, à une époque, le CRLF était différent selon les clients mails (\r\n, ou \n, voire \r)
+				// mais après plusieurs tests au cours desquels j'ai essayé les 2 1ères versions,
+				// il semble qu'il n'y ait plus de problème, les 2 fonctionnent bien ... cf fichier texte "CRLF.txt"
+				$rc = "\r\n";
+
+				// NB: Pour ce qui est du charset, le ISO-8859-1 est supporté par tous les webmails,
+				//     contrairement à l'UTF-8, mais ne permet pas les accents français,
+				//     alors que l'UTF-8 les supportent ... donc je choisis UTF-8
+
+
+				// ===============  Objet du mail  ============== //
+
+				// L'objet du message est constitué d'un préfixe (les 4 derniers car. de l'IP) suivi des prénom et nom de l'expéditeur :
+				// (la fonction mb... sert à autoriser les caractères accentués)
+				$objet = mb_encode_mimeheader("Contact - [" .
+												substr($ipClient, -4, 4) . "]  " .
+												$civilite . " " .
+												$prenom . " " .
+												$nom, "UTF-8", "B");
+
+				// ============  Création du header  ============ //
+
+				// cf dossier "envoi de mails en PHP"
+				$header =	"From: " .
+							mb_encode_mimeheader(LABEL_EXP, "UTF-8", "B") .
+							"<" . ADR_EXP_HEBERGEUR . ">" . $rc .
+							"Reply-To: $adrMailClient" . $rc .
+							"MIME-Version: 1.0" . $rc .
+							"X-Mailer: PHP/" . phpversion() . $rc .
+							"Content-type: text/html; charset=UTF-8" . $rc .
+			           		"Content-Transfer-Encoding: 8bit" . $rc;
+
+				// ============= Création du message ============= //
+
+				// version HTML seule
+				$message .=	$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br>" . "<br>" .
+							$messageClientHtml . "<br><br><br><br>" .
 							"IP  client     = " . $ipClient . "<br>" .
-							"FAI client     = " . $faiClientBrut . "<br>";
-							// "REMOTE " . $_SERVER['REMOTE_ADDR'] . "<br>" . 
-							// "HTTP_X " . $_SERVER['REMOTE_ADDR'] . "<br>" . 
-							// "HTTP_C " . $_SERVER['REMOTE_ADDR'];
+							"FAI client     = " . $faiClientBrut;
 
-				// ajout d'options pour le message :
-				$headers = "From: contact@pharmacielereste.fr\r\n" .
-						   "Reply-To: $adrMailExp\r\n" .
-				           "MIME-Version: 1.0" . "\r\n" .
-				           "Content-type: text/html; charset=UTF-8" . "\r\n" .
-				           "Content-Transfer-Encoding: 8bit" . "\r\n" .
-				           "X-Mailer: PHP/" . phpversion();
+				// ============= Dernier "blindage" ============== //
 
-				// L'objet du message sera constitué d'un préfixe (les 4 derniers car. de l'IP)
-				// suivi des prénom et nom de l'expéditeur :
-				$objet = "Contact - [" . substr($ipClient, -4, 4) . "]  " . $prenom . " " . $nom;
+				// si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
+				if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
+					&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
+					&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
+					&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0 ){
 
-				if( mail(MAIL_DEST_TEST, $objet, $message, $headers) ){
-
-					echo "<h2>Merci, votre message a bien été envoyé.</h2>";
-					echo "<p>Nous vous répondrons dans les meilleurs délais, sous
-							réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
+					$headerAlerte =	"From: " .
+									mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .
+									"<" . ADR_EXP_HEBERGEUR . ">" . $rc .
+									"Reply-To: " . $rc .
+									"MIME-Version: 1.0" . $rc .
+									"X-Mailer: PHP/" . phpversion() . $rc .
+									"Content-Type: text/plain; charset=\"UTF-8\"" . $rc .
+									"Content-Transfer-Encoding: 8bit";
+					$messageAlerte =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
+										"Envoi du formulaire à partir d'un site web différent de celui de la pharmacie :" . $rc .
+										$_SERVER['HTTP_REFERER'] . $rc . $rc .
+										"IP  client     = " . $ipClient . $rc .
+										"FAI client     = " . $faiClientBrut;
+					mail(MAIL_DEST_PHARMA, "Tentative de piratage ?", $messageAlerte, $headerAlerte);
+				    header('Location: http://www.bigouig.fr/'); 
 				}
 				else{
-					echo "<h2>Aïe, il y a eu un problème ...</h2>";
-					echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
+				    // envoi de l'e-mail :
+					if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
+	
+						echo "<article class='artIntroOrdo'><br><br><br>";
+						echo "<p>Merci, votre message a bien été envoyé.</p>";
+						echo "<p>Nous vous répondrons dans les meilleurs délais, sous
+								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
+						echo "<br><br><br><br><br>";
+						echo "</article>";
+					}
+					else{
+						echo "<article class='artIntroOrdo'><br><br><br>";
+						echo "<p>Aïe, il y a eu un problème ...</p>";
+						echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
+						echo "<br><br><br><br><br>";
+						echo "</article>";
+					}
 				};
+
 				?>
 
 			<?php else : ?>
@@ -260,31 +389,43 @@
 				?>
 				<h2> Envoyez-nous un message ...</h2>
 				<section>
+					<span>(la saisie de tous les champs est obligatoire)</span>
 					<form method="post">
 						<div class="champsForm">
-							<label for="idPrenom">Prénom <span>*</span></label>
+							<input type="radio" id="idCiviliteMme" name="civilite" value="Mme" required
+								<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
+							<label for="idCiviliteMme">Mme</label>
+							<input type="radio" id="idCiviliteMlle" name="civilite" value="Mlle" required
+								<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
+							<label for="idCiviliteMlle">Melle</label>
+							<input type="radio" id="idCiviliteM" name="civilite" value="M." required
+								<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
+							<label for="idCiviliteM">M.</label>
+						</div>
+
+						<div class="champsForm">
+						<label for="idPrenom">Prénom</label>
 									<input type="text" id="idPrenom" name="prenom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-						<?php if( isset($erreurs['prenom']) ) { echo "<aside>" . $erreurs['prenom'] . "</aside>"; } ?>
+					<?php if( isset($erreurs['prenom']) ) { echo "<span>" . $erreurs['prenom'] . "</span>"; } ?>
 						</div>
 
 						<div class="champsForm">
-							<label for="idNom">Nom <span>*</span></label>
+						<label for="idNom">Nom</label>
 									<input type="text" id="idNom" name="nom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($nom) ? "value=" . $nom : ""?> >
-						<?php if( isset($erreurs['nom']) ) { echo "<aside>" . $erreurs['nom'] . "</aside>"; } ?>
+					<?php if( isset($erreurs['nom']) ) { echo "<span>" . $erreurs['nom'] . "</span>"; } ?>
 						</div>
 
 						<div class="champsForm">
-							<label for="idMail">Mail <span>*</span></label>
-									<input type="email" id="idMail" name="adrMailExp" required <?= isset($adrMailExp) ? "value=" . $adrMailExp : ""?> >
-						<?php if( isset($erreurs['adrMailExp']) ) { echo "<aside>" . $erreurs['adrMailExp'] . "</aside>"; } ?>
+						<label for="idMail">Mail</label>
+									<input type="email" id="idMail" name="adrMailClient" required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+					<?php if( isset($erreurs['adrMailClient']) ) { echo "<span>" . $erreurs['adrMailClient'] . "</span>"; } ?>
 						</div>
 						<div class="champsForm">
-							<label for="idMessage">Message <span>*</span></label>
-									<textarea rows="4" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($message) ? $message : ""?></textarea>
-						<?php if( isset($erreurs['message']) ) { echo "<aside>" . $erreurs['message'] . "</aside>"; } ?>
+							<label for="idMessage">Message</label>
+									<textarea rows="4" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
+						<?php if( isset($erreurs['message']) ) { echo "<span>" . $erreurs['message'] . "</span>"; } ?>
 						</div>
 
-						<p><span>* saisie obligatoire</span></p>
 						<div class="envoyer">
 							<button name="bouton">Envoyer</button>
 						</div>
@@ -292,7 +433,6 @@
 				</section>
 			<?php endif ?>
 		</section>
-
 	</main>
 
 	<footer>

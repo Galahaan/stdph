@@ -22,10 +22,6 @@ img{
 	max-width: 100%;
 }
 
-.espaceVertical{
-	height: 1rem;
-}
-
 body{
 	font-size: 1.8rem;
 
@@ -48,7 +44,7 @@ h1 p{
 	font-size: 1.5rem; /* sous-titre de la page : Nantes, ... */
 }
 #telIndex{
-	font-size: 1.5rem; /* sous-titre de la page : numéro de tel cliquable */
+	font-size: 2rem; /* sous-titre de la page : numéro de tel cliquable */
 }
 h2{
 	font-size: 2.5rem; /* titres des vignettes de la page Index + intro du form. de contact */
@@ -113,15 +109,20 @@ h1 p{
 }
 
 /* numéro de téléphone cliquable */
-#telIndex{
-	text-decoration: underline;
+#telIndex {
 	color: #951A80;
-	font-weight: 400;
+	font-weight: 700;
 	position: absolute;
-	top: 55%;
-	left: 35%;
+	top: 52%;
+	left: 28%;
+}
+/* § spécifique pour "a" puisque ça change avec les media queries */
+#telIndex a{
+	text-decoration: underline;
 }
 
+/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
 #telIndex a:link, #telIndex a:visited, #telIndex a:hover, #telIndex a:focus, #telIndex a:active{
 	color: #951A80;
 }
@@ -186,8 +187,9 @@ ul{
 	opacity: 0;
 }
 
+/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
 .vignettes article a:hover, .vignettes article a:focus, .vignettes article a:active{
-	/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
 	opacity: .85;
 }
 
@@ -211,7 +213,9 @@ ul{
 
 /* espace entre le bandeau et les infos de contact */
 /* et entre les infos de contact et le footer      */
-.formsContOrdo{
+
+.formsContOrdo{      /* formulaires 'contact' et 'ordonnance' */
+
 	padding: 1rem 0; /* si on met un margin, il prend la couleur de fond du body */
 }
 
@@ -236,6 +240,8 @@ ul{
 	font-weight: bold;
 	text-decoration: underline;
 }
+/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
 #telContact a:link, #telContact a:visited, #telContact a:hover, #telContact a:focus, #telContact a:active{
 	color: black;
 }
@@ -283,6 +289,8 @@ ul{
 	left: 0;
 }
 
+/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
 .noir:hover, .noir:focus, .noir:active{
 	display: none;
 }
@@ -293,6 +301,8 @@ ul{
 
 /* ********************     colonne de droite : formulaire de contact      ******************** */
 
+/* ligne fine de séparation entre les 2 § */
+/* (en version mobile uniquement !)       */
 .droite:before{
 	content: "";
 	display: block;
@@ -307,6 +317,11 @@ ul{
 	margin-bottom: 2rem;
 }
 
+/* saisie obligatoire des champs */
+section > span{
+	font-size: .8em;
+}
+
 /* pour que les lignes fines entre les champs ne fassent pas toute la largeur de la colonne */
 .droite section{
 	margin: 0 1rem;
@@ -316,35 +331,40 @@ ul{
 .champsForm{
 	border: none;
 	border-top: .1rem solid #951A80;
-	margin-right: 1rem;
 	padding: 1.5rem 0;
 	width: 100%;
 	text-align: right;
 }
 
 /* proportions entre label et input pour les champs du formulaire */
-.champsForm input, .champsForm textarea{
+.champsForm input:not([type="radio"]), .champsForm textarea{
 	font-weight: bold;
 	font-family: 'Advent Pro', sans-serif;
 	width: 65%;
+	margin-left: 3%;
 	margin-right: 1.5%;
+}
+.champsForm [type="radio"]{
+	font-weight: bold;
+	font-family: 'Advent Pro', sans-serif;
+	margin-left: 5%	
+}
+.champsForm [for="idCiviliteM"] {
+	margin-right: 25%;
 }
 .champsForm textarea{
 	padding-top: .7rem;
 }
-
+/* pour bloquer la largeur du champ texte */
 .champsForm textarea{
 	min-width: 65%;
-	max-width: 65%
+	max-width: 65%;
+	margin-left: 3%;
 }
 
 /* label "Message" calé en haut, ligne fine sous le message */
 .champsForm [for="idMessage"]{
 	vertical-align: top;
-}
-
-.droite form div:nth-child(4){
-	border-bottom: .1rem solid #951A80;
 }
 
 /* pour les éventuels messages d'erreurs */
@@ -355,7 +375,7 @@ ul{
 }
 /*pour les astérisques et la légende de l'astérisque */
 .champsForm span{
-	vertical-align: super;
+	vertical-align: top;
 }
 
 /* légende pour l'astérisque (*) */
@@ -376,7 +396,6 @@ ul{
 	width: auto;
 	font-weight: 400;
 	padding: 1rem;
-	margin-top: 2rem;
 	margin-right: 2rem;
 	border: none;
 
@@ -385,7 +404,9 @@ ul{
 	border-radius: 5px;
 }
 
-.envoyer button:hover{
+/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
+.envoyer button:hover, .envoyer button:focus, .envoyer button:active{
 	background-color: #F29200;
 }
 
@@ -395,12 +416,79 @@ ul{
 /* ******************************        Page Ordonnance         ****************************** */
 /* ******************************************************************************************** */
 
-.ordoIntro {
-	padding: 0 3rem;
+
+/* marges autour du § d'introduction situé au dessus du formulaire */
+.artIntroOrdo {
+	padding: 1rem 1rem;      /*     haut et bas : 1rem      gauche et droite : 1rem      */
 	text-align: justify;
 }
 
+/* par défaut, le mode d'emploi est masqué */
+#idModeEmploi + article {
+	display: none;
+}
 
+/* quand on clique sur Mode d'emploi, ça le déplie */
+#idModeEmploi:active + article, #idModeEmploi:focus + article {
+	display: block;
+}
+
+/* calage à gauche dans l'article */
+.formsContOrdo article:nth-child(2) {
+	text-align: left;
+}
+
+/* calage et couleur(s) du lien "mode d'emploi" */
+#idModeEmploi p{
+	padding: 0 0 2rem 3rem;
+}
+#idModeEmploi:link, #idModeEmploi:visited {
+	color: #F29200;
+}
+#idModeEmploi:hover, #idModeEmploi:focus, #idModeEmploi:active {
+	color: black;
+}
+
+/*  § Mode d'emploi  */
+.artModeEmploi {
+	padding: 2rem;
+	margin: 0 .5rem 2rem .5rem;
+	background-color: #5B5B5B;
+	color: white;
+	text-align: left;
+}
+
+/* centrage de l'intro */
+.artModeEmploi aside {
+	font-style: normal;
+	text-align: center;
+}
+
+/* "... 4 étapes" en gras */
+.artModeEmploi aside span{
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+/* chacune des étapes */
+.artModeEmploi p{
+	font-weight: bold;
+	text-decoration: underline;
+	padding: 1rem 0;
+}
+
+.artModeEmploi li{
+	margin-left: 1rem;
+}
+
+.artModeEmploi ul{
+	margin-left: 2rem;
+}
+
+/* saisie obligatoire des champs */
+.formsContOrdo article:nth-child(2) + span {
+	font-size: .8em;
+}
 
 /* ******************************************************************************************** */
 /* ******************************              Footer            ****************************** */
@@ -447,10 +535,10 @@ footer section:last-of-type{
 		font-size: 1.7rem; /* old 1.5 sous-titre de la page : Nantes, ... */
 	}
 	#telIndex{
-		font-size: 1.7rem; /* old 1.5 sous-titre de la page : numéro de tel cliquable */
+		font-size: 2rem; /* old 2 sous-titre de la page : numéro de tel cliquable */
 		position: absolute;
 		top: 48%;
-		left: 32%;
+		left: 27%;
 	}
 
 	/* page Index : on affiche 2 vignettes en largeur */
@@ -477,6 +565,21 @@ footer section:last-of-type{
 	.droite p{
 		font-size: 1.6rem; /* old 1.4 pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
 	}
+
+	/*     page prepaOrdonnance     */
+
+	/* marges des § concernant le mode d'emploi */
+	.artIntroOrdo {
+		padding: 2rem 2rem;				/* old : 1rem   1rem			*/
+	}
+	/* calage du lien "mode d'emploi" */
+	#idModeEmploi p{
+		padding: 0 0 2rem 5rem;			/* old : 0 0 2rem 3rem			*/
+	}
+	/*  § Mode d'emploi  */
+	.artModeEmploi {
+		margin: 0 2rem 2rem 2rem;		/* old : 0 .5rem 2rem .5rem		*/
+	}
 }
 
 /* 																									600 px		*/
@@ -498,7 +601,13 @@ footer section:last-of-type{
 		font-size: 2.5rem; /* old 1.7 sous-titre de la page : numéro de tel cliquable */
 		position: absolute;
 		top: 50%;
-		left: 35%;
+		left: 34%;
+	}
+	#telIndex span{
+		display: none;
+	}
+	#telIndex a{
+		text-decoration: none;
 	}
 	nav{
 		padding: 1rem; /* hauteur du bandeau de nav */
@@ -584,6 +693,22 @@ footer section:last-of-type{
 	footer section:first-of-type p{
 		padding: 1rem 1rem; /* old .5rem 1rem */
 	}
+
+	/*     page prepaOrdonnance     */
+
+	/* marges des § concernant le mode d'emploi */
+	.artIntroOrdo {
+		padding: 3rem 3rem;				/* old : 2rem   2rem			*/
+	}
+	/* calage du lien "mode d'emploi" */
+	#idModeEmploi p{
+		padding: 0 0 3rem 5rem;			/* old : 0 0 2rem 5rem			*/
+	}
+	/*  § Mode d'emploi  */
+	.artModeEmploi {
+		padding: 3rem;					/* old : 2rem					*/
+		margin: 0 3rem 3rem 3rem;		/* old : 0 2rem 2rem 2rem		*/
+	}
 }
 
 /* 																									900 px		*/
@@ -616,7 +741,12 @@ footer section:last-of-type{
 		top: 45%;
 		left: 35%;
 	}
-
+	#telIndex span{
+		display: none;
+	}
+	#telIndex a{
+		text-decoration: none;
+	}
 	/* page Index : on passe en 2 vignettes en largeur */
 	.vignettes article{
 		width: 33.33%;
@@ -655,4 +785,9 @@ footer section:last-of-type{
 	footer section:first-of-type p{
 		padding: 1.5rem 1.5rem; /* old .5rem 1rem */
 	}
+}
+
+/* 																									braille 		*/
+@media braille{
+
 }

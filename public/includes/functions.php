@@ -43,4 +43,17 @@ print_r(json_decode($result, true));
 	    return json_decode($result, true);
 	}
 
+
+	// Fonction qui prolonge l'action de la fonction php trim().
+	// trim() supprime les espaces à gauche et à droite de la chaine, mais ici, en plus :
+	// - on transforme les tabulations en espace
+	// - on transforme les multiples occurrences d’espace en 1 seul espace
+	function SuperTrim($string)
+	{
+		$string = trim($string);
+		$string = str_replace('\t', ' ',  $string);
+		$string = preg_replace('/[ ]+/', ' ',  $string);
+		return $string;      	
+	}
+
 ?>
