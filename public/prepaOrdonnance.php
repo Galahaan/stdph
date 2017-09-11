@@ -56,6 +56,9 @@
 	//define("W_ADRESSE_SITE_PHARMACIE", "http://www.pharmacielereste.fr/");
 	//define("SW_ADRESSE_SITE_PHARMACIE", "https://www.pharmacielereste.fr/");
 
+	// page en cours :
+	define("PAGE_EN_COURS", "prepaOrdonnance.php");
+
 	// adresse mail de la pharmacie :
 	//define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
 	define("MAIL_DEST_PHARMA", "bk24tsxnt@use.startmail.com");
@@ -449,10 +452,10 @@
 					// ============= Dernier "blindage" ============== //
 
 					// si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
-					if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . "prepaOrdonnance.php" ) != 0
-						&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . "prepaOrdonnance.php" ) != 0
-						&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . "prepaOrdonnance.php" ) != 0
-						&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . "prepaOrdonnance.php" ) != 0 ){
+					if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
+						&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
+						&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
+						&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0 ){
 
 						$headerAlerte =	"From: " .
 										mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .
@@ -576,7 +579,7 @@
 					</div>
 					<div class="champsForm">
 						<label for="idMessage">Message</label>
-								<textarea rows="4" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
+								<textarea rows="5" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
 					<?php if( isset($erreurs['message']) ) { echo "<span>" . $erreurs['message'] . "</span>"; } ?>
 					</div>
 

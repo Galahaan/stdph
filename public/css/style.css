@@ -8,7 +8,7 @@
 *{
 	margin: 0;
 	padding: 0;
-	border: solid orange 0rem;
+	border: solid orange 0px;
 }
 
 /* Configurer l'utilisation des "rem" => 1 rem = 10 px */
@@ -62,10 +62,10 @@ h2{
 	font-size: 1.3rem; /* pour les éventuels messages d'erreurs */
 }
 .droite h2{
-	font-size: 2rem; /* message de réussite ou d'échec après l'envoi du formulaire */
+	font-size: 2rem; /* "Envoyez-nous un message ..." */
 }
 .droite p{
-	font-size: 1.4rem; /* pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
+	font-size: 1.4rem; /* message de réussite ou d'échec après l'envoi du formulaire */
 }
 footer section:first-of-type{
 	font-size: 1.3rem; /* Pharmacie Le Reste ... */
@@ -490,6 +490,91 @@ section > span{
 	font-size: .8em;
 }
 
+
+/* ******************************************************************************************** */
+/* ******************************             Horaires           ****************************** */
+/* ******************************************************************************************** */
+
+.horaires {
+	padding-top: 2rem;
+}
+.horaires table{
+	width: 90%;
+	margin: auto;
+	border-spacing: 0 .5rem;
+}
+/* caractéristiques générales des cellules */
+.horaires td{
+	background-color: rgba(148, 193, 29, .2);
+}
+/* jours de la semaine */
+.horaires tr td:first-child{
+	text-align: left;
+	width: 5%;
+	background-color: white;
+}
+/* 8h30 */
+.horaires tr td:nth-child(2) {
+	width: 5%;
+	text-align: left;
+	padding-left: 2%;
+}
+/* 12h30 */
+.horaires tr td:nth-child(3){
+	width: 1%;
+	text-align: right;
+	padding-right: 2%;
+}
+/* - */
+.horaires tr td:nth-child(4){
+	background-color: white;
+	width: 1%;
+}
+/* 14h */
+.horaires tr td:nth-child(5){
+	width: 1%;
+	text-align: left;
+	padding-left: 1%;
+}
+/* 19h30 */
+.horaires tr td:last-child {
+	width: 5%;
+	text-align: right;
+	padding-right: 2%;
+}
+/* samedi avant 9h */
+.horaires tr:last-child td:nth-child(2) {
+	background-color: white;
+}
+/* samedi 9h */
+.horaires tr:last-child td:nth-child(3) {
+	width: 8%;
+	text-align: left;
+	padding-left: 2%;
+}
+/* samedi midi */
+.horaires tr:last-child td:nth-child(4) {
+	background-color: rgba(148, 193, 29, .2);
+}
+/* samedi 16h */
+.horaires tr:last-child td:nth-child(5) {
+	width: 12%;
+	text-align: right;
+	padding-right: 2%;
+}
+/* samedi après 16h */
+.horaires tr:last-child td:last-child {
+	background-color: white;
+}
+.horaires p{
+	text-align: justify;
+	padding: 1.5rem;
+}
+.horaires p span{
+	font-weight: bold;
+}
+
+
 /* ******************************************************************************************** */
 /* ******************************              Footer            ****************************** */
 /* ******************************************************************************************** */
@@ -710,6 +795,7 @@ footer section:last-of-type{
 		margin: 0 3rem 3rem 3rem;		/* old : 0 2rem 2rem 2rem		*/
 	}
 }
+
 
 /* 																									900 px		*/
 @media screen and (min-width: 900px){

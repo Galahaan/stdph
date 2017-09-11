@@ -320,12 +320,12 @@
 							"MIME-Version: 1.0" . $rc .
 							"X-Mailer: PHP/" . phpversion() . $rc .
 							"Content-type: text/html; charset=UTF-8" . $rc .
-			           		"Content-Transfer-Encoding: 8bit" . $rc;
+			           		"Content-Transfer-Encoding: 8bit";
 
 				// ============= Création du message ============= //
 
 				// version HTML seule
-				$message .=	$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br>" . "<br>" .
+				$message =	$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br>" . "<br>" .
 							$messageClientHtml . "<br><br><br><br>" .
 							"IP  client     = " . $ipClient . "<br>" .
 							"FAI client     = " . $faiClientBrut;
