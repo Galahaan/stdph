@@ -495,82 +495,70 @@ section > span{
 /* ******************************             Horaires           ****************************** */
 /* ******************************************************************************************** */
 
+/* position dans la page */
 .horaires {
 	padding-top: 2rem;
 }
-.horaires table{
-	width: 90%;
-	margin: auto;
-	border-spacing: 0 .5rem;
+.horaires article {
+	width: 100%;
+	text-align: left;
+	padding: 0 0 .5rem 2%;
 }
-/* caractéristiques générales des cellules */
-.horaires td{
+/* pour que chaque article, contenant les "aside", ne prenne qu'une seule ligne */
+.horaires article aside {
+	display: inline-block;
+}
+/*	couleur de fond des créneaux horaires d'ouverture */
+.horaires article aside {
 	background-color: rgba(148, 193, 29, .2);
 }
 /* jours de la semaine */
-.horaires tr td:first-child{
-	text-align: left;
-	width: 5%;
+.horaires article aside:first-child {
+	width: 22%;
 	background-color: white;
 }
-/* 8h30 */
-.horaires tr td:nth-child(2) {
-	width: 5%;
-	text-align: left;
+/* 8h30 et 14h */
+.horaires .semaine aside:nth-child(2),
+.horaires .semaine aside:nth-child(5) {
+	width: 15%;
 	padding-left: 2%;
 }
-/* 12h30 */
-.horaires tr td:nth-child(3){
-	width: 1%;
-	text-align: right;
-	padding-right: 2%;
-}
 /* - */
-.horaires tr td:nth-child(4){
+.horaires .semaine aside:nth-child(4) {
 	background-color: white;
-	width: 1%;
-}
-/* 14h */
-.horaires tr td:nth-child(5){
-	width: 1%;
-	text-align: left;
-	padding-left: 1%;
-}
-/* 19h30 */
-.horaires tr td:last-child {
 	width: 5%;
+	text-align: center;
+}
+/* 12h30 et 19h30 */
+.horaires .semaine aside:nth-child(3),
+.horaires .semaine aside:last-child {
+	width: 15%;
 	text-align: right;
 	padding-right: 2%;
 }
 /* samedi avant 9h */
-.horaires tr:last-child td:nth-child(2) {
+.horaires #samedi aside:nth-child(2) {
 	background-color: white;
+	width: 3%;
 }
 /* samedi 9h */
-.horaires tr:last-child td:nth-child(3) {
-	width: 8%;
+.horaires #samedi aside:nth-child(3) {
+	width: 30%;
 	text-align: left;
 	padding-left: 2%;
 }
-/* samedi midi */
-.horaires tr:last-child td:nth-child(4) {
-	background-color: rgba(148, 193, 29, .2);
-}
 /* samedi 16h */
-.horaires tr:last-child td:nth-child(5) {
-	width: 12%;
+.horaires #samedi aside:nth-child(4) {
+	width: 21%;
 	text-align: right;
 	padding-right: 2%;
 }
-/* samedi après 16h */
-.horaires tr:last-child td:last-child {
-	background-color: white;
-}
-.horaires p{
+/* blabla en dessous des horaires */
+.horaires p {
 	text-align: justify;
-	padding: 1.5rem;
+	padding: 2%;
 }
-.horaires p span{
+.horaires p span {
 	font-weight: bold;
 }
 
