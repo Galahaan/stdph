@@ -86,50 +86,83 @@
 
 			if( $heure >= 8.5 && $heure < 19.5){
 
-				$maintenantOK = true; // pour afficher l'id 'maintenant' dans le aside du jour
+				$dessinerTrait = true; // pour afficher l'id 'trait' dans le div du jour
 
+				// le nom 'deltaP' est sensé évoquer 'delta %'
 				$deltaP = 23; // 23%, auxquels on va rajouter des % en fonction du créneau horaire
 
 				if( $heure < 12.5 ){
 
-					$deltaP += ($heure - 8.5) / 4 * 30; // 30% couvrent 4h
+					// les 4h de la matinée sont représentées par une width de 30% en CSS :
+					$deltaP += ($heure - 8.5) / 4 * 30;
 
 				}else if( $heure >= 12.5 && $heure < 14 ){
 
-					$deltaP += 30 + ($heure - 12.5) / 1.5 * 5; // 5% couvrent 1h30 soit 1.5 en décimal
+					// les 1h30 de la pause déjeuner (1.5 en décimal) sont représentées par une width de 5% :
+					$deltaP += 30 + ($heure - 12.5) / 1.5 * 5;
 
 				}else if( $heure >= 14 && $heure < 19.5 ){
 
-					$deltaP += 30 + 5 + ($heure - 14) / 5.5 * 40; // 40% couvrent 5h30 soit 5.5 en décimal
+					// les 5h30 de l'après-midi (5.5 en décimal) sont représentées par une width de 40% :
+					$deltaP += 30 + 5 + ($heure - 14) / 5.5 * 40;
 				}
 			}
 			else{
-				$maintenantOK = false; // pour afficher la classe 'effacerAside' quand on est avant 8h30 ou après 19h30
+				$deltaP = 0; // en fait, on n'a pas besoin de deltaP dans ce cas, mais pour éviter un message d'erreur, on le met à 0
+				$dessinerTrait = false; // pour afficher la classe 'effacerTrait' quand on est avant 8h30 ou après 19h30
 			}
+
+			// passé 12h30, on "désactive" le créneau du matin, et passé 19h30, on "désactive" le créneau de l'après-midi,
+			// pour le samedi, passé 16h, on désactive les 2 <div>,
+			// ie qu'on les remet avec la couleur de fond, un peu plus pâle, des autres jours :
+			$matinOff  = ( $heure >= 12.5 ) ? true : false;
+			$apremOff  = ( $heure >= 19.5 ) ? true : false;
+			$samediOff = ( $heure >= 16   ) ? true : false;
 
 			// pharmacieOuverte() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
 		?>
-		<p><?= $aujourdhui . " - ". $heureH ?></p>
+		<p><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=\"rose\">". $heureH . "</span>" ?></p>
 		<p><?= pharmacieOuverte() ?></p>
 		<section class="horaires">
 
-			<article class="semaine" <?= ($auj == 'lun') ? "id=\"aujourdhui\"" : "" ?>>
-				<aside>lundi</aside><aside>8h30</aside><aside>12h30</aside><aside>-</aside><aside>14h</aside><aside>19h30</aside><aside <?= ($auj == 'lun' && $maintenantOK == true) ? "id=\"maintenant\"" : "class=\"effacerAside\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</aside>
+			<article class="semaine" <?= ($auj == 'lun') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>lundi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+
+				<?php // comme cette dernière <div> est en position absolute, c'est pas grave si on laisse
+				      // de la place dans l'éditeur après la <div> précédente : l'espace ne se verra pas en HTML ?>
+
+				<div <?= ($auj == 'lun' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+
 			</article>
-			<article class="semaine" <?= ($auj == 'mar') ? "id=\"aujourdhui\"" : "" ?>>
-				<aside>mardi</aside><aside>8h30</aside><aside>12h30</aside><aside>-</aside><aside>14h</aside><aside>19h30</aside><aside <?= ($auj == 'mar' && $maintenantOK == true) ? "id=\"maintenant\"" : "class=\"effacerAside\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</aside>
+			<article class="semaine" <?= ($auj == 'mar') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>mardi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+
+				<div <?= ($auj == 'mar' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+
 			</article>
-			<article class="semaine" <?= ($auj == 'mer') ? "id=\"aujourdhui\"" : "" ?>>
-				<aside>mercredi</aside><aside>8h30</aside><aside>12h30</aside><aside>-</aside><aside>14h</aside><aside>19h30</aside><aside <?= ($auj == 'mer' && $maintenantOK == true) ? "id=\"maintenant\"" : "class=\"effacerAside\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</aside>
+			<article class="semaine" <?= ($auj == 'mer') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>mercredi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+
+				<div <?= ($auj == 'mer' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+
 			</article>
-			<article class="semaine" <?= ($auj == 'jeu') ? "id=\"aujourdhui\"" : "" ?>>
-				<aside>jeudi</aside><aside>8h30</aside><aside>12h30</aside><aside>-</aside><aside>14h</aside><aside>19h30</aside><aside <?= ($auj == 'jeu' && $maintenantOK == true) ? "id=\"maintenant\"" : "class=\"effacerAside\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</aside>
+			<article class="semaine" <?= ($auj == 'jeu') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>jeudi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+
+				<div <?= ($auj == 'jeu' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+
 			</article>
-			<article class="semaine" <?= ($auj == 'ven') ? "id=\"aujourdhui\"" : "" ?>>
-				<aside>vendredi</aside><aside>8h30</aside><aside>12h30</aside><aside>-</aside><aside>14h</aside><aside>19h30</aside><aside <?= ($auj == 'ven' && $maintenantOK == true) ? "id=\"maintenant\"" : "class=\"effacerAside\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</aside>
+			<article class="semaine" <?= ($auj == 'ven') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>vendredi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+
+				<div <?= ($auj == 'ven' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+
 			</article>
-			<article id="samedi" <?= ($auj == 'sam') ? "id=\"aujourdhui\"" : "" ?>>
-				<aside>samedi</aside><aside>&nbsp;</aside><aside>9h</aside><aside>16h</aside><aside <?= ($auj == 'sam' && $maintenantOK == true) ? "id=\"maintenant\"" : "class=\"effacerAside\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</aside>
+			<article class="samedi" <?= ($auj == 'sam') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>samedi</div><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >9h</div><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >16h</div>
+
+				<div <?= ($auj == 'sam' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+
 			</article>
 
 			<p>Si vous venez en voiture, la pharmacie dispose d'un parking.</p>
