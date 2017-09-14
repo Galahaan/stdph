@@ -352,9 +352,6 @@ section > span{
 .champsForm [for="idCiviliteM"] {
 	margin-right: 25%;
 }
-.champsForm textarea{
-	padding-top: .7rem;
-}
 /* pour bloquer la largeur du champ texte */
 .champsForm textarea{
 	min-width: 65%;
@@ -421,6 +418,11 @@ section > span{
 .artIntroOrdo {
 	padding: 1rem 1rem;      /*     haut et bas : 1rem      gauche et droite : 1rem      */
 	text-align: justify;
+}
+/* N'oubliez pas l'original de l'ordonnance ... */
+.attention {
+	color: red;
+	font-weight: bold;
 }
 
 /* par défaut, le mode d'emploi est masqué */
@@ -489,39 +491,90 @@ section > span{
 .formsContOrdo article:nth-child(2) + span {
 	font-size: .8em;
 }
+/* Message dans le champ TEXTAREA */
+#idMessage {
+	font-weight: normal;
+	text-align: justify;
+	color: grey;
+}
 
 
 /* ******************************************************************************************** */
 /* ******************************             Horaires           ****************************** */
 /* ******************************************************************************************** */
 
-/* position dans la page */
+/* la date aujourd'hui */
+main > p:first-child{
+	font-weight: bold;
+	padding: 2.2rem 2rem 1rem 2rem;
+}
+/* message sur l'état d'ouverture / fermeture de la pharmacie */
+main > p:nth-child(2){
+	padding: 0 2rem 1rem 2rem;
+}
+/* position des infos dans la page */
 .horaires {
 	padding-top: 2rem;
 }
 .horaires article {
-	width: 100%;
+	width: 88%;																	/* modifié en MQ 600 px */
 	text-align: left;
-	padding: 0 0 .5rem 2%;
+	padding-bottom: .5rem;
+	margin: auto;
 }
 /* pour que chaque article, contenant les "aside", ne prenne qu'une seule ligne */
 .horaires article aside {
 	display: inline-block;
 }
-/*	couleur de fond des créneaux horaires d'ouverture */
+/*	couleur de fond par défaut des créneaux horaires d'ouverture */
 .horaires article aside {
 	background-color: rgba(148, 193, 29, .2);
 }
+/* couleur de fond un peu plus soutenue pour mettre en valeur 'aujourd'hui' */
+#aujourdhui aside:nth-child(2),
+#aujourdhui aside:nth-child(3),
+#aujourdhui aside:nth-child(5),
+#aujourdhui aside:nth-child(6) {
+	background-color: rgba(148, 193, 29, .4);
+	font-weight: bold;
+}
+/* Pour créer un trait vertical représentant l'heure =================================*/
+.semaine, #samedi {
+	position: relative;
+}
+#maintenant {
+	background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final */
+	border-left: solid #951A80 2px; /* #951A80 #D84591 */
+	position: absolute;
+	top: 0; /* la valeur du left est déterminée en PHP dans le HTML */
+}
+.horaires article .effacerAside {
+	background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final */
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+/* fin du § pour le trait ============================================================*/
+
 /* jours de la semaine */
 .horaires article aside:first-child {
-	width: 22%;
+	width: 23%;
 	background-color: white;
 }
-/* 8h30 et 14h */
-.horaires .semaine aside:nth-child(2),
-.horaires .semaine aside:nth-child(5) {
-	width: 15%;
-	padding-left: 2%;
+/* on fait ressortir 'aujourd'hui' en gras */
+#aujourdhui aside:first-child{
+	font-weight: bold;
+}
+/* 8h30 */
+.horaires .semaine aside:nth-child(2) {
+	width: 14%;				/* cette valeur (14%) et celle du segment suivant (14%) ci-dessous            */
+	padding-left: 1%;		/* doivent être égales, pour la linéarité de la progression du trait vertical */
+}
+/* 12h30 */
+.horaires .semaine aside:nth-child(3) {
+	width: 14%;
+	text-align: right;
+	padding-right: 1%;
 }
 /* - */
 .horaires .semaine aside:nth-child(4) {
@@ -529,29 +582,33 @@ section > span{
 	width: 5%;
 	text-align: center;
 }
-/* 12h30 et 19h30 */
-.horaires .semaine aside:nth-child(3),
-.horaires .semaine aside:last-child {
-	width: 15%;
+/* 14h */
+.horaires .semaine aside:nth-child(5) {
+	width: 19%;				/* cette valeur (19%) et celle du segment suivant (19%) ci-dessous            */
+	padding-left: 1%;		/* doivent être égales, pour la linéarité de la progression du trait vertical */
+}
+/* 19h30 */
+.horaires .semaine aside:nth-child(6) {
+	width: 19%;
 	text-align: right;
-	padding-right: 2%;
+	padding-right: 1%;
 }
 /* samedi avant 9h */
 .horaires #samedi aside:nth-child(2) {
 	background-color: white;
-	width: 3%;
+	width: 3.75%;      /* cette valeur bizarre permet d'aligner '9h le samedi' avec '9h en semaine' */
 }
 /* samedi 9h */
 .horaires #samedi aside:nth-child(3) {
-	width: 30%;
+	width: 21.9%;   /* cette valeur bizarre permet d'aligner '16h le samedi' avec '16h en semaine' */
 	text-align: left;
-	padding-left: 2%;
+	padding-left: 1%;
 }
 /* samedi 16h */
 .horaires #samedi aside:nth-child(4) {
-	width: 21%;
+	width: 21.9%;   /* cf ci-dessus, et ces 2 valeurs doivent être égales, pour la linéarité de la progression du trait vertical */
 	text-align: right;
-	padding-right: 2%;
+	padding-right: 1%;
 }
 /* blabla en dessous des horaires */
 .horaires p {
@@ -781,6 +838,11 @@ footer section:last-of-type{
 	.artModeEmploi {
 		padding: 3rem;					/* old : 2rem					*/
 		margin: 0 3rem 3rem 3rem;		/* old : 0 2rem 2rem 2rem		*/
+	}
+
+	/*        page horaires         */
+	.horaires article {
+		width: 85%;						/* old : 94%   */
 	}
 }
 

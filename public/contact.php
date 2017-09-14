@@ -180,7 +180,7 @@
 <body>
 	<header>
 		<section>
-			<a href="index.html">
+			<a href="index.php">
 				<img src="img/croix_mauve.png" alt="">
 				<h1>Pharmacie Le Reste
 					<p>Nantes, quartier Saint-Joseph de Porterie</p>
@@ -190,8 +190,8 @@
 		</section>
 		<nav class="navigation">
 			<ul>
-				<li><a href="index.html"   >Accueil </a></li>
-				<li><a href="horaires.html">Horaires</a></li>
+				<li><a href="index.php"   >Accueil </a></li>
+				<li><a href="horaires.php">Horaires</a></li>
 				<li><a href="equipe.html"  >Équipe  </a></li>
 				<li><a href="contact.php"  >Contact </a></li>
 			</ul>
@@ -352,7 +352,7 @@
 										"IP  client     = " . $ipClient . $rc .
 										"FAI client     = " . $faiClientBrut;
 					mail(MAIL_DEST_PHARMA, "Tentative de piratage ?", $messageAlerte, $headerAlerte);
-				    header('Location: http://www.bigouig.fr/'); 
+				    header('Location: https://www.bigouig.fr/'); 
 				}
 				else{
 				    // envoi de l'e-mail :
