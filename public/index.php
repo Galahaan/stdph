@@ -1,3 +1,46 @@
+<?php
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	/////     INCLUDE sécurisé
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	if( empty($page) ){
+	$page = "functions"; // page à inclure : functions.php
+
+	// On construit le nom de la page à inclure en prenant 2 précautions :
+	// - ajout dynamique de l'extension .php
+	// - on supprime également d'éventuels espaces en début et fin de chaîne
+	$page = trim($page.".php");
+	}
+
+	// On remplace les caractères qui permettent de naviguer dans les répertoires
+	$page = str_replace("../","protect",$page);
+	$page = str_replace(";","protect",$page);
+	$page = str_replace("%","protect",$page);
+
+	// On interdit l'inclusion de dossiers protégés par htaccess.
+	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
+	// strpos() peut très bien le faire, et surtout plus vite !
+	// if( preg_match('admin', $page) ){
+	if( strpos($page, 'admin') ){
+		echo "Vous n'avez pas accès à ce répertoire";
+	}
+	else{
+	    // On vérifie que la page est bien sur le serveur
+	    if (file_exists("includes/" . $page) && $page != 'index.php') {
+	    	include_once("./includes/".$page);
+	    }
+	    else{
+	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
+	    }
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	/////     FIN INCLUDE sécurisé
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	integreCLR('constantes_CLRS');
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -42,9 +85,9 @@
 
 	<main>
 		<section class="intro">
-			<p>Déposez votre ordonnance,</p>
-			<p>passez une commande,</p>
-			<p>renseignez-vous sur les produits ...</p>
+
+			<p><?= pharmacieOuverte() ?></p>
+
 		</section>
 		<section class="vignettes">
 			<article>

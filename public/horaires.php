@@ -1,11 +1,13 @@
 <?php
-
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	if( empty($page) ){
 	$page = "functions"; // page à inclure : functions.php
+
+	// NB: functions.php inclut 'constantes.php'
+
 	// On construit le nom de la page à inclure en prenant 2 précautions :
 	// - ajout dynamique de l'extension .php
 	// - on supprime également d'éventuels espaces en début et fin de chaîne
@@ -27,7 +29,7 @@
 	else{
 	    // On vérifie que la page est bien sur le serveur
 	    if (file_exists("includes/" . $page) && $page != 'index.php') {
-	    	include("./includes/".$page);
+	    	include_once("./includes/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -36,6 +38,9 @@
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	integreCLR('constantes_CLRS');
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -71,53 +76,27 @@
 
 	<main>
 		<?php
-			$aujourdhui = dateFr(); // fonction perso qui génère une date de la forme : vendredi 2 juillet 2017
-			$auj = substr($aujourdhui, 0, 3); // on garde les 3 1ères lettres de la chaîne
+			$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
+			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
 
-			$heureH = heureActuelle('H');
+			$heure  = heureActuelle('');		// heure au format "décimal"
+			$heureH = heureActuelle('H');		// heure au format "horaire", ie non décimal !
 
-			$heure = heureActuelle('');
-			// 8h30 = référence 0 pour le trait vertical, même pour le samedi.
-			// côté css, pour que le trait vertical soit à 8h30, il faut le décaler de la valeur du jour de la semaine, soit 23%.
-			// et la journée de 8h30 à 19h30 se décompose ainsi :
-			// 8h30  -> 12h30 : 4h   couverts par 14 + 14 = 28%  +  1 % de padding-left  +  1 % de padding-right  =  30 % en tout
-			// 12h30 -> 14h   : 1h30 couverts par 5%
-			// 14h   -> 19h30 : 5h30 couverts par 19 + 19 = 38%  +  1 % de padding-left  +  1 % de padding-right  =  40 % en tout
+			// getDeltaP( $heure ) retourne la valeur en % dont il faut décaler (left: ) la div représentant le trait vertical
+			// (en fonction de l'heure de la journée) mais également l'information s'il faut ou non afficher le trait.
+			//
+			// ATTENTION : ceci implique de ne RIEN changer aux valeurs de width et de padding left ou right du § CSS intitulé
+			//							"largeurs et marges des jours et des créneaux horaires"
 
-			if( $heure >= 8.5 && $heure < 19.5){
-
-				$dessinerTrait = true; // pour afficher l'id 'trait' dans le div du jour
-
-				// le nom 'deltaP' est sensé évoquer 'delta %'
-				$deltaP = 23; // 23%, auxquels on va rajouter des % en fonction du créneau horaire
-
-				if( $heure < 12.5 ){
-
-					// les 4h de la matinée sont représentées par une width de 30% en CSS :
-					$deltaP += ($heure - 8.5) / 4 * 30;
-
-				}else if( $heure >= 12.5 && $heure < 14 ){
-
-					// les 1h30 de la pause déjeuner (1.5 en décimal) sont représentées par une width de 5% :
-					$deltaP += 30 + ($heure - 12.5) / 1.5 * 5;
-
-				}else if( $heure >= 14 && $heure < 19.5 ){
-
-					// les 5h30 de l'après-midi (5.5 en décimal) sont représentées par une width de 40% :
-					$deltaP += 30 + 5 + ($heure - 14) / 5.5 * 40;
-				}
-			}
-			else{
-				$deltaP = 0; // en fait, on n'a pas besoin de deltaP dans ce cas, mais pour éviter un message d'erreur, on le met à 0
-				$dessinerTrait = false; // pour afficher la classe 'effacerTrait' quand on est avant 8h30 ou après 19h30
-			}
+			$deltaP			= getDeltaP($heure)[0];
+			$dessinerTrait	= getDeltaP($heure)[1];
 
 			// passé 12h30, on "désactive" le créneau du matin, et passé 19h30, on "désactive" le créneau de l'après-midi,
 			// pour le samedi, passé 16h, on désactive les 2 <div>,
 			// ie qu'on les remet avec la couleur de fond, un peu plus pâle, des autres jours :
-			$matinOff  = ( $heure >= 12.5 ) ? true : false;
-			$apremOff  = ( $heure >= 19.5 ) ? true : false;
-			$samediOff = ( $heure >= 16   ) ? true : false;
+			$matinOff  = ( $heure >= FER_MID ) ? true : false;
+			$apremOff  = ( $heure >= FER_SOI ) ? true : false;
+			$samediOff = ( $heure >= FER_SAM ) ? true : false;
 
 			// pharmacieOuverte() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
 		?>

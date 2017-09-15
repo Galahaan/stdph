@@ -6,6 +6,9 @@
 
 	if( empty($page) ){
 	$page = "functions"; // page à inclure : functions.php
+
+	// NB: functions.php inclut 'constantes.php'
+
 	// On construit le nom de la page à inclure en prenant 2 précautions :
 	// - ajout dynamique de l'extension .php
 	// - on supprime également d'éventuels espaces en début et fin de chaîne
@@ -27,7 +30,7 @@
 	else{
 	    // On vérifie que la page est bien sur le serveur
 	    if (file_exists("includes/" . $page) && $page != 'index.php') {
-	    	include("./includes/".$page);
+	    	include_once("./includes/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -36,51 +39,6 @@
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	// Définition de quelques CONSTANTES :
-
-	// adresse de l'expéditeur des mails via l'hébergeur du site :
-	//define("ADR_EXP_HEBERGEUR", "à compléter");                              //     à compléter                            +++++++++
-	define("ADR_EXP_HEBERGEUR", "bigouigfiy@cluster020.hosting.ovh.net");
-
-	// nom explicite pour l'expéditeur des mails : (possible avec accents !)
-	define("LABEL_EXP", "Site pharmacie");
-
-	// adresse du site de la pharmacie :
-	define("ADRESSE_SITE_PHARMACIE", "http://bigouig.fr/");
-	define("S_ADRESSE_SITE_PHARMACIE", "https://bigouig.fr/");
-	define("W_ADRESSE_SITE_PHARMACIE", "http://www.bigouig.fr/");
-	define("SW_ADRESSE_SITE_PHARMACIE", "https://www.bigouig.fr/");
-	//define("ADRESSE_SITE_PHARMACIE", "http://pharmacielereste.fr/");
-	//define("S_ADRESSE_SITE_PHARMACIE", "https://pharmacielereste.fr/");
-	//define("W_ADRESSE_SITE_PHARMACIE", "http://www.pharmacielereste.fr/");
-	//define("SW_ADRESSE_SITE_PHARMACIE", "https://www.pharmacielereste.fr/");
-
-	// adresse mail de la pharmacie :
-	//define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
-	define("MAIL_DEST_PHARMA", "bk24tsxnt@use.startmail.com");
-
-	// taille max de la pièce jointe : 2 Mo = 2097152 octets
-	define("TAILLE_MAX_PJ", 2097152);
-
-	// extensions autorisées pour la pièce jointe : cf aussi ligne : " switch ($extension) "
-	define("LISTE_EXT_AUTORISEES", '".jpe, .jpg, .jpeg, .png, .gif, .pdf"');
-
-	// Nombre de caractères min et max pour les nom et prénom :
-	define("NB_CAR_MIN", 2);
-	define("NB_CAR_MAX", 40);
-
-	// si on veut utiliser la vérification naturelle du HTML :
-	define("NB_CAR_MIN_HTM", 2);
-	define("NB_CAR_MAX_HTM", 40);
-
-	// Nombre de caractères min et max pour le texte libre :
-	define("NB_CAR_MIN_MESSAGE", 5);
-	define("NB_CAR_MAX_MESSAGE", 1000);
-
-	// si on veut utiliser la vérification naturelle du HTML :
-	define("NB_CAR_MIN_MESSAGE_HTM", 1);
-	define("NB_CAR_MAX_MESSAGE_HTM", 1000);
 
 	// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 	if( isset($_POST['bouton']) ){

@@ -168,8 +168,23 @@ ul{
 /* ******************************           Page Index           ****************************** */
 /* ******************************************************************************************** */
 
-.intro{
-	padding: 2rem;
+.intro {
+	padding: 4rem 0 6rem 0;
+}
+.intro span {
+	font-weight: bold;
+}
+.intro .ouvert {
+	color: #94C11D;
+}
+.intro .ferme {
+	color: red;
+}
+.intro .ouve {
+	color: black;
+}
+.intro .fer {
+	color: #F29200;
 }
 
 .vignettes article{
@@ -559,7 +574,7 @@ main > p:nth-child(2){
 	color: black;
 	font-weight: normal;
 }
-/* Pour créer un trait vertical représentant l'heure =================================*/
+/* =======================     Pour créer un trait vertical représentant l'heure     ============================= */
 .semaine, .samedi {
 	position: relative;
 }
@@ -577,8 +592,13 @@ main > p:nth-child(2){
 	top: 0;
 	left: 0;
 }
-/* fin du § pour le trait ============================================================*/
 
+/* =============================================================================================================== */
+/* ========================                                                               ======================== */
+/* ========================     largeurs et marges des jours et des créneaux horaires     ======================== */
+/* ========================                                                               ======================== */
+/* ========================  !!! si modifications => les reporter dans functions.php !!!  ======================== */
+/* ========================                                                               ======================== */
 /* jours de la semaine */
 .horaires article div:first-child {
 	width: 23%;
@@ -612,7 +632,7 @@ main > p:nth-child(2){
 	text-align: right;
 	padding-right: 1%;
 }
-/* samedi avant 9h */
+/* samedi */
 .horaires .samedi div:first-child {
 	background-color: white;
 	width: 26.75%;      /* cette valeur bizarre permet d'aligner '9h le samedi' avec '9h en semaine' */
@@ -629,6 +649,12 @@ main > p:nth-child(2){
 	text-align: right;
 	padding-right: 1%;
 }
+
+/* ========================                                                               ======================== */
+/* ========================  !!! si modifications => les reporter dans functions.php !!!  ======================== */
+/* ========================                                                               ======================== */
+/* =============================================================================================================== */
+
 /* blabla en dessous des horaires */
 .horaires p{
 	text-align: justify;

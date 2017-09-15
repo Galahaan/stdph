@@ -50,6 +50,9 @@
 
 	if( empty($page) ){
 	$page = "functions"; // page à inclure : functions.php
+
+	// NB: functions.php inclut 'constantes.php'
+
 	// On construit le nom de la page à inclure en prenant 2 précautions :
 	// - ajout dynamique de l'extension .php
 	// - on supprime également d'éventuels espaces en début et fin de chaîne
@@ -64,14 +67,14 @@
 	// On interdit l'inclusion de dossiers protégés par htaccess.
 	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 	// strpos() peut très bien le faire, et surtout plus vite !
-	if( strpos($page, 'admin') ){
 	// if( preg_match('admin', $page) ){                        ok en PHP 5.6.30 mais plus en PHP 7.1.4  ********************
+	if( strpos($page, 'admin') ){
 		echo "Vous n'avez pas accès à ce répertoire";
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
 	    if (file_exists("includes/" . $page) && $page != 'index.php') {
-	    	include("./includes/".$page);
+	    	include_once("./includes/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -80,28 +83,6 @@
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	// Définition de quelques CONSTANTES :
-
-	// adresse mail destinataire :
-	define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
-	define("MAIL_DEST_TEST", "9byjpuk5k@use.startmail.com");
-
-	// Nombre de caractères min et max pour les nom et prénom :
-	define("NB_CAR_MIN", 2);
-	define("NB_CAR_MAX", 40);
-
-	// si on veut utiliser la vérification naturelle du HTML :
-	define("NB_CAR_MIN_HTM", 0);
-	define("NB_CAR_MAX_HTM", 40);
-
-	// Nombre de caractères min et max pour le texte libre :
-	define("NB_CAR_MIN_MESSAGE", 20);
-	define("NB_CAR_MAX_MESSAGE", 1000);
-
-	// si on veut utiliser la vérification naturelle du HTML :
-	define("NB_CAR_MIN_MESSAGE_HTM", 0);
-	define("NB_CAR_MAX_MESSAGE_HTM", 1000);
 
 	// Si le formulaire vient d'être validé, on "nettoie" les champs :
 	if( isset($_POST['bouton']) ){
