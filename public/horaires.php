@@ -94,14 +94,14 @@
 			// passé 12h30, on "désactive" le créneau du matin, et passé 19h30, on "désactive" le créneau de l'après-midi,
 			// pour le samedi, passé 16h, on désactive les 2 <div>,
 			// ie qu'on les remet avec la couleur de fond, un peu plus pâle, des autres jours :
-			$matinOff  = ( $heure >= FER_MID ) ? true : false;
-			$apremOff  = ( $heure >= FER_SOI ) ? true : false;
-			$samediOff = ( $heure >= FER_SAM ) ? true : false;
+			$matinOff  = ( $heure >= FMATD ) ? true : false;
+			$apremOff  = ( $heure >= FAMID ) ? true : false;
+			$samediOff = ( $heure >= SA_FAMID ) ? true : false;
 
 			// pharmacieOuverte() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
 		?>
 		<p><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=\"rose\">". $heureH . "</span>" ?></p>
-		<p><?= pharmacieOuverte() ?></p>
+		<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
 		<section class="horaires">
 
 			<article class="semaine" <?= ($auj == 'lun') ? "id=\"aujourdhui\"" : "" ?>  >

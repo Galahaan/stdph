@@ -85,20 +85,24 @@
 
 	<main>
 		<section class="intro">
-
-			<p><?= pharmacieOuverte() ?></p>
+			<?php
+				$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
+				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
+				$heure = heureActuelle('');			// on demande l'heure au format décimal
+			?>
+			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
 
 		</section>
 		<section class="vignettes">
 			<article>
 				<a href="prepaOrdonnance.php">
-					<h2>Faites préparer votre ordonnance</h2>
+					<h2>Préparation d'ordonnance</h2>
 				</a>
 				<img src="img/prepaOrdonnance.jpg" alt="">
 			</article>
 			<article>
 				<a href="prepaCommande.php">
-					<h2>Faites préparer votre commande</h2>
+					<h2>Préparation de commande</h2>
 				</a>
 				<img src="img/prepaCommande2.png" alt="">
 			</article>

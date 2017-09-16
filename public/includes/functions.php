@@ -2,7 +2,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//						integreCLR()
+//						integreCLR( $nomDuFichier )
 //
 // NB: inclusion de fichiers '.php' uniquement
 //
@@ -17,7 +17,7 @@
 // de la fonction. Le 'X' est la 4e lettre du nom du fichier à inclure.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function integreCLR($nomDuFichier){
+function integreCLR( $nomDuFichier ){
 	if( empty($page) ){
 		$page = $nomDuFichier;
 
@@ -73,14 +73,14 @@ function getIpAdr() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//						testCaptcha()
+//						testCaptcha( $user_response )
 //
 // Fonction qui sert à la validation du captcha de Google.
 // Elle est déclenchée lors du clic sur le bouton d'envoi du formulaire.
 // Elle retourne la réponse de Google : captcha validé ou non.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function testCaptcha($user_response) {
+function testCaptcha( $user_response ) {
     $fields_string = '';
     $fields = array(
         'secret' => '6LcPQyUUAAAAAFVpINP0NVsIu80r7V-CrBEkW8tL',
@@ -107,7 +107,7 @@ print_r(json_decode($result, true));
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//						superTrim()
+//						superTrim( $string )
 //
 // Fonction qui prolonge l'action de la fonction php trim().
 // trim() supprime les espaces à gauche et à droite de la chaine, mais ici, en plus :
@@ -115,7 +115,7 @@ print_r(json_decode($result, true));
 // - on transforme les multiples occurrences d’espace en 1 seul espace
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function superTrim($string) {
+function superTrim( $string ) {
 	$string = trim($string);
 	$string = str_replace('\t', ' ',  $string);
 	$string = preg_replace('/[ ]+/', ' ',  $string);
@@ -149,7 +149,7 @@ function dateFr() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//					heureActuelle()
+//					heureActuelle( $format )
 //
 // Fonction qui donne l'heure actuelle sous 2 formats possible, selon le paramètre $format
 //
@@ -159,7 +159,7 @@ function dateFr() {
 //
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function heureActuelle($format) {
+function heureActuelle( $format ) {
 	date_default_timezone_set("Europe/Paris");
 	if( $format == 'H' ){
 		$heure = date('G\hi');
@@ -172,9 +172,9 @@ function heureActuelle($format) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//						pharmacieOuverte()
+//						pharmacieOuverte( $jour, $heure )
 //
-// Fonction qui donne l'état d'ouverture de la pharmacie :
+// Fonction qui donne l'état d'ouverture de la pharmacie à l'heure passée en paramètre
 //
 // - la pharmacie est ouverte
 // - la pharmacie est fermée
@@ -182,50 +182,48 @@ function heureActuelle($format) {
 // - la pharmacie ferme dans X mn
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function pharmacieOuverte() {
+function pharmacieOuverte( $jour, $heure ) {
 
-	$heureActuelle = heureActuelle(''); // format décimal demandé
-
-	if( date('D') != "Sat" ){
+	if( $jour != "sam" ){
 		// on est un jour de semaine hors samedi :
-		if( ($heureActuelle <= (OUV_MAT - REBOURS)) || ($heureActuelle >= FER_SOI) ){
-			return "La pharmacie est actuellement <span class='ferme'>fermée</span>.";
+		if( ($heure < (OMATD - REBOURSD)) || ($heure >= FAMID) ){
+			return "La pharmacie est actuellement <span class='ferme'>fermée</span>."; // les <span> ne sont pris en compte en CSS que pour la page index
 		}
-		else if( $heureActuelle < OUV_MAT ){
-			return "Patience, la pharmacie ouvre dans moins de <span class='ouve'>" . ceil( ceil( (OUV_MAT - $heureActuelle) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . "</span> minutes.";
+		else if( $heure < OMATD ){
+			return "Patience, la pharmacie ouvre dans <span class='ouve'>moins de " . ceil( ceil( (OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
-		else if( ($heureActuelle >= OUV_MAT) && ($heureActuelle <= (FER_MID - REBOURS)) ){
+		else if( ($heure >= OMATD) && ($heure < (FMATD - REBOURSD)) ){
 			return "La pharmacie est actuellement <span class='ouvert'>ouverte</span>.";
 		}
-		else if( $heureActuelle < FER_MID ){
-			return "Hâtez-vous, la pharmacie ferme dans moins de <span class='fer'>" . ceil( ceil( (FER_MID - $heureActuelle) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . "</span> minutes.";
+		else if( $heure < FMATD ){
+			return "Hâtez-vous, la pharmacie ferme dans <span class='fer'>moins de " . ceil( ceil( (FMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
-		else if( ($heureActuelle >= FER_MID) && ($heureActuelle <= (OUV_AMI - REBOURS)) ){
+		else if( ($heure >= FMATD) && ($heure < (OAMID - REBOURSD)) ){
 			return "C'est la pause déjeuner, la pharmacie est actuellement <span class='ferme'>fermée</span>.";
 		}
-		else if( $heureActuelle < OUV_AMI ){
-			return "Patience, la pharmacie ré-ouvre dans moins de <span class='ouve'>" . ceil( ceil( (OUV_AMI - $heureActuelle) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . "</span> minutes.";
+		else if( $heure < OAMID ){
+			return "Patience, la pharmacie ré-ouvre dans <span class='ouve'>moins de " . ceil( ceil( (OAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
-		else if( ($heureActuelle >= OUV_AMI) && ($heureActuelle <= (FER_SOI - REBOURS)) ){
+		else if( ($heure >= OAMID) && ($heure < (FAMID - REBOURSD)) ){
 			return "La pharmacie est actuellement <span class='ouvert'>ouverte</span>.";
 		}
-		else if( $heureActuelle < FER_SOI ){
-			return "Hâtez-vous, la pharmacie ferme dans moins de <span class='fer'>" . ceil( ceil( (FER_SOI - $heureActuelle) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . "</span> minutes.";
+		else if( $heure < FAMID ){
+			return "Hâtez-vous, la pharmacie ferme dans <span class='fer'>moins de " . ceil( ceil( (FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
 	else{
 		// on est un samedi :
-		if( ($heureActuelle <= OUV_SAM - REBOURS) || ($heureActuelle >= FER_SAM) ){
+		if( ($heure < (SA_OMATD - REBOURSD)) || ($heure >= SA_FAMID) ){
 			return "La pharmacie est actuellement <span class='ferme'>fermée</span>.";
 		}
-		else if( $heureActuelle < OUV_SAM ){
-			return "Patience, la pharmacie ouvre dans moins de <span class='ouve'>" . ceil( ceil( (OUV_SAM - $heureActuelle) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . "</span> minutes.";
+		else if( $heure < SA_OMATD ){
+			return "Patience, la pharmacie ouvre dans <span class='ouve'>moins de " . ceil( ceil( (SA_OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
-		else if( ($heureActuelle >= OUV_SAM) && ($heureActuelle <= (FER_SAM - REBOURS)) ){
+		else if( ($heure >= SA_OMATD) && ($heure < (SA_FAMID - REBOURSD)) ){
 			return "La pharmacie est actuellement <span class='ouvert'>ouverte</span>.";
 		}
-		else if( $heureActuelle < FER_SAM ){
-			return "Hâtez-vous, la pharmacie ferme dans moins de <span class='fer'>" . ceil( ceil( (FER_SAM - $heureActuelle) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . "</span> minutes.";
+		else if( $heure < SA_FAMID ){
+			return "Hâtez-vous, la pharmacie ferme dans <span class='fer'>moins de " . ceil( ceil( (SA_FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
 }
@@ -251,7 +249,7 @@ function pharmacieOuverte() {
 //				"largeurs et marges des jours et des créneaux horaires"
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function getDeltaP($heure) {
+function getDeltaP( $heure ) {
 
 	// 8h30 = référence 0 pour le trait vertical, même pour le samedi.
 	// côté css, pour que le trait vertical soit à 8h30, il faut le décaler de la largeur du jour de la semaine, soit 23%.
@@ -260,27 +258,27 @@ function getDeltaP($heure) {
 	// 12h30 -> 14h   : 1h30 couverts par 5%
 	// 14h   -> 19h30 : 5h30 couverts par 19 + 19 = 38%  +  1 % de padding-left  +  1 % de padding-right  =  40 % en tout
 
-	if( $heure >= OUV_MAT && $heure < FER_SOI){
+	if( $heure >= OMATD && $heure < FAMID){
 
 		$dessinerTrait = true; // pour afficher l'id 'trait' dans le div du jour
 
 		// le nom 'deltaP' est sensé évoquer 'delta %'
 		$deltaP = 23; // 23%, auxquels on va rajouter des % en fonction du créneau horaire
 
-		if( $heure < FER_MID ){
+		if( $heure < FMATD ){
 
 			// les 4h de la matinée sont représentées par une width de 30% en CSS :
-			$deltaP += ($heure - OUV_MAT) / (FER_MID - OUV_MAT) * 30;
+			$deltaP += ($heure - OMATD) / (FMATD - OMATD) * 30;
 
-		}else if( $heure >= FER_MID && $heure < OUV_AMI ){
+		}else if( $heure >= FMATD && $heure < OAMID ){
 
 			// les 1h30 de la pause déjeuner (1.5 en décimal) sont représentées par une width de 5% :
-			$deltaP += 30 + ($heure - FER_MID) / (OUV_AMI - FER_MID) * 5;
+			$deltaP += 30 + ($heure - FMATD) / (OAMID - FMATD) * 5;
 
-		}else if( $heure >= OUV_AMI && $heure < FER_SOI ){
+		}else if( $heure >= OAMID && $heure < FAMID ){
 
 			// les 5h30 de l'après-midi (5.5 en décimal) sont représentées par une width de 40% :
-			$deltaP += 30 + 5 + ($heure - OUV_AMI) / (FER_SOI - OUV_AMI) * 40;
+			$deltaP += 30 + 5 + ($heure - OAMID) / (FAMID - OAMID) * 40;
 		}
 	}
 	else{

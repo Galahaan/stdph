@@ -56,27 +56,33 @@
 	/////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Horaires d'ouverture :
+	// Horaires d'ouverture : 'D' pour le format décimal, 'H' pour le format horaire
 
 	// le matin, de 8h30 ...
-	define('OUV_MAT', 8.5);
+	define('OMATD', 8.5);
+	define('OMATH', '8h30');
 
 	// ... à 12h30
-	define('FER_MID', 12.5);
+	define('FMATD', 12.5);
+	define('FMATH', '12h30');
 
 	// l'après-midi, de 14h ...
-	define('OUV_AMI', 14);    // horaires au format DECIMAL
+	define('OAMID', 14);
+	define('OAMIH', '14h');
 
-	// ... à 19h30
-	define('FER_SOI', 19.5);
+	// ... à 19h30							pour l'instant je n'utilise pas les constantes '...H'
+	define('FAMID', 19.5);
+	define('FAMIH', '19h30');
 
 	// le samedi matin, de 9h ...
-	define('OUV_SAM', 9);
+	define('SA_OMATD', 9);
+	define('SA_OMATH', '9h');
 
 	// ... à 16h
-	define('FER_SAM', 16);
+	define('SA_FAMID', 16);
+	define('SA_FAMIH', '16h');
 
 	// Compte à rebours avant ouverture / fermeture
-	define('REBOURS', 0.25);		// compte à rebours en 'heure décimale', ie que   0.25 = 15 mn
+	define('REBOURSD', 0.25);		// compte à rebours en 'heure décimale', ie que   0.25 = 15 mn
 	define('PAS_DE_REBOURS', 5);	// en minutes ( ex. ... dans moins de 15, 10, 5 mn )
 ?>
