@@ -171,6 +171,8 @@ ul{
 .intro {
 	padding: 4rem 0 6rem 0;
 }
+
+/* Ces <span> sont ajoutés dans la fonction 'pharmacieOuverte' et non directement dans index.html */
 .intro span {
 	font-weight: bold;
 }
@@ -526,7 +528,7 @@ main > p:first-child{
 	font-weight: bold;
 	padding: 2.2rem 2rem 1rem 2rem;
 }
-/* l'heure qu'il est, en mauve */
+/* l'heure qu'il est, en rose */
 .rose {
 	color: #D84591;
 }
@@ -548,15 +550,15 @@ main > p:nth-child(2){
 .horaires article div {
 	display: inline-block;
 }
-/*	couleur de fond par défaut des créneaux horaires d'ouverture */
-.horaires article div {
-	background-color: rgba(148, 193, 29, .2); /*  Attention: si modification, reporter ici aussi : #aujourdhui .off  */
+/*	couleur de fond par défaut, et en OFF, des créneaux horaires d'ouverture */
+.horaires article div, #aujourdhui .off {			/*  Attention: il y a d'autres instructions pour #aujourdhui .off  */
+	background-color: rgba(148, 193, 29, .2);
 }
-/* couleur de fond un peu plus soutenue pour mettre en valeur 'aujourd'hui' */
+/* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
 #aujourdhui div {
 	background-color: rgba(148, 193, 29, .5);
 	font-weight: bold;
-	color: white;
+	color: #D84591;
 }
 /* on ne veut pas mettre le jour actuel et le tiret en fond vert */
 .semaine div:first-child, .samedi div:first-child, .semaine .tiret,
@@ -570,7 +572,6 @@ main > p:nth-child(2){
 }
 /* pour finir de désactiver un créneau passé du jour actuel */
 #aujourdhui .off {
-	background-color: rgba(148, 193, 29, .2); /*  Attention: si modification, reporter ici aussi : .horaires article div  */
 	color: black;
 	font-weight: normal;
 }
