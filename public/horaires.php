@@ -81,7 +81,8 @@
 
 			$heure  = heureActuelle('');		// heure au format "décimal"
 			$heureH = heureActuelle('H');		// heure au format "horaire", ie non décimal !
-
+$auj = 'lun';
+$heure = 18.7;
 			// getDeltaP( $heure ) retourne la valeur en % dont il faut décaler (left: ) la div représentant le trait vertical
 			// (en fonction de l'heure de la journée) mais également l'information s'il faut ou non afficher le trait.
 			//
@@ -96,7 +97,7 @@
 			// ie qu'on les remet avec la couleur de fond, un peu plus pâle, des autres jours :
 			$matinOff  = ( $heure >= FMATD ) ? true : false;
 			$apremOff  = ( $heure >= FAMID ) ? true : false;
-			$samediOff = ( $heure >= SA_FAMID ) ? true : false;
+			// $samediOff = ( $heure >= SA_FAMID ) ? true : false;
 
 			// pharmacieOuverte() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
 		?>
@@ -104,45 +105,56 @@
 		<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
 		<section class="horaires">
 
-			<article class="semaine" <?= ($auj == 'lun') ? "id=\"aujourdhui\"" : "" ?>  >
-				<div>lundi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+			<article class="semaine lundi" <?= ($auj == 'lun') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>lundi</div><div 
+					<?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div
+					<?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div
+					class="tiret">-</div><div
+					<?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div
+					<?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<?php // comme cette dernière <div> est en position absolute, c'est pas grave si on laisse
 				      // de la place dans l'éditeur après la <div> précédente : l'espace ne se verra pas en HTML ?>
 
 				<div <?= ($auj == 'lun' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
-
 			</article>
-			<article class="semaine" <?= ($auj == 'mar') ? "id=\"aujourdhui\"" : "" ?>  >
+
+			<article class="semaine mardi" <?= ($auj == 'mar') ? "id=\"aujourdhui\"" : "" ?>  >
 				<div>mardi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'mar' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
-
 			</article>
-			<article class="semaine" <?= ($auj == 'mer') ? "id=\"aujourdhui\"" : "" ?>  >
+
+			<article class="semaine mercredi" <?= ($auj == 'mer') ? "id=\"aujourdhui\"" : "" ?>  >
 				<div>mercredi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'mer' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
-
 			</article>
-			<article class="semaine" <?= ($auj == 'jeu') ? "id=\"aujourdhui\"" : "" ?>  >
+
+			<article class="semaine jeudi" <?= ($auj == 'jeu') ? "id=\"aujourdhui\"" : "" ?>  >
 				<div>jeudi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'jeu' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
-
 			</article>
-			<article class="semaine" <?= ($auj == 'ven') ? "id=\"aujourdhui\"" : "" ?>  >
+
+			<article class="semaine vendredi" <?= ($auj == 'ven') ? "id=\"aujourdhui\"" : "" ?>  >
 				<div>vendredi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'ven' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
-
 			</article>
-			<article class="samedi" <?= ($auj == 'sam') ? "id=\"aujourdhui\"" : "" ?>  >
-				<div>samedi</div><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >9h</div><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >16h</div>
+
+			<article class="semaine samedi" <?= ($auj == 'sam') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>samedi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'sam' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
-
 			</article>
+
+			<article class="semaine dimanche" <?= ($auj == 'dim') ? "id=\"aujourdhui\"" : "" ?>  >
+				<div>dimanche</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+
+				<div <?= ($auj == 'dim' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+			</article>
+
 
 			<p>Si vous venez en voiture, la pharmacie dispose d'un parking.</p>
 

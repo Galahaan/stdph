@@ -554,7 +554,7 @@ main > p:nth-child(2){
 .horaires article div, #aujourdhui .off {			/*  Attention: il y a d'autres instructions pour #aujourdhui .off  */
 	background-color: rgba(148, 193, 29, .2);
 }
-/* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
+/* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police colorée  */
 #aujourdhui div {
 	background-color: rgba(148, 193, 29, .5);
 	font-weight: bold;
@@ -572,7 +572,7 @@ main > p:nth-child(2){
 }
 /* pour finir de désactiver un créneau passé du jour actuel */
 #aujourdhui .off {
-	color: black;
+	color: rgba(148, 193, 29, .2);
 	font-weight: normal;
 }
 /* =======================     Pour créer un trait vertical représentant l'heure     ============================= */
