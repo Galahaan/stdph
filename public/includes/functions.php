@@ -184,7 +184,7 @@ function heureActuelle( $format ) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 function pharmacieOuverte( $jour, $heure ) {
 
-	if( $jour != "sam" ){
+	if( $jour != "sam" && $jour != "dim" ){
 		// on est un jour de semaine hors samedi :
 		if( ($heure < (OMATD - REBOURSD)) || ($heure >= FAMID) ){
 			return "La pharmacie est actuellement <span class='ferme'>fermée</span>."; // les <span> ne sont pris en compte en CSS que pour la page index
@@ -211,7 +211,7 @@ function pharmacieOuverte( $jour, $heure ) {
 			return "Hâtez-vous, la pharmacie ferme dans <span class='fer'>moins de " . ceil( ceil( (FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
-	else{
+	else if( $jour == "sam" ){
 		// on est un samedi :
 		if( ($heure < (SA_OMATD - REBOURSD)) || ($heure >= SA_FAMID) ){
 			return "La pharmacie est actuellement <span class='ferme'>fermée</span>.";
@@ -225,6 +225,10 @@ function pharmacieOuverte( $jour, $heure ) {
 		else if( $heure < SA_FAMID ){
 			return "Hâtez-vous, la pharmacie ferme dans <span class='fer'>moins de " . ceil( ceil( (SA_FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
+	}
+	else{
+		// on est un dimanche :
+		return "La pharmacie est actuellement <span class='ferme'>fermée</span>, nous vous souhaitons un bon week-end !";
 	}
 }
 

@@ -40,6 +40,8 @@
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	integreCLR('constantes_CLRS');
+
 	// Quelques constantes spécifiques à ce fichier :
 	// page en cours :
 	define("PAGE_EN_COURS", "prepaCommande.php");
