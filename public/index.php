@@ -51,7 +51,7 @@
 	<meta name="keywords" content="pharmacie, le reste, saint-joseph-de-porterie, joseph, porterie">
 
 	<!-- Prise en compte du responsive design -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- intégrer le CDN de fontAwesome -->
 	<!-- on le place AVANT l'appel à notre CSS pour se donner la possibilité -->
@@ -83,7 +83,7 @@
 	</header>
 
 	<main>
-		<section class="intro">
+		<section class="intro"><h3>Etat actuel d'ouverture de la pharmacie Le Reste</h3>
 			<?php
 				$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
 				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
@@ -140,14 +140,14 @@
 	</main>
 
 	<footer>
-		<section>
+		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
 			<p>44300 Nantes</p>
 			<p>tel - 02 40 25 15 80</p>
 			<p>fax - 02 40 30 06 56</p>
 		</section>
-		<section>
+		<section><h3>Informations sur l'editeur du site</h3>
 			<p>Édition CLR - 2017</p>
 		</section>
 	</footer>

@@ -3,7 +3,7 @@
 <head>
 	<title>Pharmacie Le Reste</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="shortcut icon" href="img/favicon.ico">
@@ -116,14 +116,14 @@
 	</main>
 
 	<footer>
-		<section>
+		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
 			<p>44300 Nantes</p>
 			<p>tel - 02 40 25 15 80</p>
 			<p>fax - 02 40 30 06 56</p>
 		</section>
-		<section>
+		<section><h3>Informations sur l'editeur du site</h3>
 			<p>Édition CLR - 2017</p>
 		</section>
 	</footer>

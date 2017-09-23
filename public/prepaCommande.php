@@ -137,7 +137,7 @@
 <head>
 	<title>Pharmacie Le Reste</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="shortcut icon" href="img/favicon.ico">
@@ -164,7 +164,7 @@
 	</header>
 
 	<main>
-		<section class="formsContOrdo">
+		<section class="formsContOrdo"><h3>Formulaire de préparation de commande</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -302,19 +302,19 @@
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							echo "<article class='artIntroOrdo'><br><br><br>";
+							echo "<div class='artIntroOrdo'><br><br><br>";
 							echo "<p>Merci, votre commande a bien été envoyée.</p><br>";
 							echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "<br><br><br><br><br>";
-							echo "</article>";
+							echo "</div>";
 						}
 						else{
-							echo "<article class='artIntroOrdo'><br><br><br>";
+							echo "<div class='artIntroOrdo'><br><br><br>";
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
 							echo "<br><br><br><br><br>";
-							echo "</article>";
+							echo "</div>";
 						}
 					}; 
 					?>
@@ -330,15 +330,15 @@
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<article class="artIntroOrdo">
+				<div class="artIntroOrdo">
 					<p>Envoyez-nous votre commande via le formulaire ci-dessous.</p>
 					<p>Écrivez librement les produits dont vous avez besoin.</p>
 					<p>Seuls les produits ne nécessitant pas d'ordonnance médicale peuvent être commandés.</p>
 					<p>Vous serez prévenu(e) par mail dès la mise à disposition de votre commande.</p>
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h, sinon une demi-journée suffit en général.</p>
-				</article>
+				</div>
 
-				<span>(la saisie de tous les champs est obligatoire)</span>
+				<span class="obligatoire">(la saisie de tous les champs est obligatoire)</span>
 				<form method="POST" enctype="multipart/form-data">
 					<div class="champsForm">
 						<input type="radio" id="idCiviliteMme" name="civilite" value="Mme" required
@@ -383,37 +383,16 @@
 	</main>
 
 	<footer>
-		<section>
+		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
 			<p>44300 Nantes</p>
 			<p>tel - 02 40 25 15 80</p>
 			<p>fax - 02 40 30 06 56</p>
 		</section>
-		<section>
+		<section><h3>Informations sur l'editeur du site</h3>
 			<p>Édition CLR - 2017</p>
 		</section>
 	</footer>
 </body>
 </html>
-
-<script language="JavaScript">
-    <!-- hide the script from old browsers --
-    //written by W.Moshammer
-    function yhostip(){
-      if((navigator.appName == "Microsoft Internet Explorer") && 
-        ((navigator.appVersion.indexOf('3.') != -1) || 
-        (navigator.appVersion.indexOf('4.') != -1)))
-        document.write("Not with MS IE 3.0/4.0");
-      else {
-        window.onerror=null;	
-        yourAddress =java.net.InetAddress.getLocalHost();	
-        yourAddress2=java.net.InetAddress.getLocalHost();	
-        yhost       =yourAddress.getHostName();	
-        yip         =yourAddress2.getHostAddress();
-        document.write("Your host name is "+yhost);
-        document.write("<br>Your IP address is "+yip);  
-      }
-    }
-   //--end hiding here -->
-  </script>

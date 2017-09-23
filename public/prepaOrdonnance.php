@@ -219,7 +219,7 @@
 <head>
 	<title>Pharmacie Le Reste</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="shortcut icon" href="img/favicon.ico">
@@ -246,7 +246,7 @@
 	</header>
 
 	<main>
-		<section class="formsContOrdo">
+		<section class="formsContOrdo"><h3>Formulaire de dépôt d'ordonnance</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -437,19 +437,19 @@
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							echo "<article class='artIntroOrdo'><br><br><br>";
+							echo "<div class='artIntroOrdo'><br><br><br>";
 							echo "<p>Merci, votre ordonnance a bien été envoyée.</p><br>";
 							echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "<br><br><br><br><br>";
-							echo "</article>";
+							echo "</div>";
 						}
 						else{
-							echo "<article class='artIntroOrdo'><br><br><br>";
+							echo "<div class='artIntroOrdo'><br><br><br>";
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
 							echo "<br><br><br><br><br>";
-							echo "</article>";
+							echo "</div>";
 						}
 					}; 
 					?>
@@ -465,21 +465,20 @@
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<article class="artIntroOrdo">
+				<div class="artIntroOrdo">
 					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
 					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail de leur mise à disposition.</p>
 					<p><span class="attention">Mais surtout</span>, lors de votre passage à la pharmacie, <span class="attention">n'oubliez pas l'original de l'ordonnance</span>.</p>
 					<p>Pensez aussi à la <span class="attention">carte vitale</span> et éventuellement à la <span class="attention">carte de mutuelle</span>.</p>
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h, sinon une demi-journée suffit en général.</p>
-				</article>
+				</div>
 
-				<article>
-					<a href="#" id="idModeEmploi"><p>Mode d'emploi</p></a>
+				<article><a href="#" id="idModeEmploi"><h4>Mode d'emploi</h4></a>
 
-					<article class="artModeEmploi">
-						<aside>Il suffit de suivre ces <span>4 étapes :</span></aside>
+					<div class="artModeEmploi">
+						<div>Il suffit de suivre ces <span>4 étapes :</span></div>
 						<ol>
-							<li><p>numériser l'ordonnance :</p>
+							<li><span>numériser l'ordonnance :</span>
 								<ul>
 									<li>si vous sortez de chez le médecin avec votre document papier,
 									    vous pouvez simplement le photographier avec votre smartphone.
@@ -489,22 +488,22 @@
 								</ul>
 							</li>
 
-							<li><p>remplir tous les champs du formulaire.</p></li>
+							<li><span>remplir tous les champs du formulaire.</span></li>
 
-							<li><p>joindre le document numérisé de votre ordonnance :</p>
+							<li><span>joindre le document numérisé de votre ordonnance :</span>
 								<ul>
-									<li>cliquer sur "Parcourir ..."</li>
+									<li><p>cliquer sur "Parcourir ..."</p>
+										<p>NB: il est possible que certains smartphones ne permettent pas l'accès aux fichiers du téléphone</p></li>
 									<li>sélectionner le document créé à l'étape 1)</li>
 								</ul>
 							</li>
 
-							<li><p>cliquer sur "Envoyer".</p></li>
-
-							Nous nous occupons de la suite !
+							<li><span>cliquer sur "Envoyer".</span></li>
 						</ol>
-					</article>
+						Nous nous occupons de la suite !
+					</div>
 				</article>
-				<span>(la saisie de tous les champs est obligatoire)</span>
+				<span class="obligatoire">(la saisie de tous les champs est obligatoire)</span>
 				<form method="POST" enctype="multipart/form-data">
 					<div class="champsForm">
 						<input type="radio" id="idCiviliteMme" name="civilite" value="Mme" required
@@ -556,37 +555,16 @@
 	</main>
 
 	<footer>
-		<section>
+		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
 			<p>44300 Nantes</p>
 			<p>tel - 02 40 25 15 80</p>
 			<p>fax - 02 40 30 06 56</p>
 		</section>
-		<section>
+		<section><h3>Informations sur l'editeur du site</h3>
 			<p>Édition CLR - 2017</p>
 		</section>
 	</footer>
 </body>
 </html>
-
-<script language="JavaScript">
-    <!-- hide the script from old browsers --
-    //written by W.Moshammer
-    function yhostip(){
-      if((navigator.appName == "Microsoft Internet Explorer") && 
-        ((navigator.appVersion.indexOf('3.') != -1) || 
-        (navigator.appVersion.indexOf('4.') != -1)))
-        document.write("Not with MS IE 3.0/4.0");
-      else {
-        window.onerror=null;	
-        yourAddress =java.net.InetAddress.getLocalHost();	
-        yourAddress2=java.net.InetAddress.getLocalHost();	
-        yhost       =yourAddress.getHostName();	
-        yip         =yourAddress2.getHostAddress();
-        document.write("Your host name is "+yhost);
-        document.write("<br>Your IP address is "+yip);  
-      }
-    }
-   //--end hiding here -->
-  </script>

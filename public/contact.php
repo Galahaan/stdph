@@ -21,7 +21,7 @@
 	// On interdit l'inclusion de dossiers protégés par htaccess.
 	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 	// strpos() peut très bien le faire, et surtout plus vite !
-	// if( preg_match('admin', $page) ){
+	// if( preg_match('admin', $page) ){                        ok en PHP 5.6.30 mais plus en PHP 7.1.4  ********************
 	if( strpos($page, 'admin') ){
 		echo "Vous n'avez pas accès à ce répertoire";
 	}
@@ -129,7 +129,7 @@
 <head>
 	<title>Pharmacie Le Reste</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="shortcut icon" href="img/favicon.ico">
@@ -149,14 +149,14 @@
 			<ul>
 				<li><a href="index.php"   >Accueil </a></li>
 				<li><a href="horaires.php">Horaires</a></li>
-				<li><a href="equipe.html"  >Équipe  </a></li>
-				<li><a href="contact.php"  >Contact </a></li>
+				<li><a href="equipe.html" >Équipe  </a></li>
+				<li><a href="contact.php" >Contact </a></li>
 			</ul>
 		</nav>
 	</header>
 
 	<main>
-		<section class="formsContOrdo gauche">
+		<section class="formsContOrdo gauche"><h3>Coordonnées de la pharmacie Le Reste</h3>
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
 			<p>44300 Nantes</p>
@@ -165,19 +165,19 @@
 			<p><a href="mailto:contact@pharmacielereste.fr"><i class="fa fa-envelope" aria-hidden="true"></i>contact@pharmacielereste.fr</a></p>
 			<p>
 				<a href="https://www.facebook.com/Pharmacie-Le-Reste-700447003388902">
-					<img class="fbg couleur" src="img/fb.png">
-					<img class="fbg noir" src="img/fb_n.png">
+					<img class="fbg couleur" src="img/fb.png" alt="">
+					<img class="fbg noir" src="img/fb_n.png" alt="">
 				</a>
 			</p>
 			<p>
 				<a href="https://plus.google.com/113407799173132476603/about">
-					<img class="fbg couleur" src="img/gplus.png">
-					<img class="fbg noir" src="img/gplus_n.png">
+					<img class="fbg couleur" src="img/gplus.png" alt="">
+					<img class="fbg noir" src="img/gplus_n.png" alt="">
 				</a>
 			</p>
 		</section>
 
-		<section class="formsContOrdo droite">
+		<section class="formsContOrdo droite"><h3>Formulaire de contact de la pharmacie Le Reste</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -330,7 +330,6 @@
 						echo "</article>";
 					}
 				};
-
 				?>
 
 			<?php else : ?>
@@ -344,9 +343,12 @@
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<h3> Envoyez-nous un message ...</h3>
-				<section>
+				
+				<section><h4> Envoyez-nous un message ...</h4>
 					<span>(la saisie de tous les champs est obligatoire)</span>
+
+
+
 					<form method="post">
 						<div class="champsForm">
 							<input type="radio" id="idCiviliteMme" name="civilite" value="Mme" required
@@ -393,37 +395,16 @@
 	</main>
 
 	<footer>
-		<section>
+		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
 			<p>44300 Nantes</p>
 			<p>tel - 02 40 25 15 80</p>
 			<p>fax - 02 40 30 06 56</p>
 		</section>
-		<section>
+		<section><h3>Informations sur l'editeur du site</h3>
 			<p>Édition CLR - 2017</p>
 		</section>
 	</footer>
 </body>
 </html>
-
-<script language="JavaScript">
-    <!-- hide the script from old browsers --
-    //written by W.Moshammer
-    function yhostip(){
-      if((navigator.appName == "Microsoft Internet Explorer") && 
-        ((navigator.appVersion.indexOf('3.') != -1) || 
-        (navigator.appVersion.indexOf('4.') != -1)))
-        document.write("Not with MS IE 3.0/4.0");
-      else {
-        window.onerror=null;	
-        yourAddress =java.net.InetAddress.getLocalHost();	
-        yourAddress2=java.net.InetAddress.getLocalHost();	
-        yhost       =yourAddress.getHostName();	
-        yip         =yourAddress2.getHostAddress();
-        document.write("Your host name is "+yhost);
-        document.write("<br>Your IP address is "+yip);  
-      }
-    }
-   //--end hiding here -->
-  </script>
