@@ -7,8 +7,6 @@
 	if( empty($page) ){
 	$page = "functions"; // page à inclure : functions.php
 
-	// NB: functions.php inclut 'constantes.php'
-
 	// On construit le nom de la page à inclure en prenant 2 précautions :
 	// - ajout dynamique de l'extension .php
 	// - on supprime également d'éventuels espaces en début et fin de chaîne
@@ -150,11 +148,10 @@
 		<section>
 			<a href="index.php">
 				<img src="img/croix_mauve.png" alt="">
-				<h1>Pharmacie Le Reste
-					<p>Nantes, quartier Saint-Joseph de Porterie</p>
-				</h1>
+				<h1>Pharmacie Le Reste</h1>
+				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
 			</a>
-			<p id="telIndex"><span>>> </span><a href="tel:+33240251580">02 40 25 15 80</a><span> <<</span></p>
+			<p id="telIndex"><i class="fa fa-volume-control-phone" aria-hidden="true"></i>&nbsp;&nbsp;<a href="tel:+33240251580">02 40 25 15 80</a></p>
 		</section>
 		<nav class="navigation">
 			<ul>

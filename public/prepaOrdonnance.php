@@ -7,8 +7,6 @@
 	if( empty($page) ){
 	$page = "functions"; // page à inclure : functions.php
 
-	// NB: functions.php inclut 'constantes.php'
-
 	// On construit le nom de la page à inclure en prenant 2 précautions :
 	// - ajout dynamique de l'extension .php
 	// - on supprime également d'éventuels espaces en début et fin de chaîne
@@ -44,11 +42,6 @@
 
 	// Quelques constantes spécifiques à ce fichier :
 	define("PAGE_EN_COURS", "prepaOrdonnance.php");
-	define("VALUE_TEXTAREA",
-		"Apportez-nous les précisions qui vous semblent utiles sur le traitement." . "\r\n" .
-		"Dites-nous si vous avez déjà certains produits, et que vous n'en avez pas besoin ...");
-
-
 
 	// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 	if( isset($_POST['bouton']) ){
@@ -237,11 +230,10 @@
 		<section>
 			<a href="index.php">
 				<img src="img/croix_mauve.png" alt="">
-				<h1>Pharmacie Le Reste
-					<p>Nantes, quartier Saint-Joseph de Porterie</p>
-				</h1>
+				<h1>Pharmacie Le Reste</h1>
+				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
 			</a>
-			<p id="telIndex"><span>>> </span><a href="tel:+33240251580">02 40 25 15 80</a><span> <<</span></p>
+			<p id="telIndex"><i class="fa fa-volume-control-phone" aria-hidden="true"></i>&nbsp;&nbsp;<a href="tel:+33240251580">02 40 25 15 80</a></p>
 		</section>
 		<nav class="navigation">
 			<ul>
@@ -476,7 +468,8 @@
 				<article class="artIntroOrdo">
 					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
 					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail de leur mise à disposition.</p>
-					<p class="attention">Mais surtout, n'oubliez pas l'original de l'ordonnance en venant chercher les produits !</p>
+					<p><span class="attention">Mais surtout</span>, lors de votre passage à la pharmacie, <span class="attention">n'oubliez pas l'original de l'ordonnance</span>.</p>
+					<p>Pensez aussi à la <span class="attention">carte vitale</span> et éventuellement à la <span class="attention">carte de mutuelle</span>.</p>
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h, sinon une demi-journée suffit en général.</p>
 				</article>
 
@@ -527,29 +520,31 @@
 					<div class="champsForm">
 						<label for="idPrenom">Prénom</label>
 								<input type="text" id="idPrenom" name="prenom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-					<?php if( isset($erreurs['prenom']) ) { echo "<span>" . $erreurs['prenom'] . "</span>"; } ?>
+					<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
 					</div>
 
 					<div class="champsForm">
 						<label for="idNom">Nom</label>
 								<input type="text" id="idNom" name="nom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($nom) ? "value=" . $nom : ""?> >
-					<?php if( isset($erreurs['nom']) ) { echo "<span>" . $erreurs['nom'] . "</span>"; } ?>
+					<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
 					</div>
 
 					<div class="champsForm">
 						<label for="idMail">Mail</label>
 								<input type="email" id="idMail" name="adrMailClient" required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
-					<?php if( isset($erreurs['adrMailClient']) ) { echo "<span>" . $erreurs['adrMailClient'] . "</span>"; } ?>
+					<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
 					</div>
 					<div class="champsForm">
 						<label for="idPJ">Ordonnance</label>
 								<input type="file"	id="idPJ" name="pieceJointe" accept=<?= LISTE_EXT_AUTORISEES ?> required >
-					<?php if( isset($erreurs['pieceJointe']) ) { echo "<span>" . $erreurs['pieceJointe'] . "</span>"; } ?>
+					<?php if( isset($erreurs['pieceJointe']) ) { echo "<p><span>" . $erreurs['pieceJointe'] . "</span></p>"; } ?>
 					</div>
 					<div class="champsForm">
+							<p>Apportez-nous des précisions qui vous semblent utiles sur votre traitement.
+								<br>Peut-être avez-vous déjà certains produits qu'il serait donc inutile d'ajouter à la commande ?..</p>
 						<label for="idMessage">Message</label>
-								<textarea rows="7" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($messageClientTxt) ? $messageClientTxt : VALUE_TEXTAREA ?></textarea>
-					<?php if( isset($erreurs['message']) ) { echo "<span>" . $erreurs['message'] . "</span>"; } ?>
+								<textarea rows="7" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($messageClientTxt) ? $messageClientTxt : "" ?></textarea>
+					<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
 					</div>
 
 					<div class="envoyer">

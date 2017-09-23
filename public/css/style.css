@@ -29,51 +29,48 @@ body{
  	background-color: #575757;
  	max-width: 95rem;
  	margin: auto;
-}
+} 
 main{
 	background-color: white;
 }
 
 body{
-	font-size: 1.8rem;
+	font-size: 1.8rem; /* taille par défaut de toutes les polices */
 }
 h1{
 	font-size: 2.5rem; /* titre de la page : Pharmacie Le Reste */
 }
-h1 p{
+h2{
 	font-size: 1.5rem; /* sous-titre de la page : Nantes, ... */
 }
 #telIndex{
 	font-size: 2rem; /* sous-titre de la page : numéro de tel cliquable */
 }
-h2{
-	font-size: 2.5rem; /* titres des vignettes de la page Index + intro du form. de contact */
+.vignettes article h4{
+	font-size: 2.5rem; /* titres des vignettes de la page Index */
 }
-#pharmacieOuverte {
-	font-size: 1.8rem; /* c'est le h2 de la page horaires, on lui donne la mm valeur que pour le body */
-}
-.vignettes article h2 span{
-	font-size: 1.7rem; /* sous-titre des vignettes de la page Index */
-}
-.fa{
+.fa-phone, .fa-fax, .fa-envelope{
 	font-size: 2rem; /* taille des icônes font-awesome : tel, fax et mail */
 }
 .champsForm input, .champsForm textarea{
 	font-size: 1.8rem;
 }
-.champsForm aside{
-	font-size: 1.3rem; /* pour les éventuels messages d'erreurs */
+.champsForm span{
+	font-size: 1.3rem; /* messages d'erreurs dans les form. contact et ordonn. */
 }
-.droite h2{
-	font-size: 2rem; /* "Envoyez-nous un message ..." */
+.droite h3{
+	font-size: 2.2rem; /* intro du form. de contact "Envoyez-nous un message ... " */
 }
 .droite p{
-	font-size: 1.4rem; /* message de réussite ou d'échec après l'envoi du formulaire */
+	font-size: 1.8rem; /* message de réussite ou d'échec après l'envoi du formulaire */
 }
 footer section:first-of-type{
 	font-size: 1.3rem; /* Pharmacie Le Reste ... */
 }
 
+h3{
+	font-weight: 400;  /* on les met tous en "normal" par défaut */
+}
 
 /* ******************************************************************************************** */
 /* ******************************        Bandeau du haut         ****************************** */
@@ -86,7 +83,7 @@ header section{
 	margin: auto;
 	padding-top: 15%;
 	padding-bottom: 15%;
-	position: relative; /* pour positionner le h1 et la croix en haut à gauche */
+	position: relative; /* pour positionner le h1, le h2 et la croix en haut à gauche */
 }
 
 /* Image de la croix positionnée en haut à gauche */
@@ -97,18 +94,20 @@ header section img{
 	left: 1rem;
 }
 
-/* titre : Pharmacie ... */
-h1{
-	font-weight: 700;
+/* titre + sous-titre du bandeau supérieur */
+h1, h2{
 	color: #951A80;
+	font-weight: 700;
 	position : absolute;
-	top: 0;
 	left: 16%;
 }
-
+/* titre : Pharmacie ... */
+h1{
+	top: 0;
+}
 /* sous-titre : Nantes ... */
-h1 p{
-	font-weight: 400;
+h2{
+	top: 28%;
 }
 
 /* numéro de téléphone cliquable */
@@ -117,11 +116,7 @@ h1 p{
 	font-weight: 700;
 	position: absolute;
 	top: 52%;
-	left: 28%;
-}
-/* § spécifique pour "a" puisque ça change avec les media queries */
-#telIndex a{
-	text-decoration: underline;
+	left: 23%;
 }
 
 /* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
@@ -177,10 +172,10 @@ ul{
 	font-weight: bold;
 }
 .intro .ouvert {
-	color: #94C11D;
+	color: #4DBC1C;
 }
 .intro .ferme {
-	color: red;
+	color: #FF4141;
 }
 .intro .ouve {
 	color: black;
@@ -188,12 +183,14 @@ ul{
 .intro .fer {
 	color: #F29200;
 }
-
+/* <h3> ajouté pour la validation W3C mais non affiché */
+.vignettes h3 {
+	display: none;	/* Services proposés ... */
+}
 .vignettes article{
 	position: relative; /* pour que les <a> et les <img> soient superposés */
 	/*margin-bottom: -0.6rem;  sinon, il y a une petite bande blanche en dessous de l'image ... ??!!   */
 }
-
 .vignettes article a{
 	position: absolute;
 	top: 0;
@@ -213,7 +210,7 @@ ul{
 	opacity: .85;
 }
 
-.vignettes article h2{
+.vignettes article h4{
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -221,10 +218,6 @@ ul{
 	   -moz-transform: translate(-50%, -50%); /* pour Firefox */
 			transform: translate(-50%, -50%);
 	width: 100%;
-}
-
-.vignettes article h2 span{
-	display: block;
 }
 
 /* ******************************************************************************************** */
@@ -240,6 +233,9 @@ ul{
 }
 
 /* ************     colonne de gauche : adresse et liens vers réseaux sociaux      ************ */
+.gauche p:nth-child(1){
+	padding-top: 2rem;		/* marge au dessus de "Pharmacie Le Reste" */
+}
 
 .gauche p:nth-child(3){
 	margin-bottom: 2rem; 	/* marge en dessous de Nantes */
@@ -286,7 +282,7 @@ ul{
 
 
 /* fontawesome pour les icônes "tel", "fax" et "mail" */
-.fa{
+.gauche .fa-phone, .gauche .fa-fax, .gauche .fa-envelope{
 	margin-right: 2rem;
 	position: relative;
 	top: 0.2rem;
@@ -303,7 +299,7 @@ ul{
 	position: relative;
 }
 
-.fbg{
+.gauche .fbg{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -311,7 +307,7 @@ ul{
 
 /* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
 /*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
-.noir:hover, .noir:focus, .noir:active{
+.gauche .noir:hover, .noir:focus, .noir:active{
 	display: none;
 }
 
@@ -332,13 +328,14 @@ ul{
 	background-color: #951A80;
 }
 
-/* message d'introduction au formulaire */
-.droite h2:first-child{
+/* message d'introduction au formulaire : "Envoyez-nous un message ... " */
+.droite h3{
 	margin-bottom: 2rem;
+	font-weight: 700;
 }
 
 /* saisie obligatoire des champs */
-section > span{
+.droite section > span{
 	font-size: .8em;
 }
 
@@ -385,20 +382,10 @@ section > span{
 }
 
 /* pour les éventuels messages d'erreurs */
-.champsForm aside{
+.champsForm span{
 	text-align: right;
 	margin-right: 1.2rem;
 	color: red;
-}
-/*pour les astérisques et la légende de l'astérisque */
-.champsForm span{
-	vertical-align: top;
-}
-
-/* légende pour l'astérisque (*) */
-.droite p{
-	text-align: left;
-	margin-left: .5rem;
 }
 
 /* proportion entre label et button pour le bouton de validation */
@@ -511,11 +498,16 @@ section > span{
 .formsContOrdo article:nth-child(2) + span {
 	font-size: .8em;
 }
-/* Message dans le champ TEXTAREA */
+
+/* Blabla au dessus du champs "textarea" */
+.champsForm p:first-child{
+	text-align: justify;
+	padding: 0 1.2rem 1.2rem 1.2rem;
+}
+/* Message dans le champ "textarea" */
 #idMessage {
 	font-weight: normal;
 	text-align: justify;
-	color: grey;
 }
 
 
@@ -542,12 +534,16 @@ main > p:nth-child(2){
 	width: 94%;																	/* modifié en MQ 600 px */
 	margin: auto;
 }
+/* <h2> ajouté pour la validation W3C mais non affiché */
+.horaires h2 {
+	display: none;	/* Créneaux horaires ... */
+}
 .horaires article {
 	text-align: left;
 	padding-bottom: .5rem;
 }
-/* pour que chaque article, contenant les "div", ne prenne qu'une seule ligne */
-.horaires article div {
+/* pour que chaque article, contenant le h3 et les div, ne prenne qu'une seule ligne */
+.horaires article div, .horaires article h3 {
 	display: inline-block;
 }
 /*	couleur de fond par défaut, et en OFF, des créneaux horaires d'ouverture */
@@ -555,14 +551,14 @@ main > p:nth-child(2){
 	background-color: rgba(148, 193, 29, .2);
 }
 /* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
-#aujourdhui div {
+#aujourdhui div, #aujourdhui h3 {
 	background-color: rgba(148, 193, 29, .5);
 	font-weight: bold;
 	color: #D84591;
 }
 /* on ne veut pas mettre le jour actuel et le tiret en fond vert */
-.semaine div:first-child, .samedi div:first-child, .semaine .tiret,
-#aujourdhui div:first-child, #aujourdhui .tiret {
+.semaine h3, .samedi h3, .semaine .tiret,
+#aujourdhui h3, #aujourdhui .tiret {
 	background-color: white;
 	color: black;
 }
@@ -571,6 +567,7 @@ main > p:nth-child(2){
 	font-weight: normal;
 }
 /* pour finir de désactiver un créneau passé du jour actuel */
+/* on a déjà mis la couleur de fond un peu plus haut        */
 #aujourdhui .off {
 	color: black;
 	font-weight: normal;
@@ -601,7 +598,7 @@ main > p:nth-child(2){
 /* ========================  !!! si modifications => les reporter dans functions.php !!!  ======================== */
 /* ========================                                                               ======================== */
 /* jours de la semaine */
-.horaires article div:first-child {
+.horaires article h3 {
 	width: 23%;
 	background-color: white;
 }
@@ -634,7 +631,7 @@ main > p:nth-child(2){
 	padding-right: 1%;
 }
 /* samedi */
-.horaires .samedi div:first-child {
+.horaires .samedi h3 {
 	background-color: white;
 	width: 26.75%;      /* cette valeur bizarre permet d'aligner '9h le samedi' avec '9h en semaine' */
 }
@@ -664,11 +661,21 @@ main > p:nth-child(2){
 .horaires p:first-of-type {
 	padding-top: 4%;
 }
-.horaires p:not(first-child) {
-}
 .horaires p span {
 	font-weight: bold;
 }
+
+/* ******************************************************************************************** */
+/* ******************************         pharmaDeGarde          ****************************** */
+/* ******************************************************************************************** */
+
+.pharGarde {
+	display: none;
+}
+
+
+
+
 
 
 /* ******************************************************************************************** */
@@ -703,23 +710,19 @@ footer section:last-of-type{
 /* 																									460 px		*/
 @media screen and (min-width: 460px){
 
-	body, #pharmacieOuverte , #pharmacieOuverte {
+	body{
 		font-size: 2rem; /* old 1.8 */
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
 	h1{
-		font-size: 2.7rem; /* old 2.5 titre de la page : Pharmacie Le Reste */
-		top: 4%;
-		left: 16%;
+		font-size: 2.7rem;	/* old 2.5 titre de la page : Pharmacie Le Reste */
+		top: 4%;			/* old 0 */
 	}
-	h1 p{
-		font-size: 1.7rem; /* old 1.5 sous-titre de la page : Nantes, ... */
+	h2{
+		font-size: 1.7rem;	/* old 1.5 sous-titre de la page : Nantes, ... */
 	}
 	#telIndex{
-		font-size: 2rem; /* old 2 sous-titre de la page : numéro de tel cliquable */
-		position: absolute;
-		top: 48%;
-		left: 27%;
+		left: 27%;			/* old 23% */
 	}
 
 	/* page Index : on affiche 2 vignettes en largeur */
@@ -732,19 +735,28 @@ footer section:last-of-type{
 		clear: both;
 	}
 
+	/* intro du form. de contact "Envoyez-nous un message ... " */
+	.droite h3{
+		font-size: 2.35rem;	/* old 2.2rem */
+	}
+
 	/* tailles des champs saisis dans le formulaire et des messages associés */
 
 	.champsForm input, .champsForm textarea{
 		font-size: 2rem; /* old 1.8 */
 	}
-	.champsForm div{
+
+	/* Blabla au dessus du champs "textarea" */
+	.champsForm p:first-child{
+		width: 58%;					/* aucune valeur */
+		margin-left: 33%;			/*     avant     */
+	}
+
+	.champsForm span{
 		font-size: 1.5rem; /* old 1.3 pour les éventuels messages d'erreurs */
 	}
-	.droite h2{
-		font-size: 2.2rem; /* old 2 message de réussite ou d'échec après l'envoi du formulaire */
-	}
 	.droite p{
-		font-size: 1.6rem; /* old 1.4 pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
+		font-size: 2rem; /* old 1.8 pour le message explicatif après l'envoi du formulaire */
 	}
 
 	/*     page prepaOrdonnance     */
@@ -767,28 +779,22 @@ footer section:last-of-type{
 @media screen and (min-width: 600px){
 
 	/* On augmente encore un peu les tailles */
-	body, #pharmacieOuverte {
+	body,{
 		font-size: 2.3rem; /* old 2 */
 	}
 	h1{
-		font-size: 3.8rem; /* old 2.7 titre de la page : Pharmacie Le Reste */
-		top: 7%;
-		left: 16%;
+		font-size: 3.8rem;	/* old 2.7 - titre de la page : Pharmacie Le Reste */
+		top: 7%;			/* old 4% */
 	}
-	h1 p{
-		font-size: 2.5rem; /* old 1.7 sous-titre de la page : Nantes, ... */
+	h2{
+		font-size: 2.5rem;	/* old 1.7 - sous-titre de la page : Nantes, ... */
 	}
 	#telIndex{
-		font-size: 2.5rem; /* old 1.7 sous-titre de la page : numéro de tel cliquable */
-		position: absolute;
-		top: 50%;
-		left: 34%;
+		font-size: 2.5rem;	/* old 2 en mobile - numéro de tel cliquable */
+		left: 34%;			/* old 27% */
 	}
-	#telIndex span{
+	#telIndex .fa-volume-control-phone{
 		display: none;
-	}
-	#telIndex a{
-		text-decoration: none;
 	}
 	nav{
 		padding: 1rem; /* hauteur du bandeau de nav */
@@ -811,6 +817,10 @@ footer section:last-of-type{
 	/* espace entre le bandeau et les infos de contact */
 	.formsContOrdo{
 		padding: 2rem 0; /* old 1 0 */
+	}
+
+	.gauche p:first-child, .gauche p:nth-child(2), .gauche p:nth-child(3){
+		font-size: 2.35rem;
 	}
 	.gauche p:nth-child(3){
 		margin-bottom: 3rem; 	/* old 2 marge en dessous de Nantes */
@@ -846,7 +856,7 @@ footer section:last-of-type{
 	}
 
 	/* font-awesome pour les icônes "tel", "fax" et "mail" */
-	.fa{
+	.fa-phone, .fa-fax, .fa-envelope{
 		font-size: 3rem; /* old 2 */
 	}
 
@@ -855,14 +865,13 @@ footer section:last-of-type{
 	.champsForm input, .champsForm textarea{
 		font-size: 2.3rem; /* old 2 */
 	}
-	.champsForm aside{
-		font-size: 1.8rem; /* old 1.5 pour les éventuels messages d'erreurs */
+
+	.champsForm span{
+		font-size: 2rem; /* old 1.5 pour les éventuels messages d'erreurs */
 	}
-	.droite h2{
-		font-size: 2.5rem; /* old 2.2 message de réussite ou d'échec après l'envoi du formulaire */
-	}
+
 	.droite p{
-		font-size: 1.9rem; /* old 1.6 pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
+		font-size: 2.35rem; /* old 1.6 pour le message explicatif après l'envoi du formulaire */
 	}
 
 	/* Footer */
@@ -901,7 +910,7 @@ footer section:last-of-type{
 /* 																									900 px		*/
 @media screen and (min-width: 900px){
 
-	body, #pharmacieOuverte {
+	body,{
 		font-size: 2.5rem; /* old 2.3 */
 	}
 	/* on agrandit un peu la croix */
@@ -913,27 +922,20 @@ footer section:last-of-type{
 
 	/* titre : Pharmacie ... */
 	h1{
-		font-size: 4.5rem; /* old 3.8 */
-		top: 8%;
-		left: 21%;
+		font-size: 4.5rem;	/* old 3.8 */
+		top: 8%;			/* old 7% */
+		left: 21%;			/* old 16% en mobile */
 	}
 
 	/* sous-titre : Nantes ... */
-	h1 p{
-		font-size: 2.8rem; /* old 2.5 */
+	h2{
+		font-size: 2.8rem;	/* old 2.5 */
+		left: 21%;			/* old 16% en mobile */
 	}
 	#telIndex{
-		font-size: 2.8rem; /* old 2.5 sous-titre de la page : numéro de tel cliquable */
-		position: absolute;
-		top: 45%;
-		left: 35%;
+		font-size: 2.8rem;	/* old 2.5 */
 	}
-	#telIndex span{
-		display: none;
-	}
-	#telIndex a{
-		text-decoration: none;
-	}
+
 	/* page Index : on passe en 2 vignettes en largeur */
 	.vignettes article{
 		width: 33.33%;
@@ -948,20 +950,17 @@ footer section:last-of-type{
 		width: 4rem;
 	}
 
+	/* intro du form. de contact "Envoyez-nous un message ... " */
+	.droite h3{
+		font-size: 2.5rem;	/* old 2.35rem */
+	}
+
 	/* tailles des champs saisis dans le formulaire et des messages associés */
 
 	.champsForm input, .champsForm textarea{
 		font-size: 2.5rem; /* old 2.3 */
 	}
-	.champsForm aside{
-		font-size: 2rem; /* old 1.8 pour les éventuels messages d'erreurs */
-	}
-	.droite h2{
-		font-size: 2.7rem; /* old 2.5 message de réussite ou d'échec après l'envoi du formulaire */
-	}
-	.droite p{
-		font-size: 2.1rem; /* old 1.9 pour la légende de l'astérisque et le message explicatif après l'envoi du formulaire */
-	}
+
 
 	/* Footer */
 

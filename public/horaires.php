@@ -6,8 +6,6 @@
 	if( empty($page) ){
 	$page = "functions"; // page à inclure : functions.php
 
-	// NB: functions.php inclut 'constantes.php'
-
 	// On construit le nom de la page à inclure en prenant 2 précautions :
 	// - ajout dynamique de l'extension .php
 	// - on supprime également d'éventuels espaces en début et fin de chaîne
@@ -58,11 +56,10 @@
 		<section>
 			<a href="index.php">
 				<img src="img/croix_mauve.png" alt="">
-				<h1>Pharmacie Le Reste
-					<p>Nantes, quartier Saint-Joseph de Porterie</p>
-				</h1>
+				<h1>Pharmacie Le Reste</h1>
+				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
 			</a>
-			<p id="telIndex"><span>>> </span><a href="tel:+33240251580">02 40 25 15 80</a><span> <<</span></p>
+			<p id="telIndex"><i class="fa fa-volume-control-phone" aria-hidden="true"></i>&nbsp;&nbsp;<a href="tel:+33240251580">02 40 25 15 80</a></p>
 		</section>
 		<nav class="navigation">
 			<ul>
@@ -102,10 +99,10 @@
 		?>
 		<p><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=\"rose\">". $heureH . "</span>" ?></p>
 		<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
-		<section class="horaires">
+		<section class="horaires"><h2>Créneaux horaires d'ouverture de la pharmacie Le Reste</h2>
 
 			<article class="semaine" <?= ($auj == 'lun') ? "id=\"aujourdhui\"" : "" ?>  >
-				<div>lundi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+				<h3>lundi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<?php // comme cette dernière <div> est en position absolute, c'est pas grave si on laisse
 				      // de la place dans l'éditeur après la <div> précédente : l'espace ne se verra pas en HTML ?>
@@ -114,31 +111,31 @@
 
 			</article>
 			<article class="semaine" <?= ($auj == 'mar') ? "id=\"aujourdhui\"" : "" ?>  >
-				<div>mardi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+				<h3>mardi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'mar' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
 
 			</article>
 			<article class="semaine" <?= ($auj == 'mer') ? "id=\"aujourdhui\"" : "" ?>  >
-				<div>mercredi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+				<h3>mercredi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'mer' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
 
 			</article>
 			<article class="semaine" <?= ($auj == 'jeu') ? "id=\"aujourdhui\"" : "" ?>  >
-				<div>jeudi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+				<h3>jeudi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'jeu' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
 
 			</article>
 			<article class="semaine" <?= ($auj == 'ven') ? "id=\"aujourdhui\"" : "" ?>  >
-				<div>vendredi</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+				<h3>vendredi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
 
 				<div <?= ($auj == 'ven' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
 
 			</article>
 			<article class="samedi" <?= ($auj == 'sam') ? "id=\"aujourdhui\"" : "" ?>  >
-				<div>samedi</div><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >9h</div><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >16h</div>
+				<h3>samedi</h3><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >9h</div><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >16h</div>
 
 				<div <?= ($auj == 'sam' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
 

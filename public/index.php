@@ -67,18 +67,17 @@
 		<section>
 			<a href="index.php">
 				<img src="img/croix_mauve.png" alt="">
-				<h1>Pharmacie Le Reste
-					<p>Nantes, quartier Saint-Joseph de Porterie</p>
-				</h1>
+				<h1>Pharmacie Le Reste</h1>
+				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
 			</a>
-			<p id="telIndex"><span>>> </span><a href="tel:+33240251580">02 40 25 15 80</a><span> <<</span></p>
+			<p id="telIndex"><i class="fa fa-volume-control-phone" aria-hidden="true"></i>&nbsp;&nbsp;<a href="tel:+33240251580">02 40 25 15 80</a></p>
 		</section>
 		<nav class="navigation">
 			<ul>
 				<li><a href="index.php"   >Accueil </a></li>
 				<li><a href="horaires.php">Horaires</a></li>
-				<li><a href="equipe.html"  >Équipe  </a></li>
-				<li><a href="contact.php"  >Contact </a></li>
+				<li><a href="equipe.html" >Équipe  </a></li>
+				<li><a href="contact.php" >Contact </a></li>
 			</ul>
 		</nav>
 	</header>
@@ -93,47 +92,47 @@
 			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
 
 		</section>
-		<section class="vignettes">
+		<section class="vignettes"><h3>Services proposés par la pharmacie Le Reste</h3>
 			<article>
 				<a href="prepaOrdonnance.php">
-					<h2>Préparation d'ordonnance</h2>
+					<h4>Préparation d'ordonnance</h4>
 				</a>
 				<img src="img/prepaOrdonnance.jpg" alt="">
 			</article>
 			<article>
 				<a href="prepaCommande.php">
-					<h2>Préparation de commande</h2>
+					<h4>Préparation de commande</h4>
 				</a>
 				<img src="img/prepaCommande2.png" alt="">
 			</article>
 			<article>
 				<a href="gammesProduits.html">
-					<h2>Les gammes de produits</h2>
+					<h4>Les gammes de produits</h4>
 				</a>
 				<img src="img/gammesProduits.jpg" alt="">
 			</article>
 			<article>
-				<a href="pharmaDeGarde.html">
-					<h2>Pharmacies de garde</h2>
+				<a href="pharmaDeGarde.php">
+					<h4>Pharmacies de garde</h4>
 				</a>
 				<img src="img/pharmaDeGarde2.jpg" alt="">
 			</article>
 			<article>
 				<a href="promos.html">
-					<h2>Promos et cadeaux</h2>
+					<h4>Promos et cadeaux</h4>
 				</a>
 				<img src="img/promos1.jpg" alt="">
 			</article>
 			<article>
 				<a href="infos.html">
-					<h2>Informations / Conseils</h2>
+					<h4>Informations / Conseils</h4>
 				</a>
 				<img src="img/questions1.jpg" alt="">
 			</article>
 	<!-- matériel médical / contention ? /   -->
 			<article>
 				<a href="humour.html">
-					<h2>Un peu d'humour !..</h2>
+					<h4>Un peu d'humour !..</h4>
 				</a>
 				<img src="img/humour2.jpg" alt="">
 			</article>

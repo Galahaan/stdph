@@ -37,7 +37,7 @@
 	define("NB_CAR_MAX", 40);
 
 	// si on veut utiliser la vérification naturelle du HTML :
-	define("NB_CAR_MIN_HTM", 2);
+	define("NB_CAR_MIN_HTM", 1);
 	define("NB_CAR_MAX_HTM", 40);
 
 	// Nombre de caractères min et max pour le texte libre :
