@@ -380,18 +380,16 @@
 				    // envoi de l'e-mail :
 					if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 	
-						echo "<article class='artIntroOrdo'><br><br><br>";
+						echo "<article class='artMessageConfirm'>";
 						echo "<p>Merci, votre message a bien été envoyé.</p>";
 						echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-						echo "<br><br><br><br><br>";
 						echo "</article>";
 				}
 				else{
-						echo "<article class='artIntroOrdo'><br><br><br>";
+						echo "<article class='artMessageConfirm'>";
 						echo "<p>Aïe, il y a eu un problème ...</p>";
 						echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-						echo "<br><br><br><br><br>";
 						echo "</article>";
 					}
 				};

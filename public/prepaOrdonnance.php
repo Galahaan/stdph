@@ -246,7 +246,7 @@
 	</header>
 
 	<main>
-		<section class="formsContOrdo"><h3>Formulaire de dépôt d'ordonnance</h3>
+		<section class="formOrdo"><h3>Préparation d'ordonnance</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -437,18 +437,17 @@
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							echo "<div class='artIntroOrdo'><br><br><br>";
-							echo "<p>Merci, votre ordonnance a bien été envoyée.</p><br>";
-							echo "<p>Nous vous répondrons dans les meilleurs délais, sous
-								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-							echo "<br><br><br><br><br>";
+							echo "<div class='artMessageConfirm'>";
+							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
+							echo "<p>Merci, votre ordonnance a bien été envoyée.</p>";
+							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "</div>";
 						}
 						else{
-							echo "<div class='artIntroOrdo'><br><br><br>";
+							echo "<div class='artMessageConfirm'>";
+							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-							echo "<br><br><br><br><br>";
 							echo "</div>";
 						}
 					}; 
@@ -465,12 +464,12 @@
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<div class="artIntroOrdo">
+				<div class="artIntro">
 					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
 					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail de leur mise à disposition.</p>
-					<p><span class="attention">Mais surtout</span>, lors de votre passage à la pharmacie, <span class="attention">n'oubliez pas l'original de l'ordonnance</span>.</p>
-					<p>Pensez aussi à la <span class="attention">carte vitale</span> et éventuellement à la <span class="attention">carte de mutuelle</span>.</p>
-					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h, sinon une demi-journée suffit en général.</p>
+					<p><span class="attention">Attention</span>, venez à la pharmacie <span class="attention">avec l'original de l'ordonnance</span>.</p>
+					<p>Pensez aussi à la <span class="attention">carte vitale</span> et à la <span class="attention">carte de mutuelle</span>.</p>
+					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 
 				<article><a href="#" id="idModeEmploi"><h4>Mode d'emploi</h4></a>

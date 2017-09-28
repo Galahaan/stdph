@@ -164,7 +164,7 @@
 	</header>
 
 	<main>
-		<section class="formsContOrdo"><h3>Formulaire de préparation de commande</h3>
+		<section class="formComm"><h3>Préparation de commande</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -302,18 +302,17 @@
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							echo "<div class='artIntroOrdo'><br><br><br>";
-							echo "<p>Merci, votre commande a bien été envoyée.</p><br>";
-							echo "<p>Nous vous répondrons dans les meilleurs délais, sous
-								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-							echo "<br><br><br><br><br>";
+							echo "<div class='artMessageConfirm'>";
+							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
+							echo "<p>Merci, votre commande a bien été envoyée.</p>";
+							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "</div>";
 						}
 						else{
-							echo "<div class='artIntroOrdo'><br><br><br>";
+							echo "<div class='artMessageConfirm'>";
+							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-							echo "<br><br><br><br><br>";
 							echo "</div>";
 						}
 					}; 
@@ -330,12 +329,12 @@
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<div class="artIntroOrdo">
+				<div class="artIntro">
 					<p>Envoyez-nous votre commande via le formulaire ci-dessous.</p>
 					<p>Écrivez librement les produits dont vous avez besoin.</p>
 					<p>Seuls les produits ne nécessitant pas d'ordonnance médicale peuvent être commandés.</p>
 					<p>Vous serez prévenu(e) par mail dès la mise à disposition de votre commande.</p>
-					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2h, sinon une demi-journée suffit en général.</p>
+					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 
 				<span class="obligatoire">(la saisie de tous les champs est obligatoire)</span>
@@ -354,24 +353,24 @@
 					<div class="champsForm">
 						<label for="idPrenom">Prénom</label>
 								<input type="text" id="idPrenom" name="prenom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-					<?php if( isset($erreurs['prenom']) ) { echo "<span>" . $erreurs['prenom'] . "</span>"; } ?>
+					<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
 					</div>
 
 					<div class="champsForm">
 						<label for="idNom">Nom</label>
 								<input type="text" id="idNom" name="nom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($nom) ? "value=" . $nom : ""?> >
-					<?php if( isset($erreurs['nom']) ) { echo "<span>" . $erreurs['nom'] . "</span>"; } ?>
+					<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
 					</div>
 
 					<div class="champsForm">
 						<label for="idMail">Mail</label>
 								<input type="email" id="idMail" name="adrMailClient" required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
-					<?php if( isset($erreurs['adrMailClient']) ) { echo "<span>" . $erreurs['adrMailClient'] . "</span>"; } ?>
+					<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
 					</div>
 					<div class="champsForm">
-						<label for="idMessage">Votre commande</label>
+						<label for="idMessage">Commande</label>
 								<textarea rows="8" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
-					<?php if( isset($erreurs['message']) ) { echo "<span>" . $erreurs['message'] . "</span>"; } ?>
+					<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
 					</div>
 
 					<div class="envoyer">

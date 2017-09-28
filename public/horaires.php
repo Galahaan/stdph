@@ -141,10 +141,10 @@
 
 			</article>
 
-			<p>Si vous venez en voiture, la pharmacie dispose d'un parking.</p>
+			<p>La pharmacie dispose d'un parking pour sa clientèle.</p>
 
-			<p>En chronobus <span>C6</span>, vous descendez à l'arrêt <span>St Joseph de Porterie</span>,
-				et il vous reste moins d'une minute à pied.</p>
+			<p>En chronobus <span>C6</span>, descendez à l'arrêt <span>St Joseph de Porterie</span>:
+				vous avez moins d'une minute à pied.</p>
 
 			<p><b>En cas de garde</b>, la pharmacie reste ouverte jusqu'à <b>20h30</b>. Après 20h30, s'adresser au commissariat <b>Waldec-Rousseau</b>.</p>
 

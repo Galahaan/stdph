@@ -33,6 +33,14 @@
 		<section><h3> :-) </h3>
 					<br><br><br><br><br>
 					Chuck Norris ne vit pas sur Terre, c'est la Terre qui vit sous Chuck Norris.
+
+					<?php 
+
+						// https://www.chucknorrisfacts.fr/api/api
+						// https://www.chucknorrisfacts.fr/api/get?data=tri:alea;type:txt;nb:5
+
+					?>
+
 					<br><br><br><br><br><br><br><br><br><br>
 		</section>
 	</main>

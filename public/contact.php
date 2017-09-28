@@ -156,28 +156,8 @@
 	</header>
 
 	<main>
-		<section class="formsContOrdo gauche"><h3>Coordonnées de la pharmacie Le Reste</h3>
-			<p>Pharmacie Le Reste</p>
-			<p>21 rue du Bêle</p>
-			<p>44300 Nantes</p>
-			<p id="telContact"><i class="fa fa-phone"    aria-hidden="true"></i><a href="tel:+33240251580">02 40 25 15 80</a></p>
-			<p><i class="fa fa-fax"      aria-hidden="true"></i>02 40 30 06 56</p>
-			<p><a href="mailto:contact@pharmacielereste.fr"><i class="fa fa-envelope" aria-hidden="true"></i>contact@pharmacielereste.fr</a></p>
-			<p>
-				<a href="https://www.facebook.com/Pharmacie-Le-Reste-700447003388902">
-					<img class="fbg couleur" src="img/fb.png" alt="">
-					<img class="fbg noir" src="img/fb_n.png" alt="">
-				</a>
-			</p>
-			<p>
-				<a href="https://plus.google.com/113407799173132476603/about">
-					<img class="fbg couleur" src="img/gplus.png" alt="">
-					<img class="fbg noir" src="img/gplus_n.png" alt="">
-				</a>
-			</p>
-		</section>
 
-		<section class="formsContOrdo droite"><h3>Formulaire de contact de la pharmacie Le Reste</h3>
+		<section class="formContact gauche"><h3>Formulaire de contact</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -315,18 +295,16 @@
 				    // envoi de l'e-mail :
 					if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 	
-						echo "<article class='artIntroOrdo'><br><br><br>";
+						echo "<article class='artMessageConfirm'>";
 						echo "<p>Merci, votre message a bien été envoyé.</p>";
 						echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-						echo "<br><br><br><br><br>";
 						echo "</article>";
 					}
 					else{
-						echo "<article class='artIntroOrdo'><br><br><br>";
+						echo "<article class='artMessageConfirm'>";
 						echo "<p>Aïe, il y a eu un problème ...</p>";
 						echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-						echo "<br><br><br><br><br>";
 						echo "</article>";
 					}
 				};
@@ -392,10 +370,32 @@
 				</section>
 			<?php endif ?>
 		</section>
+
+		<section class="formContact droite"><h3>Coordonnées de la pharmacie</h3>
+			<p>Pharmacie Le Reste</p>
+			<p>21 rue du Bêle</p>
+			<p>44300 Nantes</p>
+			<p id="telContact"><i class="fa fa-phone"    aria-hidden="true"></i><a href="tel:+33240251580">02 40 25 15 80</a></p>
+			<p><i class="fa fa-fax"      aria-hidden="true"></i>02 40 30 06 56</p>
+			<p><a href="mailto:contact@pharmacielereste.fr"><i class="fa fa-envelope" aria-hidden="true"></i>contact@pharmacielereste.fr</a></p>
+			<p>
+				<a href="https://www.facebook.com/Pharmacie-Le-Reste-700447003388902">
+					<img class="fbg couleur" src="img/fb.png" alt="">
+					<img class="fbg noir" src="img/fb_n.jpg" alt="">
+				</a>
+			</p>
+			<p>
+				<a href="https://plus.google.com/113407799173132476603/about">
+					<img class="fbg couleur" src="img/gplus.png" alt="">
+					<img class="fbg noir" src="img/gplus_n.jpg" alt="">
+				</a>
+			</p>
+		</section>
+
 	</main>
 
 	<footer>
-		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
+		<section><h3>Coordonnées de la pharmacie</h3>
 			<p>Pharmacie Le Reste</p>
 			<p>21 rue du Bêle</p>
 			<p>44300 Nantes</p>

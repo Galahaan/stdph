@@ -58,14 +58,14 @@ h2{
 .champsForm input, .champsForm textarea{
 	font-size: 1.8rem;
 }
-.champsForm span{
-	font-size: 1.3rem; /* messages d'erreurs dans les form. contact et ordonn. */
+.champsForm p span{
+	font-size: 1.3rem; /* messages d'erreurs dans les form. contact, ordonnance et commande */
 }
 .droite h4{
 	font-size: 2.2rem; /* intro du form. de contact "Envoyez-nous un message ... " */
 }
-.droite p{
-	font-size: 1.8rem; /* message de réussite ou d'échec après l'envoi du formulaire */
+.droite{
+	font-size: 1.8rem; /* coordonnées de la pharmacie */
 }
 footer section:first-of-type{
 	font-size: 1.3rem; /* Pharmacie Le Reste ... */
@@ -228,129 +228,32 @@ ul{
 /* ******************************          Page Contact          ****************************** */
 /* ******************************************************************************************** */
 
-/* espace entre le bandeau et les infos de contact */
-/* et entre les infos de contact et le footer      */
-
-.formsContOrdo{      /* formulaires 'contact' et 'ordonnance' */
-
-	padding: 1rem 0; /* si on met un margin, il prend la couleur de fond du body */
-}
-
 /* <h3> ajouté pour la validation W3C mais non affiché */
-.formsContOrdo h3{
-	display: none;	/* cette consigne a ausi un effet sur       prepaCommande.php    et    prepaOrdonnance.php       */
-}
-
-/* ************     colonne de gauche : coordonnées et liens vers réseaux sociaux      ************ */
-.gauche p:first-of-type{
-	padding-top: 2rem;		/* marge au dessus de "Pharmacie Le Reste" */
-}
-
-.gauche p:nth-of-type(3){
-	margin-bottom: 2rem; 	/* marge en dessous de Nantes */
-}
-
-/* positions de tel, fax et mail */
-.gauche p:nth-of-type(4),
-.gauche p:nth-of-type(5),
-.gauche p:nth-of-type(6){
-	margin-bottom: 1rem;
-	position: relative;
-	top: 0;
-	left: -0.8rem;
-}
-
-/* on met juste le tel en gras */
-#telContact{
-	font-weight: bold;
-	text-decoration: underline;
-}
-/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
-/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
-#telContact a:link, #telContact a:visited, #telContact a:hover, #telContact a:focus, #telContact a:active{
-	color: black;
-}
-
-/* soulignement et coloration du mail quand on passe dessus */
-.gauche p:nth-of-type(6) a{
-	text-decoration: underline;
-}
-
-.gauche p:nth-of-type(6) a:link, .gauche p:nth-of-type(6) a:visited{
-	color: black;
-}
-
-.gauche p:nth-of-type(6) a:hover, a:focus, a:active{
-	color: #F29200;
-}
-
-/* espace avant les liens FB et G+ */
-.gauche p:nth-of-type(6){
-	margin-bottom: 3rem;
-}
-
-
-/* fontawesome pour les icônes "tel", "fax" et "mail" */
-.gauche .fa-phone, .gauche .fa-fax, .gauche .fa-envelope{
-	margin-right: 2rem;
-	position: relative;
-	top: 0.2rem;
-	left: 0;
-}
-
-/* Icônes / liens vers Facebook et Google+ */
-
-.gauche p:nth-of-type(7), .gauche p:nth-of-type(8){
-	display: inline-block;
-	height: 3rem;
-	width: 3rem;
-	margin: 0 3rem; /* pour les espacer un peu */
-	position: relative;
-}
-
-.gauche .fbg{
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-
-/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
-/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
-.gauche .noir:hover, .noir:focus, .noir:active{
+.formContact h3{
 	display: none;
 }
 
-/* j'ai essayé avec visibility, z-index ... dessus / dessous ... rien n'y fait, c'est toujours "oscillant" */
+/* ********************     colonne de gauche : formulaire de contact      ******************** */
 
-
-
-/* ********************     colonne de droite : formulaire de contact      ******************** */
-
-/* ligne fine de séparation entre les 2 § */
-/* (en version mobile uniquement !)       */
-.droite:before{
-	content: "";
-	display: block;
-	height: .2rem;
-	width: 4rem;
-	margin: 2rem auto;
-	background-color: #951A80;
-}
 
 /* message d'introduction au formulaire : "Envoyez-nous un message ... " */
-.droite h4{
-	margin-bottom: 2rem;
+.gauche h4{
+	padding: 2rem 0;
 	font-weight: 700;
 }
 
-/* saisie obligatoire des champs */
-.droite section > span{
-	font-size: .8em;
+/* "la saisie de tous les champs ..." */
+.formContact section span:first-of-type{
+	font-size: 1.2rem;
+}
+
+/* pour positionner latéralement les civilités dans le formulaire */
+.formContact .champsForm [for="idCiviliteM"] {
+	padding-right: 25%;
 }
 
 /* pour que les lignes fines entre les champs ne fassent pas toute la largeur de la colonne */
-.droite section{
+.gauche section{
 	margin: 0 1rem;
 }
 
@@ -362,7 +265,7 @@ ul{
 	width: 100%;
 	text-align: right;
 }
-
+/* Cette partie est commune aux 3 formulaires : contact, ordonnance et commande */
 /* proportions entre label et input pour les champs du formulaire */
 .champsForm input:not([type="radio"]), .champsForm textarea{
 	font-weight: bold;
@@ -376,9 +279,7 @@ ul{
 	font-family: 'Advent Pro', sans-serif;
 	margin-left: 5%	
 }
-.champsForm [for="idCiviliteM"] {
-	margin-right: 25%;
-}
+
 /* pour bloquer la largeur du champ texte */
 .champsForm textarea{
 	min-width: 65%;
@@ -391,10 +292,10 @@ ul{
 	vertical-align: top;
 }
 
-/* pour les éventuels messages d'erreurs */
-.champsForm span{
+/* messages d'erreurs dans les form. contact, ordonnance et commande */
+.champsForm p span{
 	text-align: right;
-	margin-right: 1.2rem;
+	padding-right: 1.2rem;
 	color: red;
 }
 
@@ -424,6 +325,111 @@ ul{
 	background-color: #F29200;
 }
 
+/* Espaces au dessus et au dessous du message de confirmation d'envoi du formulaire */
+.formContact .artMessageConfirm {
+	padding: 3rem 1rem 0;
+}
+
+/* ************     colonne de droite : coordonnées et liens vers réseaux sociaux      ************ */
+
+/* ligne fine de séparation entre les 2 § */
+/* (en version mobile uniquement !)       */
+.droite:before{
+	content: "";
+	display: block;
+	height: .2rem;
+	width: 4rem;
+	margin: 3rem auto 0;
+	background-color: #951A80;
+}
+
+/* espace en dessous des icônes fb et g+ */
+.droite {
+	padding-bottom: 4rem;
+}
+
+/* marge au dessus de "Pharmacie Le Reste" */
+.droite p:first-of-type{
+	padding-top: 3rem;
+}
+
+/* marge en dessous de Nantes */
+.droite p:nth-of-type(3){
+	padding-bottom: 2rem;
+}
+
+/* positions de tel, fax et mail */
+/* on les décale très légèrement vers la gauche puisque les icônes les avaient décalées vers la droite */
+.droite p:nth-of-type(4),
+.droite p:nth-of-type(5),
+.droite p:nth-of-type(6){
+	padding-bottom: 1rem;
+	position: relative;
+	top: 0;
+	left: -0.8rem;
+}
+
+/* tel en gras et souligné */
+#telContact{
+	font-weight: bold;
+	text-decoration: underline;
+}
+/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
+#telContact a:link, #telContact a:visited, #telContact a:hover, #telContact a:focus, #telContact a:active{
+	color: black;
+}
+
+/* soulignement et coloration du mail quand on passe dessus */
+.droite p:nth-of-type(6) a{
+	text-decoration: underline;
+}
+
+.droite p:nth-of-type(6) a:link, .droite p:nth-of-type(6) a:visited{
+	color: black;
+}
+
+.droite p:nth-of-type(6) a:hover, a:focus, a:active{
+	color: #F29200;
+}
+
+/* espace avant les liens FB et G+ */
+.droite p:nth-of-type(6){
+	margin-bottom: 3rem;
+}
+
+
+/* fontawesome pour les icônes "tel", "fax" et "mail" */
+.droite .fa-phone, .droite .fa-fax, .droite .fa-envelope{
+	margin-right: 2rem;
+	position: relative;
+	top: 0.2rem;
+	left: 0;
+}
+
+/* icônes/liens vers Facebook et Google+ */
+.droite p:nth-of-type(7), .droite p:nth-of-type(8){
+	display: inline-block;
+	height: 3rem;
+	width: 3rem;
+	margin: 0 3rem; /* pour les espacer un peu */
+	position: relative;
+}
+
+.droite .fbg{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
+.droite .noir:hover, .droite .noir:focus, .droite .noir:active{
+	display: none;
+}
+/* j'ai essayé avec visibility, z-index ... dessus / dessous ... rien n'y fait, c'est toujours "oscillant" */
+
+
 /* Fin de Contact */
 
 /* ******************************************************************************************** */
@@ -431,9 +437,26 @@ ul{
 /* ******************************          + commande            ****************************** */
 /* ******************************************************************************************** */
 
+/* espace entre le bandeau et le formulaire */
+/* et entre le formulaire et le footer      */
+.formOrdo, .formComm{
+	padding: 2rem 0; /* si on met un margin, il prend la couleur de fond du body */
+}
+.formOrdo h3, .formComm h3 {
+	font-weight: bold;
+}
+
+/* Espaces au dessus et au dessous du message de confirmation d'envoi du formulaire */
+.formOrdo .artMessageConfirm, .formComm .artMessageConfirm {
+	padding: 10% 8% 45%;
+}
+/* Espace entre les 2 phrases du message de confirmation d'envoi du formulaire */
+.formOrdo .artMessageConfirm p:first-of-type, .formComm .artMessageConfirm p:first-of-type {
+	padding-bottom: 8%;
+}
 
 /* marges autour du § d'introduction situé au dessus du formulaire */
-.artIntroOrdo {
+.artIntro {
 	padding: 1rem 1rem;      /*     haut et bas : 1rem      gauche et droite : 1rem      */
 	text-align: justify;
 }
@@ -465,13 +488,13 @@ ul{
 	display: block;
 }
 
-/* calage à gauche dans l'article */
-.formsContOrdo article:first-of-type{
+/* calage à gauche dans l'article du mode d'emploi */
+.formOrdo article:first-of-type{
 	text-align: left;
 }
 
 /*  § Mode d'emploi  */
-.artModeEmploi {
+.formOrdo .artModeEmploi {
 	padding: 2rem;
 	margin: 0 .5rem 2rem .5rem;
 	background-color: #5B5B5B;
@@ -480,34 +503,34 @@ ul{
 }
 
 /* centrage de l'intro */
-.artModeEmploi div {
+.formOrdo .artModeEmploi div {
 	font-style: normal;
 	text-align: center;
 	margin-bottom: 2rem;
 }
 
 /* les 4 étapes en gras */
-.artModeEmploi span{
+.formOrdo .artModeEmploi span{
 	font-weight: bold;
 	text-decoration: underline;
 }
 
 /* un peu d'espace entre les différents points du mode d'emploi */
-.artModeEmploi ol li, .artModeEmploi ol li span{
+.formOrdo .artModeEmploi ol li, .formOrdo .artModeEmploi ol li span{
 	margin: 1.5rem 0;
 }
 
 /* message pour l'accès impossible aux fichiers sur certains smartphones */
-.artModeEmploi ul li p:nth-of-type(2){
+.formOrdo .artModeEmploi ul li p:nth-of-type(2){
 	color: orange;
 	font-weight: bold;
 }
 
-.artModeEmploi li{
+.formOrdo .artModeEmploi li{
 	margin-left: 1rem;
 }
 
-.artModeEmploi ul{
+.formOrdo .artModeEmploi ul{
 	margin-left: 2rem;
 }
 
@@ -516,8 +539,13 @@ ul{
 	font-size: .8em;
 }
 
-/* Blabla au dessus du champs "textarea" */
-.champsForm p:first-of-type{
+/* pour positionner latéralement les civilités dans le formulaire */
+.formOrdo .champsForm [for="idCiviliteM"], .formComm .champsForm [for="idCiviliteM"] {
+	padding-right: 25%;
+}
+
+/* blabla au dessus du champs "textarea" */
+.formOrdo .champsForm p:first-child{
 	text-align: justify;
 	padding: 0 1.2rem 1.2rem 1.2rem;
 }
@@ -768,23 +796,24 @@ footer section:last-of-type{
 		font-size: 2rem; /* old 1.8 */
 	}
 
-	/* Blabla au dessus du champs "textarea" */
-	.champsForm p:first-child{
+	/* blabla au dessus du champs "textarea" */
+	.formOrdo .champsForm p:first-child{
 		width: 58%;					/* aucune valeur */
 		margin-left: 33%;			/*     avant     */
 	}
 
-	.champsForm span{
-		font-size: 1.5rem; /* old 1.3 pour les éventuels messages d'erreurs */
+	/* messages d'erreurs dans les form. contact, ordonnance et commande */
+	.champsForm p span{
+		font-size: 1.5rem; /* old 1.3 */
 	}
-	.droite p{
-		font-size: 2rem; /* old 1.8 pour le message explicatif après l'envoi du formulaire */
+	.droite{
+		font-size: 2rem; /* old 1.8 coordonnées de la pharmacie */
 	}
 
 	/*     page prepaOrdonnance     */
 
-	/* marges des § concernant le mode d'emploi */
-	.artIntroOrdo {
+	/* marges autour du § d'introduction situé au dessus du formulaire */
+	.artIntro {
 		padding: 2rem 2rem;				/* old : 1rem   1rem			*/
 	}
 	/* calage du lien "mode d'emploi" */
@@ -837,10 +866,33 @@ footer section:last-of-type{
 	/* Formulaire de contact */
 
 	/* espace entre le bandeau et les infos de contact */
-	.formsContOrdo{
+	.formContact{
 		padding: 3rem 0; /* old 1 0 */
 	}
 
+	/* tailles des champs saisis dans le formulaire et des messages associés */
+	/* + taille des coordonnées de la colonne d'à côté */
+	.formContact section form, .droite{
+		font-size: 2.1rem; /* old 2 */
+	}
+
+	/* messages d'erreurs dans les form. contact, ordonnance et commande */
+	.champsForm p span{
+		font-size: 2rem; /* old 1.5 */
+	}
+
+	/* "la saisie de tous les champs ..." */
+	.formContact section span:first-of-type{
+		font-size: 1.5rem; 		/* old 1.2 */
+	}
+
+	/* pour positionner latéralement les civilités dans le formulaire de contact */
+	.formContact .champsForm [for="idCiviliteM"] {
+		padding-right: 10%;
+	}
+
+
+	/* coordonnées de la pharmacie */
 	.gauche p:first-of-type, .gauche p:nth-of-type(2), .gauche p:nth-of-type(3){
 		font-size: 2.35rem;
 	}
@@ -863,7 +915,7 @@ footer section:last-of-type{
 		margin: 0 2rem 0 0;
 	}
 
-	.formsContOrdo{
+	.formContact{
 		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
 		vertical-align: top;
 	}
@@ -882,19 +934,6 @@ footer section:last-of-type{
 		font-size: 3rem; /* old 2 */
 	}
 
-	/* tailles des champs saisis dans le formulaire et des messages associés */
-
-	.champsForm input, .champsForm textarea{
-		font-size: 2.3rem; /* old 2 */
-	}
-
-	.champsForm span{
-		font-size: 2rem; /* old 1.5 pour les éventuels messages d'erreurs */
-	}
-
-	.droite p{
-		font-size: 2.35rem; /* old 1.6 pour le message explicatif après l'envoi du formulaire */
-	}
 
 	/* Footer */
 
@@ -908,8 +947,8 @@ footer section:last-of-type{
 
 	/*     page prepaOrdonnance     */
 
-	/* marges des § concernant le mode d'emploi */
-	.artIntroOrdo {
+	/* marges autour du § d'introduction situé au dessus du formulaire */
+	.artIntro {
 		padding: 3rem 3rem;				/* old : 2rem   2rem			*/
 	}
 	/* calage du lien "mode d'emploi" */
@@ -965,7 +1004,12 @@ footer section:last-of-type{
 	}
 
 	/* Formulaire de contact */
-	
+
+	/* "la saisie de tous les champs ..." */
+	.formContact section span:first-of-type{
+		font-size: 1.7rem; 		/* old 1.5 */
+	}
+
 	/* FB et G+ */
 	.gauche p:nth-of-type(7), .gauche p:nth-of-type(8){
 		display: inline-block;
