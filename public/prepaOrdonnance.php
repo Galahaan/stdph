@@ -474,7 +474,7 @@
 
 				<article><a href="#" id="idModeEmploi"><h4>Mode d'emploi</h4></a>
 
-					<div class="artModeEmploi">
+					<div class="divModeEmploi">
 						<div>Il suffit de suivre ces <span>4 étapes :</span></div>
 						<ol>
 							<li><span>numériser l'ordonnance :</span>

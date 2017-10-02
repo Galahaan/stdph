@@ -131,8 +131,8 @@
 			</article>
 	<!-- matériel médical / contention ? /   -->
 			<article>
-				<a href="humour.html">
-					<h4>Un peu d'humour !..</h4>
+				<a href="humour.php">
+					<h4>La blague de Chuck Norris !..</h4>
 				</a>
 				<img src="img/humour2.jpg" alt="">
 			</article>

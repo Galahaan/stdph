@@ -67,6 +67,9 @@ h2{
 .droite{
 	font-size: 1.8rem; /* coordonnées de la pharmacie */
 }
+.humour p:last-of-type {
+	font-size: 1.4rem;   /* humour.php, "Merci à ..." */
+}
 footer section:first-of-type{
 	font-size: 1.3rem; /* Pharmacie Le Reste ... */
 }
@@ -479,12 +482,12 @@ ul{
 }
 
 /* par défaut, le mode d'emploi est masqué */
-#idModeEmploi + .artModeEmploi {
+#idModeEmploi + .divModeEmploi {
 	display: none;
 }
 
 /* quand on clique sur Mode d'emploi, ça le déplie */
-#idModeEmploi:active + .artModeEmploi, #idModeEmploi:focus + .artModeEmploi {
+#idModeEmploi:active + .divModeEmploi, #idModeEmploi:focus + .divModeEmploi {
 	display: block;
 }
 
@@ -494,7 +497,7 @@ ul{
 }
 
 /*  § Mode d'emploi  */
-.formOrdo .artModeEmploi {
+.formOrdo .divModeEmploi {
 	padding: 2rem;
 	margin: 0 .5rem 2rem .5rem;
 	background-color: #5B5B5B;
@@ -503,34 +506,34 @@ ul{
 }
 
 /* centrage de l'intro */
-.formOrdo .artModeEmploi div {
+.formOrdo .divModeEmploi div {
 	font-style: normal;
 	text-align: center;
 	margin-bottom: 2rem;
 }
 
 /* les 4 étapes en gras */
-.formOrdo .artModeEmploi span{
+.formOrdo .divModeEmploi span{
 	font-weight: bold;
 	text-decoration: underline;
 }
 
 /* un peu d'espace entre les différents points du mode d'emploi */
-.formOrdo .artModeEmploi ol li, .formOrdo .artModeEmploi ol li span{
+.formOrdo .divModeEmploi ol li, .formOrdo .divModeEmploi ol li span{
 	margin: 1.5rem 0;
 }
 
 /* message pour l'accès impossible aux fichiers sur certains smartphones */
-.formOrdo .artModeEmploi ul li p:nth-of-type(2){
+.formOrdo .divModeEmploi ul li p:nth-of-type(2){
 	color: orange;
 	font-weight: bold;
 }
 
-.formOrdo .artModeEmploi li{
+.formOrdo .divModeEmploi li{
 	margin-left: 1rem;
 }
 
-.formOrdo .artModeEmploi ul{
+.formOrdo .divModeEmploi ul{
 	margin-left: 2rem;
 }
 
@@ -718,9 +721,39 @@ main > p:nth-child(2){
 	display: none;
 }
 
+/* ******************************************************************************************** */
+/* ******************************             humour             ****************************** */
+/* ******************************************************************************************** */
 
+/* section humour */
+.humour {
+	padding: 2rem;
+	min-height: 31rem; /* pour ne pas que le bas de l'écran remonte trop haut */
+	position: relative;
+}
 
+/* titre "Thérapie par l'humour" */
+.humour h3 {
+	padding: 3rem 0 5rem;
+	font-weight: bold;
+}
 
+/* la blague */
+.humour p:first-of-type {
+	padding-bottom: 8rem; /* permet de laisser toujours une marge entre la fin de la blague et (*) */
+}
+
+/* Merci à ... */
+.humour p:last-of-type {
+	font-family: Arial;
+	text-align: left;
+	position: absolute;
+	bottom: 2rem;		/* calé en bas, juste au dessus du footer */
+	left: 2rem;
+}
+.humour a {
+	text-decoration: underline;
+}
 
 
 /* ******************************************************************************************** */
@@ -821,9 +854,17 @@ footer section:last-of-type{
 		padding: 0 0 2rem 5rem;			/* old : 0 0 2rem 3rem			*/
 	}
 	/*  § Mode d'emploi  */
-	.artModeEmploi {
+	.divModeEmploi {
 		margin: 0 2rem 2rem 2rem;		/* old : 0 .5rem 2rem .5rem		*/
 	}
+
+	/*           page humour           */
+
+	/* "Merci à ..." */
+	.humour p:last-of-type {
+		font-size: 1.6rem;				/* old : 1.4rem					*/
+	}
+
 }
 
 /* 																									600 px		*/
@@ -956,7 +997,7 @@ footer section:last-of-type{
 		padding: 0 0 3rem 5rem;			/* old : 0 0 2rem 5rem			*/
 	}
 	/*  § Mode d'emploi  */
-	.artModeEmploi {
+	.divModeEmploi {
 		padding: 3rem;					/* old : 2rem					*/
 		margin: 0 3rem 3rem 3rem;		/* old : 0 2rem 2rem 2rem		*/
 	}
@@ -964,6 +1005,18 @@ footer section:last-of-type{
 	/*        page horaires         */
 	.horaires {
 		width: 85%;						/* old : 90%   */
+	}
+
+	/*           page humour           */
+
+	/* taille minimale obligatoire de la section */
+	.humour {
+		min-height: 45rem;
+	}
+
+	/* "Merci à ..." */
+	.humour p:last-of-type {
+		font-size: 1.8rem;				/* old : 1.6rem					*/
 	}
 }
 
@@ -1028,6 +1081,11 @@ footer section:last-of-type{
 		font-size: 2.5rem; /* old 2.3 */
 	}
 
+	/*           page humour           */
+	/* "Merci à ..." */
+	.humour p:last-of-type {
+		font-size: 2rem;				/* old : 1.8rem	*/
+	}
 
 	/* Footer */
 

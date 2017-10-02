@@ -30,18 +30,40 @@
 	</header>
 
 	<main>
-		<section><h3> :-) </h3>
-					<br><br><br><br><br>
-					Chuck Norris ne vit pas sur Terre, c'est la Terre qui vit sous Chuck Norris.
+		<section class="humour"><h3>La thérapie par l'humour ! (*)</h3>
+		<?php
+			// https://www.chucknorrisfacts.fr/api/api
+			do{
+				$url = "https://www.chucknorrisfacts.fr/api/get?data=tri:alea;type:txt;nb:1";
+				try {
+					$resultat = file_get_contents($url);
+				} catch (Exception $e) {
+					echo "file_get_contents : " . $e->getMessage() . "<br>";
+				}
 
-					<?php 
+				if( $resultat !== false ){
+					$resultat = json_decode($resultat, true);
+				}
+				else{
+					// file_get_contents a rencontré une erreur et a retourné "false"
+					$resultat = [["points" => "8000" , "fact" => "Aïe, désolé, problème de serveur ..."], [0]];
+				}
 
-						// https://www.chucknorrisfacts.fr/api/api
-						// https://www.chucknorrisfacts.fr/api/get?data=tri:alea;type:txt;nb:5
-
-					?>
-
-					<br><br><br><br><br><br><br><br><br><br>
+				// foreach($resultat as $blague){
+				// 	if( $blague['points'] >= 5000 ){
+				// 		echo "<p>" . $blague['fact'] . " - " . $blague['points'] . "</p>";
+				// 	}
+				// }
+				// echo "<pre>";
+				// print_r($resultat);
+				// echo "</pre>";
+			}
+			while( $resultat[0]['points'] <= 5000 );
+			echo "<p>" . $resultat[0]['points'] . " - " . $resultat[0]['fact'] . "</p>";
+			// echo "<p>" . $resultat[0]['fact'] . "</p>";
+		?>
+			<p>(*) Merci à <a href="https://www.chucknorrisfacts.fr">chucknorrisfacts.fr</a> !<br>
+			Pardonnez-nous si la blague n'est pas toujours de très bon goût !..</p>
 		</section>
 	</main>
 
