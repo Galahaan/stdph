@@ -85,7 +85,7 @@ h3{
 
 /* Image de fond */
 header section{
-	background-image: url("../img/fond1.jpg");
+	background-image: url("../img/fond.jpg");
 	background-size: cover;
 	margin: auto;
 	padding-top: 15%;

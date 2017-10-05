@@ -103,7 +103,7 @@
 				<a href="prepaCommande.php">
 					<h4>Préparation de commande</h4>
 				</a>
-				<img src="img/prepaCommande2.png" alt="">
+				<img src="img/prepaCommande.png" alt="">
 			</article>
 			<article>
 				<a href="gammesProduits.html">
@@ -115,26 +115,26 @@
 				<a href="pharmaDeGarde.php">
 					<h4>Pharmacies de garde</h4>
 				</a>
-				<img src="img/pharmaDeGarde2.jpg" alt="">
+				<img src="img/pharmaDeGarde.jpg" alt="">
 			</article>
 			<article>
 				<a href="promos.html">
 					<h4>Promos et cadeaux</h4>
 				</a>
-				<img src="img/promos1.jpg" alt="">
+				<img src="img/promos.jpg" alt="">
 			</article>
 			<article>
 				<a href="infos.html">
 					<h4>Informations / Conseils</h4>
 				</a>
-				<img src="img/questions1.jpg" alt="">
+				<img src="img/questions.jpg" alt="">
 			</article>
 	<!-- matériel médical / contention ? /   -->
 			<article>
 				<a href="humour.php">
 					<h4>La blague de Chuck Norris !..</h4>
 				</a>
-				<img src="img/humour2.jpg" alt="">
+				<img src="img/humour.jpg" alt="">
 			</article>
  		</section>
 	</main>
