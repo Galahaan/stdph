@@ -146,7 +146,7 @@
 			<p>En chronobus <span>C6</span>, descendez à l'arrêt <span>St Joseph de Porterie</span>:
 				vous avez moins d'une minute à pied.</p>
 
-			<p><b>En cas de garde</b>, la pharmacie reste ouverte jusqu'à <b>20h30</b>. Après 20h30, s'adresser au commissariat <b>Waldec-Rousseau</b>.</p>
+			<p><b>En cas de garde</b>, la pharmacie reste ouverte jusqu'à <b>20h30</b>. Après 20h30, s'adresser au commissariat <b>Waldeck-Rousseau</b>.</p>
 
 		</section>
 	</main>

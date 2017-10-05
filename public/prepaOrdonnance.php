@@ -502,7 +502,7 @@
 						Nous nous occupons de la suite !
 					</div>
 				</article>
-				<span class="obligatoire">(la saisie de tous les champs est obligatoire)</span>
+				<span class="obligatoire">(la saisie de tous les champs est obligatoire ; pièce jointe < 2 Mo)</span>
 				<form method="POST" enctype="multipart/form-data">
 					<div class="champsForm">
 						<input type="radio" id="idCiviliteMme" name="civilite" value="Mme" required
