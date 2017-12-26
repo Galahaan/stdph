@@ -19,7 +19,7 @@ a:not([target]){ text-decoration: none; }
 
 /* img = 100% de la largeur du parent */
 img{
-	max-width: 100%;
+	width: 100%; /* avant c'était "max-width", mais j'ai l'impression que "width" tout court est plus logique ... */
 }
 
 body{
@@ -29,7 +29,7 @@ body{
  	background-color: #575757;
  	max-width: 95rem;
  	margin: auto;
-} 
+}
 main{
 	background-color: white;
 }
@@ -51,6 +51,9 @@ h2{
 }
 .vignettes article h4{
 	font-size: 2.5rem; /* titres des vignettes de la page Index */
+}
+.gammes article h4 {
+	font-size: 3.5rem; /* titres des photos § de la page gammesProduits */
 }
 .fa-phone, .fa-fax, .fa-envelope{
 	font-size: 2rem; /* taille des icônes font-awesome : tel, fax et mail */
@@ -85,7 +88,10 @@ h3{
 
 /* Image de fond */
 header section{
-	background-image: url("../img/fond.jpg");
+	background-color: lightgrey;                /* dans le cas où l'image ne peut être chargée, ça fait un fond par défaut */
+	background-image: url("../img/fond.jpg"), url("../img/fond_light.jpg");
+	/* Les navigateurs chargeront en premier les images spécifiées en fin de ligne (fond_light.jpg)
+	   et chargeront ensuite vers la gauche (fond.jpg). */
 	background-size: cover;
 	margin: auto;
 	padding-top: 15%;
@@ -207,7 +213,7 @@ ul{
 	width: 100%;
 	height: 100%;
 	font-weight: 700;
-	line-height: 1.4em; /* line-height = hauteur de l'interligne */
+	/*line-height: 1.4em;  line-height = hauteur de l'interligne, si jamais le nom de la vignette ne tient pas sur une seule ligne */
 	opacity: 0;
 }
 
@@ -226,6 +232,13 @@ ul{
 			transform: translate(-50%, -50%);
 	width: 100%;
 }
+
+/* pour supprimer l'espace de qqs pixels sous l'image */
+/* alsacreations.com/astuce/lire/52-espaces-sous-les-images.html */
+.vignettes article img {
+	display: block;
+}
+
 
 /* ******************************************************************************************** */
 /* ******************************          Page Contact          ****************************** */
@@ -316,9 +329,6 @@ ul{
 	padding: 1rem;
 	margin-right: 2rem;
 	border: none;
-
-	-webkit-border-radius: 5px; /* cf site border radius generator */
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 
@@ -755,6 +765,64 @@ main > p:nth-child(2){
 	text-decoration: underline;
 }
 
+/* ******************************************************************************************** */
+/* ******************************         gammesProduits         ****************************** */
+/* ******************************************************************************************** */
+
+/* titre "Les Marques que ..." */
+.gammes h3 {
+	padding: 3rem 0 5rem;
+	font-weight: bold;
+}
+
+/* image d'introduction au § */
+.gammes article .imageDeco img {
+	display: block; 				/* pour supprimer l'espace de qqs pixels sous l'image, cf index.php pour l'explication */
+	opacity: 0.3;
+}
+
+/* pour caler les titres des articles sur l'image */
+.gammes article .imageDeco {
+	position: relative;
+	border: 0.3rem solid #951A80;
+}
+
+/* titres en mauve, placé sur l'image */
+.gammes article h4 {
+	color: #951A80;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%); /* pour Chrome */
+	   -moz-transform: translate(-50%, -50%); /* pour Firefox */
+			transform: translate(-50%, -50%);
+	width: 100%;
+}
+
+/* organisation des textes et des images associées */
+.gammes article div p, .gammes article div:not(.imageDeco) img {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 1%;
+}
+
+/* organisation des textes et des images associées : proportion texte / image */
+.gammes article div p {
+	width: 55%;
+}
+.gammes article div:not(.imageDeco) img {
+	width: 40%;
+}
+
+/* alternance de gris et de blanc entre les différents produits d'un même § */
+.gammes article div:nth-child(2n+1) {
+	background-color: #EFEFFF;
+}
+/* réglage de la taille des images                                                              =>  à ajouter dans les media queries +++++++++++++   */
+/*.gammes article div:not(.imageDeco) img {
+	width: 80%;
+}
+*/
 
 /* ******************************************************************************************** */
 /* ******************************              Footer            ****************************** */

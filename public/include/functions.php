@@ -4,7 +4,7 @@
 //
 //						integreCLR( $nomDuFichier )
 //
-// NB: inclusion de fichiers '.php' uniquement
+// NB: inclusion de fichiers '.php' uniquement, dans le répertoire 'include' obligatoirement
 //
 // Pour inclure de façon sécurisée un fichier (notamment 'functions.php') en tête
 // d'un fichier PHP, ou HTML, ... , il faut écrire tout un paragraphe assez lourd.
@@ -40,8 +40,8 @@ function integreCLR( $nomDuFichier ){
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("includes/" . $page) && $page != 'index.php') {
-	    	include_once("./includes/".$page);
+	    if (file_exists("include/" . $page) && $page != 'index.php') {
+	    	include_once("./include/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";

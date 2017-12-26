@@ -1,0 +1,72 @@
+﻿#
+# Redirection http -> https
+#
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+#
+# Définition de l'index par défaut à charger, ou, si non trouvé, de la page à afficher à la place
+#
+DirectoryIndex index.php /erreurs/erreur_403.php
+
+
+#
+# En cas d'absence de fichier 'index.html', pour empêcher l'affichage du contenu du répertoire :
+# (si je mets un "deny from all", c'est trop puissant et le site ne fonctionne plus :/   )
+#
+# Options -Indexes
+
+
+#
+# Pages d'erreurs personnalisées
+#
+ErrorDocument 401 /erreurs/erreur_401.php
+ErrorDocument 403 /erreurs/erreur_403.php
+ErrorDocument 404 /erreurs/erreur_404.php
+ErrorDocument 500 /erreurs/erreur_500.php
+
+
+#
+# Ici c'est juste de l'optimisation.
+# Mise en cache dans le navigateur : délais de rafraîchissements
+# (après le tout 1er chargement de la page par le navigateur, les éléments ci-dessous
+#  ne seront rechargés par le navigateur qu'une fois que le délai indiqué pour chacun d'eux sera expiré)
+# => cela permet donc une navigation plus rapide puisque certains éléments de la page sont pris dans le
+# cache du navigateur (en local), et non depuis le serveur.
+#
+<IfModule mod_expires.c>
+# Le fichier html
+ExpiresByType text/html                 "access plus 0 seconds"
+# Les données
+ExpiresByType text/xml                  "access plus 0 seconds"
+ExpiresByType application/xml           "access plus 0 seconds"
+ExpiresByType application/json          "access plus 0 seconds"
+# Les flux (feed ?)
+ExpiresByType application/rss+xml       "access plus 1 hour"
+ExpiresByType application/atom+xml      "access plus 1 hour"
+# Favicon (ne peut pas être renommé)
+ExpiresByType image/x-icon              "access plus 1 week"
+# Medias: images, video, audio
+ExpiresByType image/gif                 "access plus 1 month"
+ExpiresByType image/png                 "access plus 1 month"
+ExpiresByType image/jpeg                "access plus 1 month"
+ExpiresByType image/jpg                "access plus 1 month"
+ExpiresByType video/ogg                 "access plus 1 month"
+ExpiresByType audio/ogg                 "access plus 1 month"
+ExpiresByType video/mp4                 "access plus 1 month"
+ExpiresByType video/webm                "access plus 1 month"
+# fichiers HTC (css3pie)
+ExpiresByType text/x-component          "access plus 1 month"
+# Webfonts
+ExpiresByType application/x-font-ttf    "access plus 1 month"
+ExpiresByType font/opentype             "access plus 1 month"
+ExpiresByType application/x-font-woff   "access plus 1 month"
+ExpiresByType image/svg+xml             "access plus 1 month"
+ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+# CSS and JavaScript
+ExpiresByType text/css                  "access plus 1 year"
+ExpiresByType application/javascript    "access plus 1 year"
+</IfModule>
+

@@ -27,8 +27,8 @@
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("includes/" . $page) && $page != 'index.php') {
-	    	include_once("./includes/".$page);
+	    if (file_exists("include/" . $page) && $page != 'index.php') {
+	    	include_once("./include/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -73,6 +73,7 @@
 		// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
 		// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
 
+
 		//  ********  PRENOM  ********
 
 		// supprime les balises HTML et PHP
@@ -81,8 +82,8 @@
 		$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
 		// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
 		$prenom = SuperTrim($prenom);
-		// remplace les espaces ' ' par des tirets '-'
-		$prenom = str_replace(" ", "-", $prenom);
+		// remplace les espaces ' ' par des soulignés '_'
+		$prenom = str_replace(" ", "_", $prenom);
 		// 1ère lettre en majuscule, les autres en minuscules
 		$prenom = ucfirst(strtolower($prenom));
 		// test de la contrainte sur la longueur de la chaîne
@@ -95,7 +96,7 @@
 		$nom = strip_tags($_POST['nom']);
 		$nom = str_replace($trouverCar, $nouveauCar, $nom);
 		$nom = SuperTrim($nom);
-		$nom = str_replace(" ", "-", trim($nom));
+		$nom = str_replace(" ", "_", trim($nom));
 		// NOM en majuscule
 		$nom = strtoupper($nom);
 		$nom = strtr($nom, $minusAccMajus);
@@ -175,7 +176,15 @@
 
 				// ===================  date  =================== //
 
-				$date = date('\S\e\m. W - D d/m/Y - H:i:s') . $fuseau; // $fuseau a été défini plus haut, en cas d'erreur (sinon il est vide)
+				// au début j'avais fait ça :
+				// $date = date('\S\e\m. W - D d/m/Y - H:i:s') . $fuseau;
+				// mais c'était en anglais, alors j'ai voulu utiliser 'locale' :
+				// setlocale(LC_TIME, "fra");
+				// $date = "Semaine " . strftime('%W - %A %d/%B/%Y - %H:%M:%S') . $fuseau;
+				// sauf que comme on est sur un serveur mutualisé, on ne peut pas modifier 'locale', donc ça restait en anglais !
+				//
+				// d'où l'utilisation d'une fonction à moi :
+				$date = 'Semaine ' . date('W') . ' - ' . dateFr();
 
 				// ===============  IP du client  =============== //     (3 possibilités)
 

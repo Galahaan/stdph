@@ -34,6 +34,9 @@
 
 			<?php
 
+
+			// http://php.net/manual/fr/ref.session.php       <= creuser pour voir si on trouve qqch d'intéressant ...
+
 			// 'http://www.3237.fr/public/p2_commune.php?cp=44300&vil=&tri=nom_comm%20ASC,%20code_postal_comm'
 
 			// Initialisation de la ressource curl

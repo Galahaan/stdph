@@ -27,8 +27,8 @@
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("includes/" . $page) && $page != 'index.php') {
-	    	include_once("./includes/".$page);
+	    if (file_exists("include/" . $page) && $page != 'index.php') {
+	    	include_once("./include/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -103,7 +103,7 @@
 				<a href="prepaCommande.php">
 					<h4>Préparation de commande</h4>
 				</a>
-				<img src="img/prepaCommande.png" alt="">
+				<img src="img/prepaCommande.jpg" alt="">
 			</article>
 			<article>
 				<a href="gammesProduits.html">

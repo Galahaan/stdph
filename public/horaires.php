@@ -26,8 +26,8 @@
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("includes/" . $page) && $page != 'index.php') {
-	    	include_once("./includes/".$page);
+	    if (file_exists("include/" . $page) && $page != 'index.php') {
+	    	include_once("./include/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -146,7 +146,8 @@
 			<p>En chronobus <span>C6</span>, descendez à l'arrêt <span>St Joseph de Porterie</span>:
 				vous avez moins d'une minute à pied.</p>
 
-			<p><b>En cas de garde</b>, la pharmacie reste ouverte jusqu'à <b>20h30</b>. Après 20h30, s'adresser au commissariat <b>Waldeck-Rousseau</b>.</p>
+			<p><b>En cas de garde</b>, la pharmacie reste ouverte jusqu'à <b>20h30</b>.</p>
+			<p>Après 20h30, s'adresser au <b>commissariat</b> Waldeck-Rousseau au <b><a href="tel:+33253467000">02 53 46 70 00</a></b>.</p>
 
 		</section>
 	</main>

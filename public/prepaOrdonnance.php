@@ -27,8 +27,8 @@
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("includes/" . $page) && $page != 'index.php') {
-	    	include_once("./includes/".$page);
+	    if (file_exists("include/" . $page) && $page != 'index.php') {
+	    	include_once("./include/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -61,7 +61,7 @@
 		['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
 		 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
 		 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-		$nouveauCar = ['-'];
+		$nouveauCar = [' '];
 
 		// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
 		// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
@@ -85,8 +85,8 @@
 		$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
 		// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
 		$prenom = superTrim($prenom);
-		// remplace les espaces ' ' par des tirets '-'
-		$prenom = str_replace(" ", "-", $prenom);
+		// remplace les espaces ' ' par des soulignés '_'
+		$prenom = str_replace(" ", "_", $prenom);
 		// 1ère lettre en majuscule, les autres en minuscules
 		$prenom = ucfirst(strtolower($prenom));
 		// test de la contrainte sur la longueur de la chaîne
@@ -99,7 +99,7 @@
 		$nom = strip_tags($_POST['nom']);
 		$nom = str_replace($trouverCar, $nouveauCar, $nom);
 		$nom = superTrim($nom);
-		$nom = str_replace(" ", "-", trim($nom));
+		$nom = str_replace(" ", "_", trim($nom));
 		// NOM en majuscule
 		$nom = strtoupper($nom);
 		$nom = strtr($nom, $minusAccMajus);
@@ -264,10 +264,15 @@
 
 					// ===================  date  =================== //
 
-					$res = setlocale(LC_TIME, "fra");
-					($res === false) ? "false" : $res;
-					// $date = "Semaine " . date('W - D d/m/Y - H:i:s') . $fuseau; // $fuseau a été défini plus haut, en cas d'erreur (sinon il est vide)
-					$date = "Semaine " . strftime('%W - %A %d/%B/%Y - %H:%M:%S') . $fuseau; // $fuseau a été défini plus haut, en cas d'erreur (sinon il est vide)
+					// au début j'avais fait ça :
+					// $date = date('\S\e\m. W - D d/m/Y - H:i:s') . $fuseau;
+					// mais c'était en anglais, alors j'ai voulu utiliser 'locale' :
+					// setlocale(LC_TIME, "fra");
+					// $date = "Semaine " . strftime('%W - %A %d/%B/%Y - %H:%M:%S') . $fuseau;
+					// sauf que comme on est sur un serveur mutualisé, on ne peut pas modifier 'locale', donc ça restait en anglais !
+					//
+					// d'où l'utilisation d'une fonction à moi :
+					$date = 'Semaine ' . date('W') . ' - ' . dateFr() . ' - ' . heureActuelle(H);
 
 					// ===============  IP du client  =============== //     (3 possibilités)
 

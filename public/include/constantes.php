@@ -24,7 +24,7 @@
 
 	// adresse mail de la pharmacie :
 	//define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
-	define("MAIL_DEST_PHARMA", "bk24tsxnt@use.startmail.com");
+	define("MAIL_DEST_PHARMA", "sp04tam6c@use.startmail.com");
 
 	// taille max de la pièce jointe : 2 Mo = 2097152 octets
 	define("TAILLE_MAX_PJ", 2097152);
