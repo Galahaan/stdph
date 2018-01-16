@@ -1,5 +1,10 @@
 <?php
 
+session_start(); // en début de chaque fichier utilisant $_SESSION
+
+?>
+<?php
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,14 +26,14 @@
 	// On interdit l'inclusion de dossiers protégés par htaccess.
 	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 	// strpos() peut très bien le faire, et surtout plus vite !
-	// if( preg_match('admin', $page) ){
-	if( strpos($page, 'admin') ){
+	// if( preg_match("admin", $page) ){
+	if( strpos($page, "admin") ){
 		echo "Vous n'avez pas accès à ce répertoire";
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("include/" . $page) && $page != 'index.php') {
-	    	include_once("./include/".$page);
+	    if (file_exists("include/" . $page) && $page != "index.php") {
+	    	require_once("./include/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -38,7 +43,7 @@
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	integreCLR('constantes_CLRS');
+	require_onceCLR("constantes_CLRS");
 
 	// Quelques constantes spécifiques à ce fichier :
 	// page en cours :
@@ -62,7 +67,7 @@
 		['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
 		 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
 		 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-		$nouveauCar = ['-'];
+		$nouveauCar = [' '];
 
 		// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
 		// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
@@ -86,7 +91,7 @@
 		$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
 		// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
 		$prenom = superTrim($prenom);
-		// remplace les espaces ' ' par des soulignés '_'
+		// remplace les espaces " " par des soulignés "_"
 		$prenom = str_replace(" ", "_", $prenom);
 		// 1ère lettre en majuscule, les autres en minuscules
 		$prenom = ucfirst(strtolower($prenom));
@@ -129,42 +134,69 @@
 			$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
 		}
 		// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
-		$messageClientHtml = "<b style=\"font-size: 16px;\">" . nl2br($messageClientTxt) . "</b>";
+		$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
 	}
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang='fr'>
 <head>
 	<title>Pharmacie Le Reste</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="shortcut icon" href="img/favicon.ico">
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
+	<link rel='stylesheet' type='text/css' href='css/style.css'>
+	<link rel='shortcut icon' href='img/favicon.ico'>
 </head>
 
 <body>
 	<header>
 		<section>
-			<a href="index.php">
-				<img src="img/croix_mauve.png" alt="">
+			<a href='index.php'>
+				<img src='img/croix_mauve.png' alt=''>
 				<h1>Pharmacie Le Reste</h1>
 				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
 			</a>
-			<p id="telIndex"><i class="fa fa-volume-control-phone" aria-hidden="true"></i>&nbsp;&nbsp;<a href="tel:+33240251580">02 40 25 15 80</a></p>
+			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:+33240251580'>02 40 25 15 80</a></p>
 		</section>
-		<nav class="navigation">
+		<nav class='cNavigation'>
 			<ul>
-				<li><a href="index.php"   >Accueil </a></li>
-				<li><a href="horaires.php">Horaires</a></li>
-				<li><a href="equipe.html"  >Équipe  </a></li>
-				<li><a href="contact.php"  >Contact </a></li>
+				<li><a href='index.php'   >Accueil </a></li>
+				<li><a href='horaires.php'>Horaires</a></li>
+				<li><a href='equipe.php'  >Équipe  </a></li>
+				<li><a href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
+		<div class='cBandeauConnex'>
+			<?php
+				if( isset($_SESSION['client']) ){
+
+					// si le client est connecté, on affiche son nom et le lien pour se déconnecter :
+					echo "<div class='cClientConnecte'>";
+						echo $_SESSION['client']['prenom'] . " " . $_SESSION['client']['nom'];
+					echo "</div>";
+
+					echo "<div class='cLienConnex'>";
+						echo "<a href='deconnexion.php'>déconnexion</a>";
+					echo "</div>";
+				}
+				else{
+
+					// si le client n'est pas connecté, (normalement c'est impossible d'arriver là
+					// sans être connecté) on affiche le lien pour se connecter :
+					echo "<div class='cClientConnecte'>";
+						echo " ";
+					echo "</div>";
+
+					echo "<div class='cLienConnex'>";
+						echo "<a href='connexion.php'>connexion</a>";
+					echo "</div>";
+				}
+			?>
+		</div>
 	</header>
 
 	<main>
-		<section class="formComm"><h3>Préparation de commande</h3>
+		<section class='cFormComm'><h3>Préparation de commande</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -190,7 +222,7 @@
 					// sauf que comme on est sur un serveur mutualisé, on ne peut pas modifier 'locale', donc ça restait en anglais !
 					//
 					// d'où l'utilisation d'une fonction à moi :
-					$date = 'Semaine ' . date('W') . ' - ' . dateFr();
+					$date = "Semaine " . date("W") . " - " . dateFr() . " - " . heureActuelle(H);
 
 					// ===============  IP du client  =============== //     (3 possibilités)
 
@@ -296,7 +328,7 @@
 										"Reply-To: " . $rc .
 										"MIME-Version: 1.0" . $rc .
 										"X-Mailer: PHP/" . phpversion() . $rc .
-										"Content-Type: text/plain; charset=\"UTF-8\"" . $rc .
+										"Content-Type: text/plain; charset='UTF-8'" . $rc .
 										"Content-Transfer-Encoding: 8bit";
 						$messageAlerte =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
 											"Envoi du formulaire à partir d'un site web différent de celui de la pharmacie :" . $rc .
@@ -304,20 +336,20 @@
 											"IP  client     = " . $ipClient . $rc .
 											"FAI client     = " . $faiClientBrut;
 						mail(MAIL_DEST_PHARMA, "Tentative de piratage ?", $messageAlerte, $headerAlerte);
-					    header('Location: https://www.bigouig.fr/'); 
+					    header("Location: https://www.bigouig.fr/"); 
 					} 
 					else{
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							echo "<div class='artMessageConfirm'>";
+							echo "<div class='cArtiMessageConfirm'>";
 							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Merci, votre commande a bien été envoyée.</p>";
 							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "</div>";
 						}
 						else{
-							echo "<div class='artMessageConfirm'>";
+							echo "<div class='cArtiMessageConfirm'>";
 							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
@@ -337,7 +369,7 @@
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<div class="artIntro">
+				<div class='cArtiIntro'>
 					<p>Envoyez-nous votre commande via le formulaire ci-dessous.</p>
 					<p>Écrivez librement les produits dont vous avez besoin.</p>
 					<p>Seuls les produits ne nécessitant pas d'ordonnance médicale peuvent être commandés.</p>
@@ -345,44 +377,44 @@
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 
-				<span class="obligatoire">(la saisie de tous les champs est obligatoire)</span>
-				<form method="POST" enctype="multipart/form-data">
-					<div class="champsForm">
-						<input type="radio" id="idCiviliteMme" name="civilite" value="Mme" required
+				<span class='cSaisieObligatoire'>(la saisie de tous les champs est obligatoire)</span>
+				<form method='POST' enctype='multipart/form-data'>
+					<div class='cChampForm'>
+						<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
 							<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
-						<label for="idCiviliteMme">Mme</label>
-						<input type="radio" id="idCiviliteMlle" name="civilite" value="Mlle" required
+						<label for='iCiviliteMme'>Mme</label>
+						<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
 							<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
-						<label for="idCiviliteMlle">Melle</label>
-						<input type="radio" id="idCiviliteM" name="civilite" value="M." required
+						<label for='iCiviliteMlle'>Melle</label>
+						<input type='radio' id='iCiviliteM' name='civilite' value='M.' required
 							<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
-						<label for="idCiviliteM">M.</label>
+						<label for='iCiviliteM'>M.</label>
 					</div>
-					<div class="champsForm">
-						<label for="idPrenom">Prénom</label>
-								<input type="text" id="idPrenom" name="prenom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($prenom) ? "value=" . $prenom : ""?> >
+					<div class='cChampForm'>
+						<label for='idPrenom'>Prénom</label>
+								<input type='text' id='idPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
 					<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
 					</div>
 
-					<div class="champsForm">
-						<label for="idNom">Nom</label>
-								<input type="text" id="idNom" name="nom" minlength="<?= NB_CAR_MIN_HTM ?>" maxlength="<?= NB_CAR_MAX_HTM ?>" required <?= isset($nom) ? "value=" . $nom : ""?> >
+					<div class='cChampForm'>
+						<label for='idNom'>Nom</label>
+								<input type='text' id='idNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
 					<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
 					</div>
 
-					<div class="champsForm">
-						<label for="idMail">Mail</label>
-								<input type="email" id="idMail" name="adrMailClient" required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+					<div class='cChampForm'>
+						<label for='idMail'>Mail</label>
+								<input type='email' id='idMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
 					<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
 					</div>
-					<div class="champsForm">
-						<label for="idMessage">Commande</label>
-								<textarea rows="8" minlength="<?= NB_CAR_MIN_MESSAGE_HTM ?>" maxlength="<?= NB_CAR_MAX_MESSAGE_HTM ?>" id="idMessage" name="message" required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
+					<div class='cChampForm'>
+						<label for='iMessageTextarea'>Commande</label>
+								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
 					<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
 					</div>
 
-					<div class="envoyer">
-						<button name="bouton">Envoyer</button>
+					<div class='cBoutonOk'>
+						<button name='bouton'>Envoyer</button>
 					</div>
 				</form>
 			<?php endif ?>

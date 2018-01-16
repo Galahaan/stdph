@@ -1,4 +1,9 @@
 <?php
+
+session_start(); // en début de chaque fichier utilisant $_SESSION
+
+?>
+<?php
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,14 +25,14 @@
 	// On interdit l'inclusion de dossiers protégés par htaccess.
 	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 	// strpos() peut très bien le faire, et surtout plus vite !
-	// if( preg_match('admin', $page) ){
-	if( strpos($page, 'admin') ){
+	// if( preg_match("admin", $page) ){
+	if( strpos($page, "admin") ){
 		echo "Vous n'avez pas accès à ce répertoire";
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("include/" . $page) && $page != 'index.php') {
-	    	include_once("./include/".$page);
+	    if (file_exists("include/" . $page) && $page != "index.php") {
+	    	require_once("./include/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -37,38 +42,64 @@
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	integreCLR('constantes_CLRS');
+	require_onceCLR("constantes_CLRS");
 
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang='fr'>
 <head>
 	<title>Pharmacie Le Reste</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="shortcut icon" href="img/favicon.ico">
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
+	<link rel='stylesheet' type='text/css' href='css/style.css'>
+	<link rel='shortcut icon' href='img/favicon.ico'>
 </head>
 
 <body>
 	<header>
 		<section>
-			<a href="index.php">
-				<img src="img/croix_mauve.png" alt="">
+			<a href='index.php'>
+				<img src='img/croix_mauve.png' alt=''>
 				<h1>Pharmacie Le Reste</h1>
 				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
 			</a>
-			<p id="telIndex"><i class="fa fa-volume-control-phone" aria-hidden="true"></i>&nbsp;&nbsp;<a href="tel:+33240251580">02 40 25 15 80</a></p>
+			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:+33240251580'>02 40 25 15 80</a></p>
 		</section>
-		<nav class="navigation">
+		<nav class='cNavigation'>
 			<ul>
-				<li><a href="index.php"   >Accueil </a></li>
-				<li><a href="horaires.php">Horaires</a></li>
-				<li><a href="equipe.html"  >Équipe  </a></li>
-				<li><a href="contact.php"  >Contact </a></li>
+				<li><a href='index.php'   >Accueil </a></li>
+				<li><a href='horaires.php'>Horaires</a></li>
+				<li><a href='equipe.php'  >Équipe  </a></li>
+				<li><a href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
+		<div class='cBandeauConnex'>
+			<?php
+				if( isset($_SESSION['client']) ){
+
+					// si le client est connecté, on affiche son nom et le lien pour se déconnecter :
+					echo "<div class='cClientConnecte'>";
+						echo $_SESSION['client']['prenom'] . " " . $_SESSION['client']['nom'];
+					echo "</div>";
+
+					echo "<div class='cLienConnex'>";
+						echo "<a href='deconnexion.php'>déconnexion</a>";
+					echo "</div>";
+				}
+				else{
+
+					// si le client n'est pas connecté, on affiche le lien pour se connecter :
+					echo "<div class='cClientConnecte'>";
+						echo " ";
+					echo "</div>";
+
+					echo "<div class='cLienConnex'>";
+						echo "<a href='connexion.php'>connexion</a>";
+					echo "</div>";
+				}
+			?>
+		</div>
 	</header>
 
 	<main>
@@ -76,8 +107,8 @@
 			$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
 			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
 
-			$heure  = heureActuelle('');		// heure au format "décimal"
-			$heureH = heureActuelle('H');		// heure au format "horaire", ie non décimal !
+			$heure  = heureActuelle("");		// heure au format "décimal"
+			$heureH = heureActuelle("H");		// heure au format "horaire", ie non décimal !
 
 			// getDeltaP( $heure ) retourne la valeur en % dont il faut décaler (left: ) la div représentant le trait vertical
 			// (en fonction de l'heure de la journée) mais également l'information s'il faut ou non afficher le trait.
@@ -97,47 +128,47 @@
 
 			// pharmacieOuverte() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
 		?>
-		<p><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=\"rose\">". $heureH . "</span>" ?></p>
+		<p><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class='cCouleurRose'>". $heureH . "</span>" ?></p>
 		<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
-		<section class="horaires"><h2>Créneaux horaires d'ouverture de la pharmacie Le Reste</h2>
+		<section class='cHoraires'><h2>Créneaux horaires d'ouverture de la pharmacie Le Reste</h2>
 
-			<article class="semaine" <?= ($auj == 'lun') ? "id=\"aujourdhui\"" : "" ?>  >
-				<h3>lundi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+			<article class='cSemaine' <?= ($auj == "lun") ? "id='iAujourdhui'" : "" ?>  >
+				<h3>lundi</h3><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
 				<?php // comme cette dernière <div> est en position absolute, c'est pas grave si on laisse
 				      // de la place dans l'éditeur après la <div> précédente : l'espace ne se verra pas en HTML ?>
 
-				<div <?= ($auj == 'lun' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+				<div <?= ($auj == "lun" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
-			<article class="semaine" <?= ($auj == 'mar') ? "id=\"aujourdhui\"" : "" ?>  >
-				<h3>mardi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+			<article class='cSemaine' <?= ($auj == "mar") ? "id='iAujourdhui'" : "" ?>  >
+				<h3>mardi</h3><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
-				<div <?= ($auj == 'mar' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
-
-			</article>
-			<article class="semaine" <?= ($auj == 'mer') ? "id=\"aujourdhui\"" : "" ?>  >
-				<h3>mercredi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
-
-				<div <?= ($auj == 'mer' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+				<div <?= ($auj == "mar" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
-			<article class="semaine" <?= ($auj == 'jeu') ? "id=\"aujourdhui\"" : "" ?>  >
-				<h3>jeudi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
+			<article class='cSemaine' <?= ($auj == "mer") ? "id='iAujourdhui'" : "" ?>  >
+				<h3>mercredi</h3><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
-				<div <?= ($auj == 'jeu' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
-
-			</article>
-			<article class="semaine" <?= ($auj == 'ven') ? "id=\"aujourdhui\"" : "" ?>  >
-				<h3>vendredi</h3><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >8h30</div><div <?= ($matinOff) ? "class=\"off\"" : "" ?> >12h30</div><div class="tiret">-</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >14h</div><div <?= ($apremOff) ? "class=\"off\"" : "" ?> >19h30</div>
-
-				<div <?= ($auj == 'ven' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+				<div <?= ($auj == "mer" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
-			<article class="samedi" <?= ($auj == 'sam') ? "id=\"aujourdhui\"" : "" ?>  >
-				<h3>samedi</h3><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >9h</div><div <?= ($samediOff) ? "class=\"off\"" : "" ?> >16h</div>
+			<article class='cSemaine' <?= ($auj == "jeu") ? "id='iAujourdhui'" : "" ?>  >
+				<h3>jeudi</h3><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
-				<div <?= ($auj == 'sam' && $dessinerTrait == true) ? "id=\"trait\"" : "class=\"effacerTrait\"" ?> style="left:<?= $deltaP ?>%">&nbsp;</div>
+				<div <?= ($auj == "jeu" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
+
+			</article>
+			<article class='cSemaine' <?= ($auj == "ven") ? "id='iAujourdhui'" : "" ?>  >
+				<h3>vendredi</h3><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+
+				<div <?= ($auj == "ven" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
+
+			</article>
+			<article class='cSamedi' <?= ($auj == "sam") ? "id='iAujourdhui'" : "" ?>  >
+				<h3>samedi</h3><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> >9h</div><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> >16h</div>
+
+				<div <?= ($auj == "sam" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
 
@@ -147,7 +178,7 @@
 				vous avez moins d'une minute à pied.</p>
 
 			<p><b>En cas de garde</b>, la pharmacie reste ouverte jusqu'à <b>20h30</b>.</p>
-			<p>Après 20h30, s'adresser au <b>commissariat</b> Waldeck-Rousseau au <b><a href="tel:+33253467000">02 53 46 70 00</a></b>.</p>
+			<p>Après 20h30, s'adresser au <b>commissariat</b> Waldeck-Rousseau au <b><a href='tel:+33253467000'>02 53 46 70 00</a></b>.</p>
 
 		</section>
 	</main>

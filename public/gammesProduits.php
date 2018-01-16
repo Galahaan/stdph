@@ -61,37 +61,36 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 	</header>
 
 	<main>
-		<section class='cHumour'><h3>La thérapie par l'humour ! (*)</h3>
-		<?php
-			// https://www.chucknorrisfacts.fr/api/api
-			do{
-				$url = "https://www.chucknorrisfacts.fr/api/get?data=tri:alea;type:txt;nb:1";
-				$resultat = file_get_contents($url);
+		<section class='cGammes'><h3>Les Marques que vous trouverez à la pharmacie</h3>
 
-				if( $resultat !== false ){
-					$resultat = json_decode($resultat, true);
-				}
-				else{
-					// file_get_contents a rencontré une erreur et a retourné "false"
-					$resultat = [['points' => "" , 'fact' => "Aïe, désolé, problème de serveur ..."], [0]];
-				}
+			<article>
+				<div class='cImageDeco'><img src='img/bebe.jpg' alt=''><h4>Univers de bébé</h4></div>
+				<div>
+					<img src='img/bb_picot.png' alt=''><p>
+					Nous avons choisi les laits de la gamme PICOT, ils sont bien.</p>
+				</div>
+				<div>
+					<p>Pour le soin du corps, nous vous proposons la gamme URIAGE pour la qualité de ses produits dont aucun ne contient de parabens.
+					</p><img src='img/bb_uriage.png' alt=''>
+				</div>
+				<div>
+					<img src='img/bb_bib.png' alt=''><p>
+					Pour les biberons et tétines, nous conseillons les marques AVENT et MAM dont les produits ne contiennent pas de bisphénol A.</p>
+				</div>
+			</article>
 
-				// si on veut plusieurs blagues par jour :
-				// foreach($resultat as $blague){
-				// 	if( $blague['points'] >= 5000 ){
-				// 		echo "<p>" . $blague['fact'] . " - " . $blague['points'] . "</p>";
-				// 	}
-				// }
-				// echo "<pre>";
-				// print_r($resultat);
-				// echo "</pre>";
-			}
-			while( $resultat[0]['points'] <= 7000 );
-			// echo "<p>" . $resultat[0]['points'] . " " . $resultat[0]['fact'] . "</p>";
-			echo "<p>" . $resultat[0]['fact'] . "</p>";
-		?>
-			<p>(*) Merci à <a href='https://www.chucknorrisfacts.fr'>chucknorrisfacts.fr</a> !<br>
-			Pardonnez-nous si la blague n'est pas toujours de très bon goût !..</p>
+			<article>
+				<div class='cImageDeco'><img src='img/soinDuCorps.jpg' alt=''><h4>Soins du corps</h4></div>
+				<div>
+					<img src='img/corps_uriage_LD.png' alt=''><p>
+					Nous avons sélectionné la gamme URIAGE dont aucun produit ne contient de parabens.</p>
+				</div>
+				<div>
+					<p>Bien qu'ils ne soient pas encore très répandus, nous vous proposons des déodorants sans parabens et sans sels d'aluminium.
+					</p><img src='img/corps_uriage_deo.png' alt=''>
+				</div>
+			</article>
+
 		</section>
 	</main>
 

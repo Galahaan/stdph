@@ -16,7 +16,7 @@ DirectoryIndex index.php /erreurs/erreur_403.php
 # En cas d'absence de fichier 'index.html', pour empêcher l'affichage du contenu du répertoire :
 # (si je mets un "deny from all", c'est trop puissant et le site ne fonctionne plus :/   )
 #
-# Options -Indexes
+Options -Indexes
 
 
 #

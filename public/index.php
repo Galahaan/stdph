@@ -1,5 +1,7 @@
 <?php
 
+	session_start(); // en début de chaque fichier utilisant $_SESSION
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,14 +23,14 @@
 	// On interdit l'inclusion de dossiers protégés par htaccess.
 	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 	// strpos() peut très bien le faire, et surtout plus vite !
-	// if( preg_match('admin', $page) ){
-	if( strpos($page, 'admin') ){
+	// if( preg_match("admin", $page) ){
+	if( strpos($page, "admin") ){
 		echo "Vous n'avez pas accès à ce répertoire";
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("include/" . $page) && $page != 'index.php') {
-	    	include_once("./include/".$page);
+	    if (file_exists("include/" . $page) && $page != "index.php") {
+	    	require_once("./include/".$page);
 	    }
 	    else{
 	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -38,103 +40,143 @@
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	integreCLR('constantes_CLRS');
+	require_onceCLR("constantes_CLRS");
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang='fr'>
 <head>
 	<title>Pharmacie Le Reste</title>
-	<meta charset="utf-8">
+	<meta charset='utf-8'>
 
 	<!-- Mots clés de la page -->
-	<meta name="keywords" content="pharmacie, le reste, saint-joseph-de-porterie, joseph, porterie">
+	<meta name='keywords' content='pharmacie, le reste, saint-joseph-de-porterie, joseph, porterie'>
 
 	<!-- Prise en compte du responsive design -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
 
 	<!-- intégrer le CDN de fontAwesome -->
 	<!-- on le place AVANT l'appel à notre CSS pour se donner la possibilité -->
 	<!-- de le modifier dans notre CSS puisque le fichier HTML est lu de haut en bas -->
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel='stylesheet' type='text/css' href='css/style.css'>
+	<link rel='shortcut icon' href='img/favicon.ico'>
 </head>
 
 <body>
 	<header>
 		<section>
-			<a href="index.php">
-				<img src="img/croix_mauve.png" alt="">
+			<a href='index.php'>
+				<img src='img/croix_mauve.png' alt=''>
 				<h1>Pharmacie Le Reste</h1>
 				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
 			</a>
-			<p id="telIndex"><i class="fa fa-volume-control-phone" aria-hidden="true"></i>&nbsp;&nbsp;<a href="tel:+33240251580">02 40 25 15 80</a></p>
+			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:+33240251580'>02 40 25 15 80</a></p>
 		</section>
-		<nav class="navigation">
+		<nav class='cNavigation'>
 			<ul>
-				<li><a href="index.php"   >Accueil </a></li>
-				<li><a href="horaires.php">Horaires</a></li>
-				<li><a href="equipe.html" >Équipe  </a></li>
-				<li><a href="contact.php" >Contact </a></li>
+				<li><a href='index.php'   >Accueil </a></li>
+				<li><a href='horaires.php'>Horaires</a></li>
+				<li><a href='equipe.php'  >Équipe  </a></li>
+				<li><a href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
+
+		<div class='cBandeauConnex'>
+			<?php
+				if( isset($_SESSION['client']) ){
+
+					// si le client est connecté, on affiche son nom et le lien pour se déconnecter :
+					echo "<div class='cClientConnecte'>";
+						echo $_SESSION['client']['prenom'] . ' ' . $_SESSION['client']['nom'];
+					echo "</div>";
+
+					echo "<div class='cLienConnex'>";
+						echo "<a href='deconnexion.php'>déconnexion</a>";
+					echo "</div>";
+				}
+				else{
+
+					// si le client n'est pas connecté, on affiche le lien pour se connecter :
+					echo "<div class='cClientConnecte'>";
+						echo " ";
+					echo "</div>";
+
+					echo "<div class='cLienConnex'>";
+						echo "<a href='connexion.php'>connexion</a>";
+					echo "</div>";
+				}
+			?>
+		</div>
+
 	</header>
 
 	<main>
-		<section class="intro"><h3>Etat actuel d'ouverture de la pharmacie Le Reste</h3>
+		<section class='cIntro'><h3>Etat actuel d'ouverture de la pharmacie Le Reste</h3>
 			<?php
 				$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
-				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
+				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'pharmacieOuverte')
 				$heure = heureActuelle('');			// on demande l'heure au format décimal
 			?>
 			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
 
 		</section>
-		<section class="vignettes"><h3>Services proposés par la pharmacie Le Reste</h3>
+		<section class='cVignettes'><h3>Services proposés par la pharmacie Le Reste</h3>
 			<article>
-				<a href="prepaOrdonnance.php">
-					<h4>Préparation d'ordonnance</h4>
-				</a>
-				<img src="img/prepaOrdonnance.jpg" alt="">
+				<?php if(! empty($_SESSION)) : ?>
+					<a href='prepaOrdonnance.php'>
+						<h4>Préparation d'ordonnance</h4>
+					</a>
+				<?php else : ?>
+					<a href='connexion.php'>
+						<h4>Préparation d'ordonnance</h4>
+					</a>
+				<?php endif ?>
+				<img src='img/prepaOrdonnance.jpg' alt=''>
 			</article>
 			<article>
-				<a href="prepaCommande.php">
-					<h4>Préparation de commande</h4>
-				</a>
-				<img src="img/prepaCommande.jpg" alt="">
+				<?php if(! empty($_SESSION)) : ?>
+					<a href='prepaCommande.php'>
+						<h4>Préparation de commande</h4>
+					</a>
+				<?php else : ?>
+					<a href='connexion.php'>
+						<h4>Préparation de commande</h4>
+					</a>
+				<?php endif ?>
+				<img src='img/prepaCommande.jpg' alt=''>
 			</article>
 			<article>
-				<a href="gammesProduits.html">
+				<a href='gammesProduits.php'>
 					<h4>Les gammes de produits</h4>
 				</a>
-				<img src="img/gammesProduits.jpg" alt="">
+				<img src='img/gammesProduits.jpg' alt=''>
 			</article>
 			<article>
-				<a href="pharmaDeGarde.php">
+				<a href='pharmaDeGarde.php'>
 					<h4>Pharmacies de garde</h4>
 				</a>
-				<img src="img/pharmaDeGarde.jpg" alt="">
+				<img src='img/pharmaDeGarde.jpg' alt=''>
 			</article>
 			<article>
-				<a href="promos.html">
+				<a href='promos.php'>
 					<h4>Promos et cadeaux</h4>
 				</a>
-				<img src="img/promos.jpg" alt="">
+				<img src='img/promos.jpg' alt=''>
 			</article>
 			<article>
-				<a href="infos.html">
+				<a href='infos.php'>
 					<h4>Informations / Conseils</h4>
 				</a>
-				<img src="img/questions.jpg" alt="">
+				<img src='img/questions.jpg' alt=''>
 			</article>
 	<!-- matériel médical / contention ? /   -->
 			<article>
-				<a href="humour.php">
+				<a href='humour.php'>
 					<h4>La blague de Chuck Norris !..</h4>
 				</a>
-				<img src="img/humour.jpg" alt="">
+				<img src='img/humour.jpg' alt=''>
 			</article>
  		</section>
 	</main>
