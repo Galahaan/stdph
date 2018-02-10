@@ -10,7 +10,7 @@ ini_set("display_errors", 1);  // sans doute à virer en prod, à vérifier  +++
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 if( empty($page) ){
-$page = "functions"; // page à inclure : functions.php
+$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
 
 // On construit le nom de la page à inclure en prenant 2 précautions :
 // - ajout dynamique de l'extension .php
@@ -43,9 +43,8 @@ else{
 /////     FIN INCLUDE sécurisé
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-require_onceCLR("constantes_CLRS");
 // ici on est obligé d'utiliser la fonction native telle quelle, sinon elle ne peut pas jouer son rôle de "_once" :
-require_once("./include/initDB.php");
+require_once("./include/initDB.php"); // initDB.php inclut constantes.php
 
 // Si le formulaire vient d'être validé, et avant de savoir si on va
 // sauvegarder les infos en BDD, on "nettoie" les champs :
@@ -124,11 +123,22 @@ if( isset($_POST['bouton']) ){
 		// que le mail, qui sert d'identifiant, ne soit pas déjà présent en BDD, d'où ce petit test :
 
 		// requête pour interroger la BDD :
-		$requete = $dbConnex->prepare("SELECT mail FROM clients WHERE mail = :mailB");
-		$requete->bindValue("mailB", $adrMailClient, PDO::PARAM_STR);
+
+		// au début, je faisais ça, et ça marchait très bien, tant que le nom de la table
+		// était écrit en "dur" :
+		// le pb, c'est qu'on veut stocker le nom de la table dans une constante d'un fichier de config ...
+		// mais en utilisant la même technique pour le nom de la table que pour les valeurs des champs,
+		// ie avec le bindValue, ça ajoute des guillemets autour du nom de la table ... et ça, ça ne passe pas en SQL !
+		// (mais il en faut autour des valeurs des champs)
+
+		// $requete = $dbConnex->prepare("SELECT mail FROM clients WHERE mail = :mailB");
+		// $requete->bindValue("mailB", $adrMailClient, PDO::PARAM_STR);
+
+		// d'où la solution : construire une chaîne de caractères complète, avec des guillemets là où il en faut !
+		$phraseRequete = "SELECT mail FROM " . TABLE_CLIENTS . " WHERE mail = '" . $adrMailClient . "'";
+		$requete = $dbConnex->prepare($phraseRequete);
 		$requete->execute();
 		$mailExisteDeja = $requete->fetchAll();
-		print_r($mailExisteDeja);
 	}
 
 	//  ********  MOT DE PASSE  ********
@@ -144,8 +154,9 @@ if( isset($_POST['bouton']) ){
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title>Pharmacie Le Reste</title>
+	<title><?= NOM_PHARMA ?></title>
 	<meta charset='utf-8'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='../css/style.css'>
@@ -157,10 +168,10 @@ if( isset($_POST['bouton']) ){
 		<section>
 			<a href='../index.php'>
 				<img src='../img/croix_mauve.png' alt=''>
-				<h1>Pharmacie Le Reste</h1>
-				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
+				<h1><?= NOM_PHARMA ?></h1>
+				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:+33240251580'>02 40 25 15 80</a></p>
+			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>
@@ -209,14 +220,32 @@ if( isset($_POST['bouton']) ){
 			$dateCrea = date("d/m/Y - H\:i\:s");
 
 			// requête pour créer un nouvel enregistrement :
-			$requete = $dbConnex->prepare("INSERT INTO clients (dateCreation, civilite, nom, prenom, mail, password) VALUES (:dateB, :civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
 
-			$requete->bindValue("dateB", $dateCrea, PDO::PARAM_STR);
-			$requete->bindValue("civiliteB", $civilite, PDO::PARAM_STR);
-			$requete->bindValue("nomB", $nom, PDO::PARAM_STR);
-			$requete->bindValue("prenomB", $prenom, PDO::PARAM_STR);
-			$requete->bindValue("mailB", $adrMailClient, PDO::PARAM_STR);
-			$requete->bindValue("passwordB", $passwordCrypte, PDO::PARAM_STR);
+			// au début, je faisais ça, et ça marchait très bien, tant que le nom de la table
+			// était écrit en "dur" :
+			// le pb, c'est qu'on veut stocker le nom de la table dans une constante d'un fichier de config ...
+			// mais en utilisant la même technique pour le nom de la table que pour les valeurs des champs,
+			// ie avec le bindValue, ça ajoute des guillemets autour du nom de la table ... et ça, ça ne passe pas en SQL !
+			// (mais il en faut autour des valeurs des champs)
+
+			// $requete = $dbConnex->prepare("INSERT INTO clients (dateCreation, civilite, nom, prenom, mail, password) VALUES (:dateB, :civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
+			// $requete->bindValue("dateB", $dateCrea, PDO::PARAM_STR);
+			// $requete->bindValue("civiliteB", $civilite, PDO::PARAM_STR);
+			// $requete->bindValue("nomB", $nom, PDO::PARAM_STR);
+			// $requete->bindValue("prenomB", $prenom, PDO::PARAM_STR);
+			// $requete->bindValue("mailB", $adrMailClient, PDO::PARAM_STR);
+			// $requete->bindValue("passwordB", $passwordCrypte, PDO::PARAM_STR);
+
+			// d'où la solution : construire une chaîne de caractères complète, avec des guillemets là où il en faut !
+			$phraseRequete = "INSERT INTO " . TABLE_CLIENTS .
+							 " (dateCreation, civilite, nom, prenom, mail, password) VALUES ('" .
+							 $dateCrea . "', '" .
+							 $civilite . "', '" .
+							 $nom . "', '" .
+							 $prenom . "', '" .
+							 $adrMailClient . "', '" .
+							 $passwordCrypte . "')";
+			$requete = $dbConnex->prepare($phraseRequete);
 			$requete->execute();
 
 			$nouvelId = $dbConnex->lastInsertId();
@@ -296,15 +325,15 @@ if( isset($_POST['bouton']) ){
 	</main>
 
 	<footer>
-		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
-			<p>Pharmacie Le Reste</p>
-			<p>21 rue du Bêle</p>
-			<p>44300 Nantes</p>
-			<p>tel - 02 40 25 15 80</p>
-			<p>fax - 02 40 30 06 56</p>
+		<section><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
+			<p><?= NOM_PHARMA ?></p>
+			<p><?= ADR_PHARMA_L1 ?></p>
+			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
+			<p>tel - <?= TEL_PHARMA_DECO ?></p>
+			<p>fax - <?= FAX_PHARMA_DECO ?></p>
 		</section>
 		<section><h3>Informations sur l'editeur du site</h3>
-			<p>Édition CLR - 2017</p>
+			<p>Édition CLR - 2018</p>
 		</section>
 	</footer>
 </body>

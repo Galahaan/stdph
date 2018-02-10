@@ -7,7 +7,7 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	if( empty($page) ){
-	$page = "functions"; // page à inclure : functions.php
+	$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
 
 	// On construit le nom de la page à inclure en prenant 2 précautions :
 	// - ajout dynamique de l'extension .php
@@ -39,8 +39,6 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	require_onceCLR("constantes_CLRS");
 
 	// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 	if( isset($_POST['bouton']) ){
@@ -130,8 +128,9 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title>Pharmacie Le Reste</title>
+	<title><?= NOM_PHARMA ?></title>
 	<meta charset='utf-8'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
@@ -143,10 +142,10 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 		<section>
 			<a href='index.php'>
 				<img src='img/croix_mauve.png' alt=''>
-				<h1>Pharmacie Le Reste</h1>
-				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
+				<h1><?= NOM_PHARMA ?></h1>
+				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:+33240251580'>02 40 25 15 80</a></p>
+			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>
@@ -289,7 +288,7 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 				// cf dossier "envoi de mails en PHP"
 				$header =	"From: " .
 							mb_encode_mimeheader(LABEL_EXP, "UTF-8", "B") .
-							"<" . ADR_EXP_HEBERGEUR . ">" . $rc .
+							"<" . ADR_EXP_HBG . ">" . $rc .
 							"Reply-To: $adrMailClient" . $rc .
 							"MIME-Version: 1.0" . $rc .
 							"X-Mailer: PHP/" . phpversion() . $rc .
@@ -314,7 +313,7 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 
 					$headerAlerte =	"From: " .
 									mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .
-									"<" . ADR_EXP_HEBERGEUR . ">" . $rc .
+									"<" . ADR_EXP_HBG . ">" . $rc .
 									"Reply-To: " . $rc .
 									"MIME-Version: 1.0" . $rc .
 									"X-Mailer: PHP/" . phpversion() . $rc .
@@ -331,6 +330,8 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 				else{
 				    // envoi de l'e-mail :
 					if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
+	
+						mail(MAIL_DEST_CLR, $objet, $message, $header);
 	
 						echo "<article class='cArtiMessageConfirm'>";
 						echo "<p>Merci, votre message a bien été envoyé.</p>";
@@ -406,23 +407,23 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 			<?php endif ?>
 		</section>
 
-		<section class='cFormContact cColDroite'><h3>Coordonnées de la pharmacie</h3>
-			<p>Pharmacie Le Reste</p>
-			<p>21 rue du Bêle</p>
-			<p>44300 Nantes</p>
-			<p id='iTelContact'><i class='fa fa-phone' aria-hidden='true'></i><a href='tel:+33240251580'>02 40 25 15 80</a></p>
-			<p><i class='fa fa-fax' aria-hidden='true'></i>02 40 30 06 56</p>
-			<p><a href='mailto:contact@pharmacielereste.fr'><i class='fa fa-envelope' aria-hidden='true'></i>contact@pharmacielereste.fr</a></p>
+		<section class='cFormContact cColDroite'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
+			<p><?= NOM_PHARMA ?></p>
+			<p><?= ADR_PHARMA_L1 ?></p>
+			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
+			<p id='iTelContact'><i class='fa fa-phone' aria-hidden='true'></i><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
+			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
+			<p><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
 			<p>
-				<a href='https://www.facebook.com/Pharmacie-Le-Reste-700447003388902'>
+				<a href='<?= ADR_FB_PHARMA ?>'>
 					<img class='cFaceGool' src='img/fb.png' alt=''>
 					<img class='cFaceGool cCouleurNoire' src='img/fb_n.jpg' alt=''>
 				</a>
 			</p>
 			<p>
-				<a href='https://plus.google.com/113407799173132476603/about'>
-					<img class='cFaceGool' src='img/gplus.png' alt=''>
-					<img class='cFaceGool cCouleurNoire' src='img/gplus_n.jpg' alt=''>
+				<a href='<?= ADR_GG_PHARMA ?>'>
+					<img class='cFaceGool' src='img/gg.png' alt=''>
+					<img class='cFaceGool cCouleurNoire' src='img/gg_n.jpg' alt=''>
 				</a>
 			</p>
 		</section>
@@ -431,14 +432,14 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 
 	<footer>
 		<section><h3>Coordonnées de la pharmacie</h3>
-			<p>Pharmacie Le Reste</p>
-			<p>21 rue du Bêle</p>
-			<p>44300 Nantes</p>
-			<p>tel - 02 40 25 15 80</p>
-			<p>fax - 02 40 30 06 56</p>
+			<p><?= NOM_PHARMA ?></p>
+			<p><?= ADR_PHARMA_L1 ?></p>
+			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
+			<p>tel - <?= TEL_PHARMA_DECO ?></p>
+			<p>fax - <?= FAX_PHARMA_DECO ?></p>
 		</section>
 		<section><h3>Informations sur l'editeur du site</h3>
-			<p>Édition CLR - 2017</p>
+			<p>Édition CLR - 2018</p>
 		</section>
 	</footer>
 </body>

@@ -1,5 +1,7 @@
 <?php
 
+require_once("constantes.php");
+
 try {
 	$db_options = array(
 		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", // On force l'encodage en utf8
@@ -8,7 +10,10 @@ try {
 	    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION // On affiche des exceptions pour les erreurs                      |     en prod ???
 	);
 
-	$dbConnex = new PDO('mysql:host=bigouigfiytofbdd.mysql.db;dbname=bigouigfiytofbdd', 'bigouigfiytofbdd','Mdp2bigouig', $db_options);
+	// Au départ, j'avais écrit en dur le nom des paramètres de connexion :
+	//    ... = new PDO('mysql:host=hhhhhhhhhhhhhhh;dbname=bbbbbbbbbbbbb, uuuuuuuuuuuuuuuu, pppppppppppppppp, $db_options')
+
+	$dbConnex = new PDO('mysql:host='.ADR_BDD_HBG.';dbname='.NOM_BDD_HBG, USERNAME_BDD_HBG, USERPSWD_BDD_HBG, $db_options);
 }
 catch(Exception $e) {
 	//attrappe les éventuelles erreurs de connexion

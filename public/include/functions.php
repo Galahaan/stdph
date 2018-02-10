@@ -1,5 +1,7 @@
 <?php
 
+require_once("constantes.php");
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
 //						require_onceCLR( $nomDuFichier )
@@ -40,15 +42,14 @@ function require_onceCLR( $nomDuFichier ){
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("/home/bigouigfiy/www/include/" . $page) && $page != 'index.php') {
-	    	require_once("/home/bigouigfiy/www/include/".$page);
+	    if (file_exists("HOME"."www/include/".$page) && $page != 'index.php') {
+	    	require_once("HOME"."www/include/".$page);
 	    }
 	    else{
 	    	echo "Erreur require_onceCLR : le fichier " . $page . " est introuvable.";
 	    }
 	}
 }
-
 
 // If your code is running on multiple servers with different environments (locations from where your scripts run) the following idea may be useful to you:
 

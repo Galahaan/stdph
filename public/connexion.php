@@ -4,7 +4,7 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 
 ini_set("display_errors", 1);  // sans doute à virer en prod, à vérifier  +++++++++++++++++++++++++++++       ++++++   +++++++   +++++++
 
-require_once("./include/initDB.php");
+require_once("./include/initDB.php"); // initDB.php inclut constantes.php
 
 $erreur = "";
 
@@ -14,8 +14,8 @@ if( isset( $_POST['connexion'] ) ) {
 	$password = $_POST['password'];
 
 	// récupération du mot de passe crypté :
-	$requete = $dbConnex->prepare("SELECT * FROM clients WHERE mail = :mailB");
-	$requete->bindValue("mailB", $mail, PDO::PARAM_STR);
+	$phraseRequete = "SELECT * FROM " . TABLE_CLIENTS . " WHERE mail = '" . $mail . "'";
+	$requete = $dbConnex->prepare($phraseRequete);
 	$requete->execute();
 	$client = $requete->fetch();
 
@@ -33,12 +33,12 @@ if( isset( $_POST['connexion'] ) ) {
 		}
 		else{
 			// c'est le mauvais mot de passe
-			$erreur = "Erreur de connexion ...";
+			$erreur = "Aïe, erreur de connexion ...";
 		}
 	}
 	else{
 		// client inconnu
-		$erreur = "Erreur de connexion ...";
+		$erreur = "Oups, erreur de connexion ...";
 	}
 }
 ?>
@@ -46,8 +46,9 @@ if( isset( $_POST['connexion'] ) ) {
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title>Pharmacie Le Reste</title>
+	<title><?= NOM_PHARMA ?></title>
 	<meta charset='utf-8'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='../css/style.css'>
@@ -59,10 +60,10 @@ if( isset( $_POST['connexion'] ) ) {
 		<section>
 			<a href='../index.php'>
 				<img src='../img/croix_mauve.png' alt=''>
-				<h1>Pharmacie Le Reste</h1>
-				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
+				<h1><?= NOM_PHARMA ?></h1>
+				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:+33240251580'>02 40 25 15 80</a></p>
+			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>
@@ -127,15 +128,15 @@ if( isset( $_POST['connexion'] ) ) {
 	</main>
 
 	<footer>
-		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
-			<p>Pharmacie Le Reste</p>
-			<p>21 rue du Bêle</p>
-			<p>44300 Nantes</p>
-			<p>tel - 02 40 25 15 80</p>
-			<p>fax - 02 40 30 06 56</p>
+		<section><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
+			<p><?= NOM_PHARMA ?></p>
+			<p><?= ADR_PHARMA_L1 ?></p>
+			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
+			<p>tel - <?= TEL_PHARMA_DECO ?></p>
+			<p>fax - <?= FAX_PHARMA_DECO ?></p>
 		</section>
 		<section><h3>Informations sur l'editeur du site</h3>
-			<p>Édition CLR - 2017</p>
+			<p>Édition CLR - 2018</p>
 		</section>
 	</footer>
 </body>

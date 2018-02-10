@@ -7,7 +7,7 @@
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	if( empty($page) ){
-	$page = "functions"; // page à inclure : functions.php
+	$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
 
 	// On construit le nom de la page à inclure en prenant 2 précautions :
 	// - ajout dynamique de l'extension .php
@@ -40,17 +40,16 @@
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	require_onceCLR("constantes_CLRS");
 ?>
 
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title>Pharmacie Le Reste</title>
+	<title><?= NOM_PHARMA ?></title>
 	<meta charset='utf-8'>
 
 	<!-- Mots clés de la page -->
-	<meta name='keywords' content='pharmacie, le reste, saint-joseph-de-porterie, joseph, porterie'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
 
 	<!-- Prise en compte du responsive design -->
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -69,10 +68,10 @@
 		<section>
 			<a href='index.php'>
 				<img src='img/croix_mauve.png' alt=''>
-				<h1>Pharmacie Le Reste</h1>
-				<h2>Nantes, quartier Saint-Joseph de Porterie</h2>
+				<h1><?= NOM_PHARMA ?></h1>
+				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:+33240251580'>02 40 25 15 80</a></p>
+			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>
@@ -113,7 +112,7 @@
 	</header>
 
 	<main>
-		<section class='cIntro'><h3>Etat actuel d'ouverture de la pharmacie Le Reste</h3>
+		<section class='cIntro'><h3>Etat actuel d'ouverture de la <?= NOM_PHARMA ?></h3>
 			<?php
 				$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
 				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'pharmacieOuverte')
@@ -122,8 +121,22 @@
 			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
 
 		</section>
-		<section class='cVignettes'><h3>Services proposés par la pharmacie Le Reste</h3>
-			<article>
+		<section class='cVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
+			
+			<nav class="cBraille">
+				<ul>
+					<li><a href="#iPrepaOrdonnance">Préparation d'ordonnance</a></li>
+					<li><a href="#iPrepaCommande">Préparation de commande</a></li>
+					<li><a href="#iGammesProduits">Les gammes de produits</a></li>
+					<li><a href="#iPharmaDeGarde">Pharmacies de garde</a></li>
+					<li><a href="#iPromos">Promotions</a></li>
+					<li><a href="#iInfos">Informations / Conseils</a></li>
+					<li><a href="#iHumour">Humour</a></li>
+				</ul>
+			</nav>
+
+
+			<article id="iPrepaOrdonnance">
 				<?php if(! empty($_SESSION)) : ?>
 					<a href='prepaOrdonnance.php'>
 						<h4>Préparation d'ordonnance</h4>
@@ -135,7 +148,8 @@
 				<?php endif ?>
 				<img src='img/prepaOrdonnance.jpg' alt=''>
 			</article>
-			<article>
+
+			<article id="iPrepaCommande">
 				<?php if(! empty($_SESSION)) : ?>
 					<a href='prepaCommande.php'>
 						<h4>Préparation de commande</h4>
@@ -147,32 +161,38 @@
 				<?php endif ?>
 				<img src='img/prepaCommande.jpg' alt=''>
 			</article>
-			<article>
+
+			<article id="iGammesProduits">
 				<a href='gammesProduits.php'>
 					<h4>Les gammes de produits</h4>
 				</a>
 				<img src='img/gammesProduits.jpg' alt=''>
 			</article>
-			<article>
+
+			<article id="iPharmaDeGarde">
 				<a href='pharmaDeGarde.php'>
 					<h4>Pharmacies de garde</h4>
 				</a>
 				<img src='img/pharmaDeGarde.jpg' alt=''>
 			</article>
-			<article>
+
+			<article id="iPromos">
 				<a href='promos.php'>
-					<h4>Promos et cadeaux</h4>
+					<h4>Promos</h4>
 				</a>
 				<img src='img/promos.jpg' alt=''>
 			</article>
-			<article>
+
+			<article id="iInfos">
 				<a href='infos.php'>
 					<h4>Informations / Conseils</h4>
 				</a>
 				<img src='img/questions.jpg' alt=''>
 			</article>
+
 	<!-- matériel médical / contention ? /   -->
-			<article>
+
+			<article id="iHumour">
 				<a href='humour.php'>
 					<h4>La blague de Chuck Norris !..</h4>
 				</a>
@@ -182,15 +202,15 @@
 	</main>
 
 	<footer>
-		<section><h3>Coordonnées de la pharmacie Le Reste</h3>
-			<p>Pharmacie Le Reste</p>
-			<p>21 rue du Bêle</p>
-			<p>44300 Nantes</p>
-			<p>tel - 02 40 25 15 80</p>
-			<p>fax - 02 40 30 06 56</p>
+		<section><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
+			<p><?= NOM_PHARMA ?></p>
+			<p><?= ADR_PHARMA_L1 ?></p>
+			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
+			<p>tel - <?= TEL_PHARMA_DECO ?></p>
+			<p>fax - <?= FAX_PHARMA_DECO ?></p>
 		</section>
 		<section><h3>Informations sur l'editeur du site</h3>
-			<p>Édition CLR - 2017</p>
+			<p>Édition CLR - 2018</p>
 		</section>
 	</footer>
 </body>
