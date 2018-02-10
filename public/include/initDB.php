@@ -2,6 +2,8 @@
 
 require_once("constantes.php");
 
+ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
+
 try {
 	$db_options = array(
 		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", // On force l'encodage en utf8

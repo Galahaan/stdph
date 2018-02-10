@@ -7,32 +7,32 @@
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	// Nom de la pharmacie
-	define("NOM_PHARMA", "Pharmacie Le Reste");
-	define("STI_PHARMA", "Nantes, quartier Saint-Joseph de Porterie");
+	define("NOM_PHARMA", "Pharmacie des Tilleuls");
+	define("STI_PHARMA", "       à Gaël");
 
 	// Adresse de la pharmacie
-	define("ADR_PHARMA_L1", "21 rue du Bêle");
+	define("ADR_PHARMA_L1", "place des Tilleuls");
 	define("ADR_PHARMA_L2", "");
-	define("CP_PHARMA",     "44300");
-	define("VIL_PHARMA",    "Nantes");
+	define("CP_PHARMA",     "35290");
+	define("VIL_PHARMA",    "Gaël");
 
 	// Tel, fax, mail, facebook, google+
-	define("TEL_PHARMA_DECO", "02 40 25 15 80");
-	define("TEL_PHARMA_UTIL", "+33240251580");
-	define("FAX_PHARMA_DECO", "02 40 30 06 56");
-	define("ADR_MAIL_PHARMA", "contact@pharmacielereste.fr");
+	define("TEL_PHARMA_DECO", "01 23 45 67 89");
+	define("TEL_PHARMA_UTIL", "+33123456789");
+	define("FAX_PHARMA_DECO", "00 12 34 56 78");
+	define("ADR_MAIL_PHARMA", "contact@pharmaciedestilleuls.fr");
 	define("ADR_FB_PHARMA",   "https://www.facebook.com/Pharmacie-Le-Reste-700447003388902");
 	define("ADR_GG_PHARMA",   "https://plus.google.com/113407799173132476603/about");
 
 	// Mots-clés pour le référencement
-	define("MC_NOM_PHARMA", "le reste");
-	define("MC_QUARTIER",   "saint-joseph-de-porterie");
-	define("MC_CP",         "44300");
-	define("MC_1",          "joseph");
-	define("MC_2",          "porterie");
+	define("MC_NOM_PHARMA", "des tilleuls");
+	define("MC_QUARTIER",   "gaël");
+	define("MC_CP",         "35290");
+	define("MC_1",          "tilleuls");
+	define("MC_2",          "gaëlite");
 
 	// 'home' du site sur le serveur de l'hébergeur (functions.php)
-	define("HOME", "/home/pharmacihc/"); // utilisé uniquement dans require_onceCLR qui n'est utilisée nulle part !
+	define("HOME", "/home/bigouigfiy/"); // utilisé uniquement dans require_onceCLR qui n'est utilisée nulle part !
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	///////////////                                                            ///////////////
@@ -41,17 +41,17 @@
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	// adresse du serveur de la BDD (initDB.php)
-	define("ADR_BDD_HBG", "pharmacihctofbdd.mysql.db");
+	define("ADR_BDD_HBG", "bigouigfiytofbdd.mysql.db");
 
 	// nom de la BDD (initDB.php)
-	define("NOM_BDD_HBG", "pharmacihctofbdd");
+	define("NOM_BDD_HBG", "bigouigfiytofbdd");
 
 	// utilisateur de la BDD (initDB.php)
-	define("USERNAME_BDD_HBG", "pharmacihctofbdd");
-	define("USERPSWD_BDD_HBG", "Mdp2pharmacihc");
+	define("USERNAME_BDD_HBG", "bigouigfiytofbdd");
+	define("USERPSWD_BDD_HBG", "Mdp2bigouig");
 
 	// nom de la table 'clients' pour cette BDD (inscription.php et connexion.php)
-	define("TABLE_CLIENTS", "clientsVLR01");
+	define("TABLE_CLIENTS", "clientsBIG");
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	///////////////                                                            ///////////////
@@ -62,22 +62,22 @@
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	// adresse de l'expéditeur des mails via l'hébergeur du site :
-	define("ADR_EXP_HBG", "pharmacihc@cluster021.hosting.ovh.net");
+	define("ADR_EXP_HBG", "bigouigfiy@cluster020.hosting.ovh.net");
 
 	// nom explicite pour l'expéditeur des mails : (possible avec accents !)
 	define("LABEL_EXP", "Site pharmacie");
 
 	// adresse du site de la pharmacie :
-	define("ADRESSE_SITE_PHARMACIE", "http://pharmacielereste.fr/");
-	define("S_ADRESSE_SITE_PHARMACIE", "https://pharmacielereste.fr/");
-	define("W_ADRESSE_SITE_PHARMACIE", "http://www.pharmacielereste.fr/");
-	define("SW_ADRESSE_SITE_PHARMACIE", "https://www.pharmacielereste.fr/");
+	define("ADRESSE_SITE_PHARMACIE", "http://bigouig.fr/");
+	define("S_ADRESSE_SITE_PHARMACIE", "https://bigouig.fr/");
+	define("W_ADRESSE_SITE_PHARMACIE", "http://www.bigouig.fr/");
+	define("SW_ADRESSE_SITE_PHARMACIE", "https://www.bigouig.fr/");
 
 	// adresse mail de la pharmacie :
-	define("MAIL_DEST_PHARMA", "phcie.lereste@perso.alliadis.net");
+	define("MAIL_DEST_PHARMA", "clr.tstph@use.startmail.com");
 
 	// pour vérifier les 1ers mails officiels :
-	define("MAIL_DEST_CLR",    "clr.tstph@use.startmail.com");
+//	define("MAIL_DEST_CLR",    "clr.tstph@use.startmail.com");
 
 	// taille max de la pièce jointe : 2 Mo = 2097152 octets
 	define("TAILLE_MAX_PJ", 2097152);
@@ -146,4 +146,34 @@
 	// Compte à rebours avant ouverture / fermeture
 	define('REBOURSD', 0.25);		// compte à rebours en 'heure décimale', ie que   0.25 = 15 mn
 	define('PAS_DE_REBOURS', 5);	// en minutes ( ex. ... dans moins de 15, 10, 5 mn )
+
+	// Particularités de la pharmacie : lignes de bus / tram / métro, parking privé, ...
+	define('PARTICULARITES_PHARMACIE',
+		"<p>La pharmacie dispose d'un parking pour sa clientèle.</p>
+		<p>En <span>chronobus C6</span>, descendez à l'arrêt <span>St Joseph de Porterie</span> :
+			 la pharmacie est alors à moins d'une minute.</p>");
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	///////////////                                                            ///////////////
+	///////////////                     Horaires de garde                      ///////////////
+	///////////////                                                            ///////////////
+	///////////////                      (pharmaDeGarde)                       ///////////////
+	///////////////                                                            ///////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+
+	// Heure au-delà de laquelle il faut se rendre au commissariat.
+	// Si les gardes fonctionnent sans commissariat (ex. Vendée) -> mettre la constante _D à "X"
+	define('HEURE_SOIR_POLICE_D', 20.5);
+	define('HEURE_SOIR_POLICE_H', "20h30");
+	// Nantes : 20h30
+	// Brest  : 20h00
+
+	// Heure jusqu'à laquelle il faut s'adresser au commissariat
+	define('HEURE_MATIN_POLICE_D', 8);
+	define('HEURE_MATIN_POLICE_H', "8h");
+	// Nantes : 8h00
+	// Brest  : 9h00
+
+	define('ADRESSE_POLICE', "6 place Waldeck-Rousseau à Nantes");
 ?>

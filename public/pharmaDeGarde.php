@@ -1,7 +1,45 @@
 <?php
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
-require_once("include/constantes.php");
+ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+if( empty($page) ){
+$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+
+// On construit le nom de la page à inclure en prenant 2 précautions :
+// - ajout dynamique de l'extension .php
+// - on supprime également d'éventuels espaces en début et fin de chaîne
+$page = trim($page.".php");
+}
+
+// On remplace les caractères qui permettent de naviguer dans les répertoires
+$page = str_replace("../","protect",$page);
+$page = str_replace(";","protect",$page);
+$page = str_replace("%","protect",$page);
+
+// On interdit l'inclusion de dossiers protégés par htaccess.
+// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
+// strpos() peut très bien le faire, et surtout plus vite !
+// if( preg_match("admin", $page) ){
+if( strpos($page, "admin") ){
+	echo "Vous n'avez pas accès à ce répertoire";
+}
+else{
+    // On vérifie que la page est bien sur le serveur
+    if (file_exists("include/" . $page) && $page != "index.php") {
+    	require_once("./include/".$page);
+    }
+    else{
+    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
+    }
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     FIN INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 ?>
 <!DOCTYPE html>
@@ -20,11 +58,11 @@ require_once("include/constantes.php");
 	<header>
 		<section>
 			<a href='index.php'>
-				<img src='img/croix_mauve.png' alt=''>
+				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>
@@ -63,11 +101,34 @@ require_once("include/constantes.php");
 	</header>
 
 	<main>
-		<section class='cPharmaDeGarde'>
+		<?php $heure = heureActuelle('d'); ?>
 
-			<p>Trouvez la pharmacie de garde la plus proche de chez vous
-				<a href="http://www.3237.fr/"> en cliquant ici ...</a>
+		<section class='cPdG3237'><h3>Trouver la pharmacie de garde</h3>
+
+		<?php // si les gardes fonctionnent sans passer par le commissariat, ou si on est dans la journée : ?>
+		<?php if( (HEURE_SOIR_POLICE_D == "X") || ((HEURE_MATIN_POLICE_D <= $heure) && ($heure < HEURE_SOIR_POLICE_D)) ) : ?>
+			<p id='i3237On'>Trouvez la <span>pharmacie de garde</span> la plus proche de chez vous en cliquant sur la croix ci-dessous :
+				<a href='http://www.3237.fr/'><img src='img/croix_garde.png' alt=''><span class='cBraille'>croix</span></a>
 			</p>
+		<?php else : // on est en horaires de garde -> on affiche juste le titre ?>
+			<p id='i3237Off'><span>Pharmacie de garde</span></p>
+		<?php endif ?>
+
+		</section>
+
+		<section class='cPdGplan'><h3>Localiser le commissariat de police</h3>
+
+		<?php // si les gardes fonctionnent sans passer par le commissariat, il n'y a RIEN d'autre à afficher, d'où le 1e test : ?>
+		<?php if( HEURE_SOIR_POLICE_D != "X" ) : ?>
+			<?php // quelle que soit l'heure, on informe les gens du fonctionnement en horaires de garde, et on propose le plan : ?>
+			<p>À partir de <span><?php echo HEURE_SOIR_POLICE_H ?></span>, et jusqu'à <span><?php echo HEURE_MATIN_POLICE_H ?></span> le lendemain matin, il faut se rendre, avec une pièce d'<span>identité</span> et une <span>ordonnance</span>, au <span>commissariat de police</span> situé :</p>
+			<p><?php echo ADRESSE_POLICE ?></p>
+			<p>Si vous utilisez un smartphone, profitez de son GPS :</p>
+			<p>- cliquez sur le plan ci-dessous</p>
+			<p>- puis sur l'icône <img src='img/itineraire.png' alt='itinéraire'></p>
+			<p>... et laissez-vous guider.</p>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2709.4418958453143!2d-1.5537605841504296!3d47.227501579161355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805ee99ed6c5d25%3A0x18995709d53782b2!2sCommissariat+de+Police+Central+de+Nantes!5e0!3m2!1sfr!2sfr!4v1517266865893" allowfullscreen></iframe>
+		<?php endif ?>
 
 		</section>
 	</main>

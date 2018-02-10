@@ -2,6 +2,8 @@
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
 
+ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,11 +143,11 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 	<header>
 		<section>
 			<a href='index.php'>
-				<img src='img/croix_mauve.png' alt=''>
+				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>
@@ -331,8 +333,6 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 				    // envoi de l'e-mail :
 					if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 	
-						mail(MAIL_DEST_CLR, $objet, $message, $header);
-	
 						echo "<article class='cArtiMessageConfirm'>";
 						echo "<p>Merci, votre message a bien été envoyé.</p>";
 						echo "<p>Nous vous répondrons dans les meilleurs délais, sous
@@ -411,19 +411,19 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 			<p><?= NOM_PHARMA ?></p>
 			<p><?= ADR_PHARMA_L1 ?></p>
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p id='iTelContact'><i class='fa fa-phone' aria-hidden='true'></i><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iTelContact'><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a></p>
 			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
 			<p><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
 			<p>
 				<a href='<?= ADR_FB_PHARMA ?>'>
-					<img class='cFaceGool' src='img/fb.png' alt=''>
-					<img class='cFaceGool cCouleurNoire' src='img/fb_n.jpg' alt=''>
+					<img class='cFaceGool' src='img/fb.png' alt='facebook'>
+					<img class='cFaceGool cCouleurNoire' src='img/fb_n.jpg' alt='facebook'>
 				</a>
 			</p>
 			<p>
 				<a href='<?= ADR_GG_PHARMA ?>'>
-					<img class='cFaceGool' src='img/gg.png' alt=''>
-					<img class='cFaceGool cCouleurNoire' src='img/gg_n.jpg' alt=''>
+					<img class='cFaceGool' src='img/gg.png' alt='google+'>
+					<img class='cFaceGool cCouleurNoire' src='img/gg_n.jpg' alt='google+'>
 				</a>
 			</p>
 		</section>

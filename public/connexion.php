@@ -2,7 +2,7 @@
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
 
-ini_set("display_errors", 1);  // sans doute à virer en prod, à vérifier  +++++++++++++++++++++++++++++       ++++++   +++++++   +++++++
+ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
 require_once("./include/initDB.php"); // initDB.php inclut constantes.php
 
@@ -59,11 +59,11 @@ if( isset( $_POST['connexion'] ) ) {
 	<header>
 		<section>
 			<a href='../index.php'>
-				<img src='../img/croix_mauve.png' alt=''>
+				<img id='iLogoCroix' src='../img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>

@@ -1,9 +1,7 @@
 <?php
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
-
-?>
-<?php
+ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     INCLUDE sécurisé
@@ -234,11 +232,11 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 	<header>
 		<section>
 			<a href='index.php'>
-				<img src='img/croix_mauve.png' alt=''>
+				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>
@@ -474,8 +472,6 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							mail(MAIL_DEST_CLR, $objet, $message, $header);
-
 							echo "<div class='cArtiMessageConfirm'>";
 							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Merci, votre ordonnance a bien été envoyée.</p>";
@@ -517,7 +513,7 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 
-				<article><a href='#' id='iModeEmploi'><h4>Mode d'emploi</h4></a>
+				<article><p id='iModeEmploi'><a href='#'><h4>Mode d'emploi</h4></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 
 					<div class='cModeEmploi'>
 						<div>Il suffit de suivre ces <span>4 étapes :</span></div>

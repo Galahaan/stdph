@@ -2,6 +2,8 @@
 
 require_once("constantes.php");
 
+ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
 //						require_onceCLR( $nomDuFichier )
@@ -278,7 +280,11 @@ class='cOuverte'>ouverte</span>.";
 // - la 2ème, au format BOOLEEN, indique s'il faut afficher le trait ou non.
 //   (on affiche le trait entre 8h30 et 19h30, sinon on n'affiche pas le trait)
 //
-//		>>>   ATTENTION   <<<
+//
+//
+//		          >>>   ATTENTION   <<<
+//
+//
 //
 // Ceci implique de ne rien changer, dans le fichier CSS, aux valeurs de width,
 // de padding left ou right du § intitulé :

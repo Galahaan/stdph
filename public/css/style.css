@@ -1,36 +1,49 @@
-
 /* fond de la page                     :  #575757  gris foncé       */
 /* fond de la zone du site             :  white    blanc            */
-/* image de fond, police               :  #951A80  mauve            */
-/* bandeau de connexion, fond          :  #ADADAD  gris clair       */
-/* bandeau de connexion, police        :  black    noir             */
-/* menu de navigation, fond            :  #94C11D  vert anis        */
-/* menu de navigation, police          :  white    blanc            */
-/* vignettes accueil, fond             :  #94C11D  vert anis        */
-/* vignettes accueil, police           :  white    blanc            */
-/* créneaux ouverture (horaires)       :  rgba(148, 193, 29, .2)    */
+/* bandeau du haut : titres + tel      :  #364115  vert foncé       */
+/*  + lignes fines dans les formulaires                             */
+/*  + lignes gammes de produits                                     */
+/* menu de navigation, fond            :  #ADADAD  gris clair       */
+/* menu de navigation, police          :  #DEFFC4  vert pâle        */
+/* bandeau de connexion, fond          :  #575757  gris foncé 1     */
+/* bandeau de connexion, police        :  white    blanc            */
+/* vignettes accueil, fond             :  #DEFFC4  vert pâle        */
+/* vignettes accueil, police           :  #575757  gris foncé       */
+/* créneaux ouverture       (horaires) :  rgba(148, 193, 29, .2)    */
 /* créneau actuel ouverture (horaires) :  rgba(148, 193, 29, .5)    */
-/* bouton de validation, fond          :  #7B6A57  marron           */ devient orange
-/*   + mail (contact)                                               */
-/*   + mode emploi (prepa ordo)                                     */
-/*   + tel commissariat (horaires)                                  */ devient orange
-/*   + lien 3237 (pharma de garde)                                  */ devient orange
-/*   + lien chuck...fr (humour)                                     */ devient orange
-/* bouton de validation, hover         :  #F29200  orange           */ devient marron
-/*   + mail (contact), hover                                        */
-/*   + mode emploi (prepa ordo), hover                              */
-/*   + tel commissariat (horaires)                                  */ devient marron
-/*   + lien 3237 (pharma de garde)                                  */ devient marron
-/*   + lien chuck...fr (humour)                                     */ devient marron
-/* heure actuelle (horaires)           :  #D84591  fuschia          */
+/* bouton de validation, fond          :  #A55AA5  mauve pâle       */
+/*  + liens, tel, mail (cliquables)                                 */
+/*      - tel + mail        (contact)                               */
+/*      - inscription       (connexion)                             */
+/*      - connexion         (inscription)                           */
+/*      - mode d'emploi     (prepaOrdo)                             */
+/*      - chucknorrisfacts  (humour)                                */
+/* bouton de validation, hover         :  #585858  gris foncé 2     */
+/*  + hover liens ...                                               */
+/*      - tel + mail        (contact)                               */
+/*      - inscription       (connexion)                             */
+/*      - connexion         (inscription)                           */
+/*      - mode emploi       (prepaOrdo)                             */
+/*      - chucknorrisfacts  (humour)                                */
+/* heure actuelle           (horaires) :  #1967E5  bleu roi         */   /* old fuschia */
+/* pharma ouverte           (accueil)  :  #4DBC1C  vert 'fluo'      */
+/* pharma fermée            (accueil)  :  #FF4141  vert 'fluo'      */
+/* pharma ouvre dans ...    (accueil)  :  black    noir             */
+/* pharma ferme dans ...    (accueil)  :  #F29200  orange           */
+
+/*   - tel commissariat (horaires)                                  */
+
 
 
 /* Police importée de Google fonts */
 /* (positionner cet import sur la 1ère ligne du fichier CSS, sinon ça peut bugger) */
-@import url('https://fonts.googleapis.com/css?family=Advent+Pro:400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700|Tangerine:700');
 
-    /*  font-family: 'Advent Pro', sans-serif;   pour l'ensemble du site  */
-
+    /*  font-family: 'Tangerine', cursive;   pour l'image de fond  */
+    /*  font-family: 'Raleway', sans-serif;  pour tout le reste    */
+    /*                                                             */
+    /*  penser à modifier si besoin l'épaisseur des polices :      */
+    /*  ie pas de bold mais du 700 (ou autre) ...                  */
 
 /* Supprimer toutes les marges de toutes les balises */
 *{
@@ -42,8 +55,11 @@
 /* Configurer l'utilisation des 'rem' => 1 rem = 10 px */
 html{ font-size: 62.5%; }  /* => associé à body{ font-size: 1.5rem; } */
 
-/* les crochets [] permettent d'identifier un ATTRIBUT */
-a:not([target]){ text-decoration: none; }
+/* par défaut on force tous les liens en black */
+a {
+	text-decoration: none;
+	color: black;
+}
 
 /* img = 100% de la largeur du parent */
 img{
@@ -52,7 +68,7 @@ img{
 
 body{
 	/* ligne associée à l'import de la police Google fonts */
-	font-family: 'Advent Pro', sans-serif;
+	font-family: 'Raleway', sans-serif;
  	text-align: center;/* étant donné que le texte est majoritairement centré dans tout le doc */
  	background-color: #575757;
  	max-width: 95rem;
@@ -60,26 +76,32 @@ body{
 }
 main{
 	background-color: white;
-}
-
-.cBraille{
-	display: none;
+ 	min-height: 40rem; /* pour ne pas que le footer remonte trop haut */
 }
 
 body, h3{
-	font-size: 1.8rem; /* taille par défaut de toutes les polices + les h3 */
+	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h3 */
 	/* 		horaires.php : 																							*/
 	/* on utilise le h3 pour chaque jour de la semaine, il FAUT donc qu'il ait la même taille que celle du body 	*/
 	/* sinon, le trait de l'heure se décale vers le haut, les jours sont écrits plus gros ... bref c'est la merde ! */
 }
+/* icône du clicIndex */
+/* on l'exprime en 'rem' pour qu'elle ait la même taille à tous les endroits où             */
+/* l'on s'en sert (bandeau du haut, pharmaDeGarde, mode d'emploi de prepaOrdo ...)          */
+/* cette classe ne sert d'ailleurs QUE pour définir la taille de l'icône dans tout le site. */
+/* pour ce qui est de sa position, il ne faudrait surtout pas utiliser cette classe, étant  */
+/* donné qu'il peut y avoir plusieurs fois cette icône dans la page ...                      */
+.cClicIndexTaille{
+	width: 3.2rem;
+}
 h1{
-	font-size: 2.5rem; /* titre de la page : Pharmacie des Tilleuls */
+	font-size: 4.5rem; /* titre de la page : Pharmacie des Tilleuls */
 }
 h2{
-	font-size: 1.5rem; /* sous-titre de la page : à Gaël ... */
+	font-size: 3rem; /* sous-titre de la page : à Gaël ... */
 }
-#iTelIndex{
-	font-size: 2rem; /* sous-titre de la page : numéro de tel cliquable */
+#iTelBandeau{
+	font-size: 3.5rem; /* sous-titre de la page : numéro de tel cliquable */
 }
 .cVignettes article h4{
 	font-size: 2.5rem; /* titres des vignettes de la page Index */
@@ -90,17 +112,8 @@ h2{
 .fa-phone, .fa-fax, .fa-envelope{
 	font-size: 2rem; /* taille des icônes font-awesome : tel, fax et mail */
 }
-.cChampForm input, .cChampForm textarea{
-	font-size: 1.8rem;
-}
 .cChampForm p span{
 	font-size: 1.3rem; /* messages d'erreurs dans les form. contact, ordonnance et commande */
-}
-.cColDroite h4{
-	font-size: 2.2rem; /* intro du form. de contact "Envoyez-nous un message ... " */
-}
-.cColDroite{
-	font-size: 1.8rem; /* coordonnées de la pharmacie */
 }
 .cHumour p:last-of-type{
 	font-size: 1.4rem;   /* humour.php, "Merci à ..." */
@@ -108,15 +121,19 @@ h2{
 footer section:first-of-type{
 	font-size: 1.3rem; /* Pharmacie des Tilleuls ... */
 }
-
 h3{
 	font-weight: 400;  /* on les met tous en 'normal' par défaut */
-	/*height: 98%;*/
 }
 
-/* ******************************************************************************************** */
-/* ******************************        Bandeau du haut         ****************************** */
-/* ******************************************************************************************** */
+/* <h3> ajouté pour la validation W3C mais non affiché, même pas en braille */
+.cIntro h3{
+	display: none;	/* 'Etat actuel d'ouverture ...' */
+}
+
+
+/***************************************************************************************************************************************/
+/***************************************************         bandeau du haut         ***************************************************/
+/***************************************************************************************************************************************/
 
 /* Image de fond */
 header section{
@@ -129,60 +146,71 @@ header section{
 	margin: auto;
 	padding-top: 15%;
 	padding-bottom: 15%;
-	position: relative; /* pour positionner le h1, le h2 et la croix en haut à gauche */
+	position: relative; /* pour positionner le h1, le h2, l'icône clicIndex et la croix en haut à gauche */
 }
 
 /* Image de la croix positionnée en haut à gauche */
-header section img{
+#iLogoCroix{
 	width: 11%;
 	position: absolute;
-	top: 1rem;
-	left: 1rem;
-/*  display: none; */ /* on ne veut pas forcément de croix dans le bandeau */
+	top: 5%;
+	left: 2%;
+	/*display: none;  on ne veut pas forcément de croix dans le bandeau */
 }
 
-/* titre + sous-titre du bandeau supérieur */
-h1, h2, #iTelIndex{
-	color: #951A80;
+/* titre + sous-titre + tel bandeau du haut */
+h1, h2, #iTelBandeau{
+	color: #364115;
 	font-weight: 700;
-	position : absolute;
-	/* font-family: ... */ /* on souhaite une police particulière uniquement pour le bandeau du haut */
+	position: absolute;
+	font-family: 'Tangerine', cursive; /* on souhaite une police particulière uniquement pour le bandeau du haut */
 }
 /* titre : Pharmacie ... */
 h1{
-	top: 0;
-	left: 16%;
+	top: 1.5rem;
+	left: 9%;
 }
 /* sous-titre : à Gaël ... */
 h2{
-	top: 28%;
-	left: 16%;
+	top: 54%;
+	left: 19%;
 }
 
 /* numéro de téléphone cliquable */
-#iTelIndex{
+#iTelBandeau{
 	top: 52%;
-	left: 23%;
+	left: 45%;
+}
+/* icône du clicIndex dans le bandeau */
+#iTelBandeau img{
+	position: absolute;
+	top: 38%;
+	left: 102%;
 }
 
-/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
-/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
-#iTelIndex a:link, #iTelIndex a:visited, #iTelIndex a:hover, #iTelIndex a:focus, #iTelIndex a:active{
-	color: #951A80;
+/* NB : il faut respecter cet ordre de déclaration :                           */
+/*                  link > visited > hover > focus > active                    */
+/*      (pour que visited n'écrase pas hover, et que la navigation             */
+/*       au clavier se passe bien sous IE : hover > focus > active)            */
+/* Par défaut dans le body, on a mis les liens en black, mais ici,             */
+/* pour le bandeau => même couleur que celle de la police                      */
+#iTelBandeau a{
+	color: #364115;
 }
 
-
-/* ******************************************************************************************** */
-/* *******************************       Menu de navigation       ***************************** */
-/* ******************************************************************************************** */
+/***********************************************************************************************/
+/********************************       menu de navigation       *******************************/
+/***********************************************************************************************/
 nav{
-	background-color: #94C11D;
+	background-color: #ADADAD;
 	text-align: right;
 	padding: 0.5rem;
 }
 
+/* par défaut dans le body, on a mis les liens en black              */
+/* ici => couleur de contraste par rapport au fond du menu ci-dessus */
 nav a{
-	color: white;
+	color: #DEFFC4;
 }
 
 ul{
@@ -205,11 +233,11 @@ ul{
 	padding-left: 0;
 }
 
-/****************************************************/
-/*               Bandeau de connexion               */
-/****************************************************/
+/***********************************************************************************************/
+/**********************                bandeau de connexion               **********************/
+/***********************************************************************************************/
 .cBandeauConnex{
-	background-color: #ADADAD;
+	background-color: #575757;
 	width: 96%;
 	padding: 0 2%;
 }
@@ -217,79 +245,97 @@ ul{
 	display: inline-block;
 	width: 65%;
 	text-align: left;
-	color: black;
+	color: white;
 }
 .cLienConnex{
 	display: inline-block;
 	width: 34%;
 	text-align: right;
 }
+/* par défaut dans le body, on a mis les liens en black              */
+/* ici => couleur de contraste par rapport au fond du menu ci-dessus */
 .cLienConnex a{
-	color: black;
+	color: white;
 }
 
-/****************************************************/
-/*           pages connexion et inscription         */
-/****************************************************/
+/***************************************************************************************************************************************/
+/*******************************************          pages connexion et inscription         *******************************************/
+/***************************************************************************************************************************************/
+/* pour que les lignes fines entre les champs ne fassent pas toute la largeur de la colonne */
+.cConnexion, .cConnexionInscription, .cInscription{
+	padding: 2rem 0.5rem;
+}
 .cConnexion h3, .cConnexionInscription h3, .cInscription h3{
-	padding: 2rem 0;
+	padding-bottom: 2rem;
 	font-weight: 700;
 }
-/* pour que les lignes fines entre les champs ne fassent pas toute la largeur de la colonne */
-.cConnexion, .cInscription{
-	margin: 0 1rem;
-}
 
-/****************************************************/
-/*                  page connexion                  */
-/****************************************************/
+/***********************************************************************************************/
+/***********************                  page connexion                  **********************/
+/***********************************************************************************************/
 
-/* la petite ligne de séparation avec le § sur l'inscription */
-/* est codée dans la partie 'page contact' ci-dessous        */
+/* la petite ligne de séparation avec le § sur l'inscription     */
+/* est codée dans la partie 'page contact' ci-dessous            */
 
-/* on met un peu d'espace au-dessus du lien 'inscription' */
+/* on met un peu d'espace au-dessus du lien 'inscription'        */
 .cConnexionInscription p:first-of-type{
 	padding-bottom: 0.5rem;
 }
-/* on met de la couleur sur le lien 'inscription' */
-.cConnexionInscription a{
-	color: #7B6A57;
-	font-weight: 700;
+/* on passe le lien en gras */
+/* on en profite pour paramétrer le lien de la page inscription  */
+/* par défaut dans le body, on a mis les liens en black ...      */
+.cConnexionInscription a, .cArtiMessageConfirm a{
+	color: #A55AA5;
+	text-decoration: underline;
 }
-.cConnexionInscription a:hover, .cConnexionInscription a:focus, .cConnexionInscription a:active{
-	color: #F29200;
+
+/* ... ici on veut le colorer au passage de la souris et au clic */
+/* on en profite pour paramétrer le lien de la page inscription  */
+.cConnexionInscription a:hover, .cConnexionInscription a:focus, .cConnexionInscription a:active,
+.cArtiMessageConfirm a:hover, .cArtiMessageConfirm a:focus, .cArtiMessageConfirm a:active{
+	color: #585858;
+}
+/* un peu d'espace avant le lien   */
+.cConnexionInscription p:first-of-type{
+	padding-bottom: 2rem;
 }
 /* un peu d'espace avant le footer */
 .cConnexionInscription{
 	padding-bottom: 4rem;
 }
 
-/****************************************************/
-/*                 page inscription                 */
-/****************************************************/
+/***********************************************************************************************/
+/***********************                 page inscription                 **********************/
+/***********************************************************************************************/
 
 /* pour positionner latéralement les civilités dans le formulaire */
 .cInscription .cChampForm [for='iCiviliteM']{
-	padding-right: 25%;
+	padding-right: 20%;
+}
+
+/* on paramètre le lien ci-dessus pour sa couleur et le 'gras' */
+
+/* espace autour du message de confirmation */
+.cArtiMessageConfirm{
+	padding: 10rem 0 14rem 0;
+}
+/* espace avant le lien de connexion */
+.cArtiMessageConfirm p:last-of-type{
+	padding-bottom: 5rem;
 }
 
 
-/* ******************************************************************************************** */
-/* ******************************           page index           ****************************** */
-/* ******************************************************************************************** */
+/***************************************************************************************************************************************/
+/****************************************************           page index          ****************************************************/
+/***************************************************************************************************************************************/
 
 .cIntro{
-	padding: 4rem 0 6rem 0;
-}
-
-/* page Index - <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-.cIntro h3, .cVignettes h3{
-	display: none;	/* Etat actuel d'ouverture ... et Services proposés ... */
+	padding: 3rem 0;
 }
 
 /* Ces <span> sont ajoutés dans la fonction 'pharmacieOuverte' et non directement dans index.html */
 .cIntro span{
-	font-weight: bold;
+	font-weight: 700;
 }
 .cIntro .cOuverte{
 	color: #4DBC1C;
@@ -311,8 +357,8 @@ ul{
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-color: #94C11D;
-	color: white;
+	background-color: #DEFFC4;
+	color: #575757;
 	width: 100%;
 	height: 100%;
 	font-weight: 700;
@@ -320,7 +366,7 @@ ul{
 	opacity: 0;
 }
 
-/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
+/* NB : il faut respecter cet ordre de déclaration : link > visited > hover > focus > active */
 /*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
 .cVignettes article a:hover, .cVignettes article a:focus, .cVignettes article a:active{
 	opacity: .85;
@@ -343,16 +389,17 @@ ul{
 }
 
 
-/* ******************************************************************************************** */
-/* ******************************          page contact          ****************************** */
-/* ******************************************************************************************** */
+/***************************************************************************************************************************************/
+/****************************************************          page contact          ***************************************************/
+/***************************************************************************************************************************************/
 
-/* ********************     colonne de gauche : formulaire de contact      ******************** */
+
+/***********************     colonne de gauche formulaire de contact     ***********************/
 
 
 /* message d'introduction au formulaire : "Envoyez-nous un message ... " */
 .cColGauche h4{
-	padding: 2rem 0;
+	padding-bottom: 2rem;
 	font-weight: 700;
 }
 
@@ -363,62 +410,67 @@ ul{
 
 /* pour positionner latéralement les civilités dans le formulaire */
 .cFormContact .cChampForm [for='iCiviliteM']{
-	padding-right: 25%;
+	padding-right: 20%;
 }
 
 /* pour que les lignes fines entre les champs ne fassent pas toute la largeur de la colonne */
-.cColGauche section{
-	margin: 0 1rem;
+.cFormContact{
+	padding: 2rem 0.5rem;
 }
 
-/* lignes fines entre les champs, taille des champs ... */
+/***************************************************************************************************************/
+/* Cette partie est commune aux 5 formulaires :                                                                */
+/*                                                                                                             */
+/*       => contact, connexion, inscription, ordonnance et commande                                            */
+/*                                                                                                             */
+
+/* lignes fines entre les champs, taille des champs ...                                                        */
 .cChampForm{
 	border: none;
-	border-top: .1rem solid #951A80;
+	border-top: .1rem solid #364115;
 	padding: 1.5rem 0;
 	width: 100%;
 	text-align: right;
 }
-/* Cette partie est commune aux 5 formulaires : contact, connexion, inscription, ordonnance et commande */
-/* proportions entre label et input pour les champs du formulaire */
+/* proportions entre label et input pour les champs du formulaire                                              */
 .cChampForm input:not([type='radio']), .cChampForm textarea{
-	font-weight: bold;
-	width: 62%;
+	font-weight: 700;
+	width: 58%;
 	margin-left: 3%;
 	margin-right: 1.5%;
 }
 .cChampForm [type='radio']{
-	font-weight: bold;
+	font-weight: 700;
 	margin-left: 5%	
 }
 
-/* pour bloquer la largeur du champ texte */
+/* pour bloquer la largeur du champ texte                                                                      */
 .cChampForm textarea{
-	min-width: 62%;
-	max-width: 62%;
+	min-width: 58%;
+	max-width: 58%;
 	margin-left: 3%;
 }
 
-/* label 'Message' calé en haut, ligne fine sous le message */
+/* label 'Message' calé en haut, ligne fine sous le message                                                    */
 .cChampForm [for='iMessageTextarea']{
 	vertical-align: top;
 }
 
-/* messages d'erreurs dans les form. contact, ordonnance et commande */
+/* messages d'erreurs dans les form. contact, ordonnance et commande         partie commune aux 5 formulaires  */
 .cChampForm p span{
 	text-align: right;
 	padding-right: 1.2rem;
 	color: red;
 }
 
-/* proportion entre label et button pour le bouton de validation */
+/* proportion entre label et button pour le bouton de validation                                               */
 .cBoutonOk{
 	text-align: right;
 }
 
-/* déco du bouton de validation du formulaire */
+/* déco du bouton de validation du formulaire                                                                  */
 .cBoutonOk button{
-	background-color: #7B6A57;
+	background-color: #A55AA5;
 	color: white;
 	width: auto;
 	font-weight: 400;
@@ -428,18 +480,20 @@ ul{
 	border-radius: 5px;
 }
 
-/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
-/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
 .cBoutonOk button:hover, .cBoutonOk button:focus, .cBoutonOk button:active{
-	background-color: #F29200;
+	background-color: #585858;
 }
 
-/* Espaces au dessus et au dessous du message de confirmation d'envoi du formulaire */
+/* Espaces au dessus et au dessous du message de confirmation d'envoi                                          */
 .cFormContact .cArtiMessageConfirm{
 	padding: 3rem 1rem 0;
 }
 
-/* ************     colonne de droite : coordonnées et liens vers réseaux sociaux      ************ */
+/*               fin de la partie commune aux 5 formulaires                                                    */
+/***************************************************************************************************************/
+
+
+/************     colonne de droite : coordonnées et liens vers réseaux sociaux     ************/
 
 /* pages connexion et page contact        */
 /* ligne fine de séparation entre les 2 § */
@@ -449,30 +503,21 @@ ul{
 	display: block;
 	height: .2rem;
 	width: 4rem;
-	margin: 2rem auto 0;
-	background-color: #951A80;
+	margin: 0 auto 2rem;
+	background-color: #364115;
 }
-
 /* espace en dessous des icônes fb et g+ */
 .cColDroite{
 	padding-bottom: 4rem;
 }
-
-/* marge au dessus de "Pharmacie des Tilleuls" */
-.cColDroite p:first-of-type{
-	padding-top: 3rem;
-}
-
-/* marge en dessous de Nantes */
+/* marge en dessous de Gaël */
 .cColDroite p:nth-of-type(3){
 	padding-bottom: 2rem;
 }
 
 /* positions de tel, fax et mail */
 /* on les décale très légèrement vers la gauche puisque les icônes les avaient décalées vers la droite */
-.cColDroite p:nth-of-type(4),
-.cColDroite p:nth-of-type(5),
-.cColDroite p:nth-of-type(6){
+.cColDroite p:nth-of-type(4), .cColDroite p:nth-of-type(5), .cColDroite p:nth-of-type(6){
 	padding-bottom: 1rem;
 	position: relative;
 	top: 0;
@@ -480,27 +525,32 @@ ul{
 }
 
 /* tel en gras et souligné */
-#iTelContact{
-	font-weight: bold;
+/* (par défaut dans le body, on a mis les liens en black)   */
+#iTelContact a{
 	text-decoration: underline;
+	color: #A55AA5;
 }
-/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
-/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
-#iTelContact a:link, #iTelContact a:visited, #iTelContact a:hover, #iTelContact a:focus, #iTelContact a:active{
-	color: black;
+#iTelContact a:hover{
+	color: #585858;
 }
-
+/* icône du clicIndex */
+#iTelContact{
+	position: relative;
+}
+#iTelContact img{
+	position: absolute;
+	top: 28%;
+	left: 74%;
+}
 /* soulignement et coloration du mail quand on passe dessus */
 .cColDroite p:nth-of-type(6) a{
 	text-decoration: underline;
+	color: #A55AA5;
 }
-
-.cColDroite p:nth-of-type(6) a:link, .cColDroite p:nth-of-type(6) a:visited{
-	color: black;
-}
-
-.cColDroite p:nth-of-type(6) a:hover, a:focus, a:active{
-	color: #F29200;
+/* par défaut dans le body, on a mis les liens en black      */
+/* ici on veut le colorer au passage de la souris et au clic */
+.cColDroite p:nth-of-type(6) a:hover, .cColDroite p:nth-of-type(6) a:focus, .cColDroite p:nth-of-type(6) a:active{
+	color: #585858;
 }
 
 /* espace avant les liens FB et G+ */
@@ -511,7 +561,7 @@ ul{
 
 /* fontawesome pour les icônes 'tel', 'fax' et 'mail' */
 .cColDroite .fa-phone, .cColDroite .fa-fax, .cColDroite .fa-envelope{
-	margin-right: 2rem;
+	margin-right: 3%;
 	position: relative;
 	top: 0.2rem;
 	left: 0;
@@ -532,28 +582,25 @@ ul{
 	left: 0;
 }
 
-/* NB : il faut respecter cet ordre de déclaration : link < visited < hover < focus < active */
-/*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
-.cColDroite .cCouleurNoire:hover, .cColDroite .cCouleurNoire:focus, .cColDroite .cCouleurNoire:active{
+.cColDroite .cCouleurNoire:hover{
 	display: none;
 }
 /* j'ai essayé avec visibility, z-index ... dessus / dessous ... rien n'y fait, c'est toujours "oscillant" */
 
 
-/* Fin de Contact */
+/* fin de la page contact */
 
-/* ******************************************************************************************** */
-/* ******************************        page ordonnance         ****************************** */
-/* ******************************          + commande            ****************************** */
-/* ******************************************************************************************** */
+/***************************************************************************************************************************************/
+/****************************************          page ordonnance   +   page commande          ****************************************/
+/***************************************************************************************************************************************/
 
 /* espace entre le bandeau et le formulaire */
 /* et entre le formulaire et le footer      */
 .cFormOrdo, .cFormComm{
-	padding: 2rem 0; /* si on met un margin, il prend la couleur de fond du body */
+	padding: 2rem 0.5rem; /* si on met un margin, il prend la couleur de fond du body */
 }
 .cFormOrdo h3, .cFormComm h3{
-	font-weight: bold;
+	font-weight: 700;
 }
 
 /* Espaces au dessus et au dessous du message de confirmation d'envoi du formulaire */
@@ -567,45 +614,61 @@ ul{
 
 /* marges autour du § d'introduction situé au dessus du formulaire */
 .cArtiIntro{
-	padding: 1rem 1rem;      /*     haut et bas : 1rem      gauche et droite : 1rem      */
+	padding: 2rem 0;
 	text-align: justify;
 }
 
 /* N'oubliez pas l'original de l'ordonnance ... */
 .cCouleurRouge{
 	color: red;
-	font-weight: bold;
+	font-weight: 700;
 }
 
-/* calage et couleur(s) du lien "mode d'emploi" */
+/* icône du clicIndex */
+/* Attention : cArtiIntro est aussi utilisée dans prepaCommande ... */
+.cArtiIntro + article{
+	position: relative;
+}
+.cArtiIntro + article img{
+	position: absolute;
+	top: 2rem;
+	left: 15rem;
+}
+
+/*
+<article><p id='iModeEmploi'><a href='#'><h4>Mode d'emploi</h4></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+	<div class='cModeEmploi'>
+*/
+
+/* calage et couleur(s) du lien 'mode d'emploi' */
 #iModeEmploi h4{
-	padding: 0 0 2rem 3rem;
+	padding: 1rem 0 5rem 3rem;
+	font-weight: normal; /* un h4 est en gras par défaut */
 }
-#iModeEmploi:link, #iModeEmploi:visited{
-	color: #F29200;
+/* par défaut dans le body, on a mis les liens en black      */
+#iModeEmploi{
+	text-decoration: underline;
+	color: #A55AA5;
 }
-#iModeEmploi:hover, #iModeEmploi:focus, #iModeEmploi:active{
-	color: black;
+/* ici on veut le colorer au passage de la souris et au clic */
+#iModeEmploi:hover{
+	color: #585858;
 }
-
 /* par défaut, le mode d'emploi est masqué */
 #iModeEmploi + .cModeEmploi{
 	display: none;
 }
-
 /* quand on clique sur Mode d'emploi, ça le déplie */
 #iModeEmploi:active + .cModeEmploi, #iModeEmploi:focus + .cModeEmploi{
 	display: block;
 }
-
 /* calage à gauche dans l'article du mode d'emploi */
 .cFormOrdo article:first-of-type{
 	text-align: left;
 }
-
 /*  § Mode d'emploi  */
 .cFormOrdo .cModeEmploi{
-	padding: 2rem;
+	padding: 3rem;
 	margin: 0 .5rem 2rem .5rem;
 	background-color: #5B5B5B;
 	color: white;
@@ -621,7 +684,7 @@ ul{
 
 /* les 4 étapes en gras */
 .cFormOrdo .cModeEmploi span{
-	font-weight: bold;
+	font-weight: 700;
 	text-decoration: underline;
 }
 
@@ -633,7 +696,7 @@ ul{
 /* message pour l'accès impossible aux fichiers sur certains smartphones */
 .cFormOrdo .cModeEmploi ul li p:nth-of-type(2){
 	color: orange;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 .cFormOrdo .cModeEmploi li{
@@ -651,7 +714,7 @@ ul{
 
 /* pour positionner latéralement les civilités dans le formulaire */
 .cFormOrdo .cChampForm [for='iCiviliteM'], .cFormComm .cChampForm [for='iCiviliteM']{
-	padding-right: 25%;
+	padding-right: 20%;
 }
 
 /* blabla au dessus du champ 'textarea' */
@@ -666,31 +729,27 @@ ul{
 }
 
 
-/* ******************************************************************************************** */
-/* ******************************             Horaires           ****************************** */
-/* ******************************************************************************************** */
+/***************************************************************************************************************************************/
+/***************************************************          page horaires          ***************************************************/
+/***************************************************************************************************************************************/
 
 /* la date aujourd'hui */
 main > p:first-child{
-	font-weight: bold;
-	padding: 2.2rem 2rem 1rem 2rem;
+	font-weight: 700;
+	padding: 2rem;
 }
 /* l'heure qu'il est, en rose */
 .cCouleurRose{
-	color: #D84591;
-}
-/* message sur l'état d'ouverture / fermeture de la pharmacie */
-main > p:nth-child(2){
-	padding: 0 2rem 1rem 2rem;
+	color: #1967E5;
 }
 /* position des infos dans la page */
-.cHoraires{
-	padding-top: 2rem;
-	width: 94%;																	/* modifié en MQ 600 px */
+.cHoraires, .cHorairesInfos{
+	padding: 2rem 0.5rem;
+	width: 96%;
 	margin: auto;
 }
-/* <h2> ajouté pour la validation W3C mais non affiché */
-.cHoraires h2{
+/* <h3> ajouté pour la validation W3C mais non affiché */
+.cHoraires h3{
 	display: none;	/* Créneaux horaires ... */
 }
 .cHoraires article{
@@ -709,8 +768,8 @@ main > p:nth-child(2){
 /* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
 #iAujourdhui div, #iAujourdhui h3{
 	background-color: rgba(148, 193, 29, .5);
-	font-weight: bold;
-	color: #D84591;
+	font-weight: 700;
+	color: #1967E5;
 }
 /* on ne veut pas mettre le jour actuel et le tiret en fond vert */
 .cSemaine h3, .cSamedi h3, .cSemaine .cTiret,
@@ -736,7 +795,7 @@ main > p:nth-child(2){
 	background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final, ie 'transparence totale'. */
 	/* NB: j'avais testé 'opacity: 0;' => mais TOUT disaparaît, y compris la border */
 
-	border-left: solid #D84591 2px;
+	border-left: solid #1967E5 2px;
 	position: absolute;
 	top: 0; /* la valeur du left est déterminée en PHP dans le HTML */
 }
@@ -747,10 +806,6 @@ main > p:nth-child(2){
 	left: 0;
 }
 
-/* lien actif du numéro de téléphone du commissariat */
-.cHoraires a{
-	color: #951A80;
-}
 
 /* =============================================================================================================== */
 /* ========================                                                               ======================== */
@@ -814,40 +869,85 @@ main > p:nth-child(2){
 /* ========================                                                               ======================== */
 /* =============================================================================================================== */
 
-/* blabla en dessous des horaires */
-.cHoraires p{
+/* Informations accès / horaires de garde ... */
+/* (on a mis un petit padding-top ... avec .cHoraires ci-dessus) */
+.cHorairesInfos p{
 	text-align: justify;
 	padding: 1% 0;
 }
-.cHoraires p:first-of-type{
-	padding-top: 4%;
-}
-.cHoraires p span{
-	font-weight: bold;
+.cHorairesInfos span{
+	font-weight: 700;
 }
 
-/* ******************************************************************************************** */
-/* ******************************         pharmaDeGarde          ****************************** */
-/* ******************************************************************************************** */
+/***************************************************************************************************************************************/
+/************************************************          page pharma de garde         ************************************************/
+/***************************************************************************************************************************************/
 
-/* section pharmaDeGarde */
-.cPharmaDeGarde{
-	padding: 2rem;
-	min-height: 28rem; /* pour ne pas que le bas de l'écran remonte trop haut */
-}
-.cPharmaDeGarde p{
-	padding-top: 12rem;
-}
-.cPharmaDeGarde a{
-	font-weight: bold;
-	text-decoration: underline;
-	color: #951A80;
+/* un peu d'espace autour des 2 sections */
+.cPdG3237, .cPdGplan{
+	padding: 2rem 0.5rem;
+	text-align: justify;
 }
 
+/* on met en gras quelques mots */
+.cPdG3237 span, .cPdGplan span{
+	font-weight: 700;
+}
 
-/* ******************************************************************************************** */
-/* ******************************             humour             ****************************** */
-/* ******************************************************************************************** */
+/* -----------   Section 3237   ----------- */
+
+/* pour positionner l'image où on veut et prévoir la place d'afficher l'image */
+#i3237On{
+	position: relative;
+	padding-bottom: 10rem;
+}
+#i3237On img{
+	position: absolute;
+	width: 38%;
+	top: 42%;
+	left: 30%;
+}
+/* Après 20h30, on n'affiche plus le § ci-dessus, mais à   */
+/* la place, on met 'Pharmacie de garde' que l'on centre : */
+#i3237Off{
+	text-align: center;
+}
+
+/* -----------   section plan   ----------- */
+
+/* on centre l'adresse du commissariat */
+.cPdGplan p:nth-of-type(2){
+	text-align: center;
+	padding: 1rem 0;
+}
+
+/* un peu d'espace entre chaque ligne */
+.cPdGplan p{
+	padding: 1% 0;
+}
+/* pour pouvoir positionner l'img (icône de guidage GPS) */
+.cPdGplan p:nth-of-type(5){
+	position: relative;
+}
+/* icône de guidage GPS */
+.cPdGplan img{
+	width: 3rem;
+	position: absolute;
+	top: -.2rem;
+	left: 13.2rem;
+}
+/* un peu d'espace entre la dernière ligne et le plan */
+.cPdGplan p:last-of-type{
+	padding-bottom: 2rem;
+}
+/* plan dont le lien a été copié à partir de Google maps */
+.cPdGplan iframe{
+	width: 100%;
+}
+
+/***************************************************************************************************************************************/
+/****************************************************           page humour          ***************************************************/
+/***************************************************************************************************************************************/
 
 /* section humour */
 .cHumour{
@@ -859,7 +959,7 @@ main > p:nth-child(2){
 /* titre "Thérapie par l'humour" */
 .cHumour h3{
 	padding: 3rem 0 5rem;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 /* la blague */
@@ -875,21 +975,29 @@ main > p:nth-child(2){
 	bottom: 2rem;		/* calé en bas, juste au dessus du footer */
 	left: 2rem;
 }
+/* par défaut dans le body, on a mis les liens en black      */
 .cHumour a{
 	text-decoration: underline;
-	color: #951A80;
+	color: #A55AA5;
+}
+.cHumour a:hover{
+	color: #585858;
 }
 
-/* ******************************************************************************************** */
-/* ******************************         gammesProduits         ****************************** */
-/* ******************************************************************************************** */
+/***************************************************************************************************************************************/
+/*********************************************          page gammes de produits          ***********************************************/
+/***************************************************************************************************************************************/
 
 /* titre "Les Marques que ..." */
-.cGammes h3{
-	padding: 3rem 0 5rem;
-	font-weight: bold;
+.cGammes{
+	padding: 2rem 0;
 }
-
+.cGammes h3{
+	font-weight: 700;
+}
+.cGammes > h3 + article{
+	padding-top: 2rem;
+}
 /* image d'introduction au § */
 .cGammes article .cImageDeco img{
 	display: block; 				/* pour supprimer l'espace de qqs pixels sous l'image, cf index.php pour l'explication */
@@ -899,12 +1007,12 @@ main > p:nth-child(2){
 /* pour caler les titres des articles sur l'image */
 .cGammes article .cImageDeco{
 	position: relative;
-	border: 0.3rem solid #951A80;
+	border: 0.3rem solid #364115;
 }
 
-/* titres en mauve, placé sur l'image */
+/* titres placés sur les images */
 .cGammes article h4{
-	color: #951A80;
+	color: #364115;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -939,9 +1047,9 @@ main > p:nth-child(2){
 }
 */
 
-/* ******************************************************************************************** */
-/* ******************************              Footer            ****************************** */
-/* ******************************************************************************************** */
+/***************************************************************************************************************************************/
+/****************************************************             Footer            ****************************************************/
+/***************************************************************************************************************************************/
 
 /* <h3> ajouté pour la validation W3C mais non affiché */
 footer h3{
@@ -969,59 +1077,66 @@ footer section:last-of-type{
 	color: white;
 }
 
-/* ******************************************************************************************** */
-/* ******************************          Media queries         ****************************** */
-/* ******************************************************************************************** */
+/* ********************************************************************************************************************************************** */
+/* ********************************************************************************************************************************************** */
+/* *******************************************************                                ******************************************************* */
+/* *******************************************************          Media queries         ******************************************************* */
+/* *******************************************************                                ******************************************************* */
+/* ********************************************************************************************************************************************** */
+/* ********************************************************************************************************************************************** */
 
-/* 																									braille 		*/
-@media braille{
 
-	/* page Index - <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-	/* volontairement je ne donne pas d'instruction css pour effacer le titre h3 des services proposés */
-	/* puisque c'est utile en braille */
-	.cIntro h3{
-		display: none;	/* Etat actuel d'ouverture ... et Services proposés ... */
+/* pour tous les appareils sauf les plages braille																		NOT BRAILLE	*/
+@media not braille{
+
+	/* pages index + contact + horaires + pharmaDeGarde :                                             */
+	/* <h3> ajoutés pour la validation W3C mais non affichés ...                                      */
+	/* ... sauf en braille :                                                                          */
+	/* - index    : on conserve le titre 'services proposés par la pharmacie' (.cVignettes h3)        */
+	/* - contact  : on conserve les titres 'Formulaire ...' et 'Coordonnées ...' (.cFormContact h3)   */
+	/* - horaires : on conserve les titres 'Horaires ...' et 'Infos ...' (.cHoraires et ...Infos h3)  */
+	/* - ph. garde: on conserve les titres 'Trouver ...' et 'Localiser ...' (.cPdG 3237 & plan)  */
+
+	.cVignettes h3, .cFormContact h3, .cHoraires h3, .cHorairesInfos h3, .cPdG3237 h3, .cPdGplan h3{
+		display: none;
 	}
 
-	/* page Contact <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-	.cFormContact h3{
+	/* page index - menu des liens d'accès rapide aux services */
+	.cBraille{
 		display: none;
 	}
 }
 
-/* 																									460 px		*/
+
+/* 																														460 px		*/
 @media screen and (min-width: 460px){
 
-	.cBraille{
-		display: none;
-	}
-
-	/* page Index - <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-	.cIntro h3, .cVignettes h3{
-		display: none;	/* Etat actuel d'ouverture ... et Services proposés ... */
-	}
-
-	/* page Contact <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-	.cFormContact h3{
-		display: none;
-	}
-
 	body, h3{
-		font-size: 2rem; /* old 1.8 */
+		font-size: 2rem; 	/* old 1.7 */
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
 	h1{
-		font-size: 2.7rem;	/* old 2.5 titre de la page : Pharmacie des Tilleuls */
-		top: 4%;			/* old 0 */
+		font-size: 5.5rem;	/* old 4.5 titre de la page : Pharmacie des Tilleuls */
+		top: 8%;
+		left: 22%;
 	}
 	h2{
-		font-size: 1.7rem;	/* old 1.5 sous-titre de la page : à Gaël ... */
+		font-size: 4.5rem;	/* old 3 sous-titre de la page : à Gaël ... */
+		top: 48%;
+		left: 20%;
 	}
-	#iTelIndex{
-		font-size: 2.1rem;	/* old 2 */
-		left: 27%;			/* old 23% */
+	#iLogoCroix{
+		width: 14%;
 	}
-
+	#iTelBandeau{
+		font-size: 4rem;
+		top: 52%;
+		left: 52%;
+	}
+	#iTelBandeau img{
+		top: 55%;
+		left: 100%;
+	}
 	/* page Index : on affiche 2 vignettes en largeur */
 	.cVignettes article{
 		width: 50%;
@@ -1034,7 +1149,7 @@ footer section:last-of-type{
 
 	/* intro du form. de contact "Envoyez-nous un message ... " */
 	.cColDroite h4{
-		font-size: 2.35rem;	/* old 2.2rem */
+		font-size: 2.35rem;	/* old 2rem */
 	}
 
 	/* tailles des champs saisis dans le formulaire et des messages associés */
@@ -1081,22 +1196,8 @@ footer section:last-of-type{
 
 }
 
-/* 																									600 px		*/
+/* 																														600 px		*/
 @media screen and (min-width: 600px){
-
-	.cBraille{
-		display: none;
-	}
-
-	/* page Index - <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-	.cIntro h3, .cVignettes h3{
-		display: none;	/* Etat actuel d'ouverture ... et Services proposés ... */
-	}
-
-	/* page Contact <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-	.cFormContact h3{
-		display: none;
-	}
 
 	/* On augmente encore un peu les tailles */
 	body, h3{
@@ -1109,12 +1210,12 @@ footer section:last-of-type{
 	h2{
 		font-size: 2.5rem;	/* old 1.7 - sous-titre de la page : à Gaël ... */
 	}
-	#iTelIndex{
-		font-size: 2.5rem;	/* old 2 en mobile - numéro de tel cliquable */
+	#iTelBandeau{
+		font-size: 4.5rem;	/* old 4 en mobile - numéro de tel cliquable */
 		left: 34%;			/* old 27% */
 	}
-	#iTelIndex .fa-volume-control-phone{
-		display: none;
+	#iTelBandeau img{
+		display: none; /* sur un écran d'ordi, on n'affiche plus l'icône clicIndex */
 	}
 	nav{
 		padding: 1rem; /* hauteur du bandeau de nav */
@@ -1231,7 +1332,7 @@ footer section:last-of-type{
 	}
 
 	/*        page horaires         */
-	.cHoraires{
+	.cHoraires, .cHorairesInfos{
 		width: 85%;						/* old : 90%   */
 	}
 
@@ -1249,22 +1350,8 @@ footer section:last-of-type{
 }
 
 
-/* 																									900 px		*/
+/* 																														900 px		*/
 @media screen and (min-width: 900px){
-
-	.cBraille{
-		display: none;
-	}
-
-	/* page Index - <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-	.cIntro h3, .cVignettes h3{
-		display: none;	/* Etat actuel d'ouverture ... et Services proposés ... */
-	}
-
-	/* page Contact <h3> ajouté pour la validation W3C mais non affiché, sauf en braille */
-	.cFormContact h3{
-		display: none;
-	}
 
 	body, h3{
 		font-size: 2.5rem; /* old 2.3 */
@@ -1289,8 +1376,8 @@ footer section:last-of-type{
 		left: 21%;			/* old 16% en mobile */
 	}
 
-	#iTelIndex{
-		font-size: 2.8rem;	/* old 2.5 */
+	#iTelBandeau{
+		font-size: 5rem;	/* old 4.5 */
 	}
 
 	/* page Index : on passe en 2 vignettes en largeur */
@@ -1301,8 +1388,91 @@ footer section:last-of-type{
 
 	/* page connexion : espace au-dessus du lien 'inscription' */
 	.cConnexionInscription p:first-of-type{
-		padding-bottom: 2rem;
+	padding-bottom: 2rem;
+}
+
+	/* Formulaire de contact */
+
+	/* "la saisie de tous les champs ..." */
+	.cFormContact section span:first-of-type{
+		font-size: 1.7rem; 		/* old 1.5 */
 	}
+
+	/* FB et G+ */
+	.cColGauche p:nth-of-type(7), .cColGauche p:nth-of-type(8){
+		display: inline-block;
+		height: 4rem;
+		width: 4rem;
+	}
+
+	/* intro du form. de contact "Envoyez-nous un message ... " */
+	.cColDroite h4{
+		font-size: 2.5rem;	/* old 2.35rem */
+	}
+
+	/* tailles des champs saisis dans le formulaire et des messages associés */
+
+	.cChampForm input, .cChampForm textarea{
+		font-size: 2.5rem; /* old 2.3 */
+	}
+
+	/*           page humour           */
+	/* "Merci à ..." */
+	.cHumour p:last-of-type{
+		font-size: 2rem;				/* old : 1.8rem	*/
+	}
+
+	/* Footer */
+
+	footer section:first-of-type{
+		font-size: 1.8rem; /* old 1.5 */
+	}
+
+	footer section:first-of-type p{
+		padding: 1.5rem 1.5rem; /* old .5rem 1rem */
+	}
+}
+
+/* 																														1600 px		*/
+@media screen and (min-width: 1600px){
+
+	body, h3{
+		font-size: 2.5rem; /* old 2.3 */
+	}
+	/* on agrandit un peu la croix */
+	header section img{
+		width: 16%;
+		top: 2rem;
+		left: 2rem;
+	}
+
+	/* titre : Pharmacie ... */
+	h1{
+		font-size: 4.5rem;	/* old 3.8 */
+		top: 8%;			/* old 7% */
+		left: 21%;			/* old 16% en mobile */
+	}
+
+	/* sous-titre : Nantes ... */
+	h2{
+		font-size: 2.8rem;	/* old 2.5 */
+		left: 21%;			/* old 16% en mobile */
+	}
+
+	#iTelBandeau{
+		font-size: 5.2rem;	/* old 5 */
+	}
+
+	/* page Index : on passe en 2 vignettes en largeur */
+	.cVignettes article{
+		width: 33.33%;
+	}
+
+
+	/* page connexion : espace au-dessus du lien 'inscription' */
+	.cConnexionInscription p:first-of-type{
+	padding-bottom: 2rem;
+}
 
 	/* Formulaire de contact */
 

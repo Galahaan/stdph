@@ -1,6 +1,7 @@
 <?php
 
 	session_start(); // en début de chaque fichier utilisant $_SESSION
+	ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	/////     INCLUDE sécurisé
@@ -67,11 +68,11 @@
 	<header>
 		<section>
 			<a href='index.php'>
-				<img src='img/croix_mauve.png' alt=''>
+				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelIndex'><i class='fa fa-volume-control-phone' aria-hidden='true'></i>&nbsp;&nbsp;<a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 		</section>
 		<nav class='cNavigation'>
 			<ul>
@@ -123,20 +124,20 @@
 		</section>
 		<section class='cVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
 			
-			<nav class="cBraille">
+			<nav class='cBraille'>
 				<ul>
-					<li><a href="#iPrepaOrdonnance">Préparation d'ordonnance</a></li>
-					<li><a href="#iPrepaCommande">Préparation de commande</a></li>
-					<li><a href="#iGammesProduits">Les gammes de produits</a></li>
-					<li><a href="#iPharmaDeGarde">Pharmacies de garde</a></li>
-					<li><a href="#iPromos">Promotions</a></li>
-					<li><a href="#iInfos">Informations / Conseils</a></li>
-					<li><a href="#iHumour">Humour</a></li>
+					<li><a href='#iPrepaOrdonnance'>Préparation d'ordonnance</a></li>
+					<li><a href='#iPrepaCommande'>Préparation de commande</a></li>
+					<li><a href='#iGammesProduits'>Les gammes de produits</a></li>
+					<li><a href='#iPharmaDeGarde'>Pharmacies de garde</a></li>
+					<li><a href='#iPromos'>Promotions</a></li>
+					<li><a href='#iInfos'>Informations / Conseils</a></li>
+					<li><a href='#iHumour'>Humour</a></li>
 				</ul>
 			</nav>
 
 
-			<article id="iPrepaOrdonnance">
+			<article id='iPrepaOrdonnance'>
 				<?php if(! empty($_SESSION)) : ?>
 					<a href='prepaOrdonnance.php'>
 						<h4>Préparation d'ordonnance</h4>
@@ -149,7 +150,7 @@
 				<img src='img/prepaOrdonnance.jpg' alt=''>
 			</article>
 
-			<article id="iPrepaCommande">
+			<article id='iPrepaCommande'>
 				<?php if(! empty($_SESSION)) : ?>
 					<a href='prepaCommande.php'>
 						<h4>Préparation de commande</h4>
@@ -162,42 +163,44 @@
 				<img src='img/prepaCommande.jpg' alt=''>
 			</article>
 
-			<article id="iGammesProduits">
+			<article id='iGammesProduits'>
 				<a href='gammesProduits.php'>
 					<h4>Les gammes de produits</h4>
 				</a>
 				<img src='img/gammesProduits.jpg' alt=''>
 			</article>
 
-			<article id="iPharmaDeGarde">
+			<article id='iPharmaDeGarde'>
 				<a href='pharmaDeGarde.php'>
 					<h4>Pharmacies de garde</h4>
 				</a>
 				<img src='img/pharmaDeGarde.jpg' alt=''>
 			</article>
 
-			<article id="iPromos">
+			<article id='iPromos'>
 				<a href='promos.php'>
 					<h4>Promos</h4>
 				</a>
 				<img src='img/promos.jpg' alt=''>
 			</article>
 
-			<article id="iInfos">
+			<article id='iInfos'>
 				<a href='infos.php'>
 					<h4>Informations / Conseils</h4>
 				</a>
 				<img src='img/questions.jpg' alt=''>
 			</article>
 
-	<!-- matériel médical / contention ? /   -->
+			<?php
+				// matériel médical / contention ?
 
-			<article id="iHumour">
-				<a href='humour.php'>
-					<h4>La blague de Chuck Norris !..</h4>
-				</a>
-				<img src='img/humour.jpg' alt=''>
-			</article>
+				// <article id='iHumour'>
+				// 	<a href='humour.php'>
+				// 		<h4>La blague de Chuck Norris !..</h4>
+				// 	</a>
+				// 	<img src='img/humour.jpg' alt=''>
+				// </article>
+			?>
  		</section>
 	</main>
 
