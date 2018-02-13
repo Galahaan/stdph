@@ -411,7 +411,7 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 			<p><?= NOM_PHARMA ?></p>
 			<p><?= ADR_PHARMA_L1 ?></p>
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p id='iTelContact'><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iTelContact'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
 			<p><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
 			<p>

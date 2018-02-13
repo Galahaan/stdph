@@ -31,7 +31,7 @@
 /* pharma ouvre dans ...    (accueil)  :  black    noir             */
 /* pharma ferme dans ...    (accueil)  :  #F29200  orange           */
 
-/*   - tel commissariat (horaires)                                  */
+/*   - tel commissariat (horaires)        supprimé  !!!             */
 
 
 
@@ -524,7 +524,7 @@ ul{
 	left: -0.8rem;
 }
 
-/* tel en gras et souligné */
+/* tel cliquable, de couleur et souligné */
 /* (par défaut dans le body, on a mis les liens en black)   */
 #iTelContact a{
 	text-decoration: underline;
@@ -539,8 +539,7 @@ ul{
 }
 #iTelContact img{
 	position: absolute;
-	top: 28%;
-	left: 74%;
+	top: 1rem;
 }
 /* soulignement et coloration du mail quand on passe dessus */
 .cColDroite p:nth-of-type(6) a{
@@ -625,33 +624,24 @@ ul{
 }
 
 /* icône du clicIndex */
-/* Attention : cArtiIntro est aussi utilisée dans prepaCommande ... */
-.cArtiIntro + article{
+#iModeEmploi{
 	position: relative;
+	padding: 1rem 0 5rem 3rem;
 }
-.cArtiIntro + article img{
+#iModeEmploi img{
 	position: absolute;
 	top: 2rem;
-	left: 15rem;
+	left: 16rem;
 }
-
-/*
-<article><p id='iModeEmploi'><a href='#'><h4>Mode d'emploi</h4></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
-	<div class='cModeEmploi'>
-*/
-
-/* calage et couleur(s) du lien 'mode d'emploi' */
-#iModeEmploi h4{
-	padding: 1rem 0 5rem 3rem;
-	font-weight: normal; /* un h4 est en gras par défaut */
-}
-/* par défaut dans le body, on a mis les liens en black      */
-#iModeEmploi{
+/* calage et couleur(s) du lien 'mode d'emploi'          */
+/* par défaut dans le body, on a mis les liens en black  */
+#iModeEmploi a{
+	font-weight: 700;
 	text-decoration: underline;
 	color: #A55AA5;
 }
 /* ici on veut le colorer au passage de la souris et au clic */
-#iModeEmploi:hover{
+#iModeEmploi a:hover{
 	color: #585858;
 }
 /* par défaut, le mode d'emploi est masqué */
@@ -1172,6 +1162,7 @@ footer section:last-of-type{
 		font-size: 2rem; /* old 1.8 coordonnées de la pharmacie */
 	}
 
+
 	/*     page prepaOrdonnance     */
 
 	/* marges autour du § d'introduction situé au dessus du formulaire */
@@ -1185,6 +1176,20 @@ footer section:last-of-type{
 	/*  § Mode d'emploi  */
 	.cModeEmploi{
 		margin: 0 2rem 2rem 2rem;		/* old : 0 .5rem 2rem .5rem		*/
+	}
+	/* icône du clicIndex */
+	#iModeEmploi img{
+		top: 2.2rem;
+		left: 18rem;
+	}
+
+	/*      page PharmaDeGarde      */
+
+	/* icône de guidage GPS */
+	.cPdGplan img{
+		width: 4rem;
+		top: -.4rem;
+		left: 17rem;
 	}
 
 	/*           page humour           */
@@ -1304,6 +1309,11 @@ footer section:last-of-type{
 		font-size: 3rem; /* old 2 */
 	}
 
+	/* icône du clicIndex */
+	#iTelContact img{
+		top: 2rem;
+	}
+
 
 	/* Footer */
 
@@ -1330,10 +1340,25 @@ footer section:last-of-type{
 		padding: 3rem;					/* old : 2rem					*/
 		margin: 0 3rem 3rem 3rem;		/* old : 0 2rem 2rem 2rem		*/
 	}
+	/* icône du clicIndex */
+	#iModeEmploi img{
+		top: 2.5rem;
+		left: 21rem;
+	}
 
 	/*        page horaires         */
+
 	.cHoraires, .cHorairesInfos{
 		width: 85%;						/* old : 90%   */
+	}
+
+	/*      page PharmaDeGarde      */
+
+	/* icône de guidage GPS */
+	.cPdGplan img{
+		width: 4.5rem;
+		top: -0.5rem;
+		left: 19rem;
 	}
 
 	/*           page humour           */
@@ -1414,6 +1439,23 @@ footer section:last-of-type{
 
 	.cChampForm input, .cChampForm textarea{
 		font-size: 2.5rem; /* old 2.3 */
+	}
+
+	/*     page prepaOrdonnance     */
+
+	/* icône du clicIndex */
+	#iModeEmploi img{
+		top: 2.8rem;
+		left: 22rem;
+	}
+
+	/*      page PharmaDeGarde      */
+
+	/* icône de guidage GPS */
+	.cPdGplan img{
+		width: 5rem;
+		top: 0.2rem;
+		left: 21rem;
 	}
 
 	/*           page humour           */
