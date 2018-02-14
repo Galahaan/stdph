@@ -3,218 +3,218 @@
 session_start(); // en début de chaque fichier utilisant $_SESSION
 ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	/////     INCLUDE sécurisé
-	///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-	if( empty($page) ){
-	$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+if( empty($page) ){
+$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
 
-	// On construit le nom de la page à inclure en prenant 2 précautions :
-	// - ajout dynamique de l'extension .php
-	// - on supprime également d'éventuels espaces en début et fin de chaîne
-	$page = trim($page.".php");
+// On construit le nom de la page à inclure en prenant 2 précautions :
+// - ajout dynamique de l'extension .php
+// - on supprime également d'éventuels espaces en début et fin de chaîne
+$page = trim($page.".php");
+}
+
+// On remplace les caractères qui permettent de naviguer dans les répertoires
+$page = str_replace("../","protect",$page);
+$page = str_replace(";","protect",$page);
+$page = str_replace("%","protect",$page);
+
+// On interdit l'inclusion de dossiers protégés par htaccess.
+// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
+// strpos() peut très bien le faire, et surtout plus vite !
+// if( preg_match("admin", $page) ){
+if( strpos($page, "admin") ){
+	echo "Vous n'avez pas accès à ce répertoire";
+}
+else{
+    // On vérifie que la page est bien sur le serveur
+    if (file_exists("include/" . $page) && $page != "index.php") {
+    	require_once("./include/".$page);
+    }
+    else{
+    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
+    }
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     FIN INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// Quelques constantes spécifiques à ce fichier :
+// page en cours :
+define("PAGE_EN_COURS", "prepaOrdonnance.php");
+
+// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
+if( isset($_POST['bouton']) ){
+
+	//  *******  CIVILITE  *******
+	$civilite = $_POST['civilite'];
+
+	// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
+
+	// Méthode de remplacement de caractères utilisant str_replace().
+	// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
+	// (même indice) dans le tableau $nouveauCar.
+	// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
+	// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
+	// par le caractère vide : ''.
+	$trouverCar =
+	['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
+	 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
+	 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
+	$nouveauCar = [' '];
+
+	// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
+	// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
+	$minusAccMajus =
+	['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
+	 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
+	 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
+	 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
+	 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
+	 'ç' => 'Ç', 'ñ' => 'Ñ'];
+
+	// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
+	// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
+
+
+	//  ********  PRENOM  ********
+
+	// supprime les balises HTML et PHP
+	$prenom = strip_tags($_POST['prenom']);
+	// cf explications sur le remplacement de car. ci-dessus
+	$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
+	// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
+	$prenom = superTrim($prenom);
+	// remplace les espaces " " par des soulignés "_"
+	$prenom = str_replace(" ", "_", $prenom);
+	// 1ère lettre en majuscule, les autres en minuscules
+	$prenom = ucfirst(strtolower($prenom));
+	// test de la contrainte sur la longueur de la chaîne
+	if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
+		$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
 	}
 
-	// On remplace les caractères qui permettent de naviguer dans les répertoires
-	$page = str_replace("../","protect",$page);
-	$page = str_replace(";","protect",$page);
-	$page = str_replace("%","protect",$page);
+	//  ********  NOM  ********
 
-	// On interdit l'inclusion de dossiers protégés par htaccess.
-	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
-	// strpos() peut très bien le faire, et surtout plus vite !
-	// if( preg_match("admin", $page) ){
-	if( strpos($page, "admin") ){
-		echo "Vous n'avez pas accès à ce répertoire";
+	$nom = strip_tags($_POST['nom']);
+	$nom = str_replace($trouverCar, $nouveauCar, $nom);
+	$nom = superTrim($nom);
+	$nom = str_replace(" ", "_", trim($nom));
+	// NOM en majuscule
+	$nom = strtoupper($nom);
+	$nom = strtr($nom, $minusAccMajus);
+
+	if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
+		$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
+	}
+
+	//  ********  MAIL  ********
+
+	// "nettoie" la valeur utilisateur :
+	$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
+
+	// teste la NON validité du format :
+	if( ! filter_var($adrMailClient, FILTER_VALIDATE_EMAIL) ){
+		$erreurs['adrMailClient'] = "(format incorrect)"; 
+	};
+
+	//  ********  MESSAGE  ********
+
+	// on traite volontairement le cas du message AVANT celui de la pièce jointe pour
+	// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les tests.
+	// (chunk_split limite la longueur d'une ligne à 76 car. pour respecter la RFC 2045)
+	$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
+	if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
+		$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
+	}
+	// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
+	$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
+
+	//  ********  FICHIER JOINT  ********
+
+	$fichierInitial = $_FILES['pieceJointe'];
+	$taille         = $fichierInitial['size']; 	   // en OCTETS
+	$nomInitial     = $fichierInitial['name'];     // de la forme "fichier.txt"
+	// on extrait l'extension (que l'on force en minuscules) :
+	$extension      = strtolower( pathinfo($nomInitial, PATHINFO_EXTENSION) );
+	$nomTemporaire  = $fichierInitial['tmp_name']; // de la forme "/tmp/phpxxxxxx", ie que cela inclut le chemin
+	$type           = $fichierInitial['type'];
+	// ex. image/gif ou image/jpeg ou application/pdf ou text/plain ou application/vnd.ms-excel ou application/octet-stream
+
+	// pour contrer au mieux les failles de sécurité, on procède à quelques tests / modifications
+	// sur le fichier joint.
+
+	// 1° => on choisit et on protège l'emplacement de stockage sur le serveur :
+	// (penser à bien définir les droits d'accès en lecture / écriture
+	//  ainsi qu'un solide .htaccess qui interdira de voir l'index-of du répertoire en question)                                +++++++++++
+	$repFinal = "../ordonnances_jointes";
+
+	// 2° => on vérifie que la taille est bien positive mais ne dépasse pas X Mo (cf TAILLE_MAX_PJ) :
+	( ! $taille > 0 ) ? $erreurs['pieceJointe'] .= " [vide]" : "";
+	( $taille > TAILLE_MAX_PJ ) ? $erreurs['pieceJointe'] .= " [trop volumineux]" : "";
+
+	// 3° => avant de stocker le fichier joint, s'il avait bien un nom, on lui en donne un nouveau,
+	//       constitué de la date, du nom du client, suivi de caractères aléatoires :
+	if( ! $nomInitial == "" ){
+		// avant d'écrire la date dans le nom du fichier, on définit le fuseau horaire par défaut à utiliser :
+		( date_default_timezone_set("Europe/Paris") ) ? $fuseau = "" : $fuseau = " (fuseau horaire invalide)";
+		$nouveauNom = date("Y-m-d_H-i-s_") . $prenom . "_" . $nom . "_" . bin2hex(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
 	}
 	else{
-	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("include/" . $page) && $page != "index.php") {
-	    	require_once("./include/".$page);
-	    }
-	    else{
-	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
-	    }
+		// le fichier n'avait pas de nom :
+		$erreurs['pieceJointe'] .= " [anonyme]";
 	}
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	/////     FIN INCLUDE sécurisé
-	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Quelques constantes spécifiques à ce fichier :
-	// page en cours :
-	define("PAGE_EN_COURS", "prepaOrdonnance.php");
+	// 4° => on vérifie que l'extension du fichier joint fait partie de celles autorisées,
+	//       ET on prépare dès maintenant le "Content-type" de la pièce jointe du mail :
+	switch ($extension) {
+		case 'jpe' :
+		case 'jpg' :
+		case 'jpeg': $ContentType = "image/jpeg";      break;
+		case 'png' : $ContentType = "image/png";       break;
+		case 'gif' : $ContentType = "image/gif";       break;
+		case 'pdf' : $ContentType = "application/pdf"; break;
+		default:
+			$erreurs['pieceJointe'] .= " [extension invalide]";
+	}
 
-	// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
-	if( isset($_POST['bouton']) ){
+	// 5° => on vérifie qu'un fichier portant le même nom n'est pas déjà présent sur le serveur :
+	if( file_exists($repFinal."/".$nouveauNom.".".$extension)) {
+		// ce message là, qui ne devrait pas arriver, écrase les précédents :
+		$erreurs['pieceJointe'] = "Erreur serveur, veuillez renvoyer le formulaire svp.";
+	}
 
-		//  *******  CIVILITE  *******
-		$civilite = $_POST['civilite'];
-
-		// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
-
-		// Méthode de remplacement de caractères utilisant str_replace().
-		// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
-		// (même indice) dans le tableau $nouveauCar.
-		// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
-		// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
-		// par le caractère vide : ''.
-		$trouverCar =
-		['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
-		 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
-		 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-		$nouveauCar = [' '];
-
-		// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
-		// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
-		$minusAccMajus =
-		['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
-		 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
-		 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
-		 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
-		 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
-		 'ç' => 'Ç', 'ñ' => 'Ñ'];
-
-		// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
-		// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
-
-
-		//  ********  PRENOM  ********
-
-		// supprime les balises HTML et PHP
-		$prenom = strip_tags($_POST['prenom']);
-		// cf explications sur le remplacement de car. ci-dessus
-		$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
-		// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
-		$prenom = superTrim($prenom);
-		// remplace les espaces " " par des soulignés "_"
-		$prenom = str_replace(" ", "_", $prenom);
-		// 1ère lettre en majuscule, les autres en minuscules
-		$prenom = ucfirst(strtolower($prenom));
-		// test de la contrainte sur la longueur de la chaîne
-		if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
-			$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-		}
-
-		//  ********  NOM  ********
-
-		$nom = strip_tags($_POST['nom']);
-		$nom = str_replace($trouverCar, $nouveauCar, $nom);
-		$nom = superTrim($nom);
-		$nom = str_replace(" ", "_", trim($nom));
-		// NOM en majuscule
-		$nom = strtoupper($nom);
-		$nom = strtr($nom, $minusAccMajus);
-
-		if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
-			$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-		}
-
-		//  ********  MAIL  ********
-
-		// "nettoie" la valeur utilisateur :
-		$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
-
-		// teste la NON validité du format :
-		if( ! filter_var($adrMailClient, FILTER_VALIDATE_EMAIL) ){
-			$erreurs['adrMailClient'] = "(format incorrect)"; 
-		};
-
-		//  ********  MESSAGE  ********
-
-		// on traite volontairement le cas du message AVANT celui de la pièce jointe pour
-		// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les tests.
-		// (chunk_split limite la longueur d'une ligne à 76 car. pour respecter la RFC 2045)
-		$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
-		if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
-			$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
-		}
-		// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
-		$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
-
-		//  ********  FICHIER JOINT  ********
-
-		$fichierInitial = $_FILES['pieceJointe'];
-		$taille         = $fichierInitial['size']; 	   // en OCTETS
-		$nomInitial     = $fichierInitial['name'];     // de la forme "fichier.txt"
-		// on extrait l'extension (que l'on force en minuscules) :
-		$extension      = strtolower( pathinfo($nomInitial, PATHINFO_EXTENSION) );
-		$nomTemporaire  = $fichierInitial['tmp_name']; // de la forme "/tmp/phpxxxxxx", ie que cela inclut le chemin
-		$type           = $fichierInitial['type'];
-		// ex. image/gif ou image/jpeg ou application/pdf ou text/plain ou application/vnd.ms-excel ou application/octet-stream
-
-		// pour contrer au mieux les failles de sécurité, on procède à quelques tests / modifications
-		// sur le fichier joint.
-
-		// 1° => on choisit et on protège l'emplacement de stockage sur le serveur :
-		// (penser à bien définir les droits d'accès en lecture / écriture
-		//  ainsi qu'un solide .htaccess qui interdira de voir l'index-of du répertoire en question)                                +++++++++++
-		$repFinal = "../ordonnances_jointes";
-
-		// 2° => on vérifie que la taille est bien positive mais ne dépasse pas X Mo (cf TAILLE_MAX_PJ) :
-		( ! $taille > 0 ) ? $erreurs['pieceJointe'] .= " [vide]" : "";
-		( $taille > TAILLE_MAX_PJ ) ? $erreurs['pieceJointe'] .= " [trop volumineux]" : "";
-
-		// 3° => avant de stocker le fichier joint, s'il avait bien un nom, on lui en donne un nouveau,
-		//       constitué de la date, du nom du client, suivi de caractères aléatoires :
-		if( ! $nomInitial == "" ){
-			// avant d'écrire la date dans le nom du fichier, on définit le fuseau horaire par défaut à utiliser :
-			( date_default_timezone_set("Europe/Paris") ) ? $fuseau = "" : $fuseau = " (fuseau horaire invalide)";
-			$nouveauNom = date("Y-m-d_H-i-s_") . $prenom . "_" . $nom . "_" . bin2hex(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
-		}
-		else{
-			// le fichier n'avait pas de nom :
-			$erreurs['pieceJointe'] .= " [anonyme]";
-		}
-
-		// 4° => on vérifie que l'extension du fichier joint fait partie de celles autorisées,
-		//       ET on prépare dès maintenant le "Content-type" de la pièce jointe du mail :
-		switch ($extension) {
-			case 'jpe' :
-			case 'jpg' :
-			case 'jpeg': $ContentType = "image/jpeg";      break;
-			case 'png' : $ContentType = "image/png";       break;
-			case 'gif' : $ContentType = "image/gif";       break;
-			case 'pdf' : $ContentType = "application/pdf"; break;
-			default:
-				$erreurs['pieceJointe'] .= " [extension invalide]";
-		}
-
-		// 5° => on vérifie qu'un fichier portant le même nom n'est pas déjà présent sur le serveur :
-		if( file_exists($repFinal."/".$nouveauNom.".".$extension)) {
-			// ce message là, qui ne devrait pas arriver, écrase les précédents :
-			$erreurs['pieceJointe'] = "Erreur serveur, veuillez renvoyer le formulaire svp.";
-		}
-
-		// 6° => au final, s'il n'y a pas d'erreurs, ie ni pour la pièce jointe, ni pour les autres champs
-		// du formulaire, alors on déplace le fichier :
-		if( ! isset($erreurs) ){
-			// le fichier est validé, on le déplace à son emplacement définitif tout en le renommant :
-			$succes = move_uploaded_file($nomTemporaire , $repFinal.'/'.$nouveauNom.'.'.$extension);
-		    if( ! $succes ){
-			    // le déplacement n'a pas pu se faire, on supprime le fichier du serveur :
-			    unlink($nomInitial);
-
-		    	$erreurs['pieceJointe'] = "[erreur de transfert ". $_FILES['pieceJointe']['error']. "]";
-		    	// la valeur de l'erreur renseigne sur sa signification :
-		    	// 0 = a priori ce sont les droits d'accès en écriture qui ne sont pas conformes ...
-		    	//     ou des caractères non autorisés dans le nom du fichier : ex. "/" ...
-		    	// 1 = UPLOAD_ERR_INI_SIZE - Taille du fichier téléchargé > upload_max_filesize dans le php.ini.
-				// 2 = UPLOAD_ERR_FORM_SIZE - Taille du fichier téléchargé > MAX_FILE_SIZE définie dans le formulaire HTML.
-				// 3 = UPLOAD_ERR_PARTIAL - Le fichier n'a été que partiellement téléchargé.
-				// 4 = UPLOAD_ERR_NO_FILE - Aucun fichier n'a été téléchargé.
-				// 6 = UPLOAD_ERR_NO_TMP_DIR - Un dossier temporaire est manquant. (introduit en PHP 5.0.3)
-				// 7 = UPLOAD_ERR_CANT_WRITE - Échec de l'écriture du fichier sur le disque. (introduit en PHP 5.1.0)
-				// 8 = UPLOAD_ERR_EXTENSION - Une extension PHP a arrêté l'envoi de fichier.
-				//		PHP ne propose aucun moyen de déterminer quelle extension est en cause.
-				//		L'examen du phpinfo() peut aider. (introduit en PHP 5.2.0)
-		    }
-		}
-		else{
-			// il y avait des erreurs => on supprime le fichier du serveur :
+	// 6° => au final, s'il n'y a pas d'erreurs, ie ni pour la pièce jointe, ni pour les autres champs
+	// du formulaire, alors on déplace le fichier :
+	if( ! isset($erreurs) ){
+		// le fichier est validé, on le déplace à son emplacement définitif tout en le renommant :
+		$succes = move_uploaded_file($nomTemporaire , $repFinal.'/'.$nouveauNom.'.'.$extension);
+	    if( ! $succes ){
+		    // le déplacement n'a pas pu se faire, on supprime le fichier du serveur :
 		    unlink($nomInitial);
-		}
+
+	    	$erreurs['pieceJointe'] = "[erreur de transfert ". $_FILES['pieceJointe']['error']. "]";
+	    	// la valeur de l'erreur renseigne sur sa signification :
+	    	// 0 = a priori ce sont les droits d'accès en écriture qui ne sont pas conformes ...
+	    	//     ou des caractères non autorisés dans le nom du fichier : ex. "/" ...
+	    	// 1 = UPLOAD_ERR_INI_SIZE - Taille du fichier téléchargé > upload_max_filesize dans le php.ini.
+			// 2 = UPLOAD_ERR_FORM_SIZE - Taille du fichier téléchargé > MAX_FILE_SIZE définie dans le formulaire HTML.
+			// 3 = UPLOAD_ERR_PARTIAL - Le fichier n'a été que partiellement téléchargé.
+			// 4 = UPLOAD_ERR_NO_FILE - Aucun fichier n'a été téléchargé.
+			// 6 = UPLOAD_ERR_NO_TMP_DIR - Un dossier temporaire est manquant. (introduit en PHP 5.0.3)
+			// 7 = UPLOAD_ERR_CANT_WRITE - Échec de l'écriture du fichier sur le disque. (introduit en PHP 5.1.0)
+			// 8 = UPLOAD_ERR_EXTENSION - Une extension PHP a arrêté l'envoi de fichier.
+			//		PHP ne propose aucun moyen de déterminer quelle extension est en cause.
+			//		L'examen du phpinfo() peut aider. (introduit en PHP 5.2.0)
+	    }
 	}
+	else{
+		// il y avait des erreurs => on supprime le fichier du serveur :
+	    unlink($nomInitial);
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang='fr'>

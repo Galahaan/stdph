@@ -4,132 +4,133 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 
 ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	/////     INCLUDE sécurisé
-	///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-	if( empty($page) ){
-	$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+if( empty($page) ){
+$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
 
-	// On construit le nom de la page à inclure en prenant 2 précautions :
-	// - ajout dynamique de l'extension .php
-	// - on supprime également d'éventuels espaces en début et fin de chaîne
-	$page = trim($page.".php");
+// On construit le nom de la page à inclure en prenant 2 précautions :
+// - ajout dynamique de l'extension .php
+// - on supprime également d'éventuels espaces en début et fin de chaîne
+$page = trim($page.".php");
+}
+
+// On remplace les caractères qui permettent de naviguer dans les répertoires
+$page = str_replace("../","protect",$page);
+$page = str_replace(";","protect",$page);
+$page = str_replace("%","protect",$page);
+
+// On interdit l'inclusion de dossiers protégés par htaccess.
+// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
+// strpos() peut très bien le faire, et surtout plus vite !
+// if( preg_match("admin", $page) ){                        ok en PHP 5.6.30 mais plus en PHP 7.1.4  ********************
+if( strpos($page, "admin") ){
+	echo "Vous n'avez pas accès à ce répertoire";
+}
+else{
+    // On vérifie que la page est bien sur le serveur
+    if (file_exists("include/" . $page) && $page != "index.php") {
+    	require_once("./include/".$page);
+    }
+    else{
+    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
+    }
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     FIN INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// on détermine la page courante, en vue de souligner le lien
+// concerné dans le menu de navigation grâce à l'id 'iPageCourante' :
+$flagPC = pageCourante($_SERVER['REQUEST_URI']);
+
+// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
+if( isset($_POST['bouton']) ){
+
+	//  *******  CIVILITE  *******
+	$civilite = $_POST['civilite'];
+
+	// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
+
+	// Méthode de remplacement de caractères utilisant str_replace().
+	// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
+	// (même indice) dans le tableau $nouveauCar.
+	// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
+	// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
+	// par le caractère vide : ''.
+	$trouverCar =
+	['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
+	 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
+	 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
+	$nouveauCar = [' '];
+
+	// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
+	// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
+	$minusAccMajus =
+	['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
+	 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
+	 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
+	 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
+	 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
+	 'ç' => 'Ç', 'ñ' => 'Ñ'];
+
+	// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
+	// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
+
+
+	//  ********  PRENOM  ********
+
+	// supprime les balises HTML et PHP
+	$prenom = strip_tags($_POST['prenom']);
+	// cf explications sur le remplacement de car. ci-dessus
+	$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
+	// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
+	$prenom = SuperTrim($prenom);
+	// remplace les espaces " " par des soulignés "_"
+	$prenom = str_replace(" ", "_", $prenom);
+	// 1ère lettre en majuscule, les autres en minuscules
+	$prenom = ucfirst(strtolower($prenom));
+	// test de la contrainte sur la longueur de la chaîne
+	if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
+		$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
 	}
 
-	// On remplace les caractères qui permettent de naviguer dans les répertoires
-	$page = str_replace("../","protect",$page);
-	$page = str_replace(";","protect",$page);
-	$page = str_replace("%","protect",$page);
+	//  ********  NOM  ********
 
-	// On interdit l'inclusion de dossiers protégés par htaccess.
-	// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
-	// strpos() peut très bien le faire, et surtout plus vite !
-	// if( preg_match("admin", $page) ){                        ok en PHP 5.6.30 mais plus en PHP 7.1.4  ********************
-	if( strpos($page, "admin") ){
-		echo "Vous n'avez pas accès à ce répertoire";
+	$nom = strip_tags($_POST['nom']);
+	$nom = str_replace($trouverCar, $nouveauCar, $nom);
+	$nom = SuperTrim($nom);
+	$nom = str_replace(" ", "_", trim($nom));
+	// NOM en majuscule
+	$nom = strtoupper($nom);
+	$nom = strtr($nom, $minusAccMajus);
+
+	if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
+		$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
 	}
-	else{
-	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("include/" . $page) && $page != "index.php") {
-	    	require_once("./include/".$page);
-	    }
-	    else{
-	    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
-	    }
+
+	//  ********  MAIL  ********
+
+	// "nettoie" la valeur utilisateur :
+	$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
+
+	// teste la NON validité du format :
+	if( ! filter_var($adrMailClient, FILTER_VALIDATE_EMAIL) ){
+		$erreurs['adrMailClient'] = "(format incorrect)"; 
+	};
+
+	//  ********  MESSAGE  ********
+
+	$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
+	if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
+		$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
 	}
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	/////     FIN INCLUDE sécurisé
-	///////////////////////////////////////////////////////////////////////////////////////////////
+	// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
+	$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
+}
 
-	// on détermine la page courante, en vue de souligner le lien
-	// concerné dans le menu de navigation grâce à l'id 'iPageCourante' :
-	$flagPC = pageCourante($_SERVER['REQUEST_URI']);
-
-	// Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
-	if( isset($_POST['bouton']) ){
-
-		//  *******  CIVILITE  *******
-		$civilite = $_POST['civilite'];
-
-		// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
-
-		// Méthode de remplacement de caractères utilisant str_replace().
-		// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
-		// (même indice) dans le tableau $nouveauCar.
-		// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
-		// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
-		// par le caractère vide : ''.
-		$trouverCar =
-		['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
-		 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
-		 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-		$nouveauCar = [' '];
-
-		// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
-		// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
-		$minusAccMajus =
-		['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
-		 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
-		 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
-		 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
-		 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
-		 'ç' => 'Ç', 'ñ' => 'Ñ'];
-
-		// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
-		// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
-
-
-		//  ********  PRENOM  ********
-
-		// supprime les balises HTML et PHP
-		$prenom = strip_tags($_POST['prenom']);
-		// cf explications sur le remplacement de car. ci-dessus
-		$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
-		// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
-		$prenom = SuperTrim($prenom);
-		// remplace les espaces " " par des soulignés "_"
-		$prenom = str_replace(" ", "_", $prenom);
-		// 1ère lettre en majuscule, les autres en minuscules
-		$prenom = ucfirst(strtolower($prenom));
-		// test de la contrainte sur la longueur de la chaîne
-		if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
-			$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-		}
-
-		//  ********  NOM  ********
-
-		$nom = strip_tags($_POST['nom']);
-		$nom = str_replace($trouverCar, $nouveauCar, $nom);
-		$nom = SuperTrim($nom);
-		$nom = str_replace(" ", "_", trim($nom));
-		// NOM en majuscule
-		$nom = strtoupper($nom);
-		$nom = strtr($nom, $minusAccMajus);
-
-		if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
-			$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-		}
-
-		//  ********  MAIL  ********
-
-		// "nettoie" la valeur utilisateur :
-		$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
-
-		// teste la NON validité du format :
-		if( ! filter_var($adrMailClient, FILTER_VALIDATE_EMAIL) ){
-			$erreurs['adrMailClient'] = "(format incorrect)"; 
-		};
-
-		//  ********  MESSAGE  ********
-
-		$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
-		if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
-			$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
-		}
-		// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
-		$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
-	}
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
