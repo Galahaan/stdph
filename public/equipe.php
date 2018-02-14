@@ -2,7 +2,48 @@
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
 ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
-require_once("include/constantes.php");
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+if( empty($page) ){
+$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+
+// On construit le nom de la page à inclure en prenant 2 précautions :
+// - ajout dynamique de l'extension .php
+// - on supprime également d'éventuels espaces en début et fin de chaîne
+$page = trim($page.".php");
+}
+
+// On remplace les caractères qui permettent de naviguer dans les répertoires
+$page = str_replace("../","protect",$page);
+$page = str_replace(";","protect",$page);
+$page = str_replace("%","protect",$page);
+
+// On interdit l'inclusion de dossiers protégés par htaccess.
+// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
+// strpos() peut très bien le faire, et surtout plus vite !
+// if( preg_match("admin", $page) ){
+if( strpos($page, "admin") ){
+	echo "Vous n'avez pas accès à ce répertoire";
+}
+else{
+    // On vérifie que la page est bien sur le serveur
+    if (file_exists("include/" . $page) && $page != "index.php") {
+    	require_once("./include/".$page);
+    }
+    else{
+    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
+    }
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     FIN INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// on détermine la page courante, en vue de souligner le lien
+// concerné dans le menu de navigation grâce à l'id 'iPageCourante' :
+$flagPC = pageCourante($_SERVER['REQUEST_URI']);
 
 ?>
 <!DOCTYPE html>
@@ -29,10 +70,10 @@ require_once("include/constantes.php");
 		</section>
 		<nav class='cNavigation'>
 			<ul>
-				<li><a href='index.php'   >Accueil </a></li>
-				<li><a href='horaires.php'>Horaires</a></li>
-				<li><a href='equipe.php'  >Équipe  </a></li>
-				<li><a href='contact.php' >Contact </a></li>
+				<li><a <?= ($flagPC == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
+				<li><a <?= ($flagPC == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
+				<li><a <?= ($flagPC == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
+				<li><a <?= ($flagPC == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
 		<div class='cBandeauConnex'>

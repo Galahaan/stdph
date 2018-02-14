@@ -61,6 +61,12 @@ a {
 	color: black;
 }
 
+/* pour souligner le mot du menu de nav. correspondant à la page courante */
+#iPageCourante{
+	text-decoration: underline;
+	font-weight: 700;
+}
+
 /* img = 100% de la largeur du parent */
 img{
 	width: 100%; /* avant c'était 'max-width', mais j'ai l'impression que 'width' tout court est plus logique ... */
@@ -1228,7 +1234,6 @@ footer section:last-of-type{
 
 	.cNavigation li{
 		font-size: 2.5rem;
-		font-weight: 700;
 		margin-right: 1rem; /* on éloigne un peu les mots du bord de droite */
 		padding-left: 1rem; /* et aussi entre eux */
 	}

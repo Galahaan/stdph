@@ -41,6 +41,10 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 	/////     FIN INCLUDE sécurisé
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	// on détermine la page courante, en vue de souligner le lien
+	// concerné dans le menu de navigation grâce à l'id 'iPageCourante' :
+	$flagPC = pageCourante($_SERVER['REQUEST_URI']);
+
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
@@ -66,10 +70,10 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 		</section>
 		<nav class='cNavigation'>
 			<ul>
-				<li><a href='index.php'   >Accueil </a></li>
-				<li><a href='horaires.php'>Horaires</a></li>
-				<li><a href='equipe.php'  >Équipe  </a></li>
-				<li><a href='contact.php' >Contact </a></li>
+				<li><a <?= ($flagPC == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
+				<li><a <?= ($flagPC == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
+				<li><a <?= ($flagPC == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
+				<li><a <?= ($flagPC == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
 		<div class='cBandeauConnex'>

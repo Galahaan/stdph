@@ -332,4 +332,47 @@ function getDeltaP( $heure ) {
 	return [$deltaP, $dessinerTrait];
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
+//							pageCourante( $server_request_uri )
+//
+// Cette fonction prend comme paramètre d'entrée la page courante obtenue par
+// la super globale   $_SERVER['REQUEST_URI']
+//
+// Elle renvoie une chaîne de 4 caractères dont 1 seul est positionné à '1', celui
+// correspondant à la page courante, dans cet ordre : index / horaires / équipe / contact
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+function pageCourante( $server_request_uri ) {
+
+	// on extrait le nom de la page courante :
+	$page = ltrim($server_request_uri, '/');
+
+	// on enlève l'extension '.php' :
+	$page = rtrim($page, 'hp.');
+
+	// on initialise la chaîne de la page courante à 4 x '0' en respectant
+	// l'ordre suivant : Index / Horaires / Equipe / Contact :
+	$flagPC = "0000";
+
+	// on positionne alors à '1' le digit de la page courante
+	switch( $page ){
+		case "index":
+			$flagPC = "1000";
+			break;
+
+		case "horaires":
+			$flagPC = "0100";
+			break;
+
+		case "equipe":
+			$flagPC = "0010";
+			break;
+
+		case "contact":
+			$flagPC = "0001";
+	}
+	return($flagPC);
+}
+
 ?>
