@@ -194,222 +194,222 @@ if( isset($_POST['bouton']) ){
 	<main>
 		<section class='cFormContact cColGauche'><h3>Formulaire de contact</h3>
  
-			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
+		<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
-				<?php
+			<?php
 
-				//    le formulaire a été rempli  ET  s'il n'y a pas d'erreurs
-				//
-				//    => on envoie le mail ! (après avoir préparé les données)
+			//    le formulaire a été rempli  ET  s'il n'y a pas d'erreurs
+			//
+			//    => on envoie le mail ! (après avoir préparé les données)
 
-				/////////////////////////////////////////////////////
-				//
-				// préparation des infos ajoutées dans le mail
-				//
-				/////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////
+			//
+			// préparation des infos ajoutées dans le mail
+			//
+			/////////////////////////////////////////////////////
 
-				// ===================  date  =================== //
+			// ===================  date  =================== //
 
-				// au début j'avais fait ça :
-				// $date = date('\S\e\m. W - D d/m/Y - H:i:s') . $fuseau;
-				// mais c'était en anglais, alors j'ai voulu utiliser 'locale' :
-				// setlocale(LC_TIME, "fra");
-				// $date = "Semaine " . strftime('%W - %A %d/%B/%Y - %H:%M:%S') . $fuseau;
-				// sauf que comme on est sur un serveur mutualisé, on ne peut pas modifier 'locale', donc ça restait en anglais !
-				//
-				// d'où l'utilisation d'une fonction à moi :
-				$date = "Semaine " . date("W") . " - " . dateFr() . " - " . heureActuelle(H);
+			// au début j'avais fait ça :
+			// $date = date('\S\e\m. W - D d/m/Y - H:i:s') . $fuseau;
+			// mais c'était en anglais, alors j'ai voulu utiliser 'locale' :
+			// setlocale(LC_TIME, "fra");
+			// $date = "Semaine " . strftime('%W - %A %d/%B/%Y - %H:%M:%S') . $fuseau;
+			// sauf que comme on est sur un serveur mutualisé, on ne peut pas modifier 'locale', donc ça restait en anglais !
+			//
+			// d'où l'utilisation d'une fonction à moi :
+			$date = "Semaine " . date("W") . " - " . dateFr() . " - " . heureActuelle(H);
 
-				// ===============  IP du client  =============== //     (3 possibilités)
+			// ===============  IP du client  =============== //     (3 possibilités)
 
-				$ipClient = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
+			$ipClient = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
+			if( empty($ipClient) ){
+				$ipClient = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? "HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'] : "";
 				if( empty($ipClient) ){
-					$ipClient = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? "HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'] : "";
-					if( empty($ipClient) ){
-						$ipClient = isset($_SERVER['HTTP_CLIENT_IP']) ? "HTTP_C " . $_SERVER['HTTP_CLIENT_IP'] : "";	
-					}
-					else{
-						// si jamais HTTP_X... était remplie, on la compare avec HTTP_C... et
-						// si jamais les 2 sont différentes, on garde les 2 infos :
-						if( isset($_SERVER['HTTP_CLIENT_IP']) ){
-							if( strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['HTTP_CLIENT_IP']) != 0 ){
-								$ipClient .= " ■ HTTP_C " . $_SERVER['HTTP_CLIENT_IP'];
-							}
-						}
-					}
+					$ipClient = isset($_SERVER['HTTP_CLIENT_IP']) ? "HTTP_C " . $_SERVER['HTTP_CLIENT_IP'] : "";	
 				}
 				else{
-					// si jamais REMOTE était remplie, on la compare avec HTTP_X... et
+					// si jamais HTTP_X... était remplie, on la compare avec HTTP_C... et
 					// si jamais les 2 sont différentes, on garde les 2 infos :
-					if( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ){
-						if( strcasecmp($ipClient, $_SERVER['HTTP_X_FORWARDED_FOR']) != 0 ){
-							$ipClient .= " ■ HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'];
+					if( isset($_SERVER['HTTP_CLIENT_IP']) ){
+						if( strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['HTTP_CLIENT_IP']) != 0 ){
+							$ipClient .= " ■ HTTP_C " . $_SERVER['HTTP_CLIENT_IP'];
 						}
 					}
 				}
-
-				// ===================  FAI  ==================== //
-
-				$faiClientBrut = gethostbyaddr(getIpAdr());
-				// a priori, quand ça vient du réseau mobile, ce n'est pas le FAI mais l'IP,
-				// d'où le message plus explicite :
-				if( strcasecmp($faiClientBrut, $ipClient) == 0 ){
-					$faiClientBrut = "inconnu (message issu du réseau mobile)";
+			}
+			else{
+				// si jamais REMOTE était remplie, on la compare avec HTTP_X... et
+				// si jamais les 2 sont différentes, on garde les 2 infos :
+				if( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ){
+					if( strcasecmp($ipClient, $_SERVER['HTTP_X_FORWARDED_FOR']) != 0 ){
+						$ipClient .= " ■ HTTP_X " . $_SERVER['HTTP_X_FORWARDED_FOR'];
+					}
 				}
-				// else{
-				// $faiClientBrut contient, en plus du FAI, plusieurs autres infos, d'où :
-				// $faiClient = substr(stristr($faiClientBrut, "ipv"), 5);
-				// }
+			}
+
+			// ===================  FAI  ==================== //
+
+			$faiClientBrut = gethostbyaddr(getIpAdr());
+			// a priori, quand ça vient du réseau mobile, ce n'est pas le FAI mais l'IP,
+			// d'où le message plus explicite :
+			if( strcasecmp($faiClientBrut, $ipClient) == 0 ){
+				$faiClientBrut = "inconnu (message issu du réseau mobile)";
+			}
+			// else{
+			// $faiClientBrut contient, en plus du FAI, plusieurs autres infos, d'où :
+			// $faiClient = substr(stristr($faiClientBrut, "ipv"), 5);
+			// }
 
 
-				///////////////////////////////////////////////////////////
-				//
-				// ENFIN, construction du mail
-				//
-				// (en suivant qqs étapes préparatoires encore une fois)
-				//
-				///////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////////
+			//
+			// ENFIN, construction du mail
+			//
+			// (en suivant qqs étapes préparatoires encore une fois)
+			//
+			///////////////////////////////////////////////////////////
 
-				// apparemment, à une époque, le CRLF était différent selon les clients mails (\r\n, ou \n, voire \r)
-				// mais après plusieurs tests au cours desquels j'ai essayé les 2 1ères versions,
-				// il semble qu'il n'y ait plus de problème, les 2 fonctionnent bien ... cf fichier texte "CRLF.txt"
-				$rc = "\r\n";
+			// apparemment, à une époque, le CRLF était différent selon les clients mails (\r\n, ou \n, voire \r)
+			// mais après plusieurs tests au cours desquels j'ai essayé les 2 1ères versions,
+			// il semble qu'il n'y ait plus de problème, les 2 fonctionnent bien ... cf fichier texte "CRLF.txt"
+			$rc = "\r\n";
 
-				// NB: Pour ce qui est du charset, le ISO-8859-1 est supporté par tous les webmails,
-				//     contrairement à l'UTF-8, mais ne permet pas les accents français,
-				//     alors que l'UTF-8 les supportent ... donc je choisis UTF-8
+			// NB: Pour ce qui est du charset, le ISO-8859-1 est supporté par tous les webmails,
+			//     contrairement à l'UTF-8, mais ne permet pas les accents français,
+			//     alors que l'UTF-8 les supportent ... donc je choisis UTF-8
 
 
-				// ===============  Objet du mail  ============== //
+			// ===============  Objet du mail  ============== //
 
-				// L'objet du message est constitué d'un préfixe (les 4 derniers car. de l'IP) suivi des prénom et nom de l'expéditeur :
-				// (la fonction mb... sert à autoriser les caractères accentués)
-				$objet = mb_encode_mimeheader("Contact - [" .
-												substr($ipClient, -4, 4) . "]  " .
-												$civilite . " " .
-												$prenom . " " .
-												$nom, "UTF-8", "B");
+			// L'objet du message est constitué d'un préfixe (les 4 derniers car. de l'IP) suivi des prénom et nom de l'expéditeur :
+			// (la fonction mb... sert à autoriser les caractères accentués)
+			$objet = mb_encode_mimeheader("Contact - [" .
+											substr($ipClient, -4, 4) . "]  " .
+											$civilite . " " .
+											$prenom . " " .
+											$nom, "UTF-8", "B");
 
-				// ============  Création du header  ============ //
+			// ============  Création du header  ============ //
 
-				// cf dossier "envoi de mails en PHP"
-				$header =	"From: " .
-							mb_encode_mimeheader(LABEL_EXP, "UTF-8", "B") .
-							"<" . ADR_EXP_HBG . ">" . $rc .
-							"Reply-To: $adrMailClient" . $rc .
-							"MIME-Version: 1.0" . $rc .
-							"X-Mailer: PHP/" . phpversion() . $rc .
-							"Content-type: text/html; charset=UTF-8" . $rc .
-			           		"Content-Transfer-Encoding: 8bit";
+			// cf dossier "envoi de mails en PHP"
+			$header =	"From: " .
+						mb_encode_mimeheader(LABEL_EXP, "UTF-8", "B") .
+						"<" . ADR_EXP_HBG . ">" . $rc .
+						"Reply-To: $adrMailClient" . $rc .
+						"MIME-Version: 1.0" . $rc .
+						"X-Mailer: PHP/" . phpversion() . $rc .
+						"Content-type: text/html; charset=UTF-8" . $rc .
+		           		"Content-Transfer-Encoding: 8bit";
 
-				// ============= Création du message ============= //
+			// ============= Création du message ============= //
 
-				// version HTML seule
-				$message =	$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br>" . "<br>" .
-							$messageClientHtml . "<br><br><br><br>" .
-							"IP  client     = " . $ipClient . "<br>" .
-							"FAI client     = " . $faiClientBrut;
+			// version HTML seule
+			$message =	$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br>" . "<br>" .
+						$messageClientHtml . "<br><br><br><br>" .
+						"IP  client     = " . $ipClient . "<br>" .
+						"FAI client     = " . $faiClientBrut;
 
-				// ============= Dernier "blindage" ============== //
+			// ============= Dernier "blindage" ============== //
 
-				// si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
-				if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
-					&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
-					&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
-					&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0 ){
+			// si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
+			if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
+				&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
+				&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
+				&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0 ){
 
-					$headerAlerte =	"From: " .
-									mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .
-									"<" . ADR_EXP_HBG . ">" . $rc .
-									"Reply-To: " . $rc .
-									"MIME-Version: 1.0" . $rc .
-									"X-Mailer: PHP/" . phpversion() . $rc .
-									"Content-Type: text/plain; charset='UTF-8'" . $rc .
-									"Content-Transfer-Encoding: 8bit";
-					$messageAlerte =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
-										"Envoi du formulaire à partir d'un site web différent de celui de la pharmacie :" . $rc .
-										$_SERVER['HTTP_REFERER'] . $rc . $rc .
-										"IP  client     = " . $ipClient . $rc .
-										"FAI client     = " . $faiClientBrut;
-					mail(MAIL_DEST_PHARMA, "Tentative de piratage ?", $messageAlerte, $headerAlerte);
-				    header("Location: https://www.bigouig.fr/"); 
+				$headerAlerte =	"From: " .
+								mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .
+								"<" . ADR_EXP_HBG . ">" . $rc .
+								"Reply-To: " . $rc .
+								"MIME-Version: 1.0" . $rc .
+								"X-Mailer: PHP/" . phpversion() . $rc .
+								"Content-Type: text/plain; charset='UTF-8'" . $rc .
+								"Content-Transfer-Encoding: 8bit";
+				$messageAlerte =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
+									"Envoi du formulaire à partir d'un site web différent de celui de la pharmacie :" . $rc .
+									$_SERVER['HTTP_REFERER'] . $rc . $rc .
+									"IP  client     = " . $ipClient . $rc .
+									"FAI client     = " . $faiClientBrut;
+				mail(MAIL_DEST_PHARMA, "Tentative de piratage ?", $messageAlerte, $headerAlerte);
+			    header("Location: https://www.bigouig.fr/"); 
+			}
+			else{
+			    // envoi de l'e-mail :
+				if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
+
+					echo "<article class='cArtiMessageConfirm'>";
+					echo "<p>Merci, votre message a bien été envoyé.</p>";
+					echo "<p>Nous vous répondrons dans les meilleurs délais, sous
+							réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
+					echo "</article>";
 				}
 				else{
-				    // envoi de l'e-mail :
-					if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
-	
-						echo "<article class='cArtiMessageConfirm'>";
-						echo "<p>Merci, votre message a bien été envoyé.</p>";
-						echo "<p>Nous vous répondrons dans les meilleurs délais, sous
-								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-						echo "</article>";
-					}
-					else{
-						echo "<article class='cArtiMessageConfirm'>";
-						echo "<p>Aïe, il y a eu un problème ...</p>";
-						echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-						echo "</article>";
-					}
-				};
-				?>
+					echo "<article class='cArtiMessageConfirm'>";
+					echo "<p>Aïe, il y a eu un problème ...</p>";
+					echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
+					echo "</article>";
+				}
+			};
+			?>
 
-			<?php else : ?>
+		<?php else : ?>
 
-				<?php
+			<?php
 
-				// - soit il y a eu des erreurs dans le formulaire
-				//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
-				//      ainsi qu'un message d'erreur pour les valeurs concernées.
-				//
-				// - soit le formulaire n'a pas encore été rempli
-				//   => on laisse les cases vides.
-				?>
-				
-				<section><h4> Envoyez-nous un message ...</h4>
-					<span>(la saisie de tous les champs est obligatoire)</span>
+			// - soit il y a eu des erreurs dans le formulaire
+			//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
+			//      ainsi qu'un message d'erreur pour les valeurs concernées.
+			//
+			// - soit le formulaire n'a pas encore été rempli
+			//   => on laisse les cases vides.
+			?>
+			
+			<section><h4> Envoyez-nous un message ...</h4>
+				<span>(la saisie de tous les champs est obligatoire)</span>
 
-					<form method='post'>
-						<div class='cChampForm'>
-							<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-								<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
-							<label for='iCiviliteMme'>Mme</label>
-							<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
-								<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
-							<label for='iCiviliteMlle'>Melle</label>
-							<input type='radio' id='iCiviliteM' name='civilite' value='M.' required
-								<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
-							<label for='iCiviliteM'>M.</label>
-						</div>
+				<form method='post'>
+					<div class='cChampForm'>
+						<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
+							<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
+						<label for='iCiviliteMme'>Mme</label>
+						<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
+							<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
+						<label for='iCiviliteMlle'>Melle</label>
+						<input type='radio' id='iCiviliteM' name='civilite' value='M.' required
+							<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
+						<label for='iCiviliteM'>M.</label>
+					</div>
 
-						<div class='cChampForm'>
-						<label for='idPrenom'>Prénom</label>
-									<input type='text' id='idPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-					<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
-						</div>
+					<div class='cChampForm'>
+					<label for='idPrenom'>Prénom</label>
+								<input type='text' id='idPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
+				<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
+					</div>
 
-						<div class='cChampForm'>
-						<label for='idNom'>Nom</label>
-									<input type='text' id='idNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
-					<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
-						</div>
+					<div class='cChampForm'>
+					<label for='idNom'>Nom</label>
+								<input type='text' id='idNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
+				<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
+					</div>
 
-						<div class='cChampForm'>
-						<label for='idMail'>Mail</label>
-									<input type='email' id='idMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
-					<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
-						</div>
-						<div class='cChampForm'>
-							<label for='iMessageTextarea'>Message</label>
-									<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
-						<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
-						</div>
+					<div class='cChampForm'>
+					<label for='idMail'>Mail</label>
+								<input type='email' id='idMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+				<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
+					</div>
+					<div class='cChampForm'>
+						<label for='iMessageTextarea'>Message</label>
+								<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
+					<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
+					</div>
 
-						<div class='cBoutonOk'>
-							<button name='bouton'>Envoyer</button>
-						</div>
-					</form>
-				</section>
-			<?php endif ?>
+					<div class='cBoutonOk'>
+						<button name='bouton'>Envoyer</button>
+					</div>
+				</form>
+			</section>
+		<?php endif ?>
 		</section>
 
 		<section class='cFormContact cColDroite'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
