@@ -256,13 +256,13 @@ if( isset($_POST['bouton']) ){
 	</header>
 
 	<main>
-		<section class='cFormContact cColGauche'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
+		<section class='cContactSections iContactCoordonnees'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
 			<p><?= NOM_PHARMA ?></p>
 			<p><?= ADR_PHARMA_L1 ?></p>
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p id='iTelContact'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a></p>
 			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
-			<p><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
+			<p id='iContactMail'><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
 			<p>
 				<a href='<?= ADR_FB_PHARMA ?>'>
 					<img class='cFaceGool' src='img/fb.png' alt='facebook'>
@@ -277,7 +277,7 @@ if( isset($_POST['bouton']) ){
 			</p>
 		</section>
 
-		<section class='cFormContact cColDroite'><h3>Formulaire de contact de la <?= NOM_PHARMA ?></h3>
+		<section class='cContactSections iContactFormulaire'><h3>Formulaire de contact de la <?= NOM_PHARMA ?></h3>
 
 		<?php if( isset($_POST['bouton']) && ! isset($erreurs) ) : ?>
 

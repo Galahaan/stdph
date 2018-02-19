@@ -147,12 +147,6 @@ define('SA_FAMIH', '16h');
 define('REBOURSD', 0.25);		// compte à rebours en 'heure décimale', ie que   0.25 = 15 mn
 define('PAS_DE_REBOURS', 5);	// en minutes ( ex. ... dans moins de 15, 10, 5 mn )
 
-// Particularités de la pharmacie : lignes de bus / tram / métro, parking privé, ...
-define('PARTICULARITES_PHARMACIE',
-	"<p>La pharmacie dispose d'un parking pour sa clientèle.</p>
-	<p>En <span>chronobus C6</span>, descendez à l'arrêt <span>St Joseph de Porterie</span> :
-		 la pharmacie est alors à moins d'une minute.</p>");
-
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
 ///////////////                     Horaires de garde                      ///////////////
@@ -160,7 +154,6 @@ define('PARTICULARITES_PHARMACIE',
 ///////////////                      (pharmaDeGarde)                       ///////////////
 ///////////////                                                            ///////////////
 //////////////////////////////////////////////////////////////////////////////////////////
-
 
 // Heure au-delà de laquelle il faut se rendre au commissariat.
 // Si les gardes fonctionnent sans commissariat (ex. Vendée) -> mettre la constante _D à "X"
@@ -176,4 +169,19 @@ define('HEURE_MATIN_POLICE_H', "8h");
 // Brest  : 9h00
 
 define('ADRESSE_POLICE', "6 place Waldeck-Rousseau à Nantes");
+
+//////////////////////////////////////////////////////////////////////////////////////////
+///////////////                                                            ///////////////
+///////////////                          Contact                           ///////////////
+///////////////                                                            ///////////////
+///////////////                     (infos pratiques)                      ///////////////
+///////////////                                                            ///////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// lignes de bus / tram / métro, parking privé, ...
+define('CONTACT_INFOS_PRATIQUES',
+    "<p>La pharmacie dispose d'un parking pour sa clientèle.</p>
+    <p>En <span>chronobus C6</span>, descendez à l'arrêt <span>St Joseph de Porterie</span> :
+         la pharmacie est alors à moins d'une minute.</p>");
+
 ?>

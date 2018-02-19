@@ -105,34 +105,36 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 	</header>
 
 	<main>
-		<?php
-			$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
-			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
+		<section id='iHorairesIntro'><h3>Date et heure du jour</h3>
+			<?php
+				$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
+				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
 
-			$heure  = heureActuelle("");		// heure au format "décimal"
-			$heureH = heureActuelle("H");		// heure au format "horaire", ie non décimal !
+				$heure  = heureActuelle("");		// heure au format "décimal"
+				$heureH = heureActuelle("H");		// heure au format "horaire", ie non décimal !
 
-			// getDeltaP( $heure ) retourne la valeur en % dont il faut décaler (left: ) la div représentant le trait vertical
-			// (en fonction de l'heure de la journée) mais également l'information s'il faut ou non afficher le trait.
-			//
-			// ATTENTION : ceci implique de ne RIEN changer aux valeurs de width et de padding left ou right du § CSS intitulé
-			//							"largeurs et marges des jours et des créneaux horaires"
+				// getDeltaP( $heure ) retourne la valeur en % dont il faut décaler (left: ) la div représentant le trait vertical
+				// (en fonction de l'heure de la journée) mais également l'information s'il faut ou non afficher le trait.
+				//
+				// ATTENTION : ceci implique de ne RIEN changer aux valeurs de width et de padding left ou right du § CSS intitulé
+				//							"largeurs et marges des jours et des créneaux horaires"
 
-			$deltaP			= getDeltaP($heure)[0];
-			$dessinerTrait	= getDeltaP($heure)[1];
+				$deltaP			= getDeltaP($heure)[0];
+				$dessinerTrait	= getDeltaP($heure)[1];
 
-			// passé 12h30, on "désactive" le créneau du matin, et passé 19h30, on "désactive" le créneau de l'après-midi,
-			// pour le samedi, passé 16h, on désactive les 2 <div>,
-			// ie qu'on les remet avec la couleur de fond, un peu plus pâle, des autres jours :
-			$matinOff  = ( $heure >= FMATD ) ? true : false;
-			$apremOff  = ( $heure >= FAMID ) ? true : false;
-			$samediOff = ( $heure >= SA_FAMID ) ? true : false;
+				// passé 12h30, on "désactive" le créneau du matin, et passé 19h30, on "désactive" le créneau de l'après-midi,
+				// pour le samedi, passé 16h, on désactive les 2 <div>,
+				// ie qu'on les remet avec la couleur de fond, un peu plus pâle, des autres jours :
+				$matinOff  = ( $heure >= FMATD ) ? true : false;
+				$apremOff  = ( $heure >= FAMID ) ? true : false;
+				$samediOff = ( $heure >= SA_FAMID ) ? true : false;
 
-			// pharmacieOuverte() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
-		?>
-		<p><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class='cCouleurRose'>". $heureH . "</span>" ?></p>
-		<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
-		<section class='cHoraires'><h3>Horaires d'ouverture de la <?= NOM_PHARMA ?></h3>
+				// pharmacieOuverte() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
+			?>
+			<p><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class='cHeureDuJour'>". $heureH . "</span>" ?></p>
+			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
+		</section>
+		<section id='iHorairesTableau'><h3>Horaires d'ouverture de la <?= NOM_PHARMA ?></h3>
 
 			<article class='cSemaine' <?= ($auj == "lun") ? "id='iAujourdhui'" : "" ?>  >
 				<h3>lundi</h3><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
@@ -173,9 +175,6 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 				<div <?= ($auj == "sam" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
-		</section>
-		<section class='cHorairesInfos'><h3>Informations accès / horaires de garde de la <?= NOM_PHARMA ?></h3>
-			<?php echo PARTICULARITES_PHARMACIE ?>
 		</section>
 	</main>
 

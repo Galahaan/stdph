@@ -192,12 +192,46 @@ if( isset($_POST['bouton']) ){
 	</header>
 
 	<main>
-		<section class='cFormContact cColGauche'><h3>Formulaire de contact</h3>
+
+		<section class='cContactSections' id='iContactInfosPratiques'><h3>Informations pratiques</h3>
+			<?php echo CONTACT_INFOS_PRATIQUES ?>
+		</section>
+
+		<section class='cContactSections' id='iContactCoordonnees'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
+			<p><?= NOM_PHARMA ?></p>
+			<p><?= ADR_PHARMA_L1 ?></p>
+			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
+			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
+			<p id='iContactMail'><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
+			<p>
+				<a href='<?= ADR_FB_PHARMA ?>'>
+					<img class='cFaceGool' src='img/fb.png' alt='facebook'>
+					<img class='cFaceGool cCouleurNoire' src='img/fb_n.jpg' alt='facebook'>
+				</a>
+			</p>
+			<p>
+				<a href='<?= ADR_GG_PHARMA ?>'>
+					<img class='cFaceGool' src='img/gg.png' alt='google+'>
+					<img class='cFaceGool cCouleurNoire' src='img/gg_n.jpg' alt='google+'>
+				</a>
+			</p>
+		</section>
+
+		<section class='cContactSections' id='iContactPlan'><h3>Localiser la <?= NOM_PHARMA ?></h3>
+			<p>Si vous utilisez un smartphone, profitez de son GPS pour nous rejoindre :</p>
+			<p>- activez la localisation</p>
+			<p>- cliquez sur le plan ci-dessous</p>
+			<p>- puis sur l'icône &nbsp;<img src='img/itineraire.png' alt='itinéraire'></p>
+			<p>... et laissez-vous guider.</p>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.86958984165!2d-2.225360184281275!3d48.132038259525736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480e4df918267fb7%3A0xc0ed000930b8151c!2sPlace+du+Monument%2C+35290+Ga%C3%ABl!5e0!3m2!1sfr!2sfr!4v1518614624523" allowfullscreen></iframe>
+		</section>
+
+		<section class='cContactSections' id='iContactFormulaire'><h3>Formulaire de contact</h3>
  
 		<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
 			<?php
-
 			//    le formulaire a été rempli  ET  s'il n'y a pas d'erreurs
 			//
 			//    => on envoie le mail ! (après avoir préparé les données)
@@ -356,7 +390,6 @@ if( isset($_POST['bouton']) ){
 		<?php else : ?>
 
 			<?php
-
 			// - soit il y a eu des erreurs dans le formulaire
 			//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
 			//      ainsi qu'un message d'erreur pour les valeurs concernées.
@@ -410,27 +443,6 @@ if( isset($_POST['bouton']) ){
 				</form>
 			</section>
 		<?php endif ?>
-		</section>
-
-		<section class='cFormContact cColDroite'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
-			<p><?= NOM_PHARMA ?></p>
-			<p><?= ADR_PHARMA_L1 ?></p>
-			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p id='iTelContact'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
-			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
-			<p><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
-			<p>
-				<a href='<?= ADR_FB_PHARMA ?>'>
-					<img class='cFaceGool' src='img/fb.png' alt='facebook'>
-					<img class='cFaceGool cCouleurNoire' src='img/fb_n.jpg' alt='facebook'>
-				</a>
-			</p>
-			<p>
-				<a href='<?= ADR_GG_PHARMA ?>'>
-					<img class='cFaceGool' src='img/gg.png' alt='google+'>
-					<img class='cFaceGool cCouleurNoire' src='img/gg_n.jpg' alt='google+'>
-				</a>
-			</p>
 		</section>
 
 	</main>

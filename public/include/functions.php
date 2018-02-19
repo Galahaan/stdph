@@ -222,12 +222,10 @@ function pharmacieOuverte( $jour, $heure ) {
 			return "Patience, la pharmacie ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= OMATD) && ($heure < (FMATD - REBOURSD)) ){
-			return "La pharmacie est actuellement <span 'cIntro
-class='cOuverte'>ouverte</span>.";
+			return "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < FMATD ){
-			return "Hâtez-vous, la pharmacie ferme dans <span class='cIntro
-'cFermeDans'>moins de " . ceil( ceil( (FMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			return "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (FMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= FMATD) && ($heure < (OAMID - REBOURSD)) ){
 			return "C'est la pause déjeuner, la pharmacie est actuellement <span class='cFermee'>fermée</span>.";
@@ -236,12 +234,10 @@ class='cOuverte'>ouverte</span>.";
 			return "Patience, la pharmacie ré-ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (OAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= OAMID) && ($heure < (FAMID - REBOURSD)) ){
-			return "La pharmacie est actuellement <span 'cIntro
-class='cOuverte'>ouverte</span>.";
+			return "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < FAMID ){
-			return "Hâtez-vous, la pharmacie ferme dans <span class='cIntro
-'cFermeDans'>moins de " . ceil( ceil( (FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			return "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
 	else if( $jour == "sam" ){
@@ -253,12 +249,10 @@ class='cOuverte'>ouverte</span>.";
 			return "Patience, la pharmacie ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (SA_OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= SA_OMATD) && ($heure < (SA_FAMID - REBOURSD)) ){
-			return "La pharmacie est actuellement <span 'cIntro
-class='cOuverte'>ouverte</span>.";
+			return "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < SA_FAMID ){
-			return "Hâtez-vous, la pharmacie ferme dans <span class='cIntro
-'cFermeDans'>moins de " . ceil( ceil( (SA_FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			return "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (SA_FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
 	else{
