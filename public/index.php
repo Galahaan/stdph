@@ -118,7 +118,7 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 	</header>
 
 	<main>
-		<section class='cIntro'><h3>Etat actuel d'ouverture de la <?= NOM_PHARMA ?></h3>
+		<section id='iIndexIntro'><h3>Etat actuel d'ouverture de la <?= NOM_PHARMA ?></h3>
 			<?php
 				$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
 				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'pharmacieOuverte')
@@ -127,7 +127,7 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
 
 		</section>
-		<section class='cVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
+		<section id='iIndexVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
 			
 			<nav class='cBraille'>
 				<ul>
@@ -140,7 +140,6 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 					<li><a href='#iHumour'>Humour</a></li>
 				</ul>
 			</nav>
-
 
 			<article id='iPrepaOrdonnance'>
 				<?php if(! empty($_SESSION)) : ?>

@@ -109,7 +109,7 @@ h2{
 #iTelBandeau{
 	font-size: 3.5rem; /* bandeau : sous-titre 'numéro de tel cliquable' */
 }
-.cVignettes article h4{
+#iIndexVignettes article h4{
 	font-size: 2.5rem; /* page index, titres des vignettes */
 }
 #iContactFormulaire section span:first-of-type{
@@ -135,7 +135,7 @@ h3{
 }
 
 /* <h3> ajouté pour la validation W3C mais non affiché, même pas en braille */
-.cIntro h3{
+#iIndexIntro h3{
 	display: none;	/* 'Etat actuel d'ouverture ...' */
 }
 
@@ -341,31 +341,31 @@ ul{
 /****************************************************           page index          ****************************************************/
 /***************************************************************************************************************************************/
 
-.cIntro{
+#iIndexIntro{
 	padding: 3rem 0;
 }
 
 /* Ces <span> sont ajoutés dans la fonction 'pharmacieOuverte' et non directement dans index.html */
-.cIntro span{
+#iIndexIntro span{
 	font-weight: 700;
 }
-.cIntro .cOuverte{
+#iIndexIntro .cOuverte{
 	color: #4DBC1C;
 }
-.cIntro .cFermee{
+#iIndexIntro .cFermee{
 	color: #FF4141;
 }
-.cIntro .cOuvreDans{
+#iIndexIntro .cOuvreDans{
 	color: black;
 }
-.cIntro .cFermeDans{
+#iIndexIntro .cFermeDans{
 	color: #F29200;
 }
-.cVignettes article{
+#iIndexVignettes article{
 	position: relative; /* pour que les <a> et les <img> soient superposés */
 	/*margin-bottom: -0.6rem;  sinon, il y a une petite bande blanche en dessous de l'image ... ??!!   */
 }
-.cVignettes article a{
+#iIndexVignettes article a{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -380,11 +380,11 @@ ul{
 
 /* NB : il faut respecter cet ordre de déclaration : link > visited > hover > focus > active */
 /*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
-.cVignettes article a:hover, .cVignettes article a:focus, .cVignettes article a:active{
+#iIndexVignettes article a:hover, #iIndexVignettes article a:focus, #iIndexVignettes article a:active{
 	opacity: .85;
 }
 
-.cVignettes article h4{
+#iIndexVignettes article h4{
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -396,7 +396,7 @@ ul{
 
 /* pour supprimer l'espace de qqs pixels sous l'image */
 /* alsacreations.com/astuce/lire/52-espaces-sous-les-images.html */
-.cVignettes article img{
+#iIndexVignettes article img{
 	display: block;
 }
 
@@ -1079,12 +1079,12 @@ footer section:last-of-type{
 	/* pages index + contact + horaires + pharmaDeGarde :                                             */
 	/* <h3> ajoutés pour la validation W3C mais non affichés ...                                      */
 	/* ... sauf en braille :                                                                          */
-	/* - index    : on conserve le titre 'services proposés par la pharmacie' (.cVignettes h3)        */
+	/* - index    : on conserve le titre 'services proposés par la pharmacie' (#iIndexVignettes h3)        */
 	/* - contact  : on conserve les titres 'Formulaire ...' et 'Coordonnées ...' (.cContactSections h3)   */
 	/* - horaires : on conserve les titres 'Horaires ...' et 'Infos ...' (#iHorairesTableau et ...Infos h3)  */
 	/* - ph. garde: on conserve les titres 'Trouver ...' et 'Localiser ...' (.cPdG 3237 & plan)  */
 
-	.cVignettes h3, .cContactSections h3, #iHorairesTableau h3, #iContactInfosPratiques h3, .cPdG3237 h3, .cPdGplan h3{
+	#iIndexVignettes h3, .cContactSections h3, #iHorairesTableau h3, #iContactInfosPratiques h3, .cPdG3237 h3, .cPdGplan h3{
 		display: none;
 	}
 
@@ -1124,11 +1124,11 @@ footer section:last-of-type{
 		top: 2rem;						/* old 1.8 */
 	}
 	/* page Index : on affiche 2 vignettes en largeur */
-	.cVignettes article{
+	#iIndexVignettes article{
 		width: 50%;
 		float: left;
 	}
-	section:not(.cVignettes){
+	section:not(#iIndexVignettes){
 		/* Supprimer le flottement */
 		clear: both;
 	}
@@ -1398,7 +1398,7 @@ footer section:last-of-type{
 	}
 
 	/* page Index : on passe en 2 vignettes en largeur */
-	.cVignettes article{
+	#iIndexVignettes article{
 		width: 33.33%;
 	}
 
@@ -1498,7 +1498,7 @@ footer section:last-of-type{
 	}
 
 	/* page Index : on passe en 2 vignettes en largeur */
-	.cVignettes article{
+	#iIndexVignettes article{
 		width: 33.33%;
 	}
 
