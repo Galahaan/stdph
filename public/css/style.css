@@ -754,28 +754,28 @@ ul{
 }
 /* - couleur de fond par défaut des créneaux horaires d'ouverture */
 /* - couleur de fond d'un créneau écoulé du jour en cours         */
-#iHorairesTableau article div, #iAujourdhui .cCreneauOff{			/*  Attention: il y a d'autres instructions pour #iAujourdhui .cCreneauOff  */
+#iHorairesTableau article div, #iHorairesTableau #iAujourdhui .cCreneauOff{			/*  Attention: il y a d'autres instructions pour #iAujourdhui .cCreneauOff  */
 	background-color: rgba(148, 193, 29, .2);
 }
 /* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
-#iAujourdhui div, #iAujourdhui h3{
+#iHorairesTableau #iAujourdhui div, #iHorairesTableau #iAujourdhui h3{
 	background-color: rgba(148, 193, 29, .5);
 	font-weight: 700;
 	color: #1967E5;
 }
 /* on ne veut pas mettre le jour actuel et le tiret en fond vert */
 .cSemaine h3, .cSamedi h3, .cSemaine .cTiret,
-#iAujourdhui h3, #iAujourdhui .cTiret{
+#iHorairesTableau #iAujourdhui h3, #iHorairesTableau #iAujourdhui .cTiret{
 	background-color: white;
 	color: black;
 }
 /* et le tiret reste en normal */
-#iAujourdhui .cTiret{
+#iHorairesTableau #iAujourdhui .cTiret{
 	font-weight: normal;
 }
 /* pour finir de désactiver un créneau passé du jour actuel */
 /* on a déjà mis la couleur de fond un peu plus haut        */
-#iAujourdhui .cCreneauOff{
+#iHorairesTableau #iAujourdhui .cCreneauOff{
 	color: black;
 	font-weight: normal;
 }
@@ -783,7 +783,7 @@ ul{
 .cSemaine, .cSamedi{
 	position: relative;
 }
-#iAujourdhui #iTraitHoraire{
+#iHorairesTableau #iAujourdhui #iTraitHoraire{
 	background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final, ie 'transparence totale'. */
 	/* NB: j'avais testé 'opacity: 0;' => mais TOUT disaparaît, y compris la border */
 
@@ -791,7 +791,7 @@ ul{
 	position: absolute;
 	top: 0; /* la valeur du left est déterminée en PHP dans le HTML */
 }
-#iAujourdhui .cEffacerTrait, #iHorairesTableau article .cEffacerTrait{
+#iHorairesTableau #iAujourdhui .cEffacerTrait, #iHorairesTableau article .cEffacerTrait{
 	background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final, cf NB ci-dessus */
 	position: absolute;
 	top: 0;
