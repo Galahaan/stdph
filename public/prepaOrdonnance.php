@@ -513,7 +513,7 @@ if( isset($_POST['bouton']) ){
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 
-				<article><p id='iModeEmploi'><a href='#'>Mode d'emploi</a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+				<article><p id='iModeEmploi'><a href='#'>Mode d'emploi</a>&nbsp;&nbsp;<img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 
 					<div class='cModeEmploi'>
 						<div>Il suffit de suivre ces <span>4 étapes :</span></div>

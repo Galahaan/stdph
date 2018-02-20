@@ -201,7 +201,7 @@ if( isset($_POST['bouton']) ){
 			<p><?= NOM_PHARMA ?></p>
 			<p><?= ADR_PHARMA_L1 ?></p>
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a>&nbsp;<img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
 			<p id='iContactMail'><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
 			<p>
