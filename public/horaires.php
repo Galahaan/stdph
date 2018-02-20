@@ -105,7 +105,7 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 	</header>
 
 	<main>
-		<section id='iHorairesIntro'><h3>Date et heure du jour</h3>
+		<section id='iHorairesIntro' class='cSectionContour'><h3>Date et heure du jour</h3>
 			<?php
 				$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
 				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
@@ -134,7 +134,7 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 			<p><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class='cHeureDuJour'>". $heureH . "</span>" ?></p>
 			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
 		</section>
-		<section id='iHorairesTableau'><h3>Horaires d'ouverture de la <?= NOM_PHARMA ?></h3>
+		<section id='iHorairesTableau' class='cSectionContour'><h3>Horaires d'ouverture de la <?= NOM_PHARMA ?></h3>
 
 			<article class='cSemaine' <?= ($auj == "lun") ? "id='iAujourdhui'" : "" ?>  >
 				<h3>lundi</h3><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
