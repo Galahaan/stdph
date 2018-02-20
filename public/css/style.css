@@ -134,7 +134,7 @@ h3{
 	font-weight: 400;  /* on les met tous en 'normal' par défaut */
 }
 .cSectionContour{
-	padding: 2rem 2% 0; /* espace autour des sections principales du site */
+	padding: 2rem 2% 0; /* espace autour des sections principales du site */   /* page contact + d'autres ?? ctrl + F  cSectionContour  **************/
 }
 
 /* <h3> ajouté pour la validation W3C mais non affiché, même pas en braille */
@@ -408,11 +408,6 @@ ul{
 /****************************************************          page contact          ***************************************************/
 /***************************************************************************************************************************************/
 
-/* position et marges autour des sections de la page */
-.cContactSections{
-	padding: 2rem 2% 0;
-}
-
 /**************     sections informations pratiques + plan     *************/
 
 #iContactInfosPratiques p, #iContactPlan p{
@@ -494,7 +489,7 @@ ul{
 /* j'ai essayé avec visibility, z-index ... dessus / dessous ... rien n'y fait, c'est toujours "oscillant" */
 
 
-/**********************              plan             **********************/
+/*******************************     plan     ******************************/
 
 /* icône de guidage GPS */
 #iContactPlan p:nth-last-of-type(2){
@@ -592,7 +587,7 @@ ul{
 }
 
 /* Espaces au dessus et au dessous du message de confirmation d'envoi                                          */
-.cContactSections .cArtiMessageConfirm{
+#iContactFormulaire .cArtiMessageConfirm{
 	padding: 3rem 1rem 0;
 }
 
@@ -1075,15 +1070,26 @@ footer section:last-of-type{
 /* pour tous les appareils sauf les plages braille																		NOT BRAILLE	*/
 @media not braille{
 
-	/* pages index + contact + horaires + pharmaDeGarde :                                             */
-	/* <h3> ajoutés pour la validation W3C mais non affichés ...                                      */
-	/* ... sauf en braille :                                                                          */
-	/* - index    : on conserve le titre 'services proposés par la pharmacie' (#iIndexVignettes h3)        */
-	/* - contact  : on conserve les titres 'Formulaire ...' et 'Coordonnées ...' (.cContactSections h3)   */
-	/* - horaires : on conserve les titres 'Horaires ...' et 'Infos ...' (#iHorairesTableau et ...Infos h3)  */
-	/* - ph. garde: on conserve les titres 'Trouver ...' et 'Localiser ...' (.cPdG 3237 & plan)  */
+	/* titres <h3> de sections, ajoutés pour la validation W3C mais non affichés ... sauf en braille      */
+	/*                                                                                                    */
+	/* - index    : on conserve le titre :                                                                */
+	/*              'Services proposés par la pharmacie'                      #iIndexVignettes h3         */
+	/* - horaires : on conserve les titres :                                                              */
+	/*              - 'Date et heure du jour'                                 #iHorairesIntro h3          */
+	/*              - 'Horaires d'ouverture ...'                              #iHorairesTableau h3        */
+	/* - contact  : on conserve les titres :                                                              */
+	/*              - 'Informations pratiques'                                #iContactInfosPratiques h3  */
+	/*              - 'Coordonnées de la pharmacie'                           #iContactCoordonnees h3     */
+	/*              - 'Localiser la pharmacie'                                #iContactPlan h3            */
+	/*              - 'Formulaire de contact'                                 #iContactFormulaire h3      */
+	/* - ph. garde: on conserve les titres :                                                              */
+	/*              - 'Trouver ...'                                           .cPdG 3237  */
+	/*              - 'Localiser ...'                                          plan       */
 
-	#iIndexVignettes h3, .cContactSections h3, #iHorairesTableau h3, #iContactInfosPratiques h3, .cPdG3237 h3, .cPdGplan h3{
+	#iIndexVignettes h3,
+	#iHorairesIntro h3, #iHorairesTableau h3,
+	#iContactInfosPratiques h3, #iContactCoordonnees h3, #iContactPlan h3, #iContactFormulaire h3,
+	.cPdG3237 h3, .cPdGplan h3{
 		display: none;
 	}
 
@@ -1127,13 +1133,14 @@ footer section:last-of-type{
 		width: 50%;
 		float: left;
 	}
-	section:not(#iIndexVignettes){
-		/* Supprimer le flottement */
+	/* finalement ça n'a l'air de servir à rien ... */
+	/* Supprimer le flottement */
+/*	section:not(#iIndexVignettes){
 		clear: both;
 	}
-
+*/
 	/* intro du form. de contact "Envoyez-nous un message ... " */
-	#iContactCoordonnees h4{
+	#iContactFormulaire h4{
 		font-size: 2.35rem;				/* old 2rem */
 	}
 
@@ -1153,8 +1160,9 @@ footer section:last-of-type{
 	.cChampForm p span{
 		font-size: 1.5rem; 				/* old 1.3 */
 	}
+	/* coordonnées de la pharmacie */
 	#iContactCoordonnees{
-		font-size: 2rem; 				/* old 1.8 coordonnées de la pharmacie */
+		font-size: 2rem; 				/* old 1.8 */
 	}
 	/* icône de guidage GPS */
 	#iContactPlan p img, .cPdGplan img{
@@ -1230,70 +1238,50 @@ footer section:last-of-type{
 		top: 0;
 	}
 
-	/* Formulaire de contact */
+	/*********************************    page contact   **********************************/
 
-	/* espace entre le bandeau et les infos de contact */
-	.cContactSections{
-		padding: 3rem 0; 				/* old 1 0 */
-	}
-
-	/* tailles des champs saisis dans le formulaire et des messages associés */
-	/* + taille des coordonnées de la colonne d'à côté */
-	.cContactSections section form, #iContactCoordonnees{
+	/* taille de la police dans les sections (cSectionContour ??) */
+	#iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire{
 		font-size: 2.1rem; 				/* old 2 */
 	}
+	#iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire{
+		width: 45%;
+		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
+		vertical-align: top;
+	}
 
+	/*======================================================     § formulaire de contact  */
 	/* messages d'erreurs dans les form. contact, ordonnance et commande */
 	.cChampForm p span{
 		font-size: 2rem; 				/* old 1.5 */
 	}
 
 	/* "la saisie de tous les champs ..." */
-	.cContactSections section span:first-of-type{
+	#iContactFormulaire section span:first-of-type{
 		font-size: 1.5rem; 				/* old 1.2 */
 	}
 
 	/* pour positionner latéralement les civilités dans le formulaire de contact */
-	.cContactSections .cChampForm [for='iCiviliteM']{
+	#iContactFormulaire .cChampForm [for='iCiviliteM']{
 		padding-right: 10%;
 	}
 
-
-	/* coordonnées de la pharmacie */
-	#iContactFormulaire p:first-of-type, #iContactFormulaire p:nth-of-type(2), #iContactFormulaire p:nth-of-type(3){
+	/*================================================     § coordonnées de la pharmacie  */
+	#iContactCoordonnees p:first-of-type, #iContactCoordonnees p:nth-of-type(2), #iContactCoordonnees p:nth-of-type(3){
 		font-size: 2.35rem;
 	}
-	#iContactFormulaire p:nth-of-type(3){
+	#iContactCoordonnees p:nth-of-type(3){
 		margin-bottom: 3rem; 			/* old 2 marge en dessous de Nantes */
 	}
 
 	/* positions de tel, fax et mail */
-	#iContactFormulaire p:nth-of-type(4),
-	#iContactFormulaire p:nth-of-type(5),
-	#iContactFormulaire p:nth-of-type(6){
+	#iContactCoordonnees p:nth-of-type(4),
+	#iContactCoordonnees p:nth-of-type(5),
+	#iContactCoordonnees p:nth-of-type(6){
 		margin-bottom: 3rem; 			/* old 1 */
 	}
 	#iContactCoordonnees:before{
 		content: none; /* on annule le trait avec le § précédent puisqu'on passe sur 2 colonnes */
-	}
-
-	/* pour que les lignes fines entre les champs ne soient pas trop près du bord de droite */
-	#iContactCoordonnees section{
-		margin: 0 2rem 0 0;
-	}
-
-	.cContactSections{
-		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
-		vertical-align: top;
-	}
-
-	/* proportion colonne de gauche / colonne de droite */
-	#iContactFormulaire{
-		width: 48%;
-	}
-
-	#iContactCoordonnees{
-		width: 50%;
 	}
 
 	/* font-awesome pour les icônes 'tel', 'fax' et 'mail' */
@@ -1321,7 +1309,7 @@ footer section:last-of-type{
 		padding: 1rem 1rem;				/* old .5rem 1rem */
 	}
 
-	/*     page prepaOrdonnance     */
+	/******************************   page prepaOrdonnance   ******************************/
 
 	/* marges autour du § d'introduction situé au dessus du formulaire */
 	.cArtiIntro{
@@ -1341,28 +1329,17 @@ footer section:last-of-type{
 		top: 2.5rem;					/* old 2.2 */
 	}
 
-	/*        page horaires         */
+	/**********************************   page horaires   *********************************/
 
 	#iHorairesTableau{
 		width: 85%;						/* old : 90%   */
 	}
 
-	/*      page PharmaDeGarde      */
+	/*******************************   page pharmaDeGarde   *******************************/
 
 	/* icône de guidage GPS */
 	/* cf ctrl+P .cPdGplan img{ */
 
-	/*           page humour           */
-
-	/* taille minimale obligatoire de la section */
-	.cHumour{
-		min-height: 45rem;
-	}
-
-	/* "Merci à ..." */
-	.cHumour p:last-of-type{
-		font-size: 1.8rem;				/* old : 1.6rem					*/
-	}
 }
 
 
@@ -1410,19 +1387,19 @@ footer section:last-of-type{
 	/* Formulaire de contact */
 
 	/* "la saisie de tous les champs ..." */
-	.cContactSections section span:first-of-type{
+	#iContactFormulaire section span:first-of-type{
 		font-size: 1.7rem;				/* old 1.5 */
 	}
 
 	/* FB et G+ */
-	#iContactFormulaire p:nth-of-type(7), #iContactFormulaire p:nth-of-type(8){
+	#iContactCoordonnees p:nth-of-type(7), #iContactCoordonnees p:nth-of-type(8){
 		display: inline-block;
 		height: 4rem;
 		width: 4rem;
 	}
 
 	/* intro du form. de contact "Envoyez-nous un message ... " */
-	#iContactCoordonnees h4{
+	#iContactFormulaire h4{
 		font-size: 2.5rem;				/* old 2.35rem */
 	}
 
@@ -1449,11 +1426,6 @@ footer section:last-of-type{
 	/* icône de guidage GPS */
 	/* cf ctrl+P .cPdGplan img{ */
 
-	/*          page humour         */
-	/* "Merci à ..." */
-	.cHumour p:last-of-type{
-		font-size: 2rem;				/* old : 1.8 */
-	}
 
 	/* Footer */
 
@@ -1510,19 +1482,19 @@ footer section:last-of-type{
 	/* Formulaire de contact */
 
 	/* "la saisie de tous les champs ..." */
-	.cContactSections section span:first-of-type{
+	#iContactFormulaire section span:first-of-type{
 		font-size: 1.7rem; 		/* old 1.5 */
 	}
 
 	/* FB et G+ */
-	#iContactFormulaire p:nth-of-type(7), #iContactFormulaire p:nth-of-type(8){
+	#iContactCoordonnees p:nth-of-type(7), #iContactCoordonnees p:nth-of-type(8){
 		display: inline-block;
 		height: 4rem;
 		width: 4rem;
 	}
 
 	/* intro du form. de contact "Envoyez-nous un message ... " */
-	#iContactCoordonnees h4{
+	#iContactFormulaire h4{
 		font-size: 2.5rem;	/* old 2.35rem */
 	}
 
@@ -1532,11 +1504,6 @@ footer section:last-of-type{
 		font-size: 2.5rem; /* old 2.3 */
 	}
 
-	/*           page humour           */
-	/* "Merci à ..." */
-	.cHumour p:last-of-type{
-		font-size: 2rem;				/* old : 1.8rem	*/
-	}
 
 	/* Footer */
 

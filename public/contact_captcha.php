@@ -256,7 +256,7 @@ if( isset($_POST['bouton']) ){
 	</header>
 
 	<main>
-		<section class='cContactSections iContactCoordonnees'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
+		<section class='cSectionContour iContactCoordonnees'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
 			<p><?= NOM_PHARMA ?></p>
 			<p><?= ADR_PHARMA_L1 ?></p>
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
@@ -277,7 +277,7 @@ if( isset($_POST['bouton']) ){
 			</p>
 		</section>
 
-		<section class='cContactSections iContactFormulaire'><h3>Formulaire de contact de la <?= NOM_PHARMA ?></h3>
+		<section class='cSectionContour iContactFormulaire'><h3>Formulaire de contact de la <?= NOM_PHARMA ?></h3>
 
 		<?php if( isset($_POST['bouton']) && ! isset($erreurs) ) : ?>
 
