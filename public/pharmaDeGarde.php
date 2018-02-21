@@ -103,7 +103,7 @@ else{
 	<main>
 		<?php $heure = heureActuelle('d'); ?>
 
-		<section class='cPdG3237'><h3>Trouver la pharmacie de garde</h3>
+		<section id='iPdG3237' class='cSectionContour'><h3>Trouver la pharmacie de garde</h3>
 
 		<?php // si les gardes fonctionnent sans passer par le commissariat, ou si on est dans la journée : ?>
 		<?php if( (HEURE_SOIR_POLICE_D == "X") || ((HEURE_MATIN_POLICE_D <= $heure) && ($heure < HEURE_SOIR_POLICE_D)) ) : ?>
@@ -116,7 +116,7 @@ else{
 
 		</section>
 
-		<section class='cPdGplan'><h3>Localiser le commissariat de police</h3>
+		<section id='iPdGplan' class='cSectionContour'><h3>Localiser le commissariat de police</h3>
 
 		<?php // si les gardes fonctionnent sans passer par le commissariat, il n'y a RIEN d'autre à afficher, d'où le 1e test : ?>
 		<?php if( HEURE_SOIR_POLICE_D != "X" ) : ?>

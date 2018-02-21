@@ -496,7 +496,7 @@ ul{
 #iContactPlan p:nth-last-of-type(2){
 	position: relative;       /* ^ permet de sélectionner l'avant-dernier élément ! */
 }
-#iContactPlan p img, .cPdGplan img{
+#iContactPlan p img, #iPdGplan img{
 	width: 3rem;
 	position: absolute;
 	top: -.2rem;
@@ -858,14 +858,13 @@ ul{
 /************************************************          page pharma de garde         ************************************************/
 /***************************************************************************************************************************************/
 
-/* un peu d'espace autour des 2 sections */
-.cPdG3237, .cPdGplan{
-	padding: 2rem 0.5rem;
+/* texte justifié dans les 2 sections */
+#iPdG3237, #iPdGplan{
 	text-align: justify;
 }
 
 /* on met en gras quelques mots */
-.cPdG3237 span, .cPdGplan span{
+#iPdG3237 span, #iPdGplan span{
 	font-weight: 700;
 }
 
@@ -891,28 +890,28 @@ ul{
 /* -----------   section plan   ----------- */
 
 /* on centre l'adresse du commissariat */
-.cPdGplan p:nth-of-type(2){
+#iPdGplan p:nth-of-type(2){
 	text-align: center;
 	padding: 1rem 0;
 }
 
 /* un peu d'espace entre chaque ligne */
-.cPdGplan p{
+#iPdGplan p{
 	padding: 1% 0;
 }
 /* pour pouvoir positionner l'img (icône de guidage GPS) */
-.cPdGplan p:nth-last-of-type(2){
+#iPdGplan p:nth-last-of-type(2){
 	position: relative;
 }
 /* icône de guidage GPS */
-/* cf ctrl+P .cPdGplan img{ */
+/* cf ctrl+F #iPdGplan img{ */
 
 /* un peu d'espace entre la dernière ligne et le plan */
-.cPdGplan p:last-of-type{
+#iPdGplan p:last-of-type{
 	padding-bottom: 2rem;
 }
 /* plan dont le lien a été copié à partir de Google maps */
-.cPdGplan iframe{
+#iPdGplan iframe{
 	width: 100%;
 }
 
@@ -1091,7 +1090,7 @@ footer section:last-of-type{
 	#iIndexVignettes h3,
 	#iHorairesIntro h3, #iHorairesTableau h3,
 	#iContactInfosPratiques h3, #iContactCoordonnees h3, #iContactPlan h3, #iContactFormulaire h3,
-	.cPdG3237 h3, .cPdGplan h3{
+	#iPdG3237 h3, #iPdGplan h3{
 		display: none;
 	}
 
@@ -1167,7 +1166,7 @@ footer section:last-of-type{
 		font-size: 2rem; 				/* old 1.8 */
 	}
 	/* icône de guidage GPS */
-	#iContactPlan p img, .cPdGplan img{
+	#iContactPlan p img, #iPdGplan img{
 		width: 4rem;					/* old 3   */
 	}
 
@@ -1185,7 +1184,7 @@ footer section:last-of-type{
 	/*      page PharmaDeGarde      */
 
 	/* icône de guidage GPS */
-	/* cf ctrl+P .cPdGplan img{ */
+	/* cf ctrl+F #iPdGplan img{ */
 
 	/*           page humour           */
 
@@ -1288,7 +1287,7 @@ footer section:last-of-type{
 		top: 2.5rem;					/* old 1.8 */
 	}
 	/* icône de guidage GPS */
-	#iContactPlan p img, .cPdGplan img{
+	#iContactPlan p img, #iPdGplan img{
 		width: 4.5rem;					/* old 4   */
 	}
 
@@ -1323,7 +1322,7 @@ footer section:last-of-type{
 	/*******************************   page pharmaDeGarde   *******************************/
 
 	/* icône de guidage GPS */
-	/* cf ctrl+P .cPdGplan img{ */
+	/* cf ctrl+F #iPdGplan img{ */
 
 }
 
@@ -1395,7 +1394,7 @@ footer section:last-of-type{
 	}
 
 	/* icône de guidage GPS */
-	#iContactPlan p img, .cPdGplan img{
+	#iContactPlan p img, #iPdGplan img{
 		width: 5rem;					/* old 4.5 */
 	}
 
@@ -1409,7 +1408,7 @@ footer section:last-of-type{
 	/*      page PharmaDeGarde      */
 
 	/* icône de guidage GPS */
-	/* cf ctrl+P .cPdGplan img{ */
+	/* cf ctrl+F #iPdGplan img{ */
 
 
 	/* Footer */
