@@ -134,7 +134,7 @@ h3{
 	font-weight: 400;  /* on les met tous en 'normal' par défaut */
 }
 .cSectionContour{
-	padding: 2rem 2% 0; /* espace autour des sections principales du site */   /* page contact + d'autres ?? ctrl + F  cSectionContour  **************/
+	padding: 5% 2% 0; /* espace autour des sections principales du site */   /* page contact + d'autres ?? ctrl + F  cSectionContour  **************/
 																			   /* est-cequ'on s'en sert pour définir aussi la taille de la police dans ces sections ? */	
 }
 
@@ -597,7 +597,7 @@ ul{
 
 
 /***************************************************************************************************************************************/
-/****************************************          page ordonnance   +   page commande          ****************************************/
+/**************************************       page prepaOrdonnance   +   page prepaCommande       **************************************/
 /***************************************************************************************************************************************/
 
 #iOrdoPrepaOrdo h3, #iCommPrepaComm h3{
@@ -615,7 +615,7 @@ ul{
 
 /* marges autour du § d'introduction situé au dessus du formulaire */
 .cBlablaIntro{
-	padding-top: 2rem;
+	padding: 5% 0;
 	text-align: justify;
 }
 
@@ -873,12 +873,12 @@ ul{
 /* pour positionner l'image où on veut et prévoir la place d'afficher l'image */
 #i3237On{
 	position: relative;
-	padding-bottom: 10rem;
+	padding-bottom: 40%;
 }
 #i3237On img{
 	position: absolute;
 	width: 38%;
-	top: 42%;
+	top: 35%;
 	left: 30%;
 }
 /* Après 20h30, on n'affiche plus le § ci-dessus, mais à   */
@@ -892,7 +892,7 @@ ul{
 /* on centre l'adresse du commissariat */
 #iPdGplan p:nth-of-type(2){
 	text-align: center;
-	padding: 1rem 0;
+	padding: 8% 0;
 }
 
 /* un peu d'espace entre chaque ligne */
@@ -1038,13 +1038,10 @@ footer h3{
 	display: none;
 }
 
-footer{
-	background-color: white;
-}
-
-/* Pharmacie des Tilleuls ... */
+/* footer 1ère section */
 footer section:first-of-type{
-	text-align: center;
+	background-color: white;
+	padding: 5% 2%;
 }
 
 footer section:first-of-type p{
@@ -1052,11 +1049,11 @@ footer section:first-of-type p{
 	padding: .5rem 1rem;
 }
 
-/* Edition CLR */
+/* footer 2ème section */
 footer section:last-of-type{
-	padding: 1rem 0;
 	background-color: #575757;
 	color: white;
+	padding: 5% 2%;
 }
 
 /* ********************************************************************************************************************************************** */
@@ -1172,10 +1169,6 @@ footer section:last-of-type{
 
 	/*     page prepaOrdonnance     */
 
-	/* marges autour du § d'introduction situé au dessus du formulaire */
-	.cBlablaIntro{
-		padding: 2rem 2rem;				/* old : 1rem   1rem			*/
-	}
 	/* icône du clicIndex */
 	#iOrdoLienModeEmploi img{
 		top: 3.1rem;					/* old 2.8 */
@@ -1183,6 +1176,10 @@ footer section:last-of-type{
 
 	/*      page PharmaDeGarde      */
 
+	/* donner de la place à la croix 'PdG' */
+	#i3237On img{
+		top: 22%;
+	}
 	/* icône de guidage GPS */
 	/* cf ctrl+F #iPdGplan img{ */
 
@@ -1304,10 +1301,6 @@ footer section:last-of-type{
 
 	/******************************   page prepaOrdonnance   ******************************/
 
-	/* marges autour du § d'introduction situé au dessus du formulaire */
-	.cBlablaIntro{
-		padding: 3rem 3rem;				/* old : 2rem   2rem			*/
-	}
 	/* icône du clicIndex */
 	#iOrdoLienModeEmploi img{
 		top: 3.5rem;					/* old 3.1 */
@@ -1366,7 +1359,7 @@ footer section:last-of-type{
 	/* page connexion : espace au-dessus du lien 'inscription' */
 	.cConnexionInscription p:first-of-type{
 	padding-bottom: 2rem;
-}
+	}
 
 	/* Formulaire de contact */
 
@@ -1418,84 +1411,12 @@ footer section:last-of-type{
 	}
 
 	footer section:first-of-type p{
-		padding: 1.5rem 1.5rem;			/* old .5 1 */
+		padding: 1.5rem 1.5rem;			/* old 1 1 */
 	}
 }
 
 /* 																														1600 px		*/
 @media screen and (min-width: 1600px){
 
-	body, h3{
-		font-size: 2.5rem; /* old 2.3 */
-	}
-	/* on agrandit un peu la croix */
-	header section img{
-		width: 16%;
-		top: 2rem;
-		left: 2rem;
-	}
 
-	/* titre : Pharmacie ... */
-	h1{
-		font-size: 4.5rem;	/* old 3.8 */
-		top: 8%;			/* old 7% */
-		left: 21%;			/* old 16% en mobile */
-	}
-
-	/* sous-titre : Nantes ... */
-	h2{
-		font-size: 2.8rem;	/* old 2.5 */
-		left: 21%;			/* old 16% en mobile */
-	}
-
-	#iTelBandeau{
-		font-size: 5.2rem;	/* old 5 */
-	}
-
-	/* page Index : on passe en 2 vignettes en largeur */
-	#iIndexVignettes article{
-		width: 33.33%;
-	}
-
-
-	/* page connexion : espace au-dessus du lien 'inscription' */
-	.cConnexionInscription p:first-of-type{
-	padding-bottom: 2rem;
-}
-
-	/* Formulaire de contact */
-
-	/* "la saisie de tous les champs ..." */
-	#iContactFormulaire section span:first-of-type{
-		font-size: 1.7rem; 		/* old 1.5 */
-	}
-
-	/* FB et G+ */
-	#iContactCoordonnees p:nth-of-type(7), #iContactCoordonnees p:nth-of-type(8){
-		display: inline-block;
-		height: 4rem;
-		width: 4rem;
-	}
-
-	/* intro du form. de contact "Envoyez-nous un message ... " */
-	#iContactFormulaire h4{
-		font-size: 2.5rem;	/* old 2.35rem */
-	}
-
-	/* tailles des champs saisis dans le formulaire et des messages associés */
-
-	.cChampForm input, .cChampForm textarea{
-		font-size: 2.5rem; /* old 2.3 */
-	}
-
-
-	/* Footer */
-
-	footer section:first-of-type{
-		font-size: 1.8rem; /* old 1.5 */
-	}
-
-	footer section:first-of-type p{
-		padding: 1.5rem 1.5rem; /* old .5rem 1rem */
-	}
 }
