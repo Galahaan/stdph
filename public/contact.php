@@ -372,14 +372,14 @@ if( isset($_POST['bouton']) ){
 			    // envoi de l'e-mail :
 				if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-					echo "<article class='cArtiMessageConfirm'>";
+					echo "<article class='cConfirmationEnvoi'>";
 					echo "<p>Merci, votre message a bien été envoyé.</p>";
 					echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 							réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 					echo "</article>";
 				}
 				else{
-					echo "<article class='cArtiMessageConfirm'>";
+					echo "<article class='cConfirmationEnvoi'>";
 					echo "<p>Aïe, il y a eu un problème ...</p>";
 					echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
 					echo "</article>";

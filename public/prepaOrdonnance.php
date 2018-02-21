@@ -160,7 +160,7 @@ if( isset($_POST['bouton']) ){
 	if( ! $nomInitial == "" ){
 		// avant d'écrire la date dans le nom du fichier, on définit le fuseau horaire par défaut à utiliser :
 		( date_default_timezone_set("Europe/Paris") ) ? $fuseau = "" : $fuseau = " (fuseau horaire invalide)";
-		$nouveauNom = date("Y-m-d_H-i-s_") . $prenom . "_" . $nom . "_" . bin2hex(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
+		$nouveauNom = date("Y-m-d_H-i-s_") . $prenom . "_" . $nom . "_" . bin2hex(random_bytes(16));
 	}
 	else{
 		// le fichier n'avait pas de nom :
@@ -276,7 +276,7 @@ if( isset($_POST['bouton']) ){
 	</header>
 
 	<main>
-		<section class='cFormOrdo'><h3>Préparation d'ordonnance</h3>
+		<section id='iOrdoPrepaOrdo' class='cSectionContour'><h3>Préparation d'ordonnance</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -472,14 +472,14 @@ if( isset($_POST['bouton']) ){
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							echo "<div class='cArtiMessageConfirm'>";
+							echo "<div class='cConfirmationEnvoi'>";
 							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Merci, votre ordonnance a bien été envoyée.</p>";
 							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "</div>";
 						}
 						else{
-							echo "<div class='cArtiMessageConfirm'>";
+							echo "<div class='cConfirmationEnvoi'>";
 							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
@@ -505,7 +505,7 @@ if( isset($_POST['bouton']) ){
 				//           ainsi qu'un message d'erreur pour les valeurs concernées.
 				?>
 
-				<div class='cArtiIntro'>
+				<div class='cBlablaIntro'>
 					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
 					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail de leur mise à disposition.</p>
 					<p><span class='cCouleurRouge'>Attention</span>, venez à la pharmacie <span class='cCouleurRouge'>avec l'original de l'ordonnance</span>.</p>
@@ -513,9 +513,11 @@ if( isset($_POST['bouton']) ){
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 
-				<article><p id='iModeEmploi'><a href='#'>Mode d'emploi</a>&nbsp;&nbsp;<img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
-
-					<div class='cModeEmploi'>
+				<article>
+					<p id='iOrdoLienModeEmploi'>
+						<a href='#iOrdoModeEmploi'>Mode d'emploi</a>&nbsp;&nbsp;<img class='cClicIndexTaille' src='img/clicIndex.png' alt=''>
+					</p>
+					<div id='iOrdoModeEmploi'>
 						<div>Il suffit de suivre ces <span>4 étapes :</span></div>
 						<ol>
 							<li><span>numériser l'ordonnance :</span>

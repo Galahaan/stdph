@@ -193,7 +193,7 @@ if( isset($_POST['bouton']) ){
 	</header>
 
 	<main>
-		<section class='cFormComm'><h3>Préparation de commande</h3>
+		<section id='iCommPrepaComm' class='cSectionContour'><h3>Préparation de commande</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -339,14 +339,14 @@ if( isset($_POST['bouton']) ){
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							echo "<div class='cArtiMessageConfirm'>";
+							echo "<div class='cConfirmationEnvoi'>";
 							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Merci, votre commande a bien été envoyée.</p>";
 							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "</div>";
 						}
 						else{
-							echo "<div class='cArtiMessageConfirm'>";
+							echo "<div class='cConfirmationEnvoi'>";
 							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
@@ -366,7 +366,7 @@ if( isset($_POST['bouton']) ){
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<div class='cArtiIntro'>
+				<div class='cBlablaIntro'>
 					<p>Envoyez-nous votre commande via le formulaire ci-dessous.</p>
 					<p>Écrivez librement les produits dont vous avez besoin.</p>
 					<p>Seuls les produits ne nécessitant pas d'ordonnance médicale peuvent être commandés.</p>

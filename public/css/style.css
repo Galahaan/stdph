@@ -135,6 +135,7 @@ h3{
 }
 .cSectionContour{
 	padding: 2rem 2% 0; /* espace autour des sections principales du site */   /* page contact + d'autres ?? ctrl + F  cSectionContour  **************/
+																			   /* est-cequ'on s'en sert pour définir aussi la taille de la police dans ces sections ? */	
 }
 
 /* <h3> ajouté pour la validation W3C mais non affiché, même pas en braille */
@@ -299,7 +300,7 @@ ul{
 /* on passe le lien en gras */
 /* on en profite pour paramétrer le lien de la page inscription  */
 /* par défaut dans le body, on a mis les liens en black ...      */
-.cConnexionInscription a, .cArtiMessageConfirm a{
+.cConnexionInscription a, .cConfirmationEnvoi a{
 	color: #A55AA5;
 	text-decoration: underline;
 }
@@ -307,7 +308,7 @@ ul{
 /* ... ici on veut le colorer au passage de la souris et au clic */
 /* on en profite pour paramétrer le lien de la page inscription  */
 .cConnexionInscription a:hover, .cConnexionInscription a:focus, .cConnexionInscription a:active,
-.cArtiMessageConfirm a:hover, .cArtiMessageConfirm a:focus, .cArtiMessageConfirm a:active{
+.cConfirmationEnvoi a:hover, .cConfirmationEnvoi a:focus, .cConfirmationEnvoi a:active{
 	color: #585858;
 }
 /* un peu d'espace avant le lien   */
@@ -331,11 +332,11 @@ ul{
 /* on paramètre le lien ci-dessus pour sa couleur et le 'gras' */
 
 /* espace autour du message de confirmation */
-.cArtiMessageConfirm{
+.cConfirmationEnvoi{
 	padding: 10rem 0 14rem 0;
 }
 /* espace avant le lien de connexion */
-.cArtiMessageConfirm p:last-of-type{
+.cConfirmationEnvoi p:last-of-type{
 	padding-bottom: 5rem;
 }
 
@@ -345,7 +346,7 @@ ul{
 /***************************************************************************************************************************************/
 
 #iIndexIntro{
-	padding: 3rem 0;
+	padding: 3rem 2%;
 }
 
 /* Ces <span> sont ajoutés dans la fonction 'pharmacieOuverte' et non directement dans index.html */
@@ -587,7 +588,7 @@ ul{
 }
 
 /* Espaces au dessus et au dessous du message de confirmation d'envoi                                          */
-#iContactFormulaire .cArtiMessageConfirm{
+#iContactFormulaire .cConfirmationEnvoi{
 	padding: 3rem 1rem 0;
 }
 
@@ -599,27 +600,22 @@ ul{
 /****************************************          page ordonnance   +   page commande          ****************************************/
 /***************************************************************************************************************************************/
 
-/* espace entre le bandeau et le formulaire */
-/* et entre le formulaire et le footer      */
-.cFormOrdo, .cFormComm{
-	padding: 2rem 0.5rem; /* si on met un margin, il prend la couleur de fond du body */
-}
-.cFormOrdo h3, .cFormComm h3{
+#iOrdoPrepaOrdo h3, #iCommPrepaComm h3{
 	font-weight: 700;
 }
 
 /* Espaces au dessus et au dessous du message de confirmation d'envoi du formulaire */
-.cFormOrdo .cArtiMessageConfirm, .cFormComm .cArtiMessageConfirm{
+#iOrdoPrepaOrdo .cConfirmationEnvoi, #iCommPrepaComm .cConfirmationEnvoi{
 	padding: 10% 8% 45%;
 }
 /* Espace entre les 2 phrases du message de confirmation d'envoi du formulaire */
-.cFormOrdo .cArtiMessageConfirm p:first-of-type, .cFormComm .cArtiMessageConfirm p:first-of-type{
+#iOrdoPrepaOrdo .cConfirmationEnvoi p:first-of-type, #iCommPrepaComm .cConfirmationEnvoi p:first-of-type{
 	padding-bottom: 8%;
 }
 
 /* marges autour du § d'introduction situé au dessus du formulaire */
-.cArtiIntro{
-	padding: 2rem 0;
+.cBlablaIntro{
+	padding-top: 2rem;
 	text-align: justify;
 }
 
@@ -629,78 +625,72 @@ ul{
 	font-weight: 700;
 }
 
-/* icône du clicIndex */
-#iModeEmploi{
-	position: relative;
-	padding: 1rem 0 5rem 3rem;
+/* position et marges autour de 'Mode d'emploi' */
+#iOrdoPrepaOrdo article:first-of-type{
+	text-align: left;
 }
-#iModeEmploi img{
-	position: absolute;
-	top: 1.8rem;
+#iOrdoLienModeEmploi{
+	padding: 2rem 0 3rem 2rem;
+	position: relative;
+}
+/* position du clicIndex */
+#iOrdoLienModeEmploi img{
+	position: absolute;    /* on a mis le relative juste au-dessus */
+	top: 2.8rem;
 	/* cf ctrl+F #iTelBandeau img{ pour plus d'explications */
 }
-/* calage et couleur(s) du lien 'mode d'emploi'          */
+/* couleur(s) du lien 'Mode d'emploi'                    */
 /* par défaut dans le body, on a mis les liens en black  */
-#iModeEmploi a{
-	font-weight: 700;
+#iOrdoLienModeEmploi a{
 	text-decoration: underline;
 	color: #A55AA5;
 }
-/* ici on veut le colorer au passage de la souris et au clic */
-#iModeEmploi a:hover{
+/* on le colore au passage de la souris */
+#iOrdoLienModeEmploi a:hover{
 	color: #585858;
 }
 /* par défaut, le mode d'emploi est masqué */
-#iModeEmploi + .cModeEmploi{
+#iOrdoModeEmploi{
 	display: none;
 }
-/* quand on clique sur Mode d'emploi, ça le déplie */
-#iModeEmploi:active + .cModeEmploi, #iModeEmploi:focus + .cModeEmploi{
+/* quand on clique sur le lien 'Mode d'emploi', ça le déplie */
+#iOrdoModeEmploi:target{
 	display: block;
 }
-/* calage à gauche dans l'article du mode d'emploi */
-.cFormOrdo article:first-of-type{
-	text-align: left;
-}
+
 /*  § Mode d'emploi  */
-.cFormOrdo .cModeEmploi{
-	padding: 3rem;
-	margin: 0 .5rem 2rem .5rem;
+#iOrdoModeEmploi{
+	padding: 7%;
+	margin: 2% 2% 8%;
 	background-color: #5B5B5B;
 	color: white;
 	text-align: left;
 }
-
 /* centrage de l'intro */
-.cFormOrdo .cModeEmploi div{
-	font-style: normal;
+#iOrdoModeEmploi div{
 	text-align: center;
-	margin-bottom: 2rem;
+	margin-bottom: 5%;
 }
 
 /* les 4 étapes en gras */
-.cFormOrdo .cModeEmploi span{
+#iOrdoModeEmploi span{
 	font-weight: 700;
 	text-decoration: underline;
 }
 
 /* un peu d'espace entre les différents points du mode d'emploi */
-.cFormOrdo .cModeEmploi ol li, .cFormOrdo .cModeEmploi ol li span{
-	margin: 1.5rem 0;
+#iOrdoModeEmploi ol li, #iOrdoModeEmploi ol li span{
+	margin: 4% 0;
 }
 
 /* message pour l'accès impossible aux fichiers sur certains smartphones */
-.cFormOrdo .cModeEmploi ul li p:nth-of-type(2){
+#iOrdoModeEmploi ul li p:nth-of-type(2){
 	color: orange;
 	font-weight: 700;
 }
-
-.cFormOrdo .cModeEmploi li{
-	margin-left: 1rem;
-}
-
-.cFormOrdo .cModeEmploi ul{
-	margin-left: 2rem;
+/* décalage des puces de 2e niveau */
+#iOrdoModeEmploi ul{
+	margin-left: 8%;
 }
 
 /* saisie obligatoire des champs */
@@ -709,14 +699,14 @@ ul{
 }
 
 /* pour positionner latéralement les civilités dans le formulaire */
-.cFormOrdo .cChampForm [for='iCiviliteM'], .cFormComm .cChampForm [for='iCiviliteM']{
+#iOrdoPrepaOrdo .cChampForm [for='iCiviliteM'], #iCommPrepaComm .cChampForm [for='iCiviliteM']{
 	padding-right: 20%;
 }
 
 /* blabla au dessus du champ 'textarea' */
-.cFormOrdo .cChampForm p:first-child{
+#iOrdoPrepaOrdo .cChampForm p:first-child{
 	text-align: justify;
-	padding: 0 1.2rem 1.2rem 1.2rem;
+	padding: 0 4% 4% 4%;
 }
 /* Message dans le champ 'textarea' */
 #iMessageTextarea{
@@ -1151,7 +1141,7 @@ footer section:last-of-type{
 	}
 
 	/* blabla au dessus du champ 'textarea' */
-	.cFormOrdo .cChampForm p:first-child{
+	#iOrdoPrepaOrdo .cChampForm p:first-child{
 		width: 58%;						/* aucune valeur */
 		margin-left: 33%;				/*     avant     */
 	}
@@ -1172,20 +1162,12 @@ footer section:last-of-type{
 	/*     page prepaOrdonnance     */
 
 	/* marges autour du § d'introduction situé au dessus du formulaire */
-	.cArtiIntro{
+	.cBlablaIntro{
 		padding: 2rem 2rem;				/* old : 1rem   1rem			*/
 	}
-	/* calage du lien "mode d'emploi" */
-	#iModeEmploi p{
-		padding: 0 0 2rem 5rem;			/* old : 0 0 2rem 3rem			*/
-	}
-	/*  § Mode d'emploi  */
-	.cModeEmploi{
-		margin: 0 2rem 2rem 2rem;		/* old : 0 .5rem 2rem .5rem		*/
-	}
 	/* icône du clicIndex */
-	#iModeEmploi img{
-		top: 2.2rem;					/* old 1.8 */
+	#iOrdoLienModeEmploi img{
+		top: 3.1rem;					/* old 2.8 */
 	}
 
 	/*      page PharmaDeGarde      */
@@ -1312,21 +1294,12 @@ footer section:last-of-type{
 	/******************************   page prepaOrdonnance   ******************************/
 
 	/* marges autour du § d'introduction situé au dessus du formulaire */
-	.cArtiIntro{
+	.cBlablaIntro{
 		padding: 3rem 3rem;				/* old : 2rem   2rem			*/
 	}
-	/* calage du lien "mode d'emploi" */
-	#iModeEmploi p{
-		padding: 0 0 3rem 5rem;			/* old : 0 0 2rem 5rem			*/
-	}
-	/*  § Mode d'emploi  */
-	.cModeEmploi{
-		padding: 3rem;					/* old : 2rem					*/
-		margin: 0 3rem 3rem 3rem;		/* old : 0 2rem 2rem 2rem		*/
-	}
 	/* icône du clicIndex */
-	#iModeEmploi img{
-		top: 2.5rem;					/* old 2.2 */
+	#iOrdoLienModeEmploi img{
+		top: 3.5rem;					/* old 3.1 */
 	}
 
 	/**********************************   page horaires   *********************************/
@@ -1417,8 +1390,8 @@ footer section:last-of-type{
 	/*     page prepaOrdonnance     */
 
 	/* icône du clicIndex */
-	#iModeEmploi img{
-		top: 2.8rem;					/* old 2.5 */
+	#iOrdoLienModeEmploi img{
+		top: 3.8rem;					/* old 3.5 */
 	}
 
 	/*      page PharmaDeGarde      */
