@@ -64,7 +64,7 @@ require_once("include/constantes.php");
 	</header>
 
 	<main>
-		<section><h3> :-) </h3>
+		<section id='iPromos' class='cSectionContour'><h3>Les promotions en cours ...</h3>
 					<br><br><br><br><br>
 					Chouette, des cadeaux !! :-)
 					<br><br><br><br><br><br><br><br><br><br>

@@ -64,7 +64,8 @@ require_once("include/constantes.php");
 	</header>
 
 	<main>
-		<section><h3> :-) </h3>
+		<section id='iInfos' class='cSectionContour'><h3>Bon à savoir !..</h3>
+
 					<br><br><br><br><br>
 					Mangez 5 fruits et légumes par jour ! :-/
 					<br><br><br><br><br><br><br><br><br><br>

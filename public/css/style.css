@@ -118,7 +118,7 @@ h2{
 .fa-phone, .fa-fax, .fa-envelope{
 	font-size: 2rem; /* page contact, taille des icônes font-awesome : tel, fax et mail */
 }
-.cGammes article h4{
+#iGammesProd article h4{
 	font-size: 3.5rem; /* page gammesProduits, titres des photos § */
 }
 .cChampForm p span{
@@ -959,30 +959,33 @@ ul{
 /*********************************************          page gammes de produits          ***********************************************/
 /***************************************************************************************************************************************/
 
-/* titre "Les Marques que ..." */
-.cGammes{
-	padding: 2rem 0;
+
+/* Comme la classe cSectionContour définit des marges latérales, et qu'ici, */
+/* exceptionnellement, on n'en veut pas, on les supprime :                  */
+#iGammesProd{
+	padding-left: 0;
+	padding-right: 0;
 }
-.cGammes h3{
+#iGammesProd h3{
 	font-weight: 700;
 }
-.cGammes > h3 + article{
+#iGammesProd > h3 + article{
 	padding-top: 2rem;
 }
 /* image d'introduction au § */
-.cGammes article .cImageDeco img{
+#iGammesProd article .cImageDeco img{
 	display: block; 				/* pour supprimer l'espace de qqs pixels sous l'image, cf index.php pour l'explication */
 	opacity: 0.3;
 }
 
 /* pour caler les titres des articles sur l'image */
-.cGammes article .cImageDeco{
+#iGammesProd article .cImageDeco{
 	position: relative;
 	border: 0.3rem solid #364115;
 }
 
 /* titres placés sur les images */
-.cGammes article h4{
+#iGammesProd article h4{
 	color: #364115;
 	position: absolute;
 	top: 50%;
@@ -994,29 +997,38 @@ ul{
 }
 
 /* organisation des textes et des images associées */
-.cGammes article div p, .cGammes article div:not(.cImageDeco) img{
+#iGammesProd article div p, #iGammesProd article div:not(.cImageDeco) img{
 	display: inline-block;
 	vertical-align: middle;
 	padding: 1%;
 }
 
 /* organisation des textes et des images associées : proportion texte / image */
-.cGammes article div p{
+#iGammesProd article div p{
 	width: 55%;
 }
-.cGammes article div:not(.cImageDeco) img{
+#iGammesProd article div:not(.cImageDeco) img{
 	width: 40%;
 }
 
 /* alternance de gris et de blanc entre les différents produits d'un même § */
-.cGammes article div:nth-child(2n+1){
+#iGammesProd article div:nth-child(2n+1){
 	background-color: #EFEFFF;
 }
 /* réglage de la taille des images                                                              =>  à ajouter dans les media queries +++++++++++++   */
-/*.cGammes article div:not(.cImageDeco) img{
+/*#iGammesProd article div:not(.cImageDeco) img{
 	width: 80%;
 }
 */
+
+/***************************************************************************************************************************************/
+/************************************************        pages infos et promos        **************************************************/
+/***************************************************************************************************************************************/
+
+#iInfos h3, #iPromos h3{
+	font-weight: 700;
+}
+
 
 /***************************************************************************************************************************************/
 /****************************************************             Footer            ****************************************************/

@@ -64,7 +64,7 @@ require_once("include/constantes.php");
 	</header>
 
 	<main>
-		<section class='cGammes'><h3>Les Marques que vous trouverez à la pharmacie</h3>
+		<section id='iGammesProd' class='cSectionContour'><h3>Les Marques que vous trouverez à la pharmacie</h3>
 
 			<article>
 				<div class='cImageDeco'><img src='img/bebe.jpg' alt=''><h4>Univers de bébé</h4></div>
