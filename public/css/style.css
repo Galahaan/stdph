@@ -870,17 +870,21 @@ ul{
 
 /* -----------   Section 3237   ----------- */
 
-/* pour positionner l'image où on veut et prévoir la place d'afficher l'image */
+/* centrer la croix verticalement et horizontalement */
 #i3237On{
 	position: relative;
-	padding-bottom: 40%;
+	padding-bottom: 35%;
 }
 #i3237On img{
 	position: absolute;
+	top: 58%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%); /* pour Chrome */
+	   -moz-transform: translate(-50%, -50%); /* pour Firefox */
+			transform: translate(-50%, -50%);
 	width: 38%;
-	top: 35%;
-	left: 30%;
 }
+
 /* Après 20h30, on n'affiche plus le § ci-dessus, mais à   */
 /* la place, on met 'Pharmacie de garde' que l'on centre : */
 #i3237Off{
@@ -1176,10 +1180,6 @@ footer section:last-of-type{
 
 	/*      page PharmaDeGarde      */
 
-	/* donner de la place à la croix 'PdG' */
-	#i3237On img{
-		top: 22%;
-	}
 	/* icône de guidage GPS */
 	/* cf ctrl+F #iPdGplan img{ */
 

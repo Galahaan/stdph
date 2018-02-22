@@ -107,8 +107,12 @@ else{
 
 		<?php // si les gardes fonctionnent sans passer par le commissariat, ou si on est dans la journée : ?>
 		<?php if( (HEURE_SOIR_POLICE_D == "X") || ((HEURE_MATIN_POLICE_D <= $heure) && ($heure < HEURE_SOIR_POLICE_D)) ) : ?>
-			<p id='i3237On'>Trouvez la <span>pharmacie de garde</span> la plus proche de chez vous en cliquant sur la croix ci-dessous :
-				<a href='http://www.3237.fr/'><img src='img/croix_garde.png' alt=''><span class='cBraille'>croix</span></a>
+			<p>Trouvez la <span>pharmacie de garde</span> la plus proche de chez vous en cliquant sur la croix ci-dessous :</p>
+			<p id='i3237On'>
+				<a href='http://www.3237.fr/'>
+					<img src='img/croix_garde.png' alt=''>
+					<!-- <span class='cBraille'>croix</span> -->
+				</a>
 			</p>
 		<?php else : // on est en horaires de garde -> on affiche juste le titre ?>
 			<p id='i3237Off'><span>Pharmacie de garde</span></p>
