@@ -124,7 +124,7 @@ h2{
 .cChampForm p span{
 	font-size: 1.3rem; /* pages contact, ordo, comm, connexion et inscrip., messages d'erreurs dans les form. */
 }
-.cHumour p:last-of-type{
+#iHumour p:last-of-type{
 	font-size: 1.4rem;   /* page humour, 'Merci à ...' */
 }
 footer section:first-of-type{
@@ -277,11 +277,8 @@ ul{
 /***************************************************************************************************************************************/
 /*******************************************          pages connexion et inscription         *******************************************/
 /***************************************************************************************************************************************/
-/* pour que les lignes fines entre les champs ne fassent pas toute la largeur de la colonne */
-.cConnexion, .cConnexionInscription, .cInscription{
-	padding: 2rem 0.5rem;
-}
-.cConnexion h3, .cConnexionInscription h3, .cInscription h3{
+
+#iConnexionIDs h3, #iConnexionInscription h3, #iInscription h3{
 	padding-bottom: 2rem;
 	font-weight: 700;
 }
@@ -294,30 +291,21 @@ ul{
 /* est codée dans la partie 'page contact' ci-dessous            */
 
 /* on met un peu d'espace au-dessus du lien 'inscription'        */
-.cConnexionInscription p:first-of-type{
-	padding-bottom: 0.5rem;
+#iConnexionInscription p:first-of-type{
+	padding-bottom: 5%;
 }
-/* on passe le lien en gras */
-/* on en profite pour paramétrer le lien de la page inscription  */
+/* on le colore et on en profite pour paramétrer le lien de la page inscription  */
 /* par défaut dans le body, on a mis les liens en black ...      */
-.cConnexionInscription a, .cConfirmationEnvoi a{
+#iConnexionInscription a, #iInscription .cConfirmationEnvoi a{
 	color: #A55AA5;
 	text-decoration: underline;
 }
 
-/* ... ici on veut le colorer au passage de la souris et au clic */
-/* on en profite pour paramétrer le lien de la page inscription  */
-.cConnexionInscription a:hover, .cConnexionInscription a:focus, .cConnexionInscription a:active,
-.cConfirmationEnvoi a:hover, .cConfirmationEnvoi a:focus, .cConfirmationEnvoi a:active{
+/* on le colore au passage de la souris et on en profite */
+/* pour paramétrer le lien de la page inscription        */
+#iConnexionInscription a:hover, #iInscription .cConfirmationEnvoi a:hover{
 	color: #585858;
-}
-/* un peu d'espace avant le lien   */
-.cConnexionInscription p:first-of-type{
-	padding-bottom: 2rem;
-}
-/* un peu d'espace avant le footer */
-.cConnexionInscription{
-	padding-bottom: 4rem;
+	font-weight: 700;
 }
 
 /***********************************************************************************************/
@@ -325,28 +313,24 @@ ul{
 /***********************************************************************************************/
 
 /* pour positionner latéralement les civilités dans le formulaire */
-.cInscription .cChampForm [for='iCiviliteM']{
+#iInscription .cChampForm [for='iCiviliteM']{
 	padding-right: 20%;
 }
-
-/* on paramètre le lien ci-dessus pour sa couleur et le 'gras' */
-
 /* espace autour du message de confirmation */
-.cConfirmationEnvoi{
+#iInscription .cConfirmationEnvoi{
 	padding: 10rem 0 14rem 0;
 }
 /* espace avant le lien de connexion */
-.cConfirmationEnvoi p:last-of-type{
+#iInscription .cConfirmationEnvoi p:last-of-type{
 	padding-bottom: 5rem;
 }
-
 
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
 /***************************************************************************************************************************************/
 
 #iIndexIntro{
-	padding: 3rem 2%;
+	padding: 8% 2%;
 }
 
 /* Ces <span> sont ajoutés dans la fonction 'pharmacieOuverte' et non directement dans index.html */
@@ -424,7 +408,7 @@ ul{
 /* page contact et page connexion           */
 /* ligne fine de séparation au dessus du §  */
 /* (en version mobile uniquement !)         */
-#iContactCoordonnees:before, #iContactPlan:before, #iContactFormulaire:before, .cConnexionInscription:before{
+#iContactCoordonnees:before, #iContactPlan:before, #iContactFormulaire:before, #iConnexionInscription:before{
 	content: '';
 	display: block;
 	height: .2rem;
@@ -453,6 +437,7 @@ ul{
 }
 #iContactTel a:hover, #iContactMail a:hover{
 	color: #585858;
+	font-weight: 700;
 }
 /* icône du clicIndex (#iContactTel est déjà en position relative, cf ci-dessus) */
 #iContactTel img{
@@ -648,6 +633,7 @@ ul{
 /* on le colore au passage de la souris */
 #iOrdoLienModeEmploi a:hover{
 	color: #585858;
+	font-weight: 700;
 }
 /* par défaut, le mode d'emploi est masqué */
 #iOrdoModeEmploi{
@@ -924,25 +910,25 @@ ul{
 /***************************************************************************************************************************************/
 
 /* section humour */
-.cHumour{
+#iHumour{
 	padding: 2rem;
 	min-height: 31rem; /* pour ne pas que le bas de l'écran remonte trop haut */
 	position: relative;
 }
 
 /* titre "Thérapie par l'humour" */
-.cHumour h3{
+#iHumour h3{
 	padding: 3rem 0 5rem;
 	font-weight: 700;
 }
 
 /* la blague */
-.cHumour p:first-of-type{
+#iHumour p:first-of-type{
 	padding-bottom: 8rem; /* permet de laisser toujours une marge entre la fin de la blague et (*) */
 }
 
 /* Merci à ... */
-.cHumour p:last-of-type{
+#iHumour p:last-of-type{
 	font-family: Arial;
 	text-align: left;
 	position: absolute;
@@ -950,12 +936,13 @@ ul{
 	left: 2rem;
 }
 /* par défaut dans le body, on a mis les liens en black      */
-.cHumour a{
+#iHumour a{
 	text-decoration: underline;
 	color: #A55AA5;
 }
-.cHumour a:hover{
+#iHumour a:hover{
 	color: #585858;
+	font-weight: 700;
 }
 
 /***************************************************************************************************************************************/
@@ -1186,7 +1173,7 @@ footer section:last-of-type{
 	/*           page humour           */
 
 	/* "Merci à ..." */
-	.cHumour p:last-of-type{
+	#iHumour p:last-of-type{
 		font-size: 1.6rem;				/* old : 1.4rem					*/
 	}
 
@@ -1353,12 +1340,6 @@ footer section:last-of-type{
 	/* page Index : on passe en 2 vignettes en largeur */
 	#iIndexVignettes article{
 		width: 33.33%;
-	}
-
-
-	/* page connexion : espace au-dessus du lien 'inscription' */
-	.cConnexionInscription p:first-of-type{
-	padding-bottom: 2rem;
 	}
 
 	/* Formulaire de contact */

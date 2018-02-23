@@ -102,7 +102,7 @@ if( isset( $_POST['connexion'] ) ) {
 	</header>
 
 	<main>
-		<section class='cConnexion'><h3>Veuillez saisir vos identifiants (*)</h3>
+		<section id='iConnexionIDs' class='cSectionContour'><h3>Veuillez saisir vos identifiants (*)</h3>
 			<p><?= ( ! empty($erreur) ) ? $erreur : "" ?></p>
 			<form method='POST'>
 				<div class='cChampForm'>
@@ -121,7 +121,7 @@ if( isset( $_POST['connexion'] ) ) {
 			</form>
 		</section>
 
-		<section class='cConnexionInscription'><h3>(*) Création d'un compte</h3>
+		<section id='iConnexionInscription'  class='cSectionContour'><h3>(*) Création d'un compte</h3>
 			<p>Si vous n'avez pas encore de compte, vous pouvez en créer un en suivant ce lien : </p>
 			<p><a href='inscription.php'>>  inscription  <</a></p>
 		</section>

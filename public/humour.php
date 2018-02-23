@@ -64,7 +64,7 @@ require_once("include/constantes.php");
 	</header>
 
 	<main>
-		<section class='cHumour'><h3>La thérapie par l'humour ! (*)</h3>
+		<section id='iHumour' class='cSectionContour'><h3>La thérapie par l'humour ! (*)</h3>
 		<?php
 			// https://www.chucknorrisfacts.fr/api/api
 			do{

@@ -209,6 +209,8 @@ if( isset($_POST['bouton']) ){
 
 	<main>
 
+		<section id='iInscription' class='cSectionContour'><h3>Création de votre compte</h3>
+
 		<?php if( isset($_POST['bouton']) && !isset($erreurs) && !$mailExisteDeja ) : ?>
 
 			<?php
@@ -247,11 +249,11 @@ if( isset($_POST['bouton']) ){
 			$requete->execute();
 
 			$nouvelId = $dbConnex->lastInsertId();
-			echo "<article class='cConfirmationEnvoi'>";
+			echo "<div class='cConfirmationEnvoi'>";
 			echo "<p>Merci, votre compte a bien été créé.</p>";
 			echo "<p>Vous pouvez dorénavant vous connecter ...</p>";
 			echo "<a href='connexion.php'>>  connexion  <</a>";
-			echo "</article>";
+			echo "</div>";
 			//header('Location: connexion.php');   ce serait pas mal de renvoyer vers la page connexion avec en paramètre le message de confirmation de création de compte.
 
 			?>
@@ -272,7 +274,6 @@ if( isset($_POST['bouton']) ){
 			//   => on laisse les cases vides.
 			?>
 
-		<section class='cInscription'><h3>Création de votre compte</h3>
 			<p>Veuillez renseigner tous les champs ci-dessous svp.</p>
 			<form method='post'>
 				<div class='cChampForm'>
