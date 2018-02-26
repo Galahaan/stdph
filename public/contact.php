@@ -405,48 +405,48 @@ if( isset($_POST['bouton']) ){
 			?>
 			
 			<section><h4> Envoyez-nous un message ...</h4>
-				<span>(la saisie de tous les champs est obligatoire)</span>
+			<span>(la saisie de tous les champs est obligatoire)</span>
 
-				<form method='post'>
-					<div class='cChampForm'>
-						<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-							<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
-						<label for='iCiviliteMme'>Mme</label>
-						<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
-							<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
-						<label for='iCiviliteMlle'>Melle</label>
-						<input type='radio' id='iCiviliteM' name='civilite' value='M.' required
-							<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
-						<label for='iCiviliteM'>M.</label>
-					</div>
+			<form method='post'>
+				<div class='cChampForm'>
+					<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
+						<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
+					<label for='iCiviliteMme'>Mme</label>
+					<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
+						<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
+					<label for='iCiviliteMlle'>Melle</label>
+					<input type='radio' id='iCiviliteM' name='civilite' value='M.' required
+						<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
+					<label for='iCiviliteM'>M.</label>
+				</div>
 
-					<div class='cChampForm'>
-					<label for='idPrenom'>Prénom</label>
-								<input type='text' id='idPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
+				<div class='cChampForm'>
+				<label for='idPrenom'>Prénom</label>
+							<input type='text' id='idPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
 				<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
-					</div>
+				</div>
 
-					<div class='cChampForm'>
-					<label for='idNom'>Nom</label>
-								<input type='text' id='idNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
+				<div class='cChampForm'>
+				<label for='idNom'>Nom</label>
+							<input type='text' id='idNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
 				<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
-					</div>
+				</div>
 
-					<div class='cChampForm'>
-					<label for='idMail'>Mail</label>
-								<input type='email' id='idMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+				<div class='cChampForm'>
+				<label for='idMail'>Mail</label>
+							<input type='email' id='idMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
 				<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
-					</div>
-					<div class='cChampForm'>
-						<label for='iMessageTextarea'>Message</label>
-								<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
-					<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
-					</div>
+				</div>
+				<div class='cChampForm'>
+					<label for='iMessageTextarea'>Message</label>
+							<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
+				<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
+				</div>
 
-					<div class='cBoutonOk'>
-						<button name='bouton'>Envoyer</button>
-					</div>
-				</form>
+				<div class='cBoutonOk'>
+					<button name='bouton'>Envoyer</button>
+				</div>
+			</form>
 			</section>
 		<?php endif ?>
 		</section>
