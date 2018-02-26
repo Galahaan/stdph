@@ -86,10 +86,10 @@ main{
  	/*min-height: 40rem;*/
 }
 
-body, h3{
-	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h3 */
+body, h3, h4{
+	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h3 et les h4 */
 	/* 		horaires.php : 																							*/
-	/* on utilise le h3 pour chaque jour de la semaine, il FAUT donc qu'il ait la même taille que celle du body 	*/
+	/* on utilise le h4 pour chaque jour de la semaine, il FAUT donc qu'il ait la même taille que celle du body 	*/
 	/* sinon, le trait de l'heure se décale vers le haut, les jours sont écrits plus gros ... bref c'est la merde ! */
 }
 /* icône du clicIndex */
@@ -131,8 +131,8 @@ h2{
 footer section:first-of-type{
 	font-size: 1.3rem; /* footer : 'Pharmacie des Tilleuls ...' */
 }
-h3{
-	font-weight: 400;  /* on les met tous en 'normal' par défaut */
+.cSemaine h4, .cSamedi h4{
+	font-weight: 400;  /* nom des jours (h4) de la page horaires en 'normal' */
 }
 .cSectionContour{
 	padding: 5% 2% 0; /* espace autour des sections principales du site */   /* page contact + d'autres ?? ctrl + F  cSectionContour  **************/
@@ -723,8 +723,8 @@ ul{
 	text-align: left;
 	padding-bottom: .5rem;
 }
-/* pour que chaque article, contenant le h3 et les div, ne prenne qu'une seule ligne */
-#iHorairesTableau article div, #iHorairesTableau article h3{
+/* pour que chaque article, contenant le h4 et les div, ne prenne qu'une seule ligne */
+#iHorairesTableau article div, #iHorairesTableau article h4{
 	display: inline-block;
 }
 /* - couleur de fond par défaut des créneaux horaires d'ouverture */
@@ -733,14 +733,14 @@ ul{
 	background-color: rgba(148, 193, 29, .2);
 }
 /* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
-#iHorairesTableau #iAujourdhui div, #iHorairesTableau #iAujourdhui h3{
+#iHorairesTableau #iAujourdhui div, #iHorairesTableau #iAujourdhui h4{
 	background-color: rgba(148, 193, 29, .5);
 	font-weight: 700;
 	color: #1967E5;
 }
 /* on ne veut pas mettre le jour actuel et le tiret en fond vert */
-.cSemaine h3, .cSamedi h3, .cSemaine .cTiret,
-#iHorairesTableau #iAujourdhui h3, #iHorairesTableau #iAujourdhui .cTiret{
+.cSemaine h4, .cSamedi h4, .cSemaine .cTiret,
+#iHorairesTableau #iAujourdhui h4, #iHorairesTableau #iAujourdhui .cTiret{
 	background-color: white;
 	color: black;
 }
@@ -781,7 +781,7 @@ ul{
 /* ========================  !!! si modifications => les reporter dans functions.php !!!  ======================== */
 /* ========================                                                               ======================== */
 /* jours de la semaine */
-#iHorairesTableau article h3{
+#iHorairesTableau article h4{
 	width: 23%;
 	background-color: white;
 }
@@ -814,7 +814,7 @@ ul{
 	padding-right: 1%;
 }
 /* samedi */
-#iHorairesTableau .cSamedi h3{
+#iHorairesTableau .cSamedi h4{
 	background-color: white;
 	width: 26.75%;      /* cette valeur bizarre permet d'aligner '9h le samedi' avec '9h en semaine' */
 }
@@ -1091,7 +1091,7 @@ footer section:last-of-type{
 /* 																														460 px		*/
 @media screen and (min-width: 460px){
 
-	body, h3{
+	body, h3, h4{
 		font-size: 2rem; 				/* old 1.7 */
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
@@ -1182,7 +1182,7 @@ footer section:last-of-type{
 @media screen and (min-width: 600px){
 
 	/* On augmente encore un peu les tailles */
-	body, h3{
+	body, h3, h4{
 		font-size: 2.3rem;				/* old 2 */
 	}
 	h1{
@@ -1229,12 +1229,12 @@ footer section:last-of-type{
 	/*======================================================     § formulaire de contact  */
 	/* messages d'erreurs dans les form. contact, ordonnance et commande */
 	.cChampForm p span{
-		font-size: 2rem; 				/* old 1.5 */
+		font-size: 2rem;                                /* old 1.5 */
 	}
 
 	/* "la saisie de tous les champs ..." */
 	#iContactFormulaire section span:first-of-type{
-		font-size: 1.5rem; 				/* old 1.2 */
+		font-size: 1.5rem;                              /* old 1.2 */
 	}
 
 	/* pour positionner latéralement les civilités dans le formulaire de contact */
@@ -1309,7 +1309,7 @@ footer section:last-of-type{
 /* 																														900 px		*/
 @media screen and (min-width: 900px){
 
-	body, h3{
+	body, h3, h4{
 		font-size: 2.5rem;				/* old 2.3 */
 	}
 	/* on agrandit un peu la croix */
@@ -1345,7 +1345,7 @@ footer section:last-of-type{
 
 	/* "la saisie de tous les champs ..." */
 	#iContactFormulaire section span:first-of-type{
-		font-size: 1.7rem;				/* old 1.5 */
+		font-size: 1.7rem;                              /* old 1.5 */
 	}
 
 	/* FB et G+ */
