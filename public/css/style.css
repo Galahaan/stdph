@@ -82,7 +82,8 @@ body{
 }
 main{
 	background-color: white;
- 	min-height: 40rem; /* pour ne pas que le footer remonte trop haut */
+	/* pour ne pas que le footer remonte trop haut */
+ 	/*min-height: 40rem;*/
 }
 
 body, h3{
@@ -296,14 +297,14 @@ ul{
 }
 /* on le colore et on en profite pour paramétrer le lien de la page inscription  */
 /* par défaut dans le body, on a mis les liens en black ...      */
-#iConnexionInscription a, #iInscription .cConfirmationEnvoi a{
+#iConnexionInscription a, #iInscription a{
 	color: #A55AA5;
 	text-decoration: underline;
 }
 
 /* on le colore au passage de la souris et on en profite */
 /* pour paramétrer le lien de la page inscription        */
-#iConnexionInscription a:hover, #iInscription .cConfirmationEnvoi a:hover{
+#iConnexionInscription a:hover, #iInscription a:hover{
 	color: #585858;
 	font-weight: 700;
 }
@@ -315,14 +316,6 @@ ul{
 /* pour positionner latéralement les civilités dans le formulaire */
 #iInscription .cChampForm [for='iCiviliteM']{
 	padding-right: 20%;
-}
-/* espace autour du message de confirmation */
-#iInscription .cConfirmationEnvoi{
-	padding: 10rem 0 14rem 0;
-}
-/* espace avant le lien de connexion */
-#iInscription .cConfirmationEnvoi p:last-of-type{
-	padding-bottom: 5rem;
 }
 
 /***************************************************************************************************************************************/
@@ -572,10 +565,25 @@ ul{
 	background-color: #585858;
 }
 
-/* Espaces au dessus et au dessous du message de confirmation d'envoi                                          */
-#iContactFormulaire .cConfirmationEnvoi{
-	padding: 3rem 1rem 0;
+
+/*--------------------------------------------------------------------------------                             */
+/*                                                                                                             */
+/*                  petit § dédié aux messages de confirmation                                                 */
+/*                     (d'envoi, de création de compte, ...)                                                   */
+/*    communs aux pages contact, inscription, prepaCommande et prepaOrdonnance                                 */
+/*                                                                                                             */
+
+/* espaces autour de la div des messages de confirmation */
+.cMessageConfirmation{
+	padding: 5% 0 18%;
 }
+/* espace sous les 2 phrases du message de confirmation */
+.cMessageConfirmation p{
+	padding-bottom: 3%;
+}
+
+/*               fin du § sur les messages de confirmation                                                     */
+/*--------------------------------------------------------------------------------                             */
 
 /*               fin de la partie commune aux 5 formulaires                                                    */
 /***************************************************************************************************************/
@@ -587,15 +595,6 @@ ul{
 
 #iOrdoPrepaOrdo h3, #iCommPrepaComm h3{
 	font-weight: 700;
-}
-
-/* Espaces au dessus et au dessous du message de confirmation d'envoi du formulaire */
-#iOrdoPrepaOrdo .cConfirmationEnvoi, #iCommPrepaComm .cConfirmationEnvoi{
-	padding: 10% 8% 45%;
-}
-/* Espace entre les 2 phrases du message de confirmation d'envoi du formulaire */
-#iOrdoPrepaOrdo .cConfirmationEnvoi p:first-of-type, #iCommPrepaComm .cConfirmationEnvoi p:first-of-type{
-	padding-bottom: 8%;
 }
 
 /* marges autour du § d'introduction situé au dessus du formulaire */
@@ -1072,8 +1071,8 @@ footer section:last-of-type{
 	/*              - 'Localiser la pharmacie'                                #iContactPlan h3            */
 	/*              - 'Formulaire de contact'                                 #iContactFormulaire h3      */
 	/* - ph. garde: on conserve les titres :                                                              */
-	/*              - 'Trouver ...'                                           .cPdG 3237  */
-	/*              - 'Localiser ...'                                          plan       */
+	/*              - 'Trouver ...'                                           #iPdG3237                   */
+	/*              - 'Localiser ...'                                         #iPdGplan                   */
 
 	#iIndexVignettes h3,
 	#iHorairesIntro h3, #iHorairesTableau h3,

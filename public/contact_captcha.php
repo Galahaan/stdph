@@ -422,18 +422,24 @@ if( isset($_POST['bouton']) ){
 				else{
 				    // envoi de l'e-mail :
 					if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
-	
-						echo "<article class='cConfirmationEnvoi'>";
+
+						// on commence par effacer les autres sections de la page (+ le petit trait au-dessus de la section en cours)
+						echo "<style type='text/css'> #iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire::before { display: none } </style>";
+						// puis on affiche le message (on sait de quoi on parle puisque 'Contact' est souligné dans le menu de nav.)
+						echo "<div class='cMessageConfirmation'>";
 						echo "<p>Merci, votre message a bien été envoyé.</p>";
 						echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 								réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-						echo "</article>";
+						echo "</div>";
 				}
 				else{
-						echo "<article class='cConfirmationEnvoi'>";
+						// on commence par effacer les autres sections de la page (+ le petit trait au-dessus de la section en cours)
+						echo "<style type='text/css'> #iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire::before { display: none } </style>";
+						// puis on affiche le message (on sait de quoi on parle puisque 'Contact' est souligné dans le menu de nav.)
+						echo "<div class='cMessageConfirmation'>";
 						echo "<p>Aïe, il y a eu un problème ...</p>";
 						echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-						echo "</article>";
+						echo "</div>";
 					}
 				};
 				?>

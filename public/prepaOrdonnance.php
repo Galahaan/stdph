@@ -472,15 +472,17 @@ if( isset($_POST['bouton']) ){
 					    // envoi de l'e-mail :
 						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
 
-							echo "<div class='cConfirmationEnvoi'>";
-							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
+							// on commence par effacer le titre de la page : "Préparation d'ordonnance" ...
+							echo "<style type='text/css'> h3 { display: none } </style>";
+							// ... puisque le message est suffisamment explicite :
+							echo "<div class='cMessageConfirmation'>";
 							echo "<p>Merci, votre ordonnance a bien été envoyée.</p>";
 							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "</div>";
 						}
 						else{
-							echo "<div class='cConfirmationEnvoi'>";
-							echo "<style type='text/css'> h3 { display: none } </style>"; // pour effacer le titre de la page : "Préparation ..."
+							// ici, on n'efface pas le titre de la page, pour savoir de quoi parle le message d'erreur
+							echo "<div class='cMessageConfirmation'>";
 							echo "<p>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
 							echo "</div>";

@@ -249,7 +249,7 @@ if( isset($_POST['bouton']) ){
 			$requete->execute();
 
 			$nouvelId = $dbConnex->lastInsertId();
-			echo "<div class='cConfirmationEnvoi'>";
+			echo "<div class='cMessageConfirmation'>";
 			echo "<p>Merci, votre compte a bien été créé.</p>";
 			echo "<p>Vous pouvez dorénavant vous connecter ...</p>";
 			echo "<a href='connexion.php'>>  connexion  <</a>";
