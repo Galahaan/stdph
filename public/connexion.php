@@ -106,8 +106,8 @@ if( isset( $_POST['connexion'] ) ) {
 			<p><?= ( ! empty($erreur) ) ? $erreur : "" ?></p>
 			<form method='POST'>
 				<div class='cChampForm'>
-					<label for='idMail'>mail</label>
-					<input type='text' id='idMail' name='mail' required>
+					<label for='iMail'>mail</label>
+					<input type='text' id='iMail' name='mail' required>
 				</div>
 
 				<div class='cChampForm'>

@@ -503,8 +503,10 @@ if( isset($_POST['bouton']) ){
 				$adrMailClient	= $_SESSION['client']['mail'];
 
 				// - soit il y a eu des erreurs dans le formulaire :
-				//        => alors on ré-affiche les valeurs saisies (grâce à "value"),
-				//           ainsi qu'un message d'erreur pour les valeurs concernées.
+				//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
+				//		ainsi qu'un message d'erreur pour les valeurs concernées,
+				//		le tout en activant l'autofocus, pour se déplacer
+				//		automatiquement jusqu'au formulaire.
 				?>
 
 				<div class='cBlablaIntro'>
@@ -547,11 +549,11 @@ if( isset($_POST['bouton']) ){
 						Nous nous occupons de la suite !
 					</div>
 				</article>
-				<span class='cSaisieObligatoire'>(la saisie de tous les champs est obligatoire ; pièce jointe < 2 Mo)</span>
+				<sup>(la saisie de tous les champs est obligatoire ; pièce jointe < 2 Mo)</sup>
 				<form method='POST' enctype='multipart/form-data'>
 					<div class='cChampForm'>
 						<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-							<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
+							<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> <?= isset($erreurs) ? "autofocus" : "" ?> >
 						<label for='iCiviliteMme'>Mme</label>
 						<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
 							<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
@@ -561,35 +563,32 @@ if( isset($_POST['bouton']) ){
 						<label for='iCiviliteM'>M.</label>
 					</div>
 					<div class='cChampForm'>
-						<label for='idPrenom'>Prénom</label>
-								<input type='text' id='idPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-					<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
-					</div>
-
-					<div class='cChampForm'>
-						<label for='idNom'>Nom</label>
-								<input type='text' id='idNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
-					<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
-					</div>
-
-					<div class='cChampForm'>
-						<label for='idMail'>Mail</label>
-								<input type='email' id='idMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
-					<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
+						<label for='iPrenom'>Prénom</label>
+								<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
+					<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
-						<label for='idPJ'>Ordonnance</label>
-								<input type='file' id='idPJ' name='pieceJointe' accept=<?= LISTE_EXT_AUTORISEES ?> required >
-					<?php if( isset($erreurs['pieceJointe']) ) { echo "<p><span>" . $erreurs['pieceJointe'] . "</span></p>"; } ?>
+						<label for='iNom'>Nom</label>
+								<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
+					<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
+					</div>
+					<div class='cChampForm'>
+						<label for='iMail'>Mail</label>
+								<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+					<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
+					</div>
+					<div class='cChampForm'>
+						<label for='iPJ'>Ordonnance</label>
+								<input type='file' id='iPJ' name='pieceJointe' accept=<?= LISTE_EXT_AUTORISEES ?> required >
+					<?php if( isset($erreurs['pieceJointe']) ) { echo "<sub>" . $erreurs['pieceJointe'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
 							<p>Apportez-nous des précisions qui vous semblent utiles sur votre traitement.
-								<br>Peut-être avez-vous déjà certains produits qu'il serait donc inutile d'ajouter à la commande ?..</p>
+								<br>Peut-être avez-vous déjà certains produits qu'il serait donc inutile d'ajouter à la préparation ?..</p>
 						<label for='iMessageTextarea'>Message</label>
 								<textarea rows='7' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : "" ?></textarea>
-					<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
+					<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
 					</div>
-
 					<div class='cBoutonOk'>
 						<button name='bouton'>Envoyer</button>
 					</div>

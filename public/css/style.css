@@ -39,8 +39,14 @@
 /* (positionner cet import sur la 1ère ligne du fichier CSS, sinon ça peut bugger) */
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700|Tangerine:700');
 
-    /*  font-family: 'Tangerine', cursive;   pour l'image de fond  */
-    /*  font-family: 'Raleway', sans-serif;  pour tout le reste    */
+	/* Il faut toujours définir une police 'générique' de secours: */
+	/* les polices génériques sont :                               */
+	/* serif, sans-serif, monospace, cursive, fantasy et system-ui */
+	/* (disponibles sur n'importe quelle machine)                  */
+	/*                                                             */
+	/* Voilà donc ce qui sera utilisé dans ce projet :             */
+    /*  font-family: 'Tangerine', fantasy;   pour l'image de fond  */
+    /*  font-family: 'Raleway', fantasy;     pour tout le reste    */
     /*                                                             */
     /*  penser à modifier si besoin l'épaisseur des polices :      */
     /*  ie pas de bold mais du 700 (ou autre) ...                  */
@@ -74,20 +80,29 @@ img{
 
 body{
 	/* ligne associée à l'import de la police Google fonts */
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Raleway', fantasy;
  	text-align: center;/* étant donné que le texte est majoritairement centré dans tout le doc */
  	background-color: #575757;
  	max-width: 95rem;
  	margin: auto;
 }
+
+/* Visiblement, le font-family du body n'est pas pris en compte dans le textarea, */
+/* et de plus, la taille n'est pas bonne pour les input ...                       */
+/* on les redéfinit donc ici plus spécifiquement :                                */
+.cChampForm input, .cChampForm textarea{
+	font-family: fantasy;
+	font-size: 1em;
+}
+
 main{
 	background-color: white;
 	/* pour ne pas que le footer remonte trop haut */
  	/*min-height: 40rem;*/
 }
 
-body, h3, h4{
-	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h3 et les h4 */
+body, h3, h4, h5{
+	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h3, les h4 et les h5 */
 	/* 		horaires.php : 																							*/
 	/* on utilise le h4 pour chaque jour de la semaine, il FAUT donc qu'il ait la même taille que celle du body 	*/
 	/* sinon, le trait de l'heure se décale vers le haut, les jours sont écrits plus gros ... bref c'est la merde ! */
@@ -113,17 +128,14 @@ h2{
 #iIndexVignettes article h4{
 	font-size: 2.5rem; /* page index, titres des vignettes */
 }
-#iContactFormulaire section span:first-of-type{
-	font-size: 1.2rem; /* page contact, section formulaire, 'la saisie de tous les champs ...' */
-}
 .fa-phone, .fa-fax, .fa-envelope{
 	font-size: 2rem; /* page contact, taille des icônes font-awesome : tel, fax et mail */
 }
 #iGammesProd article h4{
 	font-size: 3.5rem; /* page gammesProduits, titres des photos § */
 }
-.cChampForm p span{
-	font-size: 1.3rem; /* pages contact, ordo, comm, connexion et inscrip., messages d'erreurs dans les form. */
+sup, sub{
+	font-size: .7em; /* contact, ordo, comm et inscrip : 'saisie obligatoire' et 'mess. d'erreurs' */
 }
 #iHumour p:last-of-type{
 	font-size: 1.4rem;   /* page humour, 'Merci à ...' */
@@ -177,7 +189,7 @@ h1, h2, #iTelBandeau{
 	color: #364115;
 	font-weight: 700;
 	position: absolute;
-	font-family: 'Tangerine', cursive; /* on souhaite une police particulière uniquement pour le bandeau du haut */
+	font-family: 'Tangerine', fantasy; /* on souhaite une police particulière uniquement pour le bandeau du haut */
 }
 /* titre : Pharmacie ... */
 h1{
@@ -313,10 +325,7 @@ ul{
 /***********************                 page inscription                 **********************/
 /***********************************************************************************************/
 
-/* pour positionner latéralement les civilités dans le formulaire */
-#iInscription .cChampForm [for='iCiviliteM']{
-	padding-right: 20%;
-}
+
 
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
@@ -488,16 +497,9 @@ ul{
 /**********************     formulaire de contact     **********************/
 
 /* "Envoyez-nous un message ... " */
-#iContactFormulaire h4{
+#iContactFormulaire h5{
 	padding-bottom: 2rem;
-	font-weight: 700;
 }
-
-/* pour positionner latéralement les civilités dans le formulaire */
-#iContactFormulaire .cChampForm [for='iCiviliteM']{
-	padding-right: 20%;
-}
-
 
 /***************************************************************************************************************/
 /* Cette partie est commune aux 5 formulaires :                                                                */
@@ -513,35 +515,41 @@ ul{
 	width: 100%;
 	text-align: right;
 }
+/* pour positionner latéralement les civilités                                                                 */
+.cChampForm [for='iCiviliteM']{
+	padding-right: 20%;
+}
 /* proportions entre label et input pour les champs du formulaire                                              */
-.cChampForm input:not([type='radio']), .cChampForm textarea{
-	font-weight: 700;
-	width: 58%;
+.cChampForm input:not([type='radio']){
+	width: 68%;
 	margin-left: 3%;
 	margin-right: 1.5%;
 }
 .cChampForm [type='radio']{
-	font-weight: 700;
 	margin-left: 5%	
 }
-
-/* pour bloquer la largeur du champ texte                                                                      */
+/* message dans le champ 'textarea'                                                                            */
 .cChampForm textarea{
-	min-width: 58%;
-	max-width: 58%;
+	text-align: justify;
+	/* pour bloquer la largeur du champ texte                                                                  */
+	min-width: 69.5%; /* bizarrement, si on met 58%, ça n'est pas tout                                         */
+	max-width: 69.5%; /* à fait aligné avec les input situées au-dessus                                        */
 	margin-left: 3%;
 }
 
-/* label 'Message' calé en haut, ligne fine sous le message                                                    */
+/* label 'Message' calé en haut                                                                                */
 .cChampForm [for='iMessageTextarea']{
 	vertical-align: top;
 }
 
-/* messages d'erreurs dans les form. contact, ordonnance et commande         partie commune aux 5 formulaires  */
-.cChampForm p span{
-	text-align: right;
-	padding-right: 1.2rem;
+/* mess. d'erreurs dans les form. contact, inscrip, ordo et comm             partie commune aux 5 formulaires  */
+sub{
+	display: block;
+	padding-right: 1%;
 	color: red;
+	/* pour positionner le message un peu plus bas */
+	position: relative;
+	top: .8rem;
 }
 
 /* proportion entre label et button pour le bouton de validation                                               */
@@ -561,7 +569,7 @@ ul{
 	border-radius: 5px;
 }
 
-.cBoutonOk button:hover, .cBoutonOk button:focus, .cBoutonOk button:active{
+.cBoutonOk button:hover{
 	background-color: #585858;
 }
 
@@ -573,11 +581,11 @@ ul{
 /*    communs aux pages contact, inscription, prepaCommande et prepaOrdonnance                                 */
 /*                                                                                                             */
 
-/* espaces autour de la div des messages de confirmation */
+/* espaces autour de la div des messages de confirmation                                                       */
 .cMessageConfirmation{
 	padding: 5% 0 18%;
 }
-/* espace sous les 2 phrases du message de confirmation */
+/* espace sous les 2 phrases du message de confirmation                                                        */
 .cMessageConfirmation p{
 	padding-bottom: 3%;
 }
@@ -678,27 +686,11 @@ ul{
 	margin-left: 8%;
 }
 
-/* saisie obligatoire des champs */
-.cSaisieObligatoire{
-	font-size: .8em;
-}
-
-/* pour positionner latéralement les civilités dans le formulaire */
-#iOrdoPrepaOrdo .cChampForm [for='iCiviliteM'], #iCommPrepaComm .cChampForm [for='iCiviliteM']{
-	padding-right: 20%;
-}
-
 /* blabla au dessus du champ 'textarea' */
 #iOrdoPrepaOrdo .cChampForm p:first-child{
 	text-align: justify;
 	padding: 0 4% 4% 4%;
 }
-/* Message dans le champ 'textarea' */
-#iMessageTextarea{
-	font-weight: normal;
-	text-align: justify;
-}
-
 
 /***************************************************************************************************************************************/
 /***************************************************          page horaires          ***************************************************/
@@ -1091,7 +1083,7 @@ footer section:last-of-type{
 /* 																														460 px		*/
 @media screen and (min-width: 460px){
 
-	body, h3, h4{
+	body, h3, h4, h5{
 		font-size: 2rem; 				/* old 1.7 */
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
@@ -1121,22 +1113,6 @@ footer section:last-of-type{
 		width: 50%;
 		float: left;
 	}
-	/* finalement ça n'a l'air de servir à rien ... */
-	/* Supprimer le flottement */
-/*	section:not(#iIndexVignettes){
-		clear: both;
-	}
-*/
-	/* intro du form. de contact "Envoyez-nous un message ... " */
-	#iContactFormulaire h4{
-		font-size: 2.35rem;				/* old 2rem */
-	}
-
-	/* tailles des champs saisis dans le formulaire et des messages associés */
-
-	.cChampForm input, .cChampForm textarea{
-		font-size: 2rem; 				/* old 1.8 */
-	}
 
 	/* blabla au dessus du champ 'textarea' */
 	#iOrdoPrepaOrdo .cChampForm p:first-child{
@@ -1144,14 +1120,6 @@ footer section:last-of-type{
 		margin-left: 33%;				/*     avant     */
 	}
 
-	/* messages d'erreurs dans les form. contact, ordonnance et commande */
-	.cChampForm p span{
-		font-size: 1.5rem; 				/* old 1.3 */
-	}
-	/* coordonnées de la pharmacie */
-	#iContactCoordonnees{
-		font-size: 2rem; 				/* old 1.8 */
-	}
 	/* icône de guidage GPS */
 	#iContactPlan p img, #iPdGplan img{
 		width: 4rem;					/* old 3   */
@@ -1181,10 +1149,6 @@ footer section:last-of-type{
 /* 																														600 px		*/
 @media screen and (min-width: 600px){
 
-	/* On augmente encore un peu les tailles */
-	body, h3, h4{
-		font-size: 2.3rem;				/* old 2 */
-	}
 	h1{
 		font-size: 3.8rem;				/* old 2.7 - titre de la page : Pharmacie des Tilleuls */
 		top: 7%;						/* old 4% */
@@ -1216,49 +1180,7 @@ footer section:last-of-type{
 
 	/*********************************    page contact   **********************************/
 
-	/* taille de la police dans les sections (cSectionContour ??) */
-	#iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire{
-		font-size: 2.1rem; 				/* old 2 */
-	}
-	#iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire{
-		width: 45%;
-		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
-		vertical-align: top;
-	}
-
-	/*======================================================     § formulaire de contact  */
-	/* messages d'erreurs dans les form. contact, ordonnance et commande */
-	.cChampForm p span{
-		font-size: 2rem;                                /* old 1.5 */
-	}
-
-	/* "la saisie de tous les champs ..." */
-	#iContactFormulaire section span:first-of-type{
-		font-size: 1.5rem;                              /* old 1.2 */
-	}
-
-	/* pour positionner latéralement les civilités dans le formulaire de contact */
-	#iContactFormulaire .cChampForm [for='iCiviliteM']{
-		padding-right: 10%;
-	}
-
 	/*================================================     § coordonnées de la pharmacie  */
-	#iContactCoordonnees p:first-of-type, #iContactCoordonnees p:nth-of-type(2), #iContactCoordonnees p:nth-of-type(3){
-		font-size: 2.35rem;
-	}
-	#iContactCoordonnees p:nth-of-type(3){
-		margin-bottom: 3rem; 			/* old 2 marge en dessous de Nantes */
-	}
-
-	/* positions de tel, fax et mail */
-	#iContactCoordonnees p:nth-of-type(4),
-	#iContactCoordonnees p:nth-of-type(5),
-	#iContactCoordonnees p:nth-of-type(6){
-		margin-bottom: 3rem; 			/* old 1 */
-	}
-	#iContactCoordonnees:before{
-		content: none; /* on annule le trait avec le § précédent puisqu'on passe sur 2 colonnes */
-	}
 
 	/* font-awesome pour les icônes 'tel', 'fax' et 'mail' */
 	.fa-phone, .fa-fax, .fa-envelope{
@@ -1309,9 +1231,6 @@ footer section:last-of-type{
 /* 																														900 px		*/
 @media screen and (min-width: 900px){
 
-	body, h3, h4{
-		font-size: 2.5rem;				/* old 2.3 */
-	}
 	/* on agrandit un peu la croix */
 	header section img{
 		width: 16%;
@@ -1341,38 +1260,31 @@ footer section:last-of-type{
 		width: 33.33%;
 	}
 
-	/* Formulaire de contact */
-
-	/* "la saisie de tous les champs ..." */
-	#iContactFormulaire section span:first-of-type{
-		font-size: 1.7rem;                              /* old 1.5 */
+	/* page Contact */
+	#iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire{
+		width: 45%;
+		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
+		vertical-align: top;
 	}
-
+	#iContactCoordonnees:before{
+		content: none; /* on annule le trait avec le § précédent puisqu'on passe sur 2 colonnes */
+	}
+	/* pour positionner latéralement les civilités dans le formulaire de contact */
+	#iContactFormulaire .cChampForm [for='iCiviliteM']{
+		padding-right: 10%;
+	}
 	/* FB et G+ */
 	#iContactCoordonnees p:nth-of-type(7), #iContactCoordonnees p:nth-of-type(8){
 		display: inline-block;
 		height: 4rem;
 		width: 4rem;
 	}
-
-	/* intro du form. de contact "Envoyez-nous un message ... " */
-	#iContactFormulaire h4{
-		font-size: 2.5rem;				/* old 2.35rem */
-	}
-
-	/* tailles des champs saisis dans le formulaire et des messages associés */
-
-	.cChampForm input, .cChampForm textarea{
-		font-size: 2.5rem;				/* old 2.3 */
-	}
-
 	/* icône de guidage GPS */
 	#iContactPlan p img, #iPdGplan img{
 		width: 5rem;					/* old 4.5 */
 	}
 
 	/*     page prepaOrdonnance     */
-
 	/* icône du clicIndex */
 	#iOrdoLienModeEmploi img{
 		top: 3.8rem;					/* old 3.5 */

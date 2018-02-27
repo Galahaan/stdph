@@ -398,19 +398,21 @@ if( isset($_POST['bouton']) ){
 			<?php
 			// - soit il y a eu des erreurs dans le formulaire
 			//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
-			//      ainsi qu'un message d'erreur pour les valeurs concernées.
+			//      ainsi qu'un message d'erreur pour les valeurs concernées,
+			//      le tout en activant l'autofocus, pour se déplacer
+			//      automatiquement jusqu'au formulaire.
 			//
 			// - soit le formulaire n'a pas encore été rempli
 			//   => on laisse les cases vides.
 			?>
-			
-			<section><h4> Envoyez-nous un message ...</h4>
-			<span>(la saisie de tous les champs est obligatoire)</span>
+
+			<h5>Envoyez-nous un message ...</h5>
+			<sup>(la saisie de tous les champs est obligatoire)</sup>
 
 			<form method='post'>
 				<div class='cChampForm'>
 					<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-						<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
+						<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> <?= isset($erreurs) ? "autofocus" : "" ?> >
 					<label for='iCiviliteMme'>Mme</label>
 					<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
 						<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
@@ -419,35 +421,30 @@ if( isset($_POST['bouton']) ){
 						<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
 					<label for='iCiviliteM'>M.</label>
 				</div>
-
 				<div class='cChampForm'>
-				<label for='idPrenom'>Prénom</label>
-							<input type='text' id='idPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-				<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
-				</div>
-
-				<div class='cChampForm'>
-				<label for='idNom'>Nom</label>
-							<input type='text' id='idNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
-				<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
-				</div>
-
-				<div class='cChampForm'>
-				<label for='idMail'>Mail</label>
-							<input type='email' id='idMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
-				<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
+				<label for='iPrenom'>Prénom</label>
+							<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
+				<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
-					<label for='iMessageTextarea'>Message</label>
+				<label for='iNom'>Nom</label>
+							<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
+				<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
+				</div>
+				<div class='cChampForm'>
+				<label for='iMail'>Mail</label>
+							<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+				<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
+				</div>
+				<div class='cChampForm'>
+				<label for='iMessageTextarea'>Message</label>
 							<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
-				<?php if( isset($erreurs['message']) ) { echo "<p><span>" . $erreurs['message'] . "</span></p>"; } ?>
+				<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
 				</div>
-
 				<div class='cBoutonOk'>
 					<button name='bouton'>Envoyer</button>
 				</div>
 			</form>
-			</section>
 		<?php endif ?>
 		</section>
 

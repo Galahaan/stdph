@@ -264,7 +264,9 @@ if( isset($_POST['bouton']) ){
 
 			// - soit il y a eu des erreurs dans le formulaire
 			//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
-			//      ainsi qu'un message d'erreur pour les valeurs concernées.
+			//      ainsi qu'un message d'erreur pour les valeurs concernées,
+			//		le tout en activant l'autofocus, pour se déplacer
+			//		automatiquement jusqu'au formulaire.
 			//
 			// - soit le mail existait déjà en BDD
 			//   => il faut re-proposer le formulaire comme dans le cas où
@@ -274,11 +276,11 @@ if( isset($_POST['bouton']) ){
 			//   => on laisse les cases vides.
 			?>
 
-			<p>Veuillez renseigner tous les champs ci-dessous svp.</p>
+			<sup>Veuillez renseigner tous les champs ci-dessous svp.</sup>
 			<form method='post'>
 				<div class='cChampForm'>
 					<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-						<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> >
+						<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> <?= isset($erreurs) ? "autofocus" : "" ?> >
 					<label for='iCiviliteMme'>Mme</label>
 					<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
 						<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
@@ -287,32 +289,27 @@ if( isset($_POST['bouton']) ){
 						<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
 					<label for='iCiviliteM'>M.</label>
 				</div>
-
 				<div class='cChampForm'>
-					<label for='idPrenom'>Prénom</label>
-					<input type='text' id='idPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-					<?php if( isset($erreurs['prenom']) ) { echo "<p><span>" . $erreurs['prenom'] . "</span></p>"; } ?>
+					<label for='iPrenom'>Prénom</label>
+					<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
+					<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 				</div>
-
 				<div class='cChampForm'>
-					<label for='idNom'>Nom</label>
-					<input type='text' id='idNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
-					<?php if( isset($erreurs['nom']) ) { echo "<p><span>" . $erreurs['nom'] . "</span></p>"; } ?>
+					<label for='iNom'>Nom</label>
+					<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
+					<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
 				</div>
-
 				<div class='cChampForm'>
-					<label for='idMail'>Adresse mail</label>
-					<input type='email' id='idMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
-					<?php if( isset($erreurs['adrMailClient']) ) { echo "<p><span>" . $erreurs['adrMailClient'] . "</span></p>"; } ?>
-					<?php if( $mailExisteDeja ) { echo "<p><span>Aïe, cet identifiant est déjà pris, veuillez en choisir un autre svp ...</span></p>"; } ?>
+					<label for='iMail'>Adresse mail</label>
+					<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+					<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
+					<?php if( $mailExisteDeja ) { echo "<sub>Aïe, cet identifiant est déjà pris, veuillez en choisir un autre svp ...</sub>"; } ?>
 				</div>
-
 				<div class='cChampForm'>
 					<label for='idPassword'>Mot de passe</label>
 					<input type='password' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' id='idPassword' name='password' required <?= isset($password) ? $password : ""?> >
-					<?php if( isset($erreurs['password']) ) { echo "<p><span>" . $erreurs['password'] . "</span></p>"; } ?>
+					<?php if( isset($erreurs['password']) ) { echo "<sub>" . $erreurs['password'] . "</sub>"; } ?>
 				</div>
-
 				<div class='cBoutonOk'>
 					<button name='bouton'>Valider</button>
 				</div>
