@@ -125,8 +125,8 @@ else{
 		<?php // si les gardes fonctionnent sans passer par le commissariat, il n'y a RIEN d'autre à afficher, d'où le 1e test : ?>
 		<?php if( HEURE_SOIR_POLICE_D != "X" ) : ?>
 			<?php // quelle que soit l'heure, on informe les gens du fonctionnement en horaires de garde, et on propose le plan : ?>
-			<p>À partir de <span><?php echo HEURE_SOIR_POLICE_H ?></span>, et jusqu'à <span><?php echo HEURE_MATIN_POLICE_H ?></span> le lendemain matin, il faut se rendre, avec une pièce d'<span>identité</span> et une <span>ordonnance</span>, au <span>commissariat de police</span> situé :</p>
-			<p><?php echo ADRESSE_POLICE ?></p>
+			<p>À partir de <span><?= HEURE_SOIR_POLICE_H ?></span>, et jusqu'à <span><?= HEURE_MATIN_POLICE_H ?></span> le lendemain matin, il faut se rendre, avec une pièce d'<span>identité</span> et une <span>ordonnance</span>, au <span>commissariat de police</span> situé :</p>
+			<p><?= ADRESSE_POLICE ?></p>
 			<p>Si vous utilisez un smartphone, profitez de son GPS pour vous y rendre :</p>
 			<p>- cliquez sur le plan ci-dessous</p>
 			<p>- puis sur l'icône &nbsp;<img src='img/itineraire.png' alt='itinéraire'></p>

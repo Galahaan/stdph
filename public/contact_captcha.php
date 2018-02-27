@@ -258,7 +258,7 @@ if( isset($_POST['bouton']) ){
 	<main>
 
 		<section id='iContactInfosPratiques' class='cSectionContour'><h3>Informations pratiques</h3>
-			<?php echo CONTACT_INFOS_PRATIQUES ?>
+			<?= CONTACT_INFOS_PRATIQUES ?>
 		</section>
 
 		<section id='iContactCoordonnees' class='cSectionContour'><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
