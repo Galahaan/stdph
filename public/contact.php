@@ -451,7 +451,7 @@ if( isset($_POST['bouton']) ){
 	</main>
 
 	<footer>
-		<section><h3>Coordonnées de la pharmacie</h3>
+		<section><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
 			<p><?= NOM_PHARMA ?></p>
 			<p><?= ADR_PHARMA_L1 ?></p>
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>

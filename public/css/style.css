@@ -147,15 +147,12 @@ footer section:first-of-type{
 	font-weight: 400;  /* nom des jours (h4) de la page horaires en 'normal' */
 }
 .cSectionContour{
-	padding: 5% 2% 0; /* espace autour des sections principales du site */   /* page contact + d'autres ?? ctrl + F  cSectionContour  **************/
-																			   /* est-cequ'on s'en sert pour définir aussi la taille de la police dans ces sections ? */	
+	padding: 5% 2% 0; /* espace autour des sections principales du site */
 }
-
-/* <h3> ajouté pour la validation W3C mais non affiché, même pas en braille */
-#iIndexIntro h3{
-	display: none;	/* 'Etat actuel d'ouverture ...' */
+.cSectionContour h3{
+	padding-bottom: 5.8%; /* les titres de toutes les sections (affichés ou pas: validation W3C / accessibilité braille) */
+	font-weight: 700;     /* sont, par défaut, en gras, et ont un peu de marge dessous                                   */
 }
-
 
 /***************************************************************************************************************************************/
 /***************************************************         bandeau du haut         ***************************************************/
@@ -287,15 +284,6 @@ nav#iNavigation a{
 /*******************************************          pages connexion et inscription         *******************************************/
 /***************************************************************************************************************************************/
 
-#iConnexionIDs h3, #iConnexionInscription h3, #iInscription h3{
-	padding-bottom: 2rem;
-	font-weight: 700;
-}
-
-/***********************************************************************************************/
-/***********************                  page connexion                  **********************/
-/***********************************************************************************************/
-
 /* la petite ligne de séparation avec le § sur l'inscription     */
 /* est codée dans la partie 'page contact' ci-dessous            */
 
@@ -316,12 +304,6 @@ nav#iNavigation a{
 	color: #585858;
 	font-weight: 700;
 }
-
-/***********************************************************************************************/
-/***********************                 page inscription                 **********************/
-/***********************************************************************************************/
-
-
 
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
@@ -597,13 +579,9 @@ sub{
 /**************************************       page prepaOrdonnance   +   page prepaCommande       **************************************/
 /***************************************************************************************************************************************/
 
-#iOrdoPrepaOrdo h3, #iCommPrepaComm h3{
-	font-weight: 700;
-}
-
 /* marges autour du § d'introduction situé au dessus du formulaire */
 #iBlablaIntro{
-	padding: 5% 0;
+	padding-bottom: 5.8%;
 	text-align: justify;
 }
 
@@ -618,13 +596,13 @@ sub{
 	text-align: left;
 }
 #iOrdoLienModeEmploi{
-	padding: 2rem 0 3rem 2rem;
+	padding: 0 0 8% 5%;
 	position: relative;
 }
 /* position du clicIndex */
 #iOrdoLienModeEmploi img{
 	position: absolute;    /* on a mis le relative juste au-dessus */
-	top: 2.8rem;
+	top: 0.8rem;
 	/* cf ctrl+F #iTelBandeau img{ pour plus d'explications */
 }
 /* couleur(s) du lien 'Mode d'emploi'                    */
@@ -692,20 +670,9 @@ sub{
 /***************************************************          page horaires          ***************************************************/
 /***************************************************************************************************************************************/
 
-#iHorairesIntro p{
-	padding-bottom: 2rem;
-}
-/* la date aujourd'hui */
-#iHorairesIntro p:first-of-type{
-	font-weight: 700;
-}
 /* l'heure qu'il est */
 .cHeureDuJour{
 	color: #1967E5;
-}
-/* <h3> ajouté pour la validation W3C mais non affiché */
-#iHorairesIntro h3, #iHorairesTableau h3{
-	display: none;
 }
 #iHorairesTableau article{
 	text-align: left;
@@ -898,15 +865,8 @@ sub{
 
 /* section humour */
 #iHumour{
-	padding: 2rem;
 	min-height: 31rem; /* pour ne pas que le bas de l'écran remonte trop haut */
 	position: relative;
-}
-
-/* titre "Thérapie par l'humour" */
-#iHumour h3{
-	padding: 3rem 0 5rem;
-	font-weight: 700;
 }
 
 /* la blague */
@@ -943,9 +903,7 @@ sub{
 	padding-left: 0;
 	padding-right: 0;
 }
-#iGammesProd h3{
-	font-weight: 700;
-}
+/* sélectionne   <article>   qui est placé immédiatement après   <h3>   qui est un enfant (direct ou pas) de   #iGammesProd   */
 #iGammesProd > h3 + article{
 	padding-top: 2rem;
 }
@@ -1002,19 +960,10 @@ sub{
 /************************************************        pages infos et promos        **************************************************/
 /***************************************************************************************************************************************/
 
-#iInfos h3, #iPromos h3{
-	font-weight: 700;
-}
-
 
 /***************************************************************************************************************************************/
 /****************************************************             Footer            ****************************************************/
 /***************************************************************************************************************************************/
-
-/* <h3> ajouté pour la validation W3C mais non affiché */
-footer h3{
-	display: none;
-}
 
 /* footer 1ère section */
 footer section:first-of-type{
@@ -1051,7 +1000,6 @@ footer section:last-of-type{
 	/* - index    : on conserve le titre :                                                                */
 	/*              'Services proposés par la pharmacie'                      #iIndexVignettes h3         */
 	/* - horaires : on conserve les titres :                                                              */
-	/*              - 'Date et heure du jour'                                 #iHorairesIntro h3          */
 	/*              - 'Horaires d'ouverture ...'                              #iHorairesTableau h3        */
 	/* - contact  : on conserve les titres :                                                              */
 	/*              - 'Informations pratiques'                                #iContactInfosPratiques h3  */
@@ -1063,11 +1011,24 @@ footer section:last-of-type{
 	/*              - 'Localiser ...'                                         #iPdGplan                   */
 
 	#iIndexVignettes h3,
-	#iHorairesIntro h3, #iHorairesTableau h3,
+	#iHorairesTableau h3,
 	#iContactInfosPratiques h3, #iContactCoordonnees h3, #iContactPlan h3, #iContactFormulaire h3,
 	#iPdG3237 h3, #iPdGplan h3{
 		display: none;
 	}
+
+/*****************************************************************************************                 ramené d'au-dessus */
+	/* <h3> ajouté pour la validation W3C mais non affiché, même pas en braille */
+	#iIndexIntro h3{
+		display: none;	/* 'Etat actuel d'ouverture ...' */
+	}
+	/* <h3> ajouté pour la validation W3C mais non affiché */
+	footer h3{
+		display: none;
+	}
+
+/*****************************************************************************************/
+
 
 	/* page index - menu des liens d'accès rapide aux services */
 	.cBraille{
@@ -1125,7 +1086,7 @@ footer section:last-of-type{
 
 	/* icône du clicIndex */
 	#iOrdoLienModeEmploi img{
-		top: 3.1rem;					/* old 2.8 */
+		top: 1.2rem;					/* old 0.8 */
 	}
 
 	/*      page PharmaDeGarde      */
@@ -1162,13 +1123,11 @@ footer section:last-of-type{
 	nav#iNavigation{
 		padding: 1rem; /* hauteur du bandeau de nav */
 	}
-
 	#iNavigation li{
 		font-size: 2.5rem;
 		margin-right: 1rem; /* on éloigne un peu les mots du bord de droite */
 		padding-left: 1rem; /* et aussi entre eux */
 	}
-
 	#iNavigation li:first-child{
 		left: 0.5rem; /* on éloigne un peu Accueil du bord de gauche */
 		top: 0;
@@ -1192,22 +1151,12 @@ footer section:last-of-type{
 		width: 4.5rem;					/* old 4   */
 	}
 
-
 	/* Footer */
-
 	footer section:first-of-type{
 		font-size: 1.5rem;				/* old 1.3 */
 	}
-
 	footer section:first-of-type p{
 		padding: 1rem 1rem;				/* old .5rem 1rem */
-	}
-
-	/******************************   page prepaOrdonnance   ******************************/
-
-	/* icône du clicIndex */
-	#iOrdoLienModeEmploi img{
-		top: 3.5rem;					/* old 3.1 */
 	}
 
 	/**********************************   page horaires   *********************************/
@@ -1278,12 +1227,6 @@ footer section:last-of-type{
 	/* icône de guidage GPS */
 	#iContactPlan p img, #iPdGplan img{
 		width: 5rem;					/* old 4.5 */
-	}
-
-	/*     page prepaOrdonnance     */
-	/* icône du clicIndex */
-	#iOrdoLienModeEmploi img{
-		top: 3.8rem;					/* old 3.5 */
 	}
 
 	/*      page PharmaDeGarde      */
