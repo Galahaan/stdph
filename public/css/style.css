@@ -230,31 +230,27 @@ h2{
 /***********************************************************************************************/
 /********************************       menu de navigation       *******************************/
 /***********************************************************************************************/
-nav{
+nav#iNavigation{
 	background-color: #ADADAD;
 	text-align: right;
 	padding: 0.5rem;
 }
-
 /* par défaut dans le body, on a mis les liens en black              */
 /* ici => couleur de contraste par rapport au fond du menu ci-dessus */
-nav a{
+nav#iNavigation a{
 	color: #DEFFC4;
 }
-
-ul{
+#iNavigation ul{
 	margin:	auto;
 	position: relative; /* à cause du 'first li' */
 }
-
-.cNavigation li{
+#iNavigation li{
 	display: inline-block;
 	margin-right: 0rem;
 	padding-left: .4rem;
 	font-weight: 400;
 }
-
-.cNavigation li:first-child{
+#iNavigation li:first-child{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -265,25 +261,25 @@ ul{
 /***********************************************************************************************/
 /**********************                bandeau de connexion               **********************/
 /***********************************************************************************************/
-.cBandeauConnex{
+#iBandeauConnex{
 	background-color: #575757;
 	width: 96%;
 	padding: 0 2%;
 }
-.cClientConnecte{
+#iClientConnecte{
 	display: inline-block;
 	width: 65%;
 	text-align: left;
 	color: white;
 }
-.cLienConnex{
+#iLienConnex{
 	display: inline-block;
 	width: 34%;
 	text-align: right;
 }
 /* par défaut dans le body, on a mis les liens en black              */
 /* ici => couleur de contraste par rapport au fond du menu ci-dessus */
-.cLienConnex a{
+#iLienConnex a{
 	color: white;
 }
 
@@ -547,7 +543,7 @@ sub{
 	display: block;
 	padding-right: 1%;
 	color: red;
-	/* pour positionner le message un peu plus bas */
+	/* pour positionner le message un peu plus bas                                                             */
 	position: relative;
 	top: .8rem;
 }
@@ -606,7 +602,7 @@ sub{
 }
 
 /* marges autour du § d'introduction situé au dessus du formulaire */
-.cBlablaIntro{
+#iBlablaIntro{
 	padding: 5% 0;
 	text-align: justify;
 }
@@ -1163,17 +1159,17 @@ footer section:last-of-type{
 	#iTelBandeau img{
 		display: none; /* sur un écran d'ordi, on n'affiche plus l'icône clicIndex */
 	}
-	nav{
+	nav#iNavigation{
 		padding: 1rem; /* hauteur du bandeau de nav */
 	}
 
-	.cNavigation li{
+	#iNavigation li{
 		font-size: 2.5rem;
 		margin-right: 1rem; /* on éloigne un peu les mots du bord de droite */
 		padding-left: 1rem; /* et aussi entre eux */
 	}
 
-	.cNavigation li:first-child{
+	#iNavigation li:first-child{
 		left: 0.5rem; /* on éloigne un peu Accueil du bord de gauche */
 		top: 0;
 	}

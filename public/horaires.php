@@ -68,7 +68,7 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 			</a>
 			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 		</section>
-		<nav class='cNavigation'>
+		<nav id='iNavigation'>
 			<ul>
 				<li><a <?= ($flagPC == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
 				<li><a <?= ($flagPC == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
@@ -76,27 +76,27 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 				<li><a <?= ($flagPC == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
-		<div class='cBandeauConnex'>
+		<div id='iBandeauConnex'>
 			<?php
 				if( isset($_SESSION['client']) ){
 
 					// si le client est connecté, on affiche son nom et le lien pour se déconnecter :
-					echo "<div class='cClientConnecte'>";
+					echo "<div id='iClientConnecte'>";
 						echo $_SESSION['client']['prenom'] . " " . $_SESSION['client']['nom'];
 					echo "</div>";
 
-					echo "<div class='cLienConnex'>";
+					echo "<div id='iLienConnex'>";
 						echo "<a href='deconnexion.php'>déconnexion</a>";
 					echo "</div>";
 				}
 				else{
 
 					// si le client n'est pas connecté, on affiche le lien pour se connecter :
-					echo "<div class='cClientConnecte'>";
+					echo "<div id='iClientConnecte'>";
 						echo " ";
 					echo "</div>";
 
-					echo "<div class='cLienConnex'>";
+					echo "<div id='iLienConnex'>";
 						echo "<a href='connexion.php'>connexion</a>";
 					echo "</div>";
 				}

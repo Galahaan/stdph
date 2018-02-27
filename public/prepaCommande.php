@@ -155,7 +155,7 @@ if( isset($_POST['bouton']) ){
 			</a>
 			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 		</section>
-		<nav class='cNavigation'>
+		<nav id='iNavigation'>
 			<ul>
 				<li><a href='index.php'   >Accueil </a></li>
 				<li><a href='horaires.php'>Horaires</a></li>
@@ -163,16 +163,16 @@ if( isset($_POST['bouton']) ){
 				<li><a href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
-		<div class='cBandeauConnex'>
+		<div id='iBandeauConnex'>
 			<?php
 				if( isset($_SESSION['client']) ){
 
 					// si le client est connecté, on affiche son nom et le lien pour se déconnecter :
-					echo "<div class='cClientConnecte'>";
+					echo "<div id='iClientConnecte'>";
 						echo $_SESSION['client']['prenom'] . " " . $_SESSION['client']['nom'];
 					echo "</div>";
 
-					echo "<div class='cLienConnex'>";
+					echo "<div id='iLienConnex'>";
 						echo "<a href='deconnexion.php'>déconnexion</a>";
 					echo "</div>";
 				}
@@ -180,11 +180,11 @@ if( isset($_POST['bouton']) ){
 
 					// si le client n'est pas connecté, (normalement c'est impossible d'arriver là
 					// sans être connecté) on affiche le lien pour se connecter :
-					echo "<div class='cClientConnecte'>";
+					echo "<div id='iClientConnecte'>";
 						echo " ";
 					echo "</div>";
 
-					echo "<div class='cLienConnex'>";
+					echo "<div id='iLienConnex'>";
 						echo "<a href='connexion.php'>connexion</a>";
 					echo "</div>";
 				}
@@ -370,7 +370,7 @@ if( isset($_POST['bouton']) ){
 				// - soit le formulaire n'a pas encore été rempli
 				//   => on laisse les cases vides.
 				?>
-				<div class='cBlablaIntro'>
+				<div id='iBlablaIntro'>
 					<p>Envoyez-nous votre commande via le formulaire ci-dessous.</p>
 					<p>Écrivez librement les produits dont vous avez besoin.</p>
 					<p>Seuls les produits ne nécessitant pas d'ordonnance médicale peuvent être commandés.</p>
