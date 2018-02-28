@@ -192,6 +192,14 @@ if( isset($_POST['bouton']) ){
 	</header>
 
 	<main>
+		<nav class='cBraille'>
+			<ul>
+				<li><a href="#iContactInfosPratiques">Informations pratiques</a></li>
+				<li><a href="#iContactCoordonnees">Coordonnées de la <?= NOM_PHARMA ?></a></li>
+				<li><a href="#iContactPlan">Localiser la <?= NOM_PHARMA ?></a></li>
+				<li><a href="#iContactFormulaire">Formulaire de contact</a></li>
+			</ul>
+		</nav>
 
 		<section id='iContactInfosPratiques' class='cSectionContour'><h3>Informations pratiques</h3>
 			<?= CONTACT_INFOS_PRATIQUES ?>
@@ -375,18 +383,17 @@ if( isset($_POST['bouton']) ){
 					// on commence par effacer les autres sections de la page (+ le petit trait au-dessus de la section en cours)
 					echo "<style type='text/css'> #iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire::before { display: none } </style>";
 					// puis on affiche le message (on sait de quoi on parle puisque 'Contact' est souligné dans le menu de nav.)
+					// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
 					echo "<div class='cMessageConfirmation'>";
-					echo "<p>Merci, votre message a bien été envoyé.</p>";
+					echo "<p autofocus>Merci, votre message a bien été envoyé.</p>";
 					echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 							réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 					echo "</div>";
 				}
 				else{
-					// on commence par effacer les autres sections de la page (+ le petit trait au-dessus de la section en cours)
 					echo "<style type='text/css'> #iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire::before { display: none } </style>";
-					// puis on affiche le message (on sait de quoi on parle puisque 'Contact' est souligné dans le menu de nav.)
 					echo "<div class='cMessageConfirmation'>";
-					echo "<p>Aïe, il y a eu un problème ...</p>";
+					echo "<p autofocus>Aïe, il y a eu un problème ...</p>";
 					echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
 					echo "</div>";
 				}

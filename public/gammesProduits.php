@@ -66,7 +66,14 @@ require_once("include/constantes.php");
 	<main>
 		<section id='iGammesProd' class='cSectionContour'><h3>Les Marques que vous trouverez à la pharmacie</h3>
 
-			<article>
+			<nav>
+				<ul>
+					<li><a href="#iGPubb">Univers de bébé</a></li>
+					<li><a href="#iGPsdc">Soins du corps</a></li>
+				</ul>
+			</nav>
+
+			<article id='iGPubb'>
 				<div class='cImageDeco'><img src='img/bebe.jpg' alt=''><h4>Univers de bébé</h4></div>
 				<div>
 					<img src='img/bb_picot.png' alt=''><p>
@@ -82,7 +89,7 @@ require_once("include/constantes.php");
 				</div>
 			</article>
 
-			<article>
+			<article id='iGPsdc'>
 				<div class='cImageDeco'><img src='img/soinDuCorps.jpg' alt=''><h4>Soins du corps</h4></div>
 				<div>
 					<img src='img/corps_uriage_LD.png' alt=''><p>

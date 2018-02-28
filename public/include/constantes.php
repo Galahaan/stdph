@@ -147,6 +147,10 @@ define('SA_FAMIH', '16h');
 define('REBOURSD', 0.25);		// compte à rebours en 'heure décimale', ie que   0.25 = 15 mn
 define('PAS_DE_REBOURS', 5);	// en minutes ( ex. ... dans moins de 15, 10, 5 mn )
 
+// Pour les medias braille, on remplace tout le 'tableau' précédent par une simple phrase :
+define('HORAIRES_PHARMACIE',
+    "La pharmacie est ouverte du lundi au vendredi de 8h30 à 12h30 et de 14h à 19h30, et le samedi de 9h à 16h.");
+
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
 ///////////////                     Horaires de garde                      ///////////////

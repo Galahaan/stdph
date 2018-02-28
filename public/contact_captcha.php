@@ -90,6 +90,10 @@ else{
 /////     FIN INCLUDE sécurisé
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+// on détermine la page courante, en vue de souligner le lien
+// concerné dans le menu de navigation grâce à l'id 'iPageCourante' :
+$flagPC = pageCourante($_SERVER['REQUEST_URI']);
+
 // Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 if( isset($_POST['bouton']) ){
 
@@ -221,10 +225,10 @@ if( isset($_POST['bouton']) ){
 		</section>
 		<nav id='iNavigation'>
 			<ul>
-				<li><a href='index.php'   >Accueil </a></li>
-				<li><a href='horaires.php'>Horaires</a></li>
-				<li><a href='equipe.php'  >Équipe  </a></li>
-				<li><a href='contact.php' >Contact </a></li>
+				<li><a <?= ($flagPC == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
+				<li><a <?= ($flagPC == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
+				<li><a <?= ($flagPC == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
+				<li><a <?= ($flagPC == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
 		<div id='iBandeauConnex'>
@@ -242,7 +246,8 @@ if( isset($_POST['bouton']) ){
 				}
 				else{
 
-					// si le client n'est pas connecté, on affiche le lien pour se connecter :
+					// si le client n'est pas connecté, (normalement c'est impossible d'arriver là
+					// sans être connecté) on affiche le lien pour se connecter :
 					echo "<div id='iClientConnecte'>";
 						echo " ";
 					echo "</div>";
@@ -256,6 +261,14 @@ if( isset($_POST['bouton']) ){
 	</header>
 
 	<main>
+		<nav class='cBraille'>
+			<ul>
+				<li><a href="#iContactInfosPratiques">Informations pratiques</a></li>
+				<li><a href="#iContactCoordonnees">Coordonnées de la <?= NOM_PHARMA ?></a></li>
+				<li><a href="#iContactPlan">Localiser la <?= NOM_PHARMA ?></a></li>
+				<li><a href="#iContactFormulaire">Formulaire de contact</a></li>
+			</ul>
+		</nav>
 
 		<section id='iContactInfosPratiques' class='cSectionContour'><h3>Informations pratiques</h3>
 			<?= CONTACT_INFOS_PRATIQUES ?>
@@ -265,19 +278,19 @@ if( isset($_POST['bouton']) ){
 			<p><?= NOM_PHARMA ?></p>
 			<p><?= ADR_PHARMA_L1 ?></p>
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a></p>
+			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a>&nbsp;<img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
 			<p id='iContactMail'><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
 			<p>
 				<a href='<?= ADR_FB_PHARMA ?>'>
 					<img class='cFaceGool' src='img/fb.png' alt='facebook'>
-					<img class='cFaceGool cCouleurNoire' src='img/fb_n.png' alt='facebook'>
+					<img class='cFaceGool cCouleurNoire' src='img/fb_n.jpg' alt='facebook'>
 				</a>
 			</p>
 			<p>
 				<a href='<?= ADR_GG_PHARMA ?>'>
 					<img class='cFaceGool' src='img/gg.png' alt='google+'>
-					<img class='cFaceGool cCouleurNoire' src='img/gg_n.png' alt='google+'>
+					<img class='cFaceGool cCouleurNoire' src='img/gg_n.jpg' alt='google+'>
 				</a>
 			</p>
 		</section>
@@ -292,12 +305,11 @@ if( isset($_POST['bouton']) ){
 		</section>
 
 		<section id='iContactFormulaire' class='cSectionContour'><h3>Formulaire de contact</h3>
-
-		<?php if( isset($_POST['bouton']) && ! isset($erreurs) ) : ?>
+ 
+		<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
 			<?php
-
-			//    le formulaire a été rempli  ET  il n'y a pas d'erreurs
+			//    le formulaire a été rempli  ET  s'il n'y a pas d'erreurs
 			//
 			//    => on envoie le mail ! (après avoir préparé les données)
 
@@ -440,18 +452,17 @@ if( isset($_POST['bouton']) ){
 					// on commence par effacer les autres sections de la page (+ le petit trait au-dessus de la section en cours)
 					echo "<style type='text/css'> #iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire::before { display: none } </style>";
 					// puis on affiche le message (on sait de quoi on parle puisque 'Contact' est souligné dans le menu de nav.)
+					// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
 					echo "<div class='cMessageConfirmation'>";
-					echo "<p>Merci, votre message a bien été envoyé.</p>";
+					echo "<p autofocus>Merci, votre message a bien été envoyé.</p>";
 					echo "<p>Nous vous répondrons dans les meilleurs délais, sous
 							réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 					echo "</div>";
-			}
-			else{
-					// on commence par effacer les autres sections de la page (+ le petit trait au-dessus de la section en cours)
+				}
+				else{
 					echo "<style type='text/css'> #iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire::before { display: none } </style>";
-					// puis on affiche le message (on sait de quoi on parle puisque 'Contact' est souligné dans le menu de nav.)
 					echo "<div class='cMessageConfirmation'>";
-					echo "<p>Aïe, il y a eu un problème ...</p>";
+					echo "<p autofocus>Aïe, il y a eu un problème ...</p>";
 					echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
 					echo "</div>";
 				}
@@ -461,10 +472,11 @@ if( isset($_POST['bouton']) ){
 		<?php else : ?>
 
 			<?php
-
 			// - soit il y a eu des erreurs dans le formulaire
 			//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
-			//      ainsi qu'un message d'erreur pour les valeurs concernées.
+			//      ainsi qu'un message d'erreur pour les valeurs concernées,
+			//      le tout en activant l'autofocus, pour se déplacer
+			//      automatiquement jusqu'au formulaire.
 			//
 			// - soit le formulaire n'a pas encore été rempli
 			//   => on laisse les cases vides.
@@ -493,19 +505,19 @@ if( isset($_POST['bouton']) ){
 				<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
-					<label for='iNom'>Nom</label>
+				<label for='iNom'>Nom</label>
 							<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
 				<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
-					<label for='iMail'>Mail</label>
-								<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+				<label for='iMail'>Mail</label>
+							<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
 				<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
-						<label for='iMessageTextarea'>Message</label>
-								<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
-					<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
+				<label for='iMessageTextarea'>Message</label>
+							<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
+				<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
 				</div>
 				<div class='cBoutonOk'>
 						<button class='g-recaptcha' data-sitekey='6LcPQyUUAAAAAPTt3tR1KVuHoq9XVMs-74gHSOxY' data-callback='onSubmit' name='bouton'>Envoyer</button>
@@ -513,6 +525,7 @@ if( isset($_POST['bouton']) ){
 			</form>
 		<?php endif ?>
 		</section>
+
 	</main>
 
 	<footer>

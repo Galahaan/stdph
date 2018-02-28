@@ -250,7 +250,8 @@ if( isset($_POST['bouton']) ){
 
 			$nouvelId = $dbConnex->lastInsertId();
 			echo "<div class='cMessageConfirmation'>";
-			echo "<p>Merci, votre compte a bien été créé.</p>";
+				// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
+			echo "<p autofocus>Merci, votre compte a bien été créé.</p>";
 			echo "<p>Vous pouvez dorénavant vous connecter ...</p>";
 			echo "<a href='connexion.php'>>  connexion  <</a>";
 			echo "</div>";

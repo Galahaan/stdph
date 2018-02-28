@@ -312,7 +312,6 @@ nav#iNavigation a{
 #iIndexIntro{
 	padding: 8% 2%;
 }
-
 /* Ces <span> sont ajoutés dans la fonction 'pharmacieOuverte' et non directement dans index.html */
 #iIndexIntro span{
 	font-weight: 700;
@@ -804,18 +803,18 @@ sub{
 }
 
 /* on met en gras quelques mots */
-#iPdG3237 span, #iPdGplan span{
+#iPdGplan span{
 	font-weight: 700;
 }
 
 /* -----------   Section 3237   ----------- */
 
 /* centrer la croix verticalement et horizontalement */
-#i3237On{
+#iPdGcroix{
 	position: relative;
 	padding-bottom: 35%;
 }
-#i3237On img{
+#iPdGcroix img{
 	position: absolute;
 	top: 58%;
 	left: 50%;
@@ -823,12 +822,6 @@ sub{
 	   -moz-transform: translate(-50%, -50%); /* pour Firefox */
 			transform: translate(-50%, -50%);
 	width: 38%;
-}
-
-/* Après 20h30, on n'affiche plus le § ci-dessus, mais à   */
-/* la place, on met 'Pharmacie de garde' que l'on centre : */
-#i3237Off{
-	text-align: center;
 }
 
 /* -----------   section plan   ----------- */
@@ -950,11 +943,6 @@ sub{
 #iGammesProd article div:nth-child(2n+1){
 	background-color: #EFEFFF;
 }
-/* réglage de la taille des images                                                              =>  à ajouter dans les media queries +++++++++++++   */
-/*#iGammesProd article div:not(.cImageDeco) img{
-	width: 80%;
-}
-*/
 
 /***************************************************************************************************************************************/
 /************************************************        pages infos et promos        **************************************************/
@@ -992,52 +980,92 @@ footer section:last-of-type{
 /* ********************************************************************************************************************************************** */
 
 
-/* pour tous les appareils sauf les plages braille																		NOT BRAILLE	*/
+/* Cette petite partie n'a en fait pas été traitée plus haut mais     */
+/* concerne les titres <h3> qui peuvent être dans 4 états différents. */
+/* (il était donc judicieux de les rassembler dans un même endroit)   */
+/*                                                                    */
+/* - <h3> toujours affichés (c'est le cas par défaut)                 */
+/*        - #iIndexIntro h3                                           */
+/*        - #iHorairesIntro h3                                        */
+/*        - #iOrdoPrepaOrdo h3                                        */
+/*        - #iCommPrepaComm h3                                        */
+/*        - #iGammesProd h3                                           */
+/*        - #iPdG3237 h3 (ie #iPdGh31 et #iPdGh32 )                   */
+/*                                                                    */
+/* - <h3> jamais affichés (mais nécessaires pour la validation W3C)   */
+/*        - #iHorairesTableau h3                                      */
+/*        - #iContactInfosPratiques h3                                */
+/*        - #iContactCoordonnees h3                                   */
+/*        - #iContactPlan h3                                          */
+/*        - #iContactFormulaire h3                                    */
+/*        - #iPdGplan h3                                              */
+/*                                                                    */
+/* - <h3> affichés uniquement pour les medias braille                 */
+/*        - #iIndexVignettes h3                                       */
+/*                                                                    */
+/* - <h3> affichés uniquement pour les medias non braille             */
+/*                                                                    */
+
+/**********************************************************************/
+/* <h3> toujours affichés (c'est le cas par défaut)                   */
+/* ici on regroupe les exceptions :                                   */
+#iIndexIntro h3{
+	font-weight: 400; /* La ph. est actuellement ... */
+}
+#iPdG3237 h3{
+	padding-bottom: 0; /* soit on est au beau milieu du texte, soit la section est vide */
+}
+#iPdG3237 p:first-of-type, h3#iPdGh31{
+	display: inline-block; /* c'est le cas où l'on est au beau milieu du texte */
+}
+h3#iPdGh32{
+	text-align: center; /* c'est le cas du vrai titre (et la section est vide) */
+}
+
+/**********************************************************************/
+/* <h3> jamais affichés (mais nécessaires pour la validation W3C)     */
+#iHorairesTableau h3,             /* 'Horaires d'ouverture de la ...' */
+#iContactInfosPratiques h3,       /* 'Informations pratiques'         */
+#iContactCoordonnees h3,          /* 'Coordonnées de la ...'          */
+#iContactPlan h3,                 /* 'Localiser la ...'               */
+#iContactFormulaire h3,           /* 'Formulaire de contact'          */
+#iPdGplan h3,                     /* 'Localiser le commissariat ...'  */
+footer h3{
+	display: none;
+}
+
+/**********************************************************************/
+/* <h3> affichés uniquement pour les medias braille                   */
+
+/*																														NOT BRAILLE	*/
 @media not braille{
-
-	/* titres <h3> de sections, ajoutés pour la validation W3C mais non affichés ... sauf en braille      */
-	/*                                                                                                    */
-	/* - index    : on conserve le titre :                                                                */
-	/*              'Services proposés par la pharmacie'                      #iIndexVignettes h3         */
-	/* - horaires : on conserve les titres :                                                              */
-	/*              - 'Horaires d'ouverture ...'                              #iHorairesTableau h3        */
-	/* - contact  : on conserve les titres :                                                              */
-	/*              - 'Informations pratiques'                                #iContactInfosPratiques h3  */
-	/*              - 'Coordonnées de la pharmacie'                           #iContactCoordonnees h3     */
-	/*              - 'Localiser la pharmacie'                                #iContactPlan h3            */
-	/*              - 'Formulaire de contact'                                 #iContactFormulaire h3      */
-	/* - ph. garde: on conserve les titres :                                                              */
-	/*              - 'Trouver ...'                                           #iPdG3237                   */
-	/*              - 'Localiser ...'                                         #iPdGplan                   */
-
-	#iIndexVignettes h3,
-	#iHorairesTableau h3,
-	#iContactInfosPratiques h3, #iContactCoordonnees h3, #iContactPlan h3, #iContactFormulaire h3,
-	#iPdG3237 h3, #iPdGplan h3{
+	/* je suis obligé de faire les choses "à l'envers" :                                                         */
+	/*    -> comme la propriété css 'display' permet d'effacer un élément (display: none)                        */
+	/*       mais pas de le ré-afficher s'il a déjà subi un 'display: none'                                      */
+	/*       (il n'existe pas de 'display: on', même si 'display: block' peut parfois nous rendre service)       */
+	/*    -> ainsi, au lieu de dire "j'efface les titres, mais pour les medias de type braille, je les affiche", */
+	/*       => je dis "pour les medias de type non braille (@media not braille), j'efface les titres"           */
+	#iIndexVignettes h3{          /* 'Services proposés par la ph...' */
 		display: none;
 	}
 
-/*****************************************************************************************                 ramené d'au-dessus */
-	/* <h3> ajouté pour la validation W3C mais non affiché, même pas en braille */
-	#iIndexIntro h3{
-		display: none;	/* 'Etat actuel d'ouverture ...' */
-	}
-	/* <h3> ajouté pour la validation W3C mais non affiché */
-	footer h3{
-		display: none;
-	}
+/* Fin de la gestion de l'affichage des <h3>                          */
+/**********************************************************************/
 
-/*****************************************************************************************/
-
-
-	/* page index - menu des liens d'accès rapide aux services */
 	.cBraille{
 		display: none;
 	}
 }
 
 
-/* 																														460 px		*/
+/*																															BRAILLE	*/
+@media braille{
+	#iHorairesTableau{  /* le tableau graphique des horaires est remplacé par une phrase les résumant */
+		display: none;
+	}
+}
+
+/* 																															460 px	*/
 @media screen and (min-width: 460px){
 
 	body, h3, h4, h5{
@@ -1089,6 +1117,12 @@ footer section:last-of-type{
 		top: 1.2rem;					/* old 0.8 */
 	}
 
+	/* réglage de la taille des images                                                              =>  à ajouter dans les media queries +++++++++++++   */
+	/*#iGammesProd article div:not(.cImageDeco) img{
+		width: 80%;
+	}
+	*/
+
 	/*      page PharmaDeGarde      */
 
 	/* icône de guidage GPS */
@@ -1103,7 +1137,7 @@ footer section:last-of-type{
 
 }
 
-/* 																														600 px		*/
+/* 																															600 px	*/
 @media screen and (min-width: 600px){
 
 	h1{
@@ -1173,7 +1207,7 @@ footer section:last-of-type{
 }
 
 
-/* 																														900 px		*/
+/* 																															900 px	*/
 @media screen and (min-width: 900px){
 
 	/* on agrandit un peu la croix */
@@ -1246,7 +1280,7 @@ footer section:last-of-type{
 	}
 }
 
-/* 																														1600 px		*/
+/* 																															1600 px	*/
 @media screen and (min-width: 1600px){
 
 

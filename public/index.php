@@ -118,90 +118,65 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 	</header>
 
 	<main>
-		<section id='iIndexIntro'><h3>Etat actuel d'ouverture de la <?= NOM_PHARMA ?></h3>
-			<?php
-				$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
-				$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'pharmacieOuverte')
-				$heure = heureActuelle('');			// on demande l'heure au format décimal
-			?>
-			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
+		<?php
+			$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
+			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'pharmacieOuverte')
+			$heure = heureActuelle('');			// on demande l'heure au format décimal
+		?>
+		<section id='iIndexIntro'><h3><?= pharmacieOuverte( $auj, $heure ) ?></h3></section>
 
-		</section>
 		<section id='iIndexVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
-			
+
 			<nav class='cBraille'>
 				<ul>
-					<li><a href='#iPrepaOrdonnance'>Préparation d'ordonnance</a></li>
-					<li><a href='#iPrepaCommande'>Préparation de commande</a></li>
-					<li><a href='#iGammesProduits'>Les gammes de produits</a></li>
-					<li><a href='#iPharmaDeGarde'>Pharmacies de garde</a></li>
-					<li><a href='#iPromos'>Promotions</a></li>
-					<li><a href='#iInfos'>Informations / Conseils</a></li>
-					<li><a href='#iHumour'>Humour</a></li>
+					<li>
+						<a href= <?= ( !empty($_SESSION) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> >Préparation d'ordonnance</a>
+					</li>
+					<li>
+						<a href= <?= ( !empty($_SESSION) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> >Préparation de commande</a>
+					</li>
+					<li><a href='gammesProduits.php'>Les gammes de produits</a></li>
+					<li><a href='pharmaDeGarde.php' >Pharmacies de garde</a></li>
+					<li><a href='promos.php'        >Promotions</a></li>
+					<li><a href='infos.php'         >Informations / Conseils</a></li>
 				</ul>
 			</nav>
 
-			<article id='iPrepaOrdonnance'>
-				<?php if(! empty($_SESSION)) : ?>
-					<a href='prepaOrdonnance.php'>
-						<h4>Préparation d'ordonnance</h4>
-					</a>
-				<?php else : ?>
-					<a href='connexion.php'>
-						<h4>Préparation d'ordonnance</h4>
-					</a>
-				<?php endif ?>
+			<article>
+				<a href= <?= ( !empty($_SESSION) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>
 				<img src='img/prepaOrdonnance.jpg' alt=''>
 			</article>
 
-			<article id='iPrepaCommande'>
-				<?php if(! empty($_SESSION)) : ?>
-					<a href='prepaCommande.php'>
-						<h4>Préparation de commande</h4>
-					</a>
-				<?php else : ?>
-					<a href='connexion.php'>
-						<h4>Préparation de commande</h4>
-					</a>
-				<?php endif ?>
+			<article>
+				<a href= <?= ( !empty($_SESSION) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> ><h4>Préparation de commande</h4></a>
 				<img src='img/prepaCommande.jpg' alt=''>
 			</article>
 
-			<article id='iGammesProduits'>
-				<a href='gammesProduits.php'>
-					<h4>Les gammes de produits</h4>
-				</a>
+			<article>
+				<a href='gammesProduits.php'><h4>Les gammes de produits</h4></a>
 				<img src='img/gammesProduits.jpg' alt=''>
 			</article>
 
-			<article id='iPharmaDeGarde'>
-				<a href='pharmaDeGarde.php'>
-					<h4>Pharmacies de garde</h4>
-				</a>
+			<article>
+				<a href='pharmaDeGarde.php'><h4>Pharmacies de garde</h4></a>
 				<img src='img/pharmaDeGarde.jpg' alt=''>
 			</article>
 
-			<article id='iPromos'>
-				<a href='promos.php'>
-					<h4>Promos</h4>
-				</a>
+			<article>
+				<a href='promos.php'><h4>Promos</h4></a>
 				<img src='img/promos.jpg' alt=''>
 			</article>
 
-			<article id='iInfos'>
-				<a href='infos.php'>
-					<h4>Informations / Conseils</h4>
-				</a>
+			<article>
+				<a href='infos.php'><h4>Informations / Conseils</h4></a>
 				<img src='img/questions.jpg' alt=''>
 			</article>
 
 			<?php
 				// matériel médical / contention ?
 
-				// <article id='iHumour'>
-				// 	<a href='humour.php'>
-				// 		<h4>La blague de Chuck Norris !..</h4>
-				// 	</a>
+				// <article>
+				// 	<a href='humour.php'><h4>La blague de Chuck Norris !..</h4></a>
 				// 	<img src='img/humour.jpg' alt=''>
 				// </article>
 			?>

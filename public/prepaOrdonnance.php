@@ -475,15 +475,16 @@ if( isset($_POST['bouton']) ){
 							// on commence par effacer le titre de la page : "Préparation d'ordonnance" ...
 							echo "<style type='text/css'> h3 { display: none } </style>";
 							// ... puisque le message est suffisamment explicite :
+							// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
 							echo "<div class='cMessageConfirmation'>";
-							echo "<p>Merci, votre ordonnance a bien été envoyée.</p>";
+							echo "<p autofocus>Merci, votre ordonnance a bien été envoyée.</p>";
 							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
 							echo "</div>";
 						}
 						else{
 							// ici, on n'efface pas le titre de la page, pour savoir de quoi parle le message d'erreur
 							echo "<div class='cMessageConfirmation'>";
-							echo "<p>Aïe, il y a eu un problème ...</p>";
+							echo "<p autofocus>Aïe, il y a eu un problème ...</p>";
 							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
 							echo "</div>";
 						}

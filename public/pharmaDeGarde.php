@@ -103,26 +103,26 @@ else{
 	<main>
 		<?php $heure = heureActuelle('d'); ?>
 
-		<section id='iPdG3237' class='cSectionContour'><h3>Trouver la pharmacie de garde</h3>
+		<section id='iPdG3237' class='cSectionContour'>
 
 		<?php // si les gardes fonctionnent sans passer par le commissariat, ou si on est dans la journée : ?>
 		<?php if( (HEURE_SOIR_POLICE_D == "X") || ((HEURE_MATIN_POLICE_D <= $heure) && ($heure < HEURE_SOIR_POLICE_D)) ) : ?>
-			<p>Trouvez la <span>pharmacie de garde</span> la plus proche de chez vous en cliquant sur la croix ci-dessous :</p>
-			<p id='i3237On'>
+			<p>Trouvez la&nbsp;<h3 id='iPdGh31'>pharmacie de garde</h3> la plus proche de chez vous en cliquant sur la croix ci-dessous :</p>
+			<p id='iPdGcroix'>
 				<a href='http://www.3237.fr/'>
 					<img src='img/croix_garde.png' alt=''>
-					<!-- <span class='cBraille'>croix</span> -->
+					<span class='cBraille'>croix</span>
 				</a>
 			</p>
 		<?php else : // on est en horaires de garde -> on affiche juste le titre ?>
-			<p id='i3237Off'><span>Pharmacie de garde</span></p>
+			<h3 id='iPdGh32'>Pharmacie de garde</h3>
 		<?php endif ?>
 
 		</section>
 
 		<section id='iPdGplan' class='cSectionContour'><h3>Localiser le commissariat de police</h3>
 
-		<?php // si les gardes fonctionnent sans passer par le commissariat, il n'y a RIEN d'autre à afficher, d'où le 1e test : ?>
+		<?php // si les gardes fonctionnent sans passer par le commissariat, il n'y a RIEN d'autre à afficher ?>
 		<?php if( HEURE_SOIR_POLICE_D != "X" ) : ?>
 			<?php // quelle que soit l'heure, on informe les gens du fonctionnement en horaires de garde, et on propose le plan : ?>
 			<p>À partir de <span><?= HEURE_SOIR_POLICE_H ?></span>, et jusqu'à <span><?= HEURE_MATIN_POLICE_H ?></span> le lendemain matin, il faut se rendre, avec une pièce d'<span>identité</span> et une <span>ordonnance</span>, au <span>commissariat de police</span> situé :</p>
