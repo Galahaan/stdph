@@ -90,9 +90,15 @@ else{
 /////     FIN INCLUDE sécurisé
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// on détermine la page courante, en vue de souligner le lien
-// concerné dans le menu de navigation grâce à l'id 'iPageCourante' :
-$flagPC = pageCourante($_SERVER['REQUEST_URI']);
+// on détermine la page courante ...
+// 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
+// 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
+$pageCourante = pageCourante($_SERVER['REQUEST_URI']);
+
+// Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
+// courante n'a pas été usurpée; je suis donc, das ce cas, obligé de l'écrire EN DUR :
+// (et non pas, justement, en m'appuyant sur $_SERVER)
+define("PAGE_EN_COURS", "contact.php");
 
 // Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 if( isset($_POST['bouton']) ){
@@ -197,9 +203,9 @@ if( isset($_POST['bouton']) ){
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title><?= NOM_PHARMA ?></title>
+	<title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
 	<meta charset='utf-8'>
-	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
@@ -215,8 +221,18 @@ if( isset($_POST['bouton']) ){
 
 <body>
 	<header>
+		<nav class='cBraille'>
+			<?= $pageCourante['nom'] ?>
+			<ol>
+				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
+				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
+				<li><a href='#iLienConnex' accesskey='c'>[c] Connexion/Inscription/Deconnexion</a></li>
+				<li><a href='#iMain'       accesskey='m'>[m] contenu de <?= $pageCourante['nom'] ?></a></li>
+			</ol>
+		</nav>
+
 		<section>
-			<a href='index.php'>
+			<a href='index.php' accesskey='r'>
 				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
@@ -225,10 +241,10 @@ if( isset($_POST['bouton']) ){
 		</section>
 		<nav id='iNavigation'>
 			<ul>
-				<li><a <?= ($flagPC == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
-				<li><a <?= ($flagPC == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
-				<li><a <?= ($flagPC == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
-				<li><a <?= ($flagPC == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
+				<li><a <?= ($pageCourante['flag'] == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
+				<li><a <?= ($pageCourante['flag'] == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
+				<li><a <?= ($pageCourante['flag'] == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
+				<li><a <?= ($pageCourante['flag'] == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
 		<div id='iBandeauConnex'>
@@ -260,7 +276,7 @@ if( isset($_POST['bouton']) ){
 		</div>
 	</header>
 
-	<main>
+	<main id='iMain'>
 		<nav class='cBraille'>
 			<ul>
 				<li><a href="#iContactInfosPratiques">Informations pratiques</a></li>
@@ -301,7 +317,7 @@ if( isset($_POST['bouton']) ){
 			<p>- cliquez sur le plan ci-dessous</p>
 			<p>- puis sur l'icône &nbsp;<img src='img/itineraire.png' alt='itinéraire'></p>
 			<p>... et laissez-vous guider.</p>
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.86958984165!2d-2.225360184281275!3d48.132038259525736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480e4df918267fb7%3A0xc0ed000930b8151c!2sPlace+du+Monument%2C+35290+Ga%C3%ABl!5e0!3m2!1sfr!2sfr!4v1518614624523" allowfullscreen></iframe>
+			<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.86958984165!2d-2.225360184281275!3d48.132038259525736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480e4df918267fb7%3A0xc0ed000930b8151c!2sPlace+du+Monument%2C+35290+Ga%C3%ABl!5e0!3m2!1sfr!2sfr!4v1518614624523' title='nouvelle page google map' allowfullscreen></iframe>
 		</section>
 
 		<section id='iContactFormulaire' class='cSectionContour'><h3>Formulaire de contact</h3>
@@ -424,10 +440,10 @@ if( isset($_POST['bouton']) ){
 			// ============= Dernier "blindage" ============== //
 
 			// si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
-			if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
-				&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
-				&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0
-				&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . "contact.php" ) != 0 ){
+			if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . "PAGE_EN_COURS" ) != 0
+				&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . "PAGE_EN_COURS" ) != 0
+				&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . "PAGE_EN_COURS" ) != 0
+				&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . "PAGE_EN_COURS" ) != 0 ){
 
 				$headerAlerte =	"From: " .
 								mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .

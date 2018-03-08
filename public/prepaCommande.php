@@ -41,8 +41,14 @@ else{
 /////     FIN INCLUDE sécurisé
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// Quelques constantes spécifiques à ce fichier :
-// page en cours :
+// on détermine la page courante ...
+// 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
+// 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
+$pageCourante = pageCourante($_SERVER['REQUEST_URI']);
+
+// Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
+// courante n'a pas été usurpée; je suis donc, das ce cas, obligé de l'écrire EN DUR :
+// (et non pas, justement, en m'appuyant sur $_SERVER)
 define("PAGE_EN_COURS", "prepaCommande.php");
 
 // Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
@@ -136,9 +142,9 @@ if( isset($_POST['bouton']) ){
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title><?= NOM_PHARMA ?></title>
+	<title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
 	<meta charset='utf-8'>
-	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
@@ -147,8 +153,18 @@ if( isset($_POST['bouton']) ){
 
 <body>
 	<header>
+		<nav class='cBraille'>
+			<?= $pageCourante['nom'] ?>
+			<ol>
+				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
+				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
+				<li><a href='#iLienConnex' accesskey='c'>[c] Connexion/Inscription/Deconnexion</a></li>
+				<li><a href='#iMain'       accesskey='m'>[m] contenu de <?= $pageCourante['nom'] ?></a></li>
+			</ol>
+		</nav>
+
 		<section>
-			<a href='index.php'>
+			<a href='index.php' accesskey='r'>
 				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
@@ -192,7 +208,7 @@ if( isset($_POST['bouton']) ){
 		</div>
 	</header>
 
-	<main>
+	<main id='iMain'>
 		<section id='iCommPrepaComm' class='cSectionContour'><h3>Préparation de commande</h3>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>

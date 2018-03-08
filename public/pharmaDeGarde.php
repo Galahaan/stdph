@@ -41,13 +41,18 @@ else{
 /////     FIN INCLUDE sécurisé
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+// on détermine la page courante ...
+// 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
+// 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
+$pageCourante = pageCourante($_SERVER['REQUEST_URI']);
+
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title><?= NOM_PHARMA ?></title>
+	<title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
 	<meta charset='utf-8'>
-	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
@@ -56,8 +61,18 @@ else{
 
 <body>
 	<header>
+		<nav class='cBraille'>
+			<?= $pageCourante['nom'] ?>
+			<ol>
+				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
+				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
+				<li><a href='#iLienConnex' accesskey='c'>[c] Connexion/Inscription/Deconnexion</a></li>
+				<li><a href='#iMain'       accesskey='m'>[m] contenu de <?= $pageCourante['nom'] ?></a></li>
+			</ol>
+		</nav>
+
 		<section>
-			<a href='index.php'>
+			<a href='index.php' accesskey='r'>
 				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
@@ -100,7 +115,7 @@ else{
 		</div>
 	</header>
 
-	<main>
+	<main id='iMain'>
 		<?php $heure = heureActuelle('d'); ?>
 
 		<section id='iPdG3237' class='cSectionContour'>
@@ -131,7 +146,7 @@ else{
 			<p>- cliquez sur le plan ci-dessous</p>
 			<p>- puis sur l'icône &nbsp;<img src='img/itineraire.png' alt='itinéraire'></p>
 			<p>... et laissez-vous guider.</p>
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2709.4418958453143!2d-1.5537605841504296!3d47.227501579161355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805ee99ed6c5d25%3A0x18995709d53782b2!2sCommissariat+de+Police+Central+de+Nantes!5e0!3m2!1sfr!2sfr!4v1517266865893" allowfullscreen></iframe>
+			<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2709.4418958453143!2d-1.5537605841504296!3d47.227501579161355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805ee99ed6c5d25%3A0x18995709d53782b2!2sCommissariat+de+Police+Central+de+Nantes!5e0!3m2!1sfr!2sfr!4v1517266865893' title='nouvelle page google map' allowfullscreen></iframe>
 		<?php endif ?>
 
 		</section>

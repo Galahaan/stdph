@@ -1,7 +1,5 @@
 <?php
 
-require_once("constantes.php");
-
 ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
 try {

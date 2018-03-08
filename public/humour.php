@@ -2,15 +2,57 @@
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
 ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
-require_once("include/constantes.php");
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+if( empty($page) ){
+$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+
+// On construit le nom de la page à inclure en prenant 2 précautions :
+// - ajout dynamique de l'extension .php
+// - on supprime également d'éventuels espaces en début et fin de chaîne
+$page = trim($page.".php");
+}
+
+// On remplace les caractères qui permettent de naviguer dans les répertoires
+$page = str_replace("../","protect",$page);
+$page = str_replace(";","protect",$page);
+$page = str_replace("%","protect",$page);
+
+// On interdit l'inclusion de dossiers protégés par htaccess.
+// S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
+// strpos() peut très bien le faire, et surtout plus vite !
+// if( preg_match("admin", $page) ){
+if( strpos($page, "admin") ){
+	echo "Vous n'avez pas accès à ce répertoire";
+}
+else{
+    // On vérifie que la page est bien sur le serveur
+    if (file_exists("include/" . $page) && $page != "index.php") {
+    	require_once("./include/".$page);
+    }
+    else{
+    	echo "Erreur Include : le fichier " . $page . " est introuvable.";
+    }
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////     FIN INCLUDE sécurisé
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// on détermine la page courante ...
+// 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
+// 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
+$pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title><?= NOM_PHARMA ?></title>
+	<title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
 	<meta charset='utf-8'>
-	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
@@ -19,8 +61,18 @@ require_once("include/constantes.php");
 
 <body>
 	<header>
+		<nav class='cBraille'>
+			<?= $pageCourante['nom'] ?>
+			<ol>
+				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
+				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
+				<li><a href='#iLienConnex' accesskey='c'>[c] Connexion/Inscription/Deconnexion</a></li>
+				<li><a href='#iMain'       accesskey='m'>[m] contenu de <?= $pageCourante['nom'] ?></a></li>
+			</ol>
+		</nav>
+
 		<section>
-			<a href='index.php'>
+			<a href='index.php' accesskey='r'>
 				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
@@ -63,7 +115,7 @@ require_once("include/constantes.php");
 		</div>
 	</header>
 
-	<main>
+	<main id='iMain'>
 		<section id='iHumour' class='cSectionContour'><h3>La thérapie par l'humour ! (*)</h3>
 		<?php
 			// https://www.chucknorrisfacts.fr/api/api

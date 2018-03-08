@@ -204,6 +204,7 @@ function heureActuelle( $format ) {
 //						pharmacieOuverte( $jour, $heure )
 //
 // Fonction qui donne l'état d'ouverture de la pharmacie à l'heure passée en paramètre
+// (utilisée par index.php et horaires.php)
 //
 // - la pharmacie est ouverte
 // - la pharmacie est fermée
@@ -265,10 +266,13 @@ function pharmacieOuverte( $jour, $heure ) {
 //
 //							getDeltaP( $heure )
 //
-// Cette fonction prend comme paramètre d'entrée l'heure actuelle au format DECIMAL.
+// Cette fonction, utilisée par horaires.php, détermine 2 valeurs
+// destinées à l'affichage dynamique du curseur de l'heure actuelle.
 //
-// Elle renvoie ensuite 2 valeurs, rangées dans un tableau :
-// - la 1ère est le % dont il faut décaler (left: ) la div du trait vertical (id #trait),
+// La fonction prend comme paramètre d'entrée l'heure actuelle au format DECIMAL.
+//
+// Elle renvoie donc 2 valeurs, rangées dans un tableau :
+// - la 1ère est le % dont il faut décaler (left: ) la div du trait vertical (id #iTraitHoraire),
 //   représentant l'heure actuelle
 //
 // - la 2ème, au format BOOLEEN, indique s'il faut afficher le trait ou non.
@@ -328,19 +332,33 @@ function getDeltaP( $heure ) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//							pageCourante( $server_request_uri )
+//							pageCourante( $request_uri )
 //
-// Cette fonction prend comme paramètre d'entrée la page courante obtenue par
+// Cette fonction, utilisée en tête de chaque fichier du site, a 2 objectifs :
+//
+// - souligner, dans le menu de navigation, le mot correspondant à la page active
+//   (si c'est une des 4 du menu de navigation)
+//
+// - ajouter au 'title' de chaque page du site le nom de cette page
+//
+// La fonction prend comme paramètre d'entrée la page courante obtenue par
 // la super globale   $_SERVER['REQUEST_URI']
 //
-// Elle renvoie une chaîne de 4 caractères dont 1 seul est positionné à '1', celui
-// correspondant à la page courante, dans cet ordre : index / horaires / équipe / contact
+// Elle renvoie un tableau de 2 éléments :
+//
+// - une chaîne de 4 caractères dont 1 seul est positionné à '1' :
+//   celui correspondant à la page courante du menu de navigation, dans cet ordre :
+//   index / horaires / équipe / contact
+//   (dans le but de souligner ce mot)
+//
+// - le nom 'enjolivé' de la page :
+//       ex. 'Accueil' à la place de '/index.php'
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function pageCourante( $server_request_uri ) {
+function pageCourante( $request_uri ) {
 
 	// on extrait le nom de la page courante :
-	$page = ltrim($server_request_uri, '/');
+	$page = ltrim($request_uri, '/');
 
 	// on enlève l'extension '.php' :
 	$page = rtrim($page, 'hp.');
@@ -353,20 +371,178 @@ function pageCourante( $server_request_uri ) {
 	switch( $page ){
 		case "index":
 			$flagPC = "1000";
+			$nomPage = "Accueil";
 			break;
 
 		case "horaires":
 			$flagPC = "0100";
+			$nomPage = "Horaires";
 			break;
 
 		case "equipe":
 			$flagPC = "0010";
+			$nomPage = "Équipe";
 			break;
 
 		case "contact":
 			$flagPC = "0001";
+			$nomPage = "Contact";
+			break;
+
+		case "connexion":
+			$nomPage = "Connexion";
+			break;
+
+		case "inscription":
+			$nomPage = "Inscription";
+			break;
+
+		case "prepaOrdonnance":
+			$nomPage = "Préparation d'ordonnance";
+			break;
+
+		case "prepaCommande":
+			$nomPage = "Préparation de commande";
+			break;
+
+		case "pharmaDeGarde":
+			$nomPage = "Pharmacies de garde";
+			break;
+
+		case "promos":
+			$nomPage = "Promotions";
+			break;
+
+		case "gammesProduits":
+			$nomPage = "Gammes de produits";
+			break;
+
+		case "infos":
+			$nomPage = "Informations / conseils";
+			break;
 	}
-	return($flagPC);
+	return( ['flag' => $flagPC, 'nom' => $nomPage] );
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
+//							combinaisonRC( $http_user_agent )
+//
+// Cette fonction, utilisée par aide.php, a pour but d'indiquer à l'utilisateur la bonne
+// combinaison de touches pour les raccourcis clavier.
+// (cette combinaison dépend de la configuration (OS + navigateur) du client)
+//
+// La fonction prend comme paramètre d'entrée la super globale $http_user_agent
+//
+// Elle renvoie un tableau de 2 éléments :
+//
+// - une chaîne de caractères décrivant le navigateur, l'OS et la combinaison de
+// touches à utiliser, sous forme d'une phrase
+//
+// - une chaîne de caractères toute simple donnant la combinaison de touches, ex.: 'ALT'
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+function combinaisonRC( $http_user_agent ) {
+
+	// on identifie le navigateur :
+	if( strpos($http_user_agent, 'MSIE') !== FALSE ||
+	    strpos($http_user_agent, 'Trident') !== FALSE ||
+	    strpos($http_user_agent, 'Edge') !== FALSE ){
+	    $nav = "MSIE";
+	    $phrase = "Dans le cas actuel (Internet Explorer / ";
+
+	}
+	elseif( strpos($http_user_agent, 'zilla') !== FALSE ||
+	        strpos($http_user_agent, 'fox') !== FALSE){
+	    $nav = "MZFF";
+	    $phrase = "Dans le cas actuel (Firefox / ";
+	}
+	else{
+		$nav = "XXXX";
+		$phrase = "Dans le cas actuel (navigateur indéterminé / ";
+	}
+
+	// on identifie l'OS :
+	if( strpos($http_user_agent, 'Win') !== FALSE ){
+	    $os = "WIN";
+	    $phrase .= "Windows) ";
+	    
+	}
+	elseif( strpos($http_user_agent, 'linux') !== FALSE ){
+	    $os = "LIN";
+	    $phrase .= "Linux) ";
+	}
+	elseif( strpos($http_user_agent, 'mac') !== FALSE ){
+	    $os = "MAC";
+	    $phrase .= "MacOS) ";
+	}
+	else{
+	    $os = "";
+	    $phrase .= "OS indéterminé) ";
+	}
+
+	// on complète le résultat par la combinaison des touches du raccourci clavier :
+	switch ($os) {
+	    case 'WIN':
+	        switch ($nav) {
+	            case 'GGCH':
+	            case 'APSA':
+	            case 'MSIE':
+	            case 'OPE15':
+	            	$combi = "ALT";
+	                break;
+	            case 'MZFF':
+	            	$combi = "ALT + SHIFT";
+	                break;
+	            case 'OPE12':
+	            	$combi = "SHIFT + ESC";
+	                break;
+	            default:
+	            	$combi = "";
+	            }
+	        break; 
+	    case 'LIN':
+	        switch ($nav) {
+	            case 'GGCH':
+	            	$combi = "ALT";
+	                break;
+	            case 'MZFF':
+	            	$combi = "ALT + SHIFT";
+	                break;
+	            case 'APSA':
+	            case 'MSIE':
+	            case 'OPE15':
+	            case 'OPE12':
+	            default:
+	            	$combi = "";
+	            }
+	        break; 
+	    case 'MAC':
+	        switch ($nav) {
+	            case 'GGCH':
+	            case 'APSA':
+	            case 'MZFF':
+	            	$combi = "CTRL + ALT";
+	                break;
+	            case 'MSIE':
+	            case 'OPE15':
+	            case 'OPE12':
+	            default:
+	            	$combi = "";
+	            }
+	        break;
+	    default:
+           	$combi = "";
+	}
+
+	if($combi != ""){
+		$phrase .= "la combinaison est : " . $combi . " + touche(s) d'accès";
+	}
+	else{
+		$phrase .= "les raccourcis clavier sont malheureusement indisponibles :-/";
+	}
+
+	return ['phrase' => $phrase, 'combi' => $combi];
 }
 
 ?>

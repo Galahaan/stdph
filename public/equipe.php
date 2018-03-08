@@ -41,17 +41,18 @@ else{
 /////     FIN INCLUDE sécurisé
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// on détermine la page courante, en vue de souligner le lien
-// concerné dans le menu de navigation grâce à l'id 'iPageCourante' :
-$flagPC = pageCourante($_SERVER['REQUEST_URI']);
+// on détermine la page courante ...
+// 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
+// 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
+$pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title><?= NOM_PHARMA ?></title>
+	<title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
 	<meta charset='utf-8'>
-	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
@@ -60,8 +61,18 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 
 <body>
 	<header>
+		<nav class='cBraille'>
+			<?= $pageCourante['nom'] ?>
+			<ol>
+				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
+				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
+				<li><a href='#iLienConnex' accesskey='c'>[c] Connexion/Inscription/Deconnexion</a></li>
+				<li><a href='#iMain'       accesskey='m'>[m] contenu de <?= $pageCourante['nom'] ?></a></li>
+			</ol>
+		</nav>
+
 		<section>
-			<a href='index.php'>
+			<a href='index.php' accesskey='r'>
 				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
@@ -70,10 +81,10 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 		</section>
 		<nav id='iNavigation'>
 			<ul>
-				<li><a <?= ($flagPC == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
-				<li><a <?= ($flagPC == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
-				<li><a <?= ($flagPC == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
-				<li><a <?= ($flagPC == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
+				<li><a <?= ($pageCourante['flag'] == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
+				<li><a <?= ($pageCourante['flag'] == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
+				<li><a <?= ($pageCourante['flag'] == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
+				<li><a <?= ($pageCourante['flag'] == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
 		<div id='iBandeauConnex'>
@@ -104,7 +115,7 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 		</div>
 	</header>
 
-	<main>
+	<main id='iMain'>
 		<img src='img/equipe.jpg' alt='Valérie, pharmacien titulaire, Hélène, pharmacien assistante, Christine, employée, et Cécile, apprentie'>
 	</main>
 

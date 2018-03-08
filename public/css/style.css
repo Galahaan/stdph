@@ -1,8 +1,9 @@
-/* fond de la page                     :  #575757  gris foncé       */
-/* fond de la zone du site             :  white    blanc            */
-/* bandeau du haut : titres + tel      :  #364115  vert foncé       */
-/*  + lignes fines dans les formulaires                             */
-/*  + lignes gammes de produits                                     */
+/* fond de la page                     :  #D8D8D8  gris clair       */
+/* fond de la zone du site (main)      :  white    blanc            */
+/* bandeau du haut :                                                */
+/*  - titres + tel                     :  #364115  vert foncé       */
+/*    lignes fines dans les formulaires                             */
+/*    lignes gammes de produits                                     */
 /* menu de navigation, fond            :  #ADADAD  gris clair       */
 /* menu de navigation, police          :  #DEFFC4  vert pâle        */
 /* bandeau de connexion, fond          :  #575757  gris foncé 1     */
@@ -62,7 +63,7 @@
 html{ font-size: 62.5%; }  /* => associé à body{ font-size: 1.5rem; } */
 
 /* par défaut on force tous les liens en black */
-a {
+a{
 	text-decoration: none;
 	color: black;
 }
@@ -82,7 +83,7 @@ body{
 	/* ligne associée à l'import de la police Google fonts */
 	font-family: 'Raleway', fantasy;
  	text-align: center;/* étant donné que le texte est majoritairement centré dans tout le doc */
- 	background-color: #575757;
+ 	background-color: #D8D8D8;
  	max-width: 95rem;
  	margin: auto;
 }
@@ -160,7 +161,7 @@ footer section:first-of-type{
 
 /* Image de fond */
 header section{
-	background-color: lightgrey;                /* dans le cas où l'image ne peut être chargée, ça fait un fond par défaut */
+	background-color: #D8D8D8;                /* dans le cas où l'image ne peut être chargée, ça fait un fond par défaut */
 	background-image: url('../img/fond.jpg'), url('../img/fond_light.jpg');
 	/* Les navigateurs chargeront en premier les images spécifiées en fin de ligne (fond_light.jpg)
 	   et chargeront ensuite vers la gauche (fond.jpg). */
@@ -262,12 +263,12 @@ nav#iNavigation a{
 	background-color: #575757;
 	width: 96%;
 	padding: 0 2%;
+	color: white;
 }
 #iClientConnecte{
 	display: inline-block;
 	width: 65%;
 	text-align: left;
-	color: white;
 }
 #iLienConnex{
 	display: inline-block;
@@ -950,6 +951,22 @@ sub{
 
 
 /***************************************************************************************************************************************/
+/************************************************              pages aide             **************************************************/
+/***************************************************************************************************************************************/
+#iAide p{
+	padding-bottom: 2rem;
+	text-align: left;
+}
+#iAide ol, #iAide h4{
+	padding-bottom: 1rem;
+	text-align: left;
+}
+#iAide ol{
+	padding-left: 5%;
+}
+
+
+/***************************************************************************************************************************************/
 /****************************************************             Footer            ****************************************************/
 /***************************************************************************************************************************************/
 
@@ -991,6 +1008,7 @@ footer section:last-of-type{
 /*        - #iCommPrepaComm h3                                        */
 /*        - #iGammesProd h3                                           */
 /*        - #iPdG3237 h3 (ie #iPdGh31 et #iPdGh32 )                   */
+/*        - #iAide h3                                                 */
 /*                                                                    */
 /* - <h3> jamais affichés (mais nécessaires pour la validation W3C)   */
 /*        - #iHorairesTableau h3                                      */
@@ -1053,14 +1071,16 @@ footer h3{
 /**********************************************************************/
 
 	.cBraille{
-		display: none;
+		/*display: none;*/
+		text-align: left;
+		padding-left: 10%;
 	}
 }
 
 
 /*																															BRAILLE	*/
 @media braille{
-	#iHorairesTableau{  /* le tableau graphique des horaires est remplacé par une phrase les résumant */
+	#iHorairesTableau{         /* le tableau graphique des horaires est remplacé par une phrase les résumant */
 		display: none;
 	}
 }
@@ -1234,7 +1254,7 @@ footer h3{
 		font-size: 5rem;				/* old 4.5 */
 	}
 
-	/* page Index : on passe en 2 vignettes en largeur */
+	/* page Index : on passe en 3 vignettes en largeur */
 	#iIndexVignettes article{
 		width: 33.33%;
 	}

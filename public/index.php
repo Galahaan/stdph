@@ -41,20 +41,19 @@ else{
 /////     FIN INCLUDE sécurisé
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// on détermine la page courante, en vue de souligner le lien
-// concerné dans le menu de navigation grâce à l'id 'iPageCourante' :
-$flagPC = pageCourante($_SERVER['REQUEST_URI']);
-
+// on détermine la page courante ...
+// 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
+// 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
+$pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 ?>
-
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-	<title><?= NOM_PHARMA ?></title>
+	<title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
 	<meta charset='utf-8'>
 
 	<!-- Mots clés de la page -->
-	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>'>
+	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 
 	<!-- Prise en compte du responsive design -->
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -70,24 +69,32 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 
 <body>
 	<header>
+		<nav class='cBraille'>
+			<?= $pageCourante['nom'] ?>
+			<ol>
+				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
+				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
+				<li><a href='#iLienConnex' accesskey='c'>[c] Connexion/Inscription/Deconnexion</a></li>
+				<li><a href='#iMain'       accesskey='m'>[m] contenu de <?= $pageCourante['nom'] ?></a></li>
+			</ol>
+		</nav>
+
 		<section>
-			<a href='index.php'>
+			<a href='index.php' accesskey='r'>
 				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
 			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
 		</section>
-
 		<nav id='iNavigation'>
 			<ul>
-				<li><a <?= ($flagPC == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
-				<li><a <?= ($flagPC == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
-				<li><a <?= ($flagPC == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
-				<li><a <?= ($flagPC == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
+				<li><a <?= ($pageCourante['flag'] == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
+				<li><a <?= ($pageCourante['flag'] == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
+				<li><a <?= ($pageCourante['flag'] == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
+				<li><a <?= ($pageCourante['flag'] == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
-
 		<div id='iBandeauConnex'>
 			<?php
 				if( isset($_SESSION['client']) ){
@@ -117,7 +124,7 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 
 	</header>
 
-	<main>
+	<main id='iMain'>
 		<?php
 			$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
 			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'pharmacieOuverte')
@@ -126,21 +133,6 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 		<section id='iIndexIntro'><h3><?= pharmacieOuverte( $auj, $heure ) ?></h3></section>
 
 		<section id='iIndexVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
-
-			<nav class='cBraille'>
-				<ul>
-					<li>
-						<a href= <?= ( !empty($_SESSION) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> >Préparation d'ordonnance</a>
-					</li>
-					<li>
-						<a href= <?= ( !empty($_SESSION) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> >Préparation de commande</a>
-					</li>
-					<li><a href='gammesProduits.php'>Les gammes de produits</a></li>
-					<li><a href='pharmaDeGarde.php' >Pharmacies de garde</a></li>
-					<li><a href='promos.php'        >Promotions</a></li>
-					<li><a href='infos.php'         >Informations / Conseils</a></li>
-				</ul>
-			</nav>
 
 			<article>
 				<a href= <?= ( !empty($_SESSION) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>
@@ -153,11 +145,6 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 			</article>
 
 			<article>
-				<a href='gammesProduits.php'><h4>Les gammes de produits</h4></a>
-				<img src='img/gammesProduits.jpg' alt=''>
-			</article>
-
-			<article>
 				<a href='pharmaDeGarde.php'><h4>Pharmacies de garde</h4></a>
 				<img src='img/pharmaDeGarde.jpg' alt=''>
 			</article>
@@ -165,6 +152,11 @@ $flagPC = pageCourante($_SERVER['REQUEST_URI']);
 			<article>
 				<a href='promos.php'><h4>Promos</h4></a>
 				<img src='img/promos.jpg' alt=''>
+			</article>
+
+			<article>
+				<a href='gammesProduits.php'><h4>Les gammes de produits</h4></a>
+				<img src='img/gammesProduits.jpg' alt=''>
 			</article>
 
 			<article>
