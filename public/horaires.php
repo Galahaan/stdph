@@ -54,6 +54,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 	<meta charset='utf-8'>
 	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<meta http-equiv="refresh" content="60" />
 
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>

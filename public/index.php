@@ -57,6 +57,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 	<!-- Prise en compte du responsive design -->
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<meta http-equiv="refresh" content="60" />
 
 	<!-- intégrer le CDN de fontAwesome -->
 	<!-- on le place AVANT l'appel à notre CSS pour se donner la possibilité -->
