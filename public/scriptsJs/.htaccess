@@ -1,0 +1,10 @@
+
+
+
+#
+# Pour empêcher l'affichage du contenu du répertoire :
+# En effet, si je mets un "deny from all", c'est trop puissant et le site ne fonctionne plus :/
+#
+Options -Indexes
+
+

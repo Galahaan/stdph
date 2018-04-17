@@ -69,8 +69,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 <body>
 	<header>
-		<nav class='cBraille'>
-			<?= $pageCourante['nom'] ?>
+		<nav class='cBraille'><?= $pageCourante['nom'] ?>
 			<ol>
 				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
 				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
@@ -127,10 +126,10 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 	<main id='iMain'>
 		<?php
 			$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
-			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'pharmacieOuverte')
+			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'ouverturePharmacie')
 			$heure = heureActuelle('');			// on demande l'heure au format décimal
 		?>
-		<section id='iIndexIntro'><h3><?= pharmacieOuverte( $auj, $heure ) ?></h3></section>
+		<section id='iIndexIntro'><h3><?= ouverturePharmacie( $auj, $heure ) ?></h3></section>
 
 		<section id='iIndexVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
 

@@ -101,8 +101,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 <body>
 	<header>
-		<nav class='cBraille'>
-			<?= $pageCourante['nom'] ?>
+		<nav class='cBraille'><?= $pageCourante['nom'] ?>
 			<ol>
 				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
 				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
@@ -166,7 +165,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 			<form method='POST'>
 				<div class='cChampForm'>
 					<label for='iMail'>mail</label>
-					<input type='text' id='iMail' name='mail' required>
+					<input type='text' id='iMail' name='mail' required autofocus>
 				</div>
 
 				<div class='cChampForm'>

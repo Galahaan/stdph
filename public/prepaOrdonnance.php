@@ -54,69 +54,23 @@ define("PAGE_EN_COURS", "prepaOrdonnance.php");
 // Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 if( isset($_POST['bouton']) ){
 
-	//  *******  CIVILITE  *******
+	// Civilité
+
 	$civilite = $_POST['civilite'];
 
-	// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
+	// Prénom
 
-	// Méthode de remplacement de caractères utilisant str_replace().
-	// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
-	// (même indice) dans le tableau $nouveauCar.
-	// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
-	// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
-	// par le caractère vide : ''.
-	$trouverCar =
-	['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
-	 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
-	 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-	$nouveauCar = [' '];
+	$prenomFiltre = filtrerPrenom($_POST['prenom']);
+	$prenom = $prenomFiltre[0];
+	if( isset($prenomFiltre[1]) ) $erreurs['prenom'] = $prenomFiltre[1];
 
-	// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
-	// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
-	$minusAccMajus =
-	['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
-	 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
-	 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
-	 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
-	 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
-	 'ç' => 'Ç', 'ñ' => 'Ñ'];
+	// Nom
 
-	// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
-	// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
+	$nomFiltre = filtrerNom($_POST['nom']);
+	$nom = $nomFiltre[0];
+	if( isset($nomFiltre[1]) ) $erreurs['nom'] = $nomFiltre[1];
 
-
-	//  ********  PRENOM  ********
-
-	// supprime les balises HTML et PHP
-	$prenom = strip_tags($_POST['prenom']);
-	// cf explications sur le remplacement de car. ci-dessus
-	$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
-	// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
-	$prenom = superTrim($prenom);
-	// remplace les espaces " " par des soulignés "_"
-	$prenom = str_replace(" ", "_", $prenom);
-	// 1ère lettre en majuscule, les autres en minuscules
-	$prenom = ucfirst(strtolower($prenom));
-	// test de la contrainte sur la longueur de la chaîne
-	if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
-		$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-	}
-
-	//  ********  NOM  ********
-
-	$nom = strip_tags($_POST['nom']);
-	$nom = str_replace($trouverCar, $nouveauCar, $nom);
-	$nom = superTrim($nom);
-	$nom = str_replace(" ", "_", trim($nom));
-	// NOM en majuscule
-	$nom = strtoupper($nom);
-	$nom = strtr($nom, $minusAccMajus);
-
-	if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
-		$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-	}
-
-	//  ********  MAIL  ********
+	// Mail
 
 	// "nettoie" la valeur utilisateur :
 	$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
@@ -126,7 +80,7 @@ if( isset($_POST['bouton']) ){
 		$erreurs['adrMailClient'] = "(format incorrect)"; 
 	};
 
-	//  ********  MESSAGE  ********
+	// Message
 
 	// on traite volontairement le cas du message AVANT celui de la pièce jointe pour
 	// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les tests.
@@ -138,7 +92,7 @@ if( isset($_POST['bouton']) ){
 	// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
 	$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
 
-	//  ********  FICHIER JOINT  ********
+	// Fichier joint
 
 	$fichierInitial = $_FILES['pieceJointe'];
 	$taille         = $fichierInitial['size']; 	   // en OCTETS
@@ -149,32 +103,8 @@ if( isset($_POST['bouton']) ){
 	$type           = $fichierInitial['type'];
 	// ex. image/gif ou image/jpeg ou application/pdf ou text/plain ou application/vnd.ms-excel ou application/octet-stream
 
-	// pour contrer au mieux les failles de sécurité, on procède à quelques tests / modifications
-	// sur le fichier joint.
-
-	// 1° => on choisit et on protège l'emplacement de stockage sur le serveur :
-	// (penser à bien définir les droits d'accès en lecture / écriture
-	//  ainsi qu'un solide .htaccess qui interdira de voir l'index-of du répertoire en question)                                +++++++++++
-	$repFinal = "../ordonnances_jointes";
-
-	// 2° => on vérifie que la taille est bien positive mais ne dépasse pas X Mo (cf TAILLE_MAX_PJ) :
-	( ! $taille > 0 ) ? $erreurs['pieceJointe'] .= " [vide]" : "";
-	( $taille > TAILLE_MAX_PJ ) ? $erreurs['pieceJointe'] .= " [trop volumineux]" : "";
-
-	// 3° => avant de stocker le fichier joint, s'il avait bien un nom, on lui en donne un nouveau,
-	//       constitué de la date, du nom du client, suivi de caractères aléatoires :
-	if( ! $nomInitial == "" ){
-		// avant d'écrire la date dans le nom du fichier, on définit le fuseau horaire par défaut à utiliser :
-		( date_default_timezone_set("Europe/Paris") ) ? $fuseau = "" : $fuseau = " (fuseau horaire invalide)";
-		$nouveauNom = date("Y-m-d_H-i-s_") . $prenom . "_" . $nom . "_" . bin2hex(random_bytes(16));
-	}
-	else{
-		// le fichier n'avait pas de nom :
-		$erreurs['pieceJointe'] .= " [anonyme]";
-	}
-
-	// 4° => on vérifie que l'extension du fichier joint fait partie de celles autorisées,
-	//       ET on prépare dès maintenant le "Content-type" de la pièce jointe du mail :
+	// => on vérifie que l'extension du fichier joint fait partie de celles autorisées,
+	//    ET on prépare dès maintenant le "Content-type" de la pièce jointe du mail :
 	switch ($extension) {
 		case 'jpe' :
 		case 'jpg' :
@@ -183,42 +113,82 @@ if( isset($_POST['bouton']) ){
 		case 'gif' : $ContentType = "image/gif";       break;
 		case 'pdf' : $ContentType = "application/pdf"; break;
 		default:
-			$erreurs['pieceJointe'] .= " [extension invalide]";
+			$erreurs['pieceJointe'] .= " [PJ extension invalide]";
 	}
 
-	// 5° => on vérifie qu'un fichier portant le même nom n'est pas déjà présent sur le serveur :
-	if( file_exists($repFinal."/".$nouveauNom.".".$extension)) {
-		// ce message là, qui ne devrait pas arriver, écrase les précédents :
-		$erreurs['pieceJointe'] = "Erreur serveur, veuillez renvoyer le formulaire svp.";
-	}
 
-	// 6° => au final, s'il n'y a pas d'erreurs, ie ni pour la pièce jointe, ni pour les autres champs
-	// du formulaire, alors on déplace le fichier :
+	// pour contrer au mieux les failles de sécurité, et s'il n'y a pas d'erreurs jusqu'ici,
+	// on procède à une série de tests imbriqués portant sur la PJ, de façon à sortir de la série
+	// dès la première erreur, et ne pas faire inutilement les tests suivants :
 	if( ! isset($erreurs) ){
-		// le fichier est validé, on le déplace à son emplacement définitif tout en le renommant :
-		$succes = move_uploaded_file($nomTemporaire , $repFinal.'/'.$nouveauNom.'.'.$extension);
-	    if( ! $succes ){
-		    // le déplacement n'a pas pu se faire, on supprime le fichier du serveur :
-		    unlink($nomInitial);
 
-	    	$erreurs['pieceJointe'] = "[erreur de transfert ". $_FILES['pieceJointe']['error']. "]";
-	    	// la valeur de l'erreur renseigne sur sa signification :
-	    	// 0 = a priori ce sont les droits d'accès en écriture qui ne sont pas conformes ...
-	    	//     ou des caractères non autorisés dans le nom du fichier : ex. "/" ...
-	    	// 1 = UPLOAD_ERR_INI_SIZE - Taille du fichier téléchargé > upload_max_filesize dans le php.ini.
-			// 2 = UPLOAD_ERR_FORM_SIZE - Taille du fichier téléchargé > MAX_FILE_SIZE définie dans le formulaire HTML.
-			// 3 = UPLOAD_ERR_PARTIAL - Le fichier n'a été que partiellement téléchargé.
-			// 4 = UPLOAD_ERR_NO_FILE - Aucun fichier n'a été téléchargé.
-			// 6 = UPLOAD_ERR_NO_TMP_DIR - Un dossier temporaire est manquant. (introduit en PHP 5.0.3)
-			// 7 = UPLOAD_ERR_CANT_WRITE - Échec de l'écriture du fichier sur le disque. (introduit en PHP 5.1.0)
-			// 8 = UPLOAD_ERR_EXTENSION - Une extension PHP a arrêté l'envoi de fichier.
-			//		PHP ne propose aucun moyen de déterminer quelle extension est en cause.
-			//		L'examen du phpinfo() peut aider. (introduit en PHP 5.2.0)
-	    }
+	// 1° => on choisit et on protège l'emplacement de stockage sur le serveur :
+	//       (penser à bien définir les droits d'accès en lecture / écriture
+	//       ainsi qu'un solide .htaccess qui interdira de voir l'index-of du répertoire en question)
+		$repFinal = "../ordonnances_jointes";
+
+	// 2° => on vérifie que la taille est bien positive mais ne dépasse pas X Mo :
+		if( ! $taille > 0 ){
+			$erreurs['pieceJointe'] .= " [PJ vide]";
+		}
+		else{
+
+			if( $taille > TAILLE_MAX_PJ ){
+				$erreurs['pieceJointe'] .= " [PJ trop volumineuse]";
+			}
+			else{
+
+	// 3° => avant de stocker le fichier joint, s'il avait bien un nom, on lui en donne un nouveau,
+	//          constitué de la date, du nom du client, suivi de caractères aléatoires :
+				if( $nomInitial == "" ){
+					$erreurs['pieceJointe'] .= " [PJ anonyme]";  // le fichier n'avait pas de nom :
+				}
+				else{
+
+					// avant d'écrire la date dans le nom du fichier, on définit le fuseau horaire par défaut à utiliser :
+					( date_default_timezone_set("Europe/Paris") ) ? $fuseau = "" : $fuseau = " (fuseau horaire invalide)";
+
+					// si on veut que le nom de la PJ ne soit pas tronqué lors de l'envoi du mail,
+					// il ne faut pas laisser d'espaces dedans :
+					$prenomSE = str_replace(" ", "_", $prenom);
+					$nomSE    = str_replace(" ", "_", $nom);
+					$nouveauNom = date("Y-m-d__H-i-s__") . $prenomSE . "__" . $nomSE . "__" . bin2hex(random_bytes(16));
+
+	// 4° => on vérifie qu'un fichier portant le même nom n'est pas déjà présent sur le serveur :
+					if( file_exists($repFinal."/".$nouveauNom.".".$extension)) {
+						// ce message là, qui ne devrait pas arriver, écrase les précédents :
+						$erreurs['pieceJointe'] = "PJ - Erreur serveur, veuillez renvoyer le formulaire svp.";
+					}
+					else{
+
+	// 5° => au final, comme il n'y a pas d'erreurs, alors on déplace le fichier à son emplacement définitif tout en le renommant :
+						$succes = move_uploaded_file($nomTemporaire , $repFinal.'/'.$nouveauNom.'.'.$extension);
+
+						if( ! $succes ){
+							$erreurs['pieceJointe'] = "[PJ - erreur de transfert ". $_FILES['pieceJointe']['error']. "]";
+							// la valeur de l'erreur renseigne sur sa signification :
+							// 0 = a priori ce sont les droits d'accès en écriture qui ne sont pas conformes ...
+							//	 ou des caractères non autorisés dans le nom du fichier : ex. "/" ...
+							// 1 = UPLOAD_ERR_INI_SIZE - Taille du fichier téléchargé > upload_max_filesize dans le php.ini.
+							// 2 = UPLOAD_ERR_FORM_SIZE - Taille du fichier téléchargé > MAX_FILE_SIZE définie dans le formulaire HTML.
+							// 3 = UPLOAD_ERR_PARTIAL - Le fichier n'a été que partiellement téléchargé.
+							// 4 = UPLOAD_ERR_NO_FILE - Aucun fichier n'a été téléchargé.
+							// 6 = UPLOAD_ERR_NO_TMP_DIR - Un dossier temporaire est manquant. (introduit en PHP 5.0.3)
+							// 7 = UPLOAD_ERR_CANT_WRITE - Échec de l'écriture du fichier sur le disque. (introduit en PHP 5.1.0)
+							// 8 = UPLOAD_ERR_EXTENSION - Une extension PHP a arrêté l'envoi de fichier.
+							//		PHP ne propose aucun moyen de déterminer quelle extension est en cause.
+							//		L'examen du phpinfo() peut aider. (introduit en PHP 5.2.0)
+						}
+					}
+				}
+			}
+		}
 	}
-	else{
-		// il y avait des erreurs => on supprime le fichier du serveur :
-	    unlink($nomInitial);
+
+	// si, à un quelconque endroit dans la série de tests ci-dessus,
+	// il y a eu au moins une erreur, on supprime le fichier du serveur :
+	if( isset($erreurs) ){
+		    unlink($nomTemporaire);
 	}
 }
 ?>
@@ -234,10 +204,9 @@ if( isset($_POST['bouton']) ){
 	<link rel='shortcut icon' href='img/favicon.ico'>
 </head>
 
-<body>
+<body onload='placerFocus("iFocus")'>
 	<header>
-		<nav class='cBraille'>
-			<?= $pageCourante['nom'] ?>
+		<nav class='cBraille'><?= $pageCourante['nom'] ?>
 			<ol>
 				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
 				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
@@ -380,7 +349,7 @@ if( isset($_POST['bouton']) ){
 					//     alors que l'UTF-8 les supportent ... donc je choisis UTF-8
 
 
-					// ===============  Objet du mail  ============== //
+					// =================  Objet du mail  ================= //
 
 					// L'objet du message est constitué d'un préfixe (les 4 derniers car. de l'IP) suivi des prénom et nom de l'expéditeur :
 					// (la fonction mb... sert à autoriser les caractères accentués)
@@ -390,7 +359,7 @@ if( isset($_POST['bouton']) ){
 													$prenom . " " .
 													$nom, "UTF-8", "B");
 
-					// ==========  Création du séparateur  ========== //
+					// =============  Création du séparateur  ============ //
 
 					// ici il nous en faut 2 puisque nous devons séparer les 2 alternatives text : plain et html,
 					// ainsi que le message proprement dit et la pièce jointe
@@ -399,7 +368,7 @@ if( isset($_POST['bouton']) ){
 					$separateur_A = $rc . "--" . $boundary_A . $rc; // on intègre les 2 "--" obligatoires et les CRLF
 					$separateur_B = $rc . "--" . $boundary_B . $rc;
 
-					// ============  Création du header  ============ //
+					// ==============  Création du header  =============== //
 
 					// cf dossier "envoi de mails en PHP"
 					$header =	"From: " .
@@ -410,7 +379,7 @@ if( isset($_POST['bouton']) ){
 								"X-Mailer: PHP/" . phpversion() . $rc .
 								"Content-Type: multipart/mixed; boundary=" . $boundary_A;
 
-					// ============= Création du message ============= //
+					// =============== Création du message =============== //
 
 					// Texte placé entre le header et le message proprement dit,
 					// pour les clients mails ne supportant pas le type MIME (ça ne doit pas être très fréquent !..)
@@ -434,11 +403,11 @@ if( isset($_POST['bouton']) ){
 								"Content-Type: text/html; charset='UTF-8'" . $rc .
 								"Content-Transfer-Encoding: 8bit" . $rc .
 								$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br><br>" .
-								$messageClientHtml . "<br><br><br><br>" .
+								$messageClientHtml . "<br>" .
 								"IP  client     = " . $ipClient . "<br>" .
 								"FAI client     = " . $faiClientBrut;
 
-					// ======== Insertion de la pièce jointe ========= //
+					// ========== Insertion de la pièce jointe =========== //
 
 					// 1- on ouvre le fichier en lecture seule :
 					$flux = fopen($repFinal."/".$nouveauNom.".".$extension, "r") or die("impossible à ouvrir !");
@@ -460,70 +429,110 @@ if( isset($_POST['bouton']) ){
 								"Content-Disposition: attachment; filename=" . $nouveauNom . "." . $extension . $rc .
 								$pieceJointe;
 
-					// ============= Dernier "blindage" ============== //
+					// ================== Envoi du mail ================== //
 
-					// si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
+					// En réalité, il faut envisager la préparation de 2 mails différents,
+					// l'un dans le cas 'normal', et l'autre dans le cas où un 'pirate'
+					// voudrait envoyer le mail à partir du site de son choix.
+					// 
+					// Mais dans les 2 cas, on enverra la même confirmation d'envoi du mail,
+					// d'où le stockage de cette confirmation dans une variable (bon 2 en fait !) :
+
+					// on effacera le titre de la page : "Préparation d'ordonnance"
+					// puisque le message est suffisamment explicite :
+					$effaceContenuPage =
+						"<style type='text/css'>" .
+								"#iOrdoPrepaOrdo h3 { display: none }" .
+						"</style>";
+
+					// puis on affichera le message de confirmation
+					//
+					// NB: pour le braille, on positionne le focus
+					//     (comme le mot clé HTML5 'autofocus' ne fonctionne que sur des balises de type <input>,
+					//      on utilise du javascript)
+					$messageConfirmation =
+						"<div class='cMessageConfirmation'>" .
+								"<p id='iFocus'>Merci, votre ordonnance a bien été envoyée.</p>" .
+								"<p>Nous vous répondrons dans les meilleurs délais, " .
+									"sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>" .
+						"</div>";
+
+					$messageConfirmationErreur =
+						"<div class='cMessageConfirmation'>" .
+								"<p id='iFocus'>Aïe, il y a eu un problème ...</p>" .
+								"<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>" .
+						"</div>";
+
+					// Donc, 1er cas : tentative de piratage :
+					// si le formulaire n'est pas posté de notre site, on envoie un mail avec un avertissement :
 					if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
 						&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
 						&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
 						&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0 ){
 
 						$headerAlerte =	"From: " .
-										mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .
+										mb_encode_mimeheader(LABEL_EXP_PIRATE, "UTF-8", "B") .
 										"<" . ADR_EXP_HBG . ">" . $rc .
 										"Reply-To: " . $rc .
 										"MIME-Version: 1.0" . $rc .
 										"X-Mailer: PHP/" . phpversion() . $rc .
-										"Content-Type: text/plain; charset='UTF-8'" . $rc .
+										"Content-Type: text/html; charset='UTF-8'" . $rc .
 										"Content-Transfer-Encoding: 8bit";
-						$messageAlerte =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
-											"Envoi du formulaire à partir d'un site web différent de celui de la pharmacie :" . $rc .
-											$_SERVER['HTTP_REFERER'] . $rc . $rc .
-											"IP  client     = " . $ipClient . $rc .
+						$messageAlerte =	"<br><b>&nbsp;&nbsp;ATTENTION !<br>" .
+											"Ce formulaire a été envoyé à partir d'un site web DIFFERENT de celui de la pharmacie : " . "<br>" .
+											$_SERVER['HTTP_REFERER'] . "</b><br>" .
+											"(par sécurité, la pièce jointe a été supprimée de cet envoi)<br>" .
+											"_______________________________________________________________________________" . "<br><br>" .
+											$date . " - " . $civilite . " " . $prenom . " " . $nom . "  -  " . $adrMailClient . "<br><br>" .
+											$messageClientTxt . "<br><br>" .
+											"IP  client     = " . $ipClient . "<br>" .
 											"FAI client     = " . $faiClientBrut;
-						mail(MAIL_DEST_PHARMA, "Tentative de piratage ?", $messageAlerte, $headerAlerte);
-					    header("Location: https://www.bigouig.fr/"); 
-					} 
-					else{
-					    // envoi de l'e-mail :
-						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
-
-							// on commence par effacer le titre de la page : "Préparation d'ordonnance" ...
-							echo "<style type='text/css'> h3 { display: none } </style>";
-							// ... puisque le message est suffisamment explicite :
-							// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
-							echo "<div class='cMessageConfirmation'>";
-							echo "<p autofocus>Merci, votre ordonnance a bien été envoyée.</p>";
-							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-							echo "</div>";
+						if( mail(MAIL_DEST_PHARMA, "Ordonnance - Tentative de piratage ?", $messageAlerte, $headerAlerte) ){
+							echo $effaceContenuPage;
+							echo $messageConfirmation;
 						}
 						else{
 							// ici, on n'efface pas le titre de la page, pour savoir de quoi parle le message d'erreur
-							echo "<div class='cMessageConfirmation'>";
-							echo "<p autofocus>Aïe, il y a eu un problème ...</p>";
-							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-							echo "</div>";
+							echo $messageConfirmationErreur;
+						};
+					} 
+					else{
+
+					    // 2ème cas : envoi de l'e-mail 'normal' :
+
+						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
+							echo $effaceContenuPage;
+							echo $messageConfirmation;
+						}
+						else{
+							// ici, on n'efface pas le titre de la page, pour savoir de quoi parle le message d'erreur
+							echo $messageConfirmationErreur;
 						}
 					}; 
 					?>
+
 			<?php else : ?>
 
 				<?php
 
 				// - soit le formulaire n'a pas encore été rempli :
 				//        => on pré-remplit les champs avec les données de session
-				//           (avant la mise en place du compte client obligatoire, on laissait les cases vides)
+				//			 (mais si le formulaire a déjà été rempli, on ne modifie pas les valeurs saisies, d'où le if)
 
-				$civilite		= $_SESSION['client']['civilite'];
-				$nom			= $_SESSION['client']['nom'];
-				$prenom			= $_SESSION['client']['prenom'];
-				$adrMailClient	= $_SESSION['client']['mail'];
+				if( ! isset( $civilite )		){		$civilite		= $_SESSION['client']['civilite'];		};
+				if( ! isset( $nom )				){		$nom			= $_SESSION['client']['nom'];			};
+				if( ! isset( $prenom )			){		$prenom			= $_SESSION['client']['prenom'];		};
+				if( ! isset( $adrMailClient )	){		$adrMailClient	= $_SESSION['client']['mail'];			};
 
 				// - soit il y a eu des erreurs dans le formulaire :
 				//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
 				//		ainsi qu'un message d'erreur pour les valeurs concernées,
 				//		le tout en activant l'autofocus, pour se déplacer
-				//		automatiquement jusqu'au formulaire.
+				//		automatiquement sur le 1e champ en erreur.
+
+				// Si jamais il y a plusieurs erreurs, on ne placera le focus que sur la 1ère,
+				// d'où l'utilisation de ce booleen :
+				$focusErreurMis = false;
 				?>
 
 				<div id='iBlablaIntro'>
@@ -566,11 +575,21 @@ if( isset($_POST['bouton']) ){
 						Nous nous occupons de la suite !
 					</div>
 				</article>
-				<sup>(la saisie de tous les champs est obligatoire ; pièce jointe < 2 Mo)</sup>
+				<sup>Veuillez renseigner tous les champs ci-dessous svp. (pièce jointe < <?= TAILLE_MAX_PJ / 1024 / 1024 ?> Mo)</sup>
 				<form method='POST' enctype='multipart/form-data'>
 					<div class='cChampForm'>
 						<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-							<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> <?= isset($erreurs) ? "autofocus" : "" ?> >
+							<?php	if( isset($civilite) ){
+										if( $civilite == "Mme" ){
+											echo " checked";
+										}
+									}
+									else{
+										echo " autofocus";
+										$focusErreurMis = true;
+									}
+							?>
+						>
 						<label for='iCiviliteMme'>Mme</label>
 						<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
 							<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
@@ -581,30 +600,55 @@ if( isset($_POST['bouton']) ){
 					</div>
 					<div class='cChampForm'>
 						<label for='iPrenom'>Prénom</label>
-								<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-					<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
+								<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? 'value="' . $prenom . '"' : "" ?>
+									<?php	if( isset($erreurs['prenom']) && $focusErreurMis == false ){
+												echo " autofocus";
+												$focusErreurMis = true;
+											}
+									?>
+								>
+						<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
 						<label for='iNom'>Nom</label>
-								<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
-					<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
+								<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? 'value="' . $nom . '"' : ""?>
+									<?php	if( isset($erreurs['nom']) && $focusErreurMis == false ){
+												echo " autofocus";
+												$focusErreurMis = true;
+											}
+									?>
+								>
+						<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
 						<label for='iMail'>Mail</label>
-								<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
-					<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
+								<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?>
+									<?php	if( (isset($erreurs['adrMailClient']) || isset($erreurs['pieceJointe'])) && $focusErreurMis == false ){
+												echo " autofocus";
+												$focusErreurMis = true;
+											}
+									?>
+								>
+						<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
 						<label for='iPJ'>Ordonnance</label>
 								<input type='file' id='iPJ' name='pieceJointe' accept=<?= LISTE_EXT_AUTORISEES ?> required >
-					<?php if( isset($erreurs['pieceJointe']) ) { echo "<sub>" . $erreurs['pieceJointe'] . "</sub>"; } ?>
+								<?php // visiblement l'autofocus n'a pas d'effet sur un <input type='file'>, donc on le met ci-dessus :( ?>
+						<?php if( isset($erreurs['pieceJointe']) ) { echo "<sub>" . $erreurs['pieceJointe'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
 							<p>Apportez-nous des précisions qui vous semblent utiles sur votre traitement.
 								<br>Peut-être avez-vous déjà certains produits qu'il serait donc inutile d'ajouter à la préparation ?..</p>
 						<label for='iMessageTextarea'>Message</label>
-								<textarea rows='7' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : "" ?></textarea>
-					<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
+								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required 
+									<?php	if( isset($erreurs['message']) && $focusErreurMis == false ) {
+												echo " autofocus";
+												$focusErreurMis = true;
+											}
+									?>
+								><?= isset($messageClientTxt) ? $messageClientTxt : "" ?></textarea>
+						<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
 					</div>
 					<div class='cBoutonOk'>
 						<button name='bouton'>Envoyer</button>
@@ -626,5 +670,6 @@ if( isset($_POST['bouton']) ){
 			<p>Édition CLR - 2018</p>
 		</section>
 	</footer>
+	<script src='scriptsJs/scripts.js' type='text/javascript'></script>
 </body>
 </html>

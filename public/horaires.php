@@ -54,6 +54,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 	<meta charset='utf-8'>
 	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
+
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
 	<link rel='shortcut icon' href='img/favicon.ico'>
@@ -61,8 +62,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 <body>
 	<header>
-		<nav class='cBraille'>
-			<?= $pageCourante['nom'] ?>
+		<nav class='cBraille'><?= $pageCourante['nom'] ?>
 			<ol>
 				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
 				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
@@ -129,8 +129,9 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 			// ATTENTION : ceci implique de ne RIEN changer aux valeurs de width et de padding left ou right du § CSS intitulé
 			//							"largeurs et marges des jours et des créneaux horaires"
 
-			$deltaP			= getDeltaP($heure)[0];
-			$dessinerTrait	= getDeltaP($heure)[1];
+			$resultat		= getDeltaP($heure);
+			$deltaP			= $resultat[0];
+			$dessinerTrait	= $resultat[1];
 
 			// passé 12h30, on "désactive" le créneau du matin, et passé 19h30, on "désactive" le créneau de l'après-midi,
 			// pour le samedi, passé 16h, on désactive les 2 <div>,
@@ -139,11 +140,11 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 			$apremOff  = ( $heure >= FAMID ) ? true : false;
 			$samediOff = ( $heure >= SA_FAMID ) ? true : false;
 
-			// pharmacieOuverte() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
+			// ouverturePharmacie() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
 		?>
 
 		<section id='iHorairesIntro' class='cSectionContour'><h3><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class='cHeureDuJour'>". $heureH . "</span>" ?></h3>
-			<p><?= pharmacieOuverte( $auj, $heure ) ?></p>
+			<p><?= ouverturePharmacie( $auj, $heure ) ?></p>
 		</section>
 
 		<section class='cBraille'>

@@ -61,8 +61,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 <body>
 	<header>
-		<nav class='cBraille'>
-			<?= $pageCourante['nom'] ?>
+		<nav class='cBraille'><?= $pageCourante['nom'] ?>
 			<ol>
 				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
 				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>

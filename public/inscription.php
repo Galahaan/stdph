@@ -53,66 +53,23 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 // sauvegarder les infos en BDD, on "nettoie" les champs :
 if( isset($_POST['bouton']) ){
 
-	//  *******  CIVILITE  *******
+	// Civilité
+
 	$civilite = $_POST['civilite'];
 
-	// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
+	// Prénom
 
-	// Méthode de remplacement de caractères utilisant str_replace().
-	// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
-	// (même indice) dans le tableau $nouveauCar.
-	// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
-	// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
-	// par le caractère vide : ''.
-	$trouverCar =
-	['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
-	 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
-	 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-	$nouveauCar = [' '];
+	$prenomFiltre = filtrerPrenom($_POST['prenom']);
+	$prenom = $prenomFiltre[0];
+	if( isset($prenomFiltre[1]) ) $erreurs['prenom'] = $prenomFiltre[1];
 
-	// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
-	// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
-	$minusAccMajus =
-	['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
-	 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
-	 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
-	 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
-	 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
-	 'ç' => 'Ç', 'ñ' => 'Ñ'];
+	// Nom
 
-	// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
-	// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
+	$nomFiltre = filtrerNom($_POST['nom']);
+	$nom = $nomFiltre[0];
+	if( isset($nomFiltre[1]) ) $erreurs['nom'] = $nomFiltre[1];
 
-
-	//  ********  PRENOM  ********
-
-	// supprime les balises HTML et PHP
-	$prenom = strip_tags($_POST['prenom']);
-	// str_replace : cf explications sur le remplacement de caractères ci-dessus
-	$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
-	// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
-	$prenom = SuperTrim($prenom);
-	// 1ère lettre en majuscule, les autres en minuscules
-	$prenom = ucfirst(strtolower($prenom));
-	// test de la contrainte sur la longueur de la chaîne
-	if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
-		$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-	}
-
-	//  ********  NOM  ********
-
-	$nom = strip_tags($_POST['nom']);
-	$nom = str_replace($trouverCar, $nouveauCar, $nom);
-	$nom = SuperTrim($nom);
-	// NOM en majuscule
-	$nom = strtoupper($nom);
-	$nom = strtr($nom, $minusAccMajus);
-
-	if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
-		$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-	}
-
-	//  ********  MAIL  ********
+	// Mail
 
 	// "nettoie" la valeur utilisateur :
 	$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
@@ -144,11 +101,11 @@ if( isset($_POST['bouton']) ){
 		$mailExisteDeja = $requete->fetchAll();
 	}
 
-	//  ********  MOT DE PASSE  ********
+	// Mot de passe :
 
 	$password = $_POST['password'];
-		if( (strlen($password) < NB_CAR_MIN_MESSAGE) || (strlen($password) > NB_CAR_MAX_MESSAGE ) ){
-		$erreurs['password'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
+		if( (strlen($password) < NB_CAR_MIN_MDP) || (strlen($password) > NB_CAR_MAX_MDP ) ){
+		$erreurs['password'] = "(entre " . NB_CAR_MIN_MDP . " et " . NB_CAR_MAX_MDP . " caractères)";
 	}
 	$passwordCrypte = password_hash($password, PASSWORD_DEFAULT);
 }
@@ -162,14 +119,13 @@ if( isset($_POST['bouton']) ){
 	<meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
-	<link rel='stylesheet' type='text/css' href='../css/style.css'>
-	<link rel='shortcut icon' href='../img/favicon.ico'>
+	<link rel='stylesheet' type='text/css' href='css/style.css'>
+	<link rel='shortcut icon' href='img/favicon.ico'>
 </head>
 
-<body>
+<body onload='placerFocus("iFocus")'>
 	<header>
-		<nav class='cBraille'>
-			<?= $pageCourante['nom'] ?>
+		<nav class='cBraille'><?= $pageCourante['nom'] ?>
 			<ol>
 				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
 				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
@@ -179,8 +135,8 @@ if( isset($_POST['bouton']) ){
 		</nav>
 
 		<section>
-			<a href='../index.php'>
-				<img id='iLogoCroix' src='../img/croix_caducee.png' alt=''>
+			<a href='index.php' accesskey='r'>
+				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
@@ -188,10 +144,10 @@ if( isset($_POST['bouton']) ){
 		</section>
 		<nav id='iNavigation'>
 			<ul>
-				<li><a href='../index.php'   >Accueil </a></li>
-				<li><a href='../horaires.php'>Horaires</a></li>
-				<li><a href='../equipe.php' >Équipe  </a></li>
-				<li><a href='../contact.php' >Contact </a></li>
+				<li><a <?= ($pageCourante['flag'] == "1000") ? "id = 'iPageCourante'" : "" ?> href='index.php'   >Accueil </a></li>
+				<li><a <?= ($pageCourante['flag'] == "0100") ? "id = 'iPageCourante'" : "" ?> href='horaires.php'>Horaires</a></li>
+				<li><a <?= ($pageCourante['flag'] == "0010") ? "id = 'iPageCourante'" : "" ?> href='equipe.php'  >Équipe  </a></li>
+				<li><a <?= ($pageCourante['flag'] == "0001") ? "id = 'iPageCourante'" : "" ?> href='contact.php' >Contact </a></li>
 			</ul>
 		</nav>
 		<div id='iBandeauConnex'>
@@ -209,7 +165,8 @@ if( isset($_POST['bouton']) ){
 				}
 				else{
 
-					// si le client n'est pas connecté, on affiche le lien pour se connecter :
+					// si le client n'est pas connecté, (normalement c'est impossible d'arriver là
+					// sans être connecté) on affiche le lien pour se connecter :
 					echo "<div id='iClientConnecte'>";
 						echo " ";
 					echo "</div>";
@@ -223,6 +180,14 @@ if( isset($_POST['bouton']) ){
 	</header>
 
 	<main id='iMain'>
+		<nav class='cBraille'>
+			<ol>
+				<li><a href="#iContactInfosPratiques">Informations pratiques</a></li>
+				<li><a href="#iContactCoordonnees">Coordonnées de la <?= NOM_PHARMA ?></a></li>
+				<li><a href="#iContactPlan">Localiser la <?= NOM_PHARMA ?></a></li>
+				<li><a href="#iContactFormulaire">Formulaire de contact</a></li>
+			</ol>
+		</nav>
 
 		<section id='iInscription' class='cSectionContour'><h3>Création de votre compte</h3>
 
@@ -252,21 +217,23 @@ if( isset($_POST['bouton']) ){
 			// $requete->bindValue("passwordB", $passwordCrypte, PDO::PARAM_STR);
 
 			// d'où la solution : construire une chaîne de caractères complète, avec des guillemets là où il en faut !
-			$phraseRequete = "INSERT INTO " . TABLE_CLIENTS .
-							 " (dateCreation, civilite, nom, prenom, mail, password) VALUES ('" .
-							 $dateCrea . "', '" .
-							 $civilite . "', '" .
-							 $nom . "', '" .
-							 $prenom . "', '" .
-							 $adrMailClient . "', '" .
-							 $passwordCrypte . "')";
+			// (avant je délimitais les ch. de car. de la requête par des " et les variables par des ' mais
+			//  j'ai dû inverser le jour où j'ai décidé d'accepter le car. ' dans les noms : ex. Mc Kulloc'h )
+			$phraseRequete = 'INSERT INTO ' . TABLE_CLIENTS .
+							 ' (dateCreation, civilite, nom, prenom, mail, password) VALUES ("' .
+							 $dateCrea . '", "' .
+							 $civilite . '", "' .
+							 $nom . '", "' .
+							 $prenom . '", "' .
+							 $adrMailClient . '", "' .
+							 $passwordCrypte . '")';
 			$requete = $dbConnex->prepare($phraseRequete);
 			$requete->execute();
 
 			$nouvelId = $dbConnex->lastInsertId();
 			echo "<div class='cMessageConfirmation'>";
 				// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
-			echo "<p autofocus>Merci, votre compte a bien été créé.</p>";
+			echo "<p id='iFocus'>Merci, votre compte a bien été créé.</p>";
 			echo "<p>Vous pouvez dorénavant vous connecter ...</p>";
 			echo "<a href='connexion.php'>>  connexion  <</a>";
 			echo "</div>";
@@ -281,8 +248,8 @@ if( isset($_POST['bouton']) ){
 			// - soit il y a eu des erreurs dans le formulaire
 			//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
 			//      ainsi qu'un message d'erreur pour les valeurs concernées,
-			//		le tout en activant l'autofocus, pour se déplacer
-			//		automatiquement jusqu'au formulaire.
+			//      le tout en activant l'autofocus, pour se déplacer
+			//      automatiquement jusqu'au formulaire.
 			//
 			// - soit le mail existait déjà en BDD
 			//   => il faut re-proposer le formulaire comme dans le cas où
@@ -307,12 +274,12 @@ if( isset($_POST['bouton']) ){
 				</div>
 				<div class='cChampForm'>
 					<label for='iPrenom'>Prénom</label>
-					<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
+					<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? 'value="' . $prenom . '"' : ""?> >
 					<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
 					<label for='iNom'>Nom</label>
-					<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
+					<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? 'value="' . $nom . '"' : ""?> >
 					<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
@@ -323,7 +290,7 @@ if( isset($_POST['bouton']) ){
 				</div>
 				<div class='cChampForm'>
 					<label for='idPassword'>Mot de passe</label>
-					<input type='password' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' id='idPassword' name='password' required <?= isset($password) ? $password : ""?> >
+					<input type='password' minlength='<?= NB_CAR_MIN_MDP_HTM ?>' maxlength='<?= NB_CAR_MAX_MDP_HTM ?>' id='idPassword' name='password' required <?= isset($password) ? $password : ""?> >
 					<?php if( isset($erreurs['password']) ) { echo "<sub>" . $erreurs['password'] . "</sub>"; } ?>
 				</div>
 				<div class='cBoutonOk'>
@@ -348,5 +315,6 @@ if( isset($_POST['bouton']) ){
 			<p>Édition CLR - 2018</p>
 		</section>
 	</footer>
+	<script src='scriptsJs/scripts.js' type='text/javascript'></script>
 </body>
 </html>

@@ -79,6 +79,12 @@ img{
 	width: 100%; /* avant c'était 'max-width', mais j'ai l'impression que 'width' tout court est plus logique ... */
 }
 
+/* plans fournis par Google maps */
+#iPdGplan iframe,
+#iContactPlan iframe{
+	width: 100%;
+}
+
 body{
 	/* ligne associée à l'import de la police Google fonts */
 	font-family: 'Raleway', fantasy;
@@ -102,15 +108,15 @@ main{
  	/*min-height: 40rem;*/
 }
 
-body, h3, h4, h5{
-	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h3, les h4 et les h5 */
+body, h3, h4{
+	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h3 et les h4 */
 	/* 		horaires.php : 																							*/
 	/* on utilise le h4 pour chaque jour de la semaine, il FAUT donc qu'il ait la même taille que celle du body 	*/
 	/* sinon, le trait de l'heure se décale vers le haut, les jours sont écrits plus gros ... bref c'est la merde ! */
 }
 /* icône du clicIndex */
 /* on l'exprime en 'rem' pour qu'elle ait la même taille à tous les endroits où             */
-/* l'on s'en sert (bandeau du haut, pharmaDeGarde, mode d'emploi de prepaOrdo ...)          */
+/* l'on s'en sert (bandeau du haut, contact, mode d'emploi de prepaOrdo ...)                */
 /* cette classe ne sert d'ailleurs QUE pour définir la taille de l'icône dans tout le site. */
 /* pour ce qui est de sa position, il ne faudrait surtout pas utiliser cette classe, étant  */
 /* donné qu'il peut y avoir plusieurs fois cette icône dans la page ...                      */
@@ -179,7 +185,7 @@ header section{
 	position: absolute;
 	top: 5%;
 	left: 2%;
-	/*display: none;  on ne veut pas forcément de croix dans le bandeau */
+	display: none;  /* pas de croix en version mobile car pas assez de place */
 }
 
 /* titre + sous-titre + tel bandeau du haut */
@@ -192,7 +198,7 @@ h1, h2, #iTelBandeau{
 /* titre : Pharmacie ... */
 h1{
 	top: 1.5rem;
-	left: 9%;
+	left: 7%;
 }
 /* sous-titre : à Gaël ... */
 h2{
@@ -313,7 +319,7 @@ nav#iNavigation a{
 #iIndexIntro{
 	padding: 8% 2%;
 }
-/* Ces <span> sont ajoutés dans la fonction 'pharmacieOuverte' et non directement dans index.html */
+/* Ces <span> sont ajoutés dans la fonction 'ouverturePharmacie' et non directement dans index.html */
 #iIndexIntro span{
 	font-weight: 700;
 }
@@ -474,10 +480,7 @@ nav#iNavigation a{
 
 /**********************     formulaire de contact     **********************/
 
-/* "Envoyez-nous un message ... " */
-#iContactFormulaire h5{
-	padding-bottom: 2rem;
-}
+/* plus rien de spécial ... */
 
 /***************************************************************************************************************/
 /* Cette partie est commune aux 5 formulaires :                                                                */
@@ -848,10 +851,6 @@ sub{
 #iPdGplan p:last-of-type{
 	padding-bottom: 2rem;
 }
-/* plan dont le lien a été copié à partir de Google maps */
-#iPdGplan iframe{
-	width: 100%;
-}
 
 /***************************************************************************************************************************************/
 /****************************************************           page humour          ***************************************************/
@@ -1004,6 +1003,8 @@ footer section:last-of-type{
 /* - <h3> toujours affichés (c'est le cas par défaut)                 */
 /*        - #iIndexIntro h3                                           */
 /*        - #iHorairesIntro h3                                        */
+/*        - #iContactPlan h3                                          */
+/*        - #iContactFormulaire h3                                    */
 /*        - #iOrdoPrepaOrdo h3                                        */
 /*        - #iCommPrepaComm h3                                        */
 /*        - #iGammesProd h3                                           */
@@ -1014,8 +1015,6 @@ footer section:last-of-type{
 /*        - #iHorairesTableau h3                                      */
 /*        - #iContactInfosPratiques h3                                */
 /*        - #iContactCoordonnees h3                                   */
-/*        - #iContactPlan h3                                          */
-/*        - #iContactFormulaire h3                                    */
 /*        - #iPdGplan h3                                              */
 /*                                                                    */
 /* - <h3> affichés uniquement pour les medias braille                 */
@@ -1045,8 +1044,6 @@ h3#iPdGh32{
 #iHorairesTableau h3,             /* 'Horaires d'ouverture de la ...' */
 #iContactInfosPratiques h3,       /* 'Informations pratiques'         */
 #iContactCoordonnees h3,          /* 'Coordonnées de la ...'          */
-#iContactPlan h3,                 /* 'Localiser la ...'               */
-#iContactFormulaire h3,           /* 'Formulaire de contact'          */
 #iPdGplan h3,                     /* 'Localiser le commissariat ...'  */
 footer h3{
 	display: none;
@@ -1071,15 +1068,17 @@ footer h3{
 /**********************************************************************/
 
 	.cBraille{
-		/*display: none;*/
-		text-align: left;
-		padding-left: 10%;
+		display: none;
 	}
 }
 
 
 /*																															BRAILLE	*/
 @media braille{
+	.cBraille{
+		text-align: left;
+		padding-left: 10%;
+	}
 	#iHorairesTableau{         /* le tableau graphique des horaires est remplacé par une phrase les résumant */
 		display: none;
 	}
@@ -1088,7 +1087,7 @@ footer h3{
 /* 																															460 px	*/
 @media screen and (min-width: 460px){
 
-	body, h3, h4, h5{
+	body, h3, h4{
 		font-size: 2rem; 				/* old 1.7 */
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
@@ -1104,9 +1103,10 @@ footer h3{
 	}
 	#iLogoCroix{
 		width: 14%;
+		display: block;
 	}
 	#iTelBandeau{
-		font-size: 4rem;
+		font-size: 4rem;				/* old 3.5 */
 		top: 52%;
 		left: 52%;
 	}
@@ -1161,18 +1161,18 @@ footer h3{
 @media screen and (min-width: 600px){
 
 	h1{
-		font-size: 3.8rem;				/* old 2.7 - titre de la page : Pharmacie des Tilleuls */
-		top: 7%;						/* old 4% */
+		font-size: 7rem;				/* old 5.5 - titre de la page : Pharmacie des Tilleuls */
+		top: 7%;
 	}
 	h2{
-		font-size: 2.5rem;				/* old 1.7 - sous-titre de la page : à Gaël ... */
+		font-size: 5rem;				/* old 4.5 - sous-titre de la page : à Gaël ... */
+		left: 22%
 	}
 	#iTelBandeau{
-		font-size: 4.5rem;				/* old 4 en mobile - numéro de tel cliquable */
-		left: 34%;						/* old 27% */
+		font-size: 5rem;				/* old 4 en mobile - numéro de tel cliquable */
 	}
 	#iTelBandeau img{
-		display: none; /* sur un écran d'ordi, on n'affiche plus l'icône clicIndex */
+		top: 2.5rem;					/* old 2 */
 	}
 	nav#iNavigation{
 		padding: 1rem; /* hauteur du bandeau de nav */
@@ -1237,21 +1237,16 @@ footer h3{
 		left: 2rem;
 	}
 
-	/* titre : Pharmacie ... */
 	h1{
-		font-size: 4.5rem;				/* old 3.8 */
-		top: 8%;						/* old 7% */
-		left: 21%;						/* old 16% en mobile */
+		font-size: 9rem;				/* old 7 - titre de la page : Pharmacie des Tilleuls */
+		top: 10%;
 	}
-
-	/* sous-titre : Nantes ... */
 	h2{
-		font-size: 2.8rem;				/* old 2.5 */
-		left: 21%;						/* old 16% en mobile */
+		font-size: 6rem;				/* old 5 - sous-titre de la page : à Gaël ... */
+		left: 24%;
 	}
-
 	#iTelBandeau{
-		font-size: 5rem;				/* old 4.5 */
+		font-size: 6rem;				/* old 5 */
 	}
 
 	/* page Index : on passe en 3 vignettes en largeur */
@@ -1278,9 +1273,9 @@ footer h3{
 		height: 4rem;
 		width: 4rem;
 	}
-	/* icône de guidage GPS */
-	#iContactPlan p img, #iPdGplan img{
-		width: 5rem;					/* old 4.5 */
+	#iContactPlan p img{
+		top: -.58rem;
+		/* cf ctrl+F #iTelBandeau img{ pour plus d'explications */
 	}
 
 	/*      page PharmaDeGarde      */
@@ -1303,5 +1298,8 @@ footer h3{
 /* 																															1600 px	*/
 @media screen and (min-width: 1600px){
 
+	#iTelBandeau img, #iContactTel img{
+		display: none; /* sur un écran d'ordi, on n'affiche plus l'icône clicIndex */
+	}
 
 }

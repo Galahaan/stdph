@@ -54,69 +54,23 @@ define("PAGE_EN_COURS", "prepaCommande.php");
 // Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 if( isset($_POST['bouton']) ){
 
-	//  *******  CIVILITE  *******
+	// Civilité
+
 	$civilite = $_POST['civilite'];
 
-	// pour traiter le prénom et le nom, on va travailler un peu sur les chaînes de caractères :
+	// Prénom
 
-	// Méthode de remplacement de caractères utilisant str_replace().
-	// Chaque caractère du tableau $trouverCar sera remplacé par son équivalent
-	// (même indice) dans le tableau $nouveauCar.
-	// Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
-	// ce qui est le cas pour tous les caractères sauf le '_', str_replace le remplace
-	// par le caractère vide : ''.
-	$trouverCar =
-	['_', '²', '&', '~', '#', '"', "'", '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
-	 '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
-	 '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-	$nouveauCar = [' '];
+	$prenomFiltre = filtrerPrenom($_POST['prenom']);
+	$prenom = $prenomFiltre[0];
+	if( isset($prenomFiltre[1]) ) $erreurs['prenom'] = $prenomFiltre[1];
 
-	// Méthode de remplacement de caractères utilisant strtr() équivalente en temps à str_replace(),
-	// ici on a directement dans 1 seul tableau le remplaçant de chaque caractère :
-	$minusAccMajus =
-	['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
-	 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
-	 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
-	 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
-	 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
-	 'ç' => 'Ç', 'ñ' => 'Ñ'];
+	// Nom
 
-	// utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
-	// et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
+	$nomFiltre = filtrerNom($_POST['nom']);
+	$nom = $nomFiltre[0];
+	if( isset($nomFiltre[1]) ) $erreurs['nom'] = $nomFiltre[1];
 
-
-	//  ********  PRENOM  ********
-
-	// supprime les balises HTML et PHP
-	$prenom = strip_tags($_POST['prenom']);
-	// cf explications sur le remplacement de car. ci-dessus
-	$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
-	// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne
-	$prenom = superTrim($prenom);
-	// remplace les espaces " " par des soulignés "_"
-	$prenom = str_replace(" ", "_", $prenom);
-	// 1ère lettre en majuscule, les autres en minuscules
-	$prenom = ucfirst(strtolower($prenom));
-	// test de la contrainte sur la longueur de la chaîne
-	if( (strlen($prenom) < NB_CAR_MIN) || (strlen($prenom) > NB_CAR_MAX ) ){
-		$erreurs['prenom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-	}
-
-	//  ********  NOM  ********
-
-	$nom = strip_tags($_POST['nom']);
-	$nom = str_replace($trouverCar, $nouveauCar, $nom);
-	$nom = superTrim($nom);
-	$nom = str_replace(" ", "_", trim($nom));
-	// NOM en majuscule
-	$nom = strtoupper($nom);
-	$nom = strtr($nom, $minusAccMajus);
-
-	if( (strlen($nom) < NB_CAR_MIN) || (strlen($nom) > NB_CAR_MAX ) ){
-		$erreurs['nom'] = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
-	}
-
-	//  ********  MAIL  ********
+	// Mail
 
 	// "nettoie" la valeur utilisateur :
 	$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
@@ -126,10 +80,8 @@ if( isset($_POST['bouton']) ){
 		$erreurs['adrMailClient'] = "(format incorrect)"; 
 	};
 
-	//  ********  MESSAGE  ********
+	// Message
 
-	// on traite volontairement le cas du message AVANT celui de la pièce jointe pour
-	// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les tests.
 	// (chunk_split limite la longueur d'une ligne à 76 car. pour respecter la RFC 2045)
 	$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
 	if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
@@ -151,10 +103,9 @@ if( isset($_POST['bouton']) ){
 	<link rel='shortcut icon' href='img/favicon.ico'>
 </head>
 
-<body>
+<body onload='placerFocus("iFocus")'>
 	<header>
-		<nav class='cBraille'>
-			<?= $pageCourante['nom'] ?>
+		<nav class='cBraille'><?= $pageCourante['nom'] ?>
 			<ol>
 				<li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
 				<li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
@@ -297,7 +248,7 @@ if( isset($_POST['bouton']) ){
 					//     alors que l'UTF-8 les supportent ... donc je choisis UTF-8
 
 
-					// ===============  Objet du mail  ============== //
+					// =================  Objet du mail  ================= //
 
 					// L'objet du message est constitué d'un préfixe (les 4 derniers car. de l'IP) suivi des prénom et nom de l'expéditeur :
 					// (la fonction mb... sert à autoriser les caractères accentués)
@@ -307,7 +258,7 @@ if( isset($_POST['bouton']) ){
 													$prenom . " " .
 													$nom, "UTF-8", "B");
 
-					// ============  Création du header  ============ //
+					// ===============  Création du header  ============== //
 
 					// cf dossier "envoi de mails en PHP"
 					$header =	"From: " .
@@ -319,7 +270,7 @@ if( isset($_POST['bouton']) ){
 								"Content-type: text/html; charset=UTF-8" . $rc .
 			           			"Content-Transfer-Encoding: 8bit";
 
-					// ============= Création du message ============= //
+					// =============== Création du message =============== //
 
 					// version HTML seule
 					$message =	$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br>" . "<br>" .
@@ -327,49 +278,83 @@ if( isset($_POST['bouton']) ){
 								"IP  client     = " . $ipClient . "<br>" .
 								"FAI client     = " . $faiClientBrut;
 
-					// ============= Dernier "blindage" ============== //
+					// ================== Envoi du mail ================== //
 
-					// si le formulaire n'est pas posté de notre site, on renvoie vers la page d'accueil
+					// En réalité, il faut envisager la préparation de 2 mails différents,
+					// l'un dans le cas 'normal', et l'autre dans le cas où un 'pirate'
+					// voudrait envoyer le mail à partir du site de son choix.
+					// 
+					// Mais dans les 2 cas, on enverra la même confirmation d'envoi du mail,
+					// d'où le stockage de cette confirmation dans une variable (bon 2 en fait !) :
+
+					// on effacera le titre de la page : "Préparation de commande"
+					// puisque le message est suffisamment explicite :
+					$effaceContenuPage =
+						"<style type='text/css'>" .
+								"#iCommPrepaComm h3 { display: none }" .
+						"</style>";
+
+					// puis on affichera le message de confirmation
+					//
+					// NB: pour le braille, on positionne le focus
+					//     (comme le mot clé HTML5 'autofocus' ne fonctionne que sur des balises de type <input>,
+					//      on utilise du javascript)
+					$messageConfirmation =
+						"<div class='cMessageConfirmation'>" .
+								"<p id='iFocus'>Merci, votre commande a bien été envoyée.</p>" .
+								"<p>Nous vous répondrons dans les meilleurs délais, " .
+									"sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>" .
+						"</div>";
+
+					$messageConfirmationErreur =
+						"<div class='cMessageConfirmation'>" .
+								"<p id='iFocus'>Aïe, il y a eu un problème ...</p>" .
+								"<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>" .
+						"</div>";
+
+					// Donc, 1er cas : tentative de piratage :
+					// si le formulaire n'est pas posté de notre site, on envoie un mail avec un avertissement :
 					if(    strcmp( $_SERVER['HTTP_REFERER'], ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
 						&& strcmp( $_SERVER['HTTP_REFERER'], S_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
 						&& strcmp( $_SERVER['HTTP_REFERER'], W_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0
 						&& strcmp( $_SERVER['HTTP_REFERER'], SW_ADRESSE_SITE_PHARMACIE . PAGE_EN_COURS ) != 0 ){
 
 						$headerAlerte =	"From: " .
-										mb_encode_mimeheader("Expéditeur indésirable", "UTF-8", "B") .
+										mb_encode_mimeheader(LABEL_EXP_PIRATE, "UTF-8", "B") .
 										"<" . ADR_EXP_HBG . ">" . $rc .
 										"Reply-To: " . $rc .
 										"MIME-Version: 1.0" . $rc .
 										"X-Mailer: PHP/" . phpversion() . $rc .
-										"Content-Type: text/plain; charset='UTF-8'" . $rc .
+										"Content-Type: text/html; charset='UTF-8'" . $rc .
 										"Content-Transfer-Encoding: 8bit";
-						$messageAlerte =	$date . " - " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
-											"Envoi du formulaire à partir d'un site web différent de celui de la pharmacie :" . $rc .
-											$_SERVER['HTTP_REFERER'] . $rc . $rc .
-											"IP  client     = " . $ipClient . $rc .
+						$messageAlerte =	"<br><b>&nbsp;&nbsp;ATTENTION !<br>" .
+											"Ce formulaire a été envoyé à partir d'un site web DIFFERENT de celui de la pharmacie : " . "<br>" .
+											$_SERVER['HTTP_REFERER'] . "</b><br>" .
+											"_______________________________________________________________________________" . "<br><br>" .
+											$date . " - " . $civilite . " " . $prenom . " " . $nom . "  -  " . $adrMailClient . "<br><br>" .
+											$messageClientTxt . "<br><br>" .
+											"IP  client     = " . $ipClient . "<br>" .
 											"FAI client     = " . $faiClientBrut;
-						mail(MAIL_DEST_PHARMA, "Tentative de piratage ?", $messageAlerte, $headerAlerte);
-					    header("Location: https://www.bigouig.fr/"); 
-					} 
-					else{
-					    // envoi de l'e-mail :
-						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
-
-							// on commence par effacer le titre de la page : "Préparation de commande" ...
-							echo "<style type='text/css'> h3 { display: none } </style>";
-							// ... puisque le message est suffisamment explicite :
-							// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
-							echo "<div class='cMessageConfirmation'>";
-							echo "<p autofocus>Merci, votre commande a bien été envoyée.</p>";
-							echo "<p>Nous vous répondrons dans les meilleurs délais, sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>";
-							echo "</div>";
+						if( mail(MAIL_DEST_PHARMA, "Commande - Tentative de piratage ?", $messageAlerte, $headerAlerte) ){
+							echo $effaceContenuPage;
+							echo $messageConfirmation;
 						}
 						else{
 							// ici, on n'efface pas le titre de la page, pour savoir de quoi parle le message d'erreur
-							echo "<div class='cMessageConfirmation'>";
-							echo "<p autofocus>Aïe, il y a eu un problème ...</p>";
-							echo "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>";
-							echo "</div>";
+							echo $messageConfirmationErreur;
+						};
+					} 
+					else{
+
+					    // 2ème cas : envoi de l'e-mail 'normal' :
+
+						if( mail(MAIL_DEST_PHARMA, $objet, $message, $header) ){
+							echo $effaceContenuPage;
+							echo $messageConfirmation;
+						}
+						else{
+							// ici, on n'efface pas le titre de la page, pour savoir de quoi parle le message d'erreur
+							echo $messageConfirmationErreur;
 						}
 					}; 
 					?>
@@ -378,15 +363,26 @@ if( isset($_POST['bouton']) ){
 
 				<?php
 
+				// - soit le formulaire n'a pas encore été rempli :
+				//        => on pré-remplit les champs avec les données de session
+				//			 (mais si le formulaire a déjà été rempli, on ne modifie pas les valeurs saisies, d'où le if)
+
+				if( ! isset( $civilite )		){		$civilite		= $_SESSION['client']['civilite'];		};
+				if( ! isset( $nom )				){		$nom			= $_SESSION['client']['nom'];			};
+				if( ! isset( $prenom )			){		$prenom			= $_SESSION['client']['prenom'];		};
+				if( ! isset( $adrMailClient )	){		$adrMailClient	= $_SESSION['client']['mail'];			};
+
 				// - soit il y a eu des erreurs dans le formulaire :
 				//   => alors on ré-affiche les valeurs saisies (grâce à "value"),
 				//		ainsi qu'un message d'erreur pour les valeurs concernées,
 				//		le tout en activant l'autofocus, pour se déplacer
-				//		automatiquement jusqu'au formulaire.
-				//
-				// - soit le formulaire n'a pas encore été rempli
-				//   => on laisse les cases vides.
+				//		automatiquement sur le 1e champ en erreur.
+
+				// Si jamais il y a plusieurs erreurs, on ne placera le focus que sur la 1ère,
+				// d'où l'utilisation de ce booleen :
+				$focusErreurMis = false;
 				?>
+
 				<div id='iBlablaIntro'>
 					<p>Envoyez-nous votre commande via le formulaire ci-dessous.</p>
 					<p>Écrivez librement les produits dont vous avez besoin.</p>
@@ -395,11 +391,21 @@ if( isset($_POST['bouton']) ){
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 
-				<sup>(la saisie de tous les champs est obligatoire)</sup>
+				<sup>Veuillez renseigner tous les champs ci-dessous svp.</sup>
 				<form method='POST' enctype='multipart/form-data'>
 					<div class='cChampForm'>
 						<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-							<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> <?= isset($erreurs) ? "autofocus" : "" ?> >
+							<?php	if( isset($civilite) ){
+										if( $civilite == "Mme" ){
+											echo " checked";
+										}
+									}
+									else{
+										echo " autofocus";
+										$focusErreurMis = true;
+									}
+							?>
+						>
 						<label for='iCiviliteMme'>Mme</label>
 						<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
 							<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
@@ -410,23 +416,47 @@ if( isset($_POST['bouton']) ){
 					</div>
 					<div class='cChampForm'>
 						<label for='iPrenom'>Prénom</label>
-								<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? "value=" . $prenom : ""?> >
-					<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
+								<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? 'value="' . $prenom . '"' : "" ?>
+									<?php	if( isset($erreurs['prenom']) && $focusErreurMis == false ){
+												echo " autofocus";
+												$focusErreurMis = true;
+											}
+									?>
+								>
+						<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
 						<label for='iNom'>Nom</label>
-								<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? "value=" . $nom : ""?> >
-					<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
+								<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? 'value="' . $nom . '"' : ""?>
+									<?php	if( isset($erreurs['nom']) && $focusErreurMis == false ){
+												echo " autofocus";
+												$focusErreurMis = true;
+											}
+									?>
+								>
+						<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
 						<label for='iMail'>Mail</label>
-								<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
-					<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
+								<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?>
+									<?php	if( isset($erreurs['adrMailClient'])  && $focusErreurMis == false ){
+												echo " autofocus";
+												$focusErreurMis = true;
+											}
+									?>
+								>
+						<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
 						<label for='iMessageTextarea'>Commande</label>
-								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
-					<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
+								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required
+									<?php	if( isset($erreurs['message']) && $focusErreurMis == false ) {
+												echo " autofocus";
+												$focusErreurMis = true;
+											}
+									?>
+								><?= isset($messageClientTxt) ? $messageClientTxt : "" ?></textarea>
+						<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
 					</div>
 					<div class='cBoutonOk'>
 						<button name='bouton'>Envoyer</button>
@@ -448,5 +478,6 @@ if( isset($_POST['bouton']) ){
 			<p>Édition CLR - 2018</p>
 		</section>
 	</footer>
+	<script src='scriptsJs/scripts.js' type='text/javascript'></script>
 </body>
 </html>

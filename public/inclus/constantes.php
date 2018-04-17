@@ -66,6 +66,7 @@ define("ADR_EXP_HBG", "bigouigfiy@cluster020.hosting.ovh.net");
 
 // nom explicite pour l'expéditeur des mails : (possible avec accents !)
 define("LABEL_EXP", "Site pharmacie");
+define("LABEL_EXP_PIRATE", "Site pharmacie - Attention");
 
 // adresse du site de la pharmacie :
 define("ADRESSE_SITE_PHARMACIE", "http://bigouig.fr/");
@@ -79,8 +80,8 @@ define("MAIL_DEST_PHARMA", "clr.tstph@use.startmail.com");
 // pour vérifier les 1ers mails officiels :
 //	define("MAIL_DEST_CLR",    "clr.tstph@use.startmail.com");
 
-// taille max de la pièce jointe : 2 Mo = 2097152 octets
-define("TAILLE_MAX_PJ", 2097152);
+// taille max de la pièce jointe : 5 Mo = 5242880 octets
+define("TAILLE_MAX_PJ", 5242880);
 
 // extensions autorisées pour la pièce jointe : cf aussi ligne : " switch ($extension) " en ligne 177 de prepaCommande
 define("LISTE_EXT_AUTORISEES", '".jpe, .jpg, .jpeg, .png, .gif, .pdf"');
@@ -96,16 +97,18 @@ define("LISTE_EXT_AUTORISEES", '".jpe, .jpg, .jpeg, .png, .gif, .pdf"');
 // Nombre de caractères min et max pour les nom et prénom :
 define("NB_CAR_MIN", 2);
 define("NB_CAR_MAX", 40);
-
-// si on veut utiliser la vérification naturelle du HTML :
 define("NB_CAR_MIN_HTM", 1);
-define("NB_CAR_MAX_HTM", 40);
+define("NB_CAR_MAX_HTM", 45);
+
+// Nombre de caractères min et max pour le mot de passe :
+define("NB_CAR_MIN_MDP", 5);
+define("NB_CAR_MAX_MDP", 20);
+define("NB_CAR_MIN_MDP_HTM", 2);
+define("NB_CAR_MAX_MDP_HTM", 25);
 
 // Nombre de caractères min et max pour le texte libre :
-define("NB_CAR_MIN_MESSAGE", 5);
+define("NB_CAR_MIN_MESSAGE", 3);
 define("NB_CAR_MAX_MESSAGE", 1000);
-
-// si on veut utiliser la vérification naturelle du HTML :
 define("NB_CAR_MIN_MESSAGE_HTM", 1);
 define("NB_CAR_MAX_MESSAGE_HTM", 1000);
 

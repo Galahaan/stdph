@@ -74,9 +74,136 @@ function require_onceCLR( $nomDuFichier ){
 // After this, if you copy paste your codes to another servers, it will still run, without requiring any further re-configurations.
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
+//							Quelques variables globales
+//
+//		destinées aux 2 fonctions de remplacement de caractères ci-dessous
+//		(  filtrerPrenom() et filtrerNom()  )
+//
+// - la 1ère utilise    str_replace()
+//
+// 		=>	chaque caractère du tableau $trouverCar sera remplacé par son équivalent
+// 			(même indice) dans le tableau $nouveauCar.
+// 			Quand il n'y a pas de correspondance pour un caractère de $trouverCar dans $nouveauCar,
+// 			ce qui est le cas pour tous les caractères sauf le _ et le ", str_replace le remplace
+// 			par le caractère vide : ''.
+//
+//
+// 		A FAIRE éventuellement :
+// 			utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
+// 			et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
+//
+//
+//
+// - la 2ème utilise en plus    strtr()     (équivalente en temps à str_replace())
+//
+// 		=>	ici on a directement dans 1 seul tableau, $minusAccMajus, un caractère
+// 			et son remplaçant
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+$trouverCar =
+['_', '"', '²', '&', '~', '#', '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
+ '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
+ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 
+$nouveauCar = [' ', "'"];
 
+$minusAccMajus =
+['â' => 'Â', 'ä' => 'Ä', 'à' => 'À',
+ 'ê' => 'Ê', 'ë' => 'Ë', 'è' => 'È', 'é' => 'É', 
+ 'î' => 'Î', 'ï' => 'Ï', 'ì' => 'Ì',
+ 'ô' => 'Ô', 'ö' => 'Ö', 'ò' => 'Ò',
+ 'û' => 'Û', 'ü' => 'Ü', 'ù' => 'Ù',
+ 'ç' => 'Ç', 'ñ' => 'Ñ'];
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
+//						filtrerPrenom()
+//
+// Fonction qui sert à rendre le prénom "inoffensif et joli" :
+//
+// - inoffensif : du point de vue de la sécurité, on essaie de supprimer les codes néfastes
+//
+// - joli : première lettre en majuscule, puis minuscules
+//          (et on autorise les tirets -   et les apostrophes simples ')
+//
+// Elle prend en entrée la variable directement issue du formulaire : $_POST['prenom']
+//
+// Elle renvoie en sortie le prénom, "nettoyé" si besoin, ainsi qu'une erreur éventuelle
+// 
+///////////////////////////////////////////////////////////////////////////////////////////////
+function filtrerPrenom($prenomPOST) {
+
+	// on commence par donner à la fonction filtrerPrenom() la
+	// connaissance des 2 variables $trouverCar et $nouveauCar :
+	global $trouverCar, $nouveauCar;
+
+	// longueur de la chaîne initiale
+	$nbCar = strlen($prenomPOST);
+
+	// supprime les balises HTML et PHP :
+	// (avant c'était dans le else ci-dessous, mais en cas de $nbCar invalide,
+	//  le champ était vide lors du rechargement de la page ... c'était bof !)
+	$prenom = strip_tags($prenomPOST);
+
+	// test de la contrainte sur la longueur de la chaîne :
+	if( ($nbCar < NB_CAR_MIN) || ($nbCar > NB_CAR_MAX) ){
+		$erreur = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
+	}
+	else{
+		// cf explications sur le remplacement de car. ci-dessus :
+		$prenom = str_replace($trouverCar, $nouveauCar, $prenom);
+		// enlève les espaces de début, fin, et les double-espaces en milieu de chaîne :
+		$prenom = superTrim($prenom);
+		// 1ère lettre de chaque mot (délimités par un tiret '-', un espace ' ' ou une tabulation)
+		// en majuscule, les autres en minuscules :
+		$prenom = ucwords(strtolower($prenom), "- \t");
+		// on informe l'utilisateur en cas de modif de sa saisie :
+		if( $prenom != $prenomPOST ){
+			$erreur = "(orthographe modifiée => veuillez revalider)";
+		}
+	}
+	return [$prenom, $erreur];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
+//						filtrerNom()
+//
+// Fonction qui sert à rendre le nom "inoffensif et joli" :
+//
+// - inoffensif : du point de vue de la sécurité, on essaie de supprimer les codes néfastes
+//
+// - joli : toutes les lettres en majuscule, même les lettres accentuées
+//          (et on autorise les tirets -   et les apostrophes simples ')
+//
+// Elle prend en entrée la variable directement issue du formulaire : $_POST['nom']
+//
+// Elle renvoie en sortie le nom, "nettoyé" si besoin, ainsi qu'une erreur éventuelle
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+function filtrerNom($nomPOST) {
+
+	global $trouverCar, $nouveauCar, $minusAccMajus;
+	$nbCar = strlen($nomPOST);
+	$nom = strip_tags($nomPOST);
+
+	if( ($nbCar < NB_CAR_MIN) || ($nbCar > NB_CAR_MAX) ){
+		$erreur = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
+	}
+	else{
+		$nom = str_replace($trouverCar, $nouveauCar, $nom);
+		$nom = superTrim($nom);
+		$nom = strtoupper($nom);
+		$nom = strtr($nom, $minusAccMajus);
+		if( $nom != $nomPOST ){
+			$erreur = "(orthographe modifiée => veuillez revalider)";
+		}
+	}
+	return [$nom, $erreur];
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -88,16 +215,17 @@ function require_onceCLR( $nomDuFichier ){
 function getIpAdr() {
 	// IP si internet partagé
 	if (isset($_SERVER['HTTP_CLIENT_IP'])) {
-		return $_SERVER['HTTP_CLIENT_IP'];
+		$ip = $_SERVER['HTTP_CLIENT_IP'];
 	}
 	// IP derrière un proxy
 	elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		return $_SERVER['HTTP_X_FORWARDED_FOR'];
+		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 	}
 	// Sinon : IP normale
 	else {
-		return (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
+		$ip = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
 	}
+	return $ip;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,7 +260,6 @@ print_r(json_decode($result, true));
 
     return json_decode($result, true);
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -201,7 +328,7 @@ function heureActuelle( $format ) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//						pharmacieOuverte( $jour, $heure )
+//						ouverturePharmacie( $jour, $heure )
 //
 // Fonction qui donne l'état d'ouverture de la pharmacie à l'heure passée en paramètre
 // (utilisée par index.php et horaires.php)
@@ -212,54 +339,55 @@ function heureActuelle( $format ) {
 // - la pharmacie ferme dans X mn
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function pharmacieOuverte( $jour, $heure ) {
+function ouverturePharmacie( $jour, $heure ) {
 
 	if( $jour != "sam" && $jour != "dim" ){
 		// on est un jour de semaine hors samedi :
 		if( ($heure < (OMATD - REBOURSD)) || ($heure >= FAMID) ){
-			return "La pharmacie est actuellement <span class='cFermee'>fermée</span>."; // les <span> ne sont pris en compte en CSS que pour la page index
+			$infoOuverture = "La pharmacie est actuellement <span class='cFermee'>fermée</span>."; // les <span> ne sont pris en compte en CSS que pour la page index
 		}
 		else if( $heure < OMATD ){
-			return "Patience, la pharmacie ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			$infoOuverture = "Patience, la pharmacie ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= OMATD) && ($heure < (FMATD - REBOURSD)) ){
-			return "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
+			$infoOuverture = "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < FMATD ){
-			return "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (FMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (FMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= FMATD) && ($heure < (OAMID - REBOURSD)) ){
-			return "C'est la pause déjeuner, la pharmacie est actuellement <span class='cFermee'>fermée</span>.";
+			$infoOuverture = "C'est la pause déjeuner, la pharmacie est actuellement <span class='cFermee'>fermée</span>.";
 		}
 		else if( $heure < OAMID ){
-			return "Patience, la pharmacie ré-ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (OAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			$infoOuverture = "Patience, la pharmacie ré-ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (OAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= OAMID) && ($heure < (FAMID - REBOURSD)) ){
-			return "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
+			$infoOuverture = "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < FAMID ){
-			return "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
 	else if( $jour == "sam" ){
 		// on est un samedi :
 		if( ($heure < (SA_OMATD - REBOURSD)) || ($heure >= SA_FAMID) ){
-			return "La pharmacie est actuellement <span class='cFermee'>fermée</span>.";
+			$infoOuverture = "La pharmacie est actuellement <span class='cFermee'>fermée</span>.";
 		}
 		else if( $heure < SA_OMATD ){
-			return "Patience, la pharmacie ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (SA_OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			$infoOuverture = "Patience, la pharmacie ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (SA_OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= SA_OMATD) && ($heure < (SA_FAMID - REBOURSD)) ){
-			return "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
+			$infoOuverture = "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < SA_FAMID ){
-			return "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (SA_FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
+			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (SA_FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
 	else{
 		// on est un dimanche :
-		return "La pharmacie est actuellement <span class='cFermee'>fermée</span>, nous vous souhaitons un bon week-end !";
+		$infoOuverture = "La pharmacie est actuellement <span class='cFermee'>fermée</span>, nous vous souhaitons un bon week-end !";
 	}
+	return $infoOuverture;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,12 +549,12 @@ function pageCourante( $request_uri ) {
 			$nomPage = "Informations / conseils";
 			break;
 	}
-	return( ['flag' => $flagPC, 'nom' => $nomPage] );
+	return ['flag' => $flagPC, 'nom' => $nomPage];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//							combinaisonRC( $http_user_agent )
+//							racClavier( $http_user_agent )
 //
 // Cette fonction, utilisée par aide.php, a pour but d'indiquer à l'utilisateur la bonne
 // combinaison de touches pour les raccourcis clavier.
@@ -442,20 +570,53 @@ function pageCourante( $request_uri ) {
 // - une chaîne de caractères toute simple donnant la combinaison de touches, ex.: 'ALT'
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function combinaisonRC( $http_user_agent ) {
+function racClavier( $http_user_agent ) {
 
-	// on identifie le navigateur :
+	// Dans un 1er temps, on identifie le navigateur :
+
+	// voici qqs ex. de la valeur de $_SERVER['HTTP_USER_AGENT'] :
+
+	// MAC Firefox	=> Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:58.0) GecKo/20100101 Firefox/58.0
+	// W8  Firefox	=> Mozilla/5.0 (Windows NT 6.2; Win64; x64;      rv:58.0) Gecko/20100101 Firefox/58.0
+
+	// MAC Chrome	=> Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36
+	// W8  Chrome	=> Mozilla/5.0 (Windows NT 6.2; Win64; x64)        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36
+
+	// MAC Safari	=> Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/604.5.6 (KHTML, like Gecko) Version/11.0.3 Safari/604.5.6
+
+	// MAC Opera	=> Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36 OPR/51.0.2830.55
+
+	// W8  Lynx		=> Lynx/2.8.9dev.17 libwww-FM/2.14FM SSL-MM/1.4.1 OpenSSL/1.0.2o
+
+
+	// d'où l'importance de l'ORDRE des tests ci-desssous !!!
+
 	if( strpos($http_user_agent, 'MSIE') !== FALSE ||
 	    strpos($http_user_agent, 'Trident') !== FALSE ||
 	    strpos($http_user_agent, 'Edge') !== FALSE ){
 	    $nav = "MSIE";
 	    $phrase = "Dans le cas actuel (Internet Explorer / ";
-
 	}
-	elseif( strpos($http_user_agent, 'zilla') !== FALSE ||
-	        strpos($http_user_agent, 'fox') !== FALSE){
+	elseif( strpos($http_user_agent, 'irefox') !== FALSE ){
 	    $nav = "MZFF";
 	    $phrase = "Dans le cas actuel (Firefox / ";
+	}
+	elseif( strpos($http_user_agent, 'OPR') !== FALSE ){
+	    $nav = "OPE15";
+	    $phrase = "Dans le cas actuel (Opera / ";                              // Attention : on ne sait pas différencier Ope15 et Ope12   !!!
+	}
+	elseif( strpos($http_user_agent, 'afari') !== FALSE &&
+			strpos($http_user_agent, 'hrome') == FALSE ){
+	    $nav = "APSA";
+	    $phrase = "Dans le cas actuel (Safari / ";
+	}
+	elseif( strpos($http_user_agent, 'hrome') !== FALSE ){
+	    $nav = "GGCH";
+	    $phrase = "Dans le cas actuel (Chrome / ";
+	}
+	elseif( strpos($http_user_agent, 'ynx') !== FALSE ){
+	    $nav = "LYNX";
+	    $phrase = "Dans le cas actuel (Lynx / ";
 	}
 	else{
 		$nav = "XXXX";
@@ -463,16 +624,15 @@ function combinaisonRC( $http_user_agent ) {
 	}
 
 	// on identifie l'OS :
-	if( strpos($http_user_agent, 'Win') !== FALSE ){
+	if( strpos($http_user_agent, 'indows') !== FALSE ){
 	    $os = "WIN";
 	    $phrase .= "Windows) ";
-	    
 	}
 	elseif( strpos($http_user_agent, 'linux') !== FALSE ){
 	    $os = "LIN";
 	    $phrase .= "Linux) ";
 	}
-	elseif( strpos($http_user_agent, 'mac') !== FALSE ){
+	elseif( strpos($http_user_agent, 'acintosh') !== FALSE ){
 	    $os = "MAC";
 	    $phrase .= "MacOS) ";
 	}
@@ -497,6 +657,7 @@ function combinaisonRC( $http_user_agent ) {
 	            case 'OPE12':
 	            	$combi = "SHIFT + ESC";
 	                break;
+	            case 'LYNX':
 	            default:
 	            	$combi = "";
 	            }
@@ -513,6 +674,7 @@ function combinaisonRC( $http_user_agent ) {
 	            case 'MSIE':
 	            case 'OPE15':
 	            case 'OPE12':
+	            case 'LYNX':
 	            default:
 	            	$combi = "";
 	            }
@@ -520,13 +682,14 @@ function combinaisonRC( $http_user_agent ) {
 	    case 'MAC':
 	        switch ($nav) {
 	            case 'GGCH':
+	            case 'OPE15':
 	            case 'APSA':
 	            case 'MZFF':
 	            	$combi = "CTRL + ALT";
 	                break;
 	            case 'MSIE':
-	            case 'OPE15':
 	            case 'OPE12':
+	            case 'LYNX':
 	            default:
 	            	$combi = "";
 	            }

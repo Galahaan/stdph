@@ -68,14 +68,16 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
         <p>Quand ils existent, ils sont indiqués par des [lettres entre crochets].
         La combinaison de touches dépend de l'OS (Windows, Linux, Mac, ...) et du navigateur utilisé (Mozilla Firefox, Google Chrome, Microsoft Internet Explorer, Opera, Apple Safari, ...).
         <br>
-        <a href='https://www.w3schools.com/tags/att_global_accesskey.asp'>source W3schools sur les raccourcis clavier</a>
+        <a href='https://www.w3schools.com/tags/att_global_accesskey.asp'>(lien : source W3schools sur les raccourcis clavier)</a>
         <br><br>
         <?= $_SERVER['HTTP_USER_AGENT'] ?>
         <br><br>
-        <?php $combinaisonRC = combinaisonRC($_SERVER['HTTP_USER_AGENT']); $phrase = $combinaisonRC['phrase']; $combi = $combinaisonRC['combi']; ?>
+        <?php $racClavier = racClavier($_SERVER['HTTP_USER_AGENT']); $phrase = $racClavier['phrase']; $combi = $racClavier['combi']; ?>
         <?= $phrase ?>
         <br><br>
-        exemple: [r] accueil => indique le raccourci clavier <?= $combi ?> + r pour retourner à l'<a href='index.php' accesskey='r'>accueil</a>
+        <?php if( $combi != "" ) : ?>
+            exemple: [r] accueil => indique le raccourci clavier <?= $combi ?> + r pour retourner à l'<a href='index.php' accesskey='r'>accueil</a>
+        <?php endif ?>
         </p>
 
         <h4>Bandeau supérieur</h4>
