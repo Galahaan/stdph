@@ -1,38 +1,38 @@
-/* fond de la page                     :  #D8D8D8  gris clair       */
-/* fond de la zone du site (main)      :  white    blanc            */
-/* bandeau du haut :                                                */
-/*  - titres + tel                     :  #364115  vert foncé       */
-/*    lignes fines dans les formulaires                             */
-/*    lignes gammes de produits                                     */
-/* menu de navigation, fond            :  #ADADAD  gris clair       */
-/* menu de navigation, police          :  #DEFFC4  vert pâle        */
-/* bandeau de connexion, fond          :  #575757  gris foncé 1     */
-/* bandeau de connexion, police        :  white    blanc            */
-/* vignettes accueil, fond             :  #DEFFC4  vert pâle        */
-/* vignettes accueil, police           :  #575757  gris foncé       */
-/* créneaux ouverture       (horaires) :  rgba(148, 193, 29, .2)    */
-/* créneau actuel ouverture (horaires) :  rgba(148, 193, 29, .5)    */
-/* bouton de validation, fond          :  #A55AA5  mauve pâle       */
-/*  + liens, tel, mail (cliquables)                                 */
-/*      - tel + mail        (contact)                               */
-/*      - inscription       (connexion)                             */
-/*      - connexion         (inscription)                           */
-/*      - mode d'emploi     (prepaOrdo)                             */
-/*      - chucknorrisfacts  (humour)                                */
-/* bouton de validation, hover         :  #585858  gris foncé 2     */
-/*  + hover liens ...                                               */
-/*      - tel + mail        (contact)                               */
-/*      - inscription       (connexion)                             */
-/*      - connexion         (inscription)                           */
-/*      - mode emploi       (prepaOrdo)                             */
-/*      - chucknorrisfacts  (humour)                                */
-/* heure actuelle           (horaires) :  #1967E5  bleu roi         */   /* old fuschia */
-/* pharma ouverte           (accueil)  :  #4DBC1C  vert 'fluo'      */
-/* pharma fermée            (accueil)  :  #FF4141  vert 'fluo'      */
-/* pharma ouvre dans ...    (accueil)  :  black    noir             */
-/* pharma ferme dans ...    (accueil)  :  #F29200  orange           */
+/* fond de la page                     :  #D8D8D8  gris clair                   */
+/* fond de la zone du site (main)      :  white    blanc                        */
+/* bandeau du haut :                                                            */
+/*  - titres + tel                     :  #364115  vert foncé                   */
+/*    lignes fines dans les formulaires                                         */
+/*    lignes gammes de produits                                                 */
+/* menu de navigation, fond            :  #ADADAD  gris clair                   */
+/* menu de navigation, police          :  #DEFFC4  vert pâle                    */
+/* bandeau de connexion, fond          :  #575757  gris foncé 1                 */
+/* bandeau de connexion, police        :  white    blanc                        */
+/* vignettes accueil, fond             :  #DEFFC4  vert pâle                    */
+/* vignettes accueil, police           :  #575757  gris foncé 1                 */
+/* créneaux ouverture       (horaires) :  rgba(148, 193, 29, .2)                */
+/* créneau actuel ouverture (horaires) :  rgba(148, 193, 29, .5)                */
+/* bouton de validation, fond          :  #A55AA5  mauve pâle                   */
+/*  + liens, tel, mail (cliquables)                                             */
+/*      - tel + mail        (contact)                                           */
+/*      - inscription       (connexion)                                         */
+/*      - connexion         (inscription)                                       */
+/*      - mode d'emploi     (prepaOrdo)                                         */
+/*      - chucknorrisfacts  (humour)                                            */
+/* bouton de validation, hover         :  #585858  gris foncé 2                 */
+/*  + hover liens ...                                                           */
+/*      - tel + mail        (contact)                                           */
+/*      - inscription       (connexion)                                         */
+/*      - connexion         (inscription)                                       */
+/*      - mode emploi       (prepaOrdo)                                         */
+/*      - chucknorrisfacts  (humour)                                            */
+/* heure actuelle           (horaires) :  #1967E5  bleu roi       old fuschia   */
+/* pharma ouverte           (accueil)  :  #4DBC1C  vert 'fluo'                  */
+/* pharma fermée            (accueil)  :  #FF4141  rouge                        */
+/* pharma ouvre dans ...    (accueil)  :  black    noir                         */
+/* pharma ferme dans ...    (accueil)  :  #FF4141  rouge      (#F29200  orange) */
 
-/*   - tel commissariat (horaires)        supprimé  !!!             */
+/*   - tel commissariat (horaires)        supprimé  !!!                         */
 
 
 
@@ -334,7 +334,7 @@ nav#iNavigation a{
 	color: black;
 }
 #iIndexIntro .cFermeDans{
-	color: #F29200;
+	color: #FF4141;
 }
 #iIndexVignettes article{
 	position: relative; /* pour que les <a> et les <img> soient superposés */
@@ -1238,13 +1238,6 @@ footer h3{
 
 /* 																															900 px	*/
 @media screen and (min-width: 900px){
-
-	/* on agrandit un peu la croix */
-	header section img{
-		width: 16%;
-		top: 2rem;
-		left: 2rem;
-	}
 
 	h1{
 		font-size: 9rem;				/* old 7 - titre de la page : Pharmacie des Tilleuls */
