@@ -83,6 +83,7 @@ img{
 #iPdGplan iframe,
 #iContactPlan iframe{
 	width: 100%;
+	height: 50%;
 }
 
 body{
@@ -507,7 +508,7 @@ nav#iNavigation a{
 	margin-right: 1.5%;
 }
 .cChampForm [type='radio']{
-	margin-left: 5%	
+	margin-left: 5%;
 }
 /* message dans le champ 'textarea'                                                                            */
 .cChampForm textarea{
@@ -736,7 +737,7 @@ sub{
 /* ========================                                                               ======================== */
 /* ========================     largeurs et marges des jours et des créneaux horaires     ======================== */
 /* ========================                                                               ======================== */
-/* ========================  !!! si modifications => les reporter dans functions.php !!!  ======================== */
+/* ========================  !!! si modifications => les reporter dans fonctions.php !!!  ======================== */
 /* ========================                                                               ======================== */
 /* jours de la semaine */
 #iHorairesTableau article h4{
@@ -790,7 +791,7 @@ sub{
 }
 
 /* ========================                                                               ======================== */
-/* ========================  !!! si modifications => les reporter dans functions.php !!!  ======================== */
+/* ========================  !!! si modifications => les reporter dans fonctions.php !!!  ======================== */
 /* ========================                                                               ======================== */
 /* =============================================================================================================== */
 
@@ -1119,22 +1120,33 @@ footer h3{
 		float: left;
 	}
 
+	/*     page prepaOrdonnance     */
+
 	/* blabla au dessus du champ 'textarea' */
 	#iOrdoPrepaOrdo .cChampForm p:first-child{
 		width: 58%;						/* aucune valeur */
 		margin-left: 33%;				/*     avant     */
 	}
 
+	/* icône du clicIndex */
+	#iOrdoLienModeEmploi img{
+		top: 1.2rem;					/* old 0.8 */
+	}
+
+	/*         page contact        */
+
 	/* icône de guidage GPS */
 	#iContactPlan p img, #iPdGplan img{
 		width: 4rem;					/* old 3   */
 	}
 
-	/*     page prepaOrdonnance     */
-
-	/* icône du clicIndex */
-	#iOrdoLienModeEmploi img{
-		top: 1.2rem;					/* old 0.8 */
+	/* on arrange un peu le formulaire */
+	#iContactFormulaire .cChampForm input:not([type='radio']){
+		width: 64%;
+	}
+	#iContactFormulaire .cChampForm textarea{
+		min-width: 65.5%; /* bizarrement, si on met 62%, ça n'est pas tout  */
+		max-width: 65.5%; /* à fait aligné avec les input situées au-dessus */
 	}
 
 	/* réglage de la taille des images                                                              =>  à ajouter dans les media queries +++++++++++++   */
@@ -1189,8 +1201,6 @@ footer h3{
 
 	/*********************************    page contact   **********************************/
 
-	/*================================================     § coordonnées de la pharmacie  */
-
 	/* font-awesome pour les icônes 'tel', 'fax' et 'mail' */
 	.fa-phone, .fa-fax, .fa-envelope{
 		font-size: 3rem;				/* old 2 */
@@ -1200,12 +1210,21 @@ footer h3{
 	#iContactTel img{
 		top: 2.5rem;					/* old 1.8 */
 	}
+	/* on décale un peu vers la droite le blabla */
+	#iContactPlan p{
+		padding-left: 10%;
+	}
 	/* icône de guidage GPS */
 	#iContactPlan p img, #iPdGplan img{
 		width: 4.5rem;					/* old 4   */
 	}
 
-	/* Footer */
+	/*******************************   page pharmaDeGarde   *******************************/
+
+	/* icône de guidage GPS */
+	/* cf ctrl+F #iPdGplan img{ */
+
+	/*******************************         Footer         *******************************/
 	footer section:first-of-type{
 		font-size: 1.5rem;				/* old 1.3 */
 	}
@@ -1213,16 +1232,6 @@ footer h3{
 		padding: 1rem 1rem;				/* old .5rem 1rem */
 	}
 
-	/**********************************   page horaires   *********************************/
-
-	#iHorairesTableau{
-		width: 85%;						/* old : 90%   */
-	}
-
-	/*******************************   page pharmaDeGarde   *******************************/
-
-	/* icône de guidage GPS */
-	/* cf ctrl+F #iPdGplan img{ */
 
 }
 
@@ -1254,18 +1263,21 @@ footer h3{
 		width: 33.33%;
 	}
 
+	/* page Horaires */
+	/* pour recentrer l'ensemble du tableau */
+	#iHorairesTableau{
+		padding-left:  14%;
+		padding-right: 14%;
+	}
+
 	/* page Contact */
-	#iContactInfosPratiques, #iContactCoordonnees, #iContactPlan, #iContactFormulaire{
+	#iContactInfosPratiques, #iContactCoordonnees{
 		width: 45%;
 		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
 		vertical-align: top;
 	}
 	#iContactCoordonnees:before{
 		content: none; /* on annule le trait avec le § précédent puisqu'on passe sur 2 colonnes */
-	}
-	/* pour positionner latéralement les civilités dans le formulaire de contact */
-	#iContactFormulaire .cChampForm [for='iCiviliteM']{
-		padding-right: 10%;
 	}
 	/* FB et G+ */
 	#iContactCoordonnees p:nth-of-type(7), #iContactCoordonnees p:nth-of-type(8){

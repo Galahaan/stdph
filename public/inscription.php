@@ -8,7 +8,7 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 if( empty($page) ){
-$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+$page = "fonctions"; // page à inclure : fonctions.php qui lui-même inclut constantes.php
 
 // On construit le nom de la page à inclure en prenant 2 précautions :
 // - ajout dynamique de l'extension .php
@@ -24,14 +24,14 @@ $page = str_replace("%","protect",$page);
 // On interdit l'inclusion de dossiers protégés par htaccess.
 // S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 // strpos() peut très bien le faire, et surtout plus vite !
-// if( preg_match("admin", $page) ){                        ok en PHP 5.6.30 mais plus en PHP 7.1.4  ********************
+// if( preg_match("admin", $page) ){
 if( strpos($page, "admin") ){
 	echo "Vous n'avez pas accès à ce répertoire";
 }
 else{
     // On vérifie que la page est bien sur le serveur
-    if (file_exists("include/" . $page) && $page != 'index.php') {
-    	require_once("./include/".$page);
+    if (file_exists("inclus/" . $page) && $page != "index.php") {
+    	require_once("./inclus/".$page);
     }
     else{
     	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -42,7 +42,7 @@ else{
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 // ici on est obligé d'utiliser la fonction native telle quelle, sinon elle ne peut pas jouer son rôle de "_once" :
-require_once("./include/initDB.php");
+require_once("./inclus/initDB.php");
 
 // on détermine la page courante ...
 // 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
@@ -237,7 +237,6 @@ if( isset($_POST['bouton']) ){
 			echo "<p>Vous pouvez dorénavant vous connecter ...</p>";
 			echo "<a href='connexion.php'>>  connexion  <</a>";
 			echo "</div>";
-			//header('Location: connexion.php');   ce serait pas mal de renvoyer vers la page connexion avec en paramètre le message de confirmation de création de compte.
 
 			?>
 
@@ -257,40 +256,68 @@ if( isset($_POST['bouton']) ){
 			//
 			// - soit le formulaire n'a pas encore été rempli
 			//   => on laisse les cases vides.
+
+			// Si jamais il y a plusieurs erreurs, on ne placera le focus que sur la 1ère,
+			// d'où l'utilisation de ce booleen :
+			$focusErreurMis = false;
 			?>
 
 			<sup>Veuillez renseigner tous les champs ci-dessous svp.</sup>
-			<form method='post'>
+			<form method='POST'>
 				<div class='cChampForm'>
-					<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-						<?= isset($civilite) && $civilite == "Mme" ? "checked" : ""?> <?= isset($erreurs) ? "autofocus" : "" ?> >
-					<label for='iCiviliteMme'>Mme</label>
+					<input type='radio' id='iCiviliteMme'  name='civilite' value='Mme'  required
+						<?= $civilite == "Mme"  ? "checked" : ""?> >
+					<label for='iCiviliteMme' >Mme</label>
 					<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
-						<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
+						<?= $civilite == "Mlle" ? "checked" : ""?> >
 					<label for='iCiviliteMlle'>Melle</label>
-					<input type='radio' id='iCiviliteM' name='civilite' value='M.' required
-						<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
-					<label for='iCiviliteM'>M.</label>
+					<input type='radio' id='iCiviliteM'    name='civilite' value='M.'   required
+						<?= $civilite == "M."   ? "checked" : ""?> >
+					<label for='iCiviliteM'   >M.</label>
 				</div>
 				<div class='cChampForm'>
 					<label for='iPrenom'>Prénom</label>
-					<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? 'value="' . $prenom . '"' : ""?> >
+						<input type='text' id='iPrenom' name='prenom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($prenom) ? 'value="' . $prenom . '"' : ""?>
+							<?php	if( isset($erreurs['prenom']) && $focusErreurMis == false ){
+										echo " autofocus";
+										$focusErreurMis = true;
+									}
+							?>
+						>
 					<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
 					<label for='iNom'>Nom</label>
-					<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? 'value="' . $nom . '"' : ""?> >
+						<input type='text' id='iNom' name='nom' minlength='<?= NB_CAR_MIN_HTM ?>' maxlength='<?= NB_CAR_MAX_HTM ?>' required <?= isset($nom) ? 'value="' . $nom . '"' : ""?>
+							<?php	if( isset($erreurs['nom']) && $focusErreurMis == false ){
+										echo " autofocus";
+										$focusErreurMis = true;
+									}
+							?>
+						>
 					<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
 					<label for='iMail'>Adresse mail</label>
-					<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?> >
+						<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?>
+							<?php	if( isset($erreurs['adrMailClient']) && $focusErreurMis == false ){
+										echo " autofocus";
+										$focusErreurMis = true;
+									}
+							?>
+						>
 					<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
 					<?php if( $mailExisteDeja ) { echo "<sub>Aïe, cet identifiant est déjà pris, veuillez en choisir un autre svp ...</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
 					<label for='idPassword'>Mot de passe</label>
-					<input type='password' minlength='<?= NB_CAR_MIN_MDP_HTM ?>' maxlength='<?= NB_CAR_MAX_MDP_HTM ?>' id='idPassword' name='password' required <?= isset($password) ? $password : ""?> >
+						<input type='password' id='idPassword' name='password' minlength='<?= NB_CAR_MIN_MDP_HTM ?>' maxlength='<?= NB_CAR_MAX_MDP_HTM ?>' required
+							<?php	if( isset($erreurs['password']) && $focusErreurMis == false ){
+										echo " autofocus";
+										$focusErreurMis = true;
+									}
+							?>
+						>
 					<?php if( isset($erreurs['password']) ) { echo "<sub>" . $erreurs['password'] . "</sub>"; } ?>
 				</div>
 				<div class='cBoutonOk'>

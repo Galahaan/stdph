@@ -8,7 +8,7 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 if( empty($page) ){
-$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+$page = "fonctions"; // page à inclure : fonctions.php qui lui-même inclut constantes.php
 
 // On construit le nom de la page à inclure en prenant 2 précautions :
 // - ajout dynamique de l'extension .php
@@ -30,8 +30,8 @@ if( strpos($page, "admin") ){
 }
 else{
     // On vérifie que la page est bien sur le serveur
-    if (file_exists("include/" . $page) && $page != "index.php") {
-    	require_once("./include/".$page);
+    if (file_exists("inclus/" . $page) && $page != "index.php") {
+    	require_once("./inclus/".$page);
     }
     else{
     	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -84,8 +84,15 @@ if( isset($_POST['bouton']) ){
 
 	// on traite volontairement le cas du message AVANT celui de la pièce jointe pour
 	// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les tests.
-	// (chunk_split limite la longueur d'une ligne à 76 car. pour respecter la RFC 2045)
+
 	$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
+	// NB: chunk_split est utilisée ici pour respecter la RFC 2045.
+	//     utilisée de cette façon, sans param. optionnels, elle
+	//     a pour rôle de scinder une chaîne, qui aurait été saisie
+	//     d'un seul coup, sans retour chariot, en plusieurs lignes de 76 car. max.
+	//     Mais si la chaîne fait moins de 76 car. au départ, chunk_split ajoute
+	//     quand même un retour chariot, ce qui ajoute 2 caractères ('invisibles').
+
 	if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
 		$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
 	}
@@ -578,25 +585,15 @@ if( isset($_POST['bouton']) ){
 				<sup>Veuillez renseigner tous les champs ci-dessous svp. (pièce jointe < <?= TAILLE_MAX_PJ / 1024 / 1024 ?> Mo)</sup>
 				<form method='POST' enctype='multipart/form-data'>
 					<div class='cChampForm'>
-						<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-							<?php	if( isset($civilite) ){
-										if( $civilite == "Mme" ){
-											echo " checked";
-										}
-									}
-									else{
-										echo " autofocus";
-										$focusErreurMis = true;
-									}
-							?>
-						>
-						<label for='iCiviliteMme'>Mme</label>
+						<input type='radio' id='iCiviliteMme'  name='civilite' value='Mme'  required
+							<?= $civilite == "Mme"  ? "checked" : ""?> >
+						<label for='iCiviliteMme' >Mme</label>
 						<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
-							<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
+							<?= $civilite == "Mlle" ? "checked" : ""?> >
 						<label for='iCiviliteMlle'>Melle</label>
-						<input type='radio' id='iCiviliteM' name='civilite' value='M.' required
-							<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
-						<label for='iCiviliteM'>M.</label>
+						<input type='radio' id='iCiviliteM'    name='civilite' value='M.'   required
+							<?= $civilite == "M."   ? "checked" : ""?> >
+						<label for='iCiviliteM'   >M.</label>
 					</div>
 					<div class='cChampForm'>
 						<label for='iPrenom'>Prénom</label>

@@ -8,12 +8,12 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 //
 //						require_onceCLR( $nomDuFichier )
 //
-// NB: inclusion de fichiers '.php' uniquement, dans le répertoire 'include' obligatoirement
+// NB: inclusion de fichiers '.php' uniquement, dans le répertoire 'inclus' obligatoirement
 //
-// Pour inclure de façon sécurisée un fichier (notamment 'functions.php') en tête
+// Pour inclure de façon sécurisée un fichier (notamment 'fonctions.php') en tête
 // d'un fichier PHP, ou HTML, ... , il faut écrire tout un paragraphe assez lourd.
 //
-// Mais une fois 'functions.php' inclus, si on a besoin d'inclure d'autres fichiers,
+// Mais une fois 'fonctions.php' inclus, si on a besoin d'inclure d'autres fichiers,
 // il est alors très utile d'utiliser cette fonction 'require_onceCLR()' !
 //
 // Pour compliquer un peu l'opération, il faut ajouter '_CLRX' au vrai nom du fichier
@@ -44,8 +44,8 @@ function require_onceCLR( $nomDuFichier ){
 	}
 	else{
 	    // On vérifie que la page est bien sur le serveur
-	    if (file_exists("HOME"."www/include/".$page) && $page != 'index.php') {
-	    	require_once("HOME"."www/include/".$page);
+	    if (file_exists("HOME"."www/inclus/".$page) && $page != "index.php") {
+	    	require_once("HOME"."www/inclus/".$page);
 	    }
 	    else{
 	    	echo "Erreur require_onceCLR : le fichier " . $page . " est introuvable.";

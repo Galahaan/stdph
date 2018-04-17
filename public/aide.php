@@ -8,7 +8,7 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 if( empty($page) ){
-$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+$page = "fonctions"; // page à inclure : fonctions.php qui lui-même inclut constantes.php
 
 // On construit le nom de la page à inclure en prenant 2 précautions :
 // - ajout dynamique de l'extension .php
@@ -30,8 +30,8 @@ if( strpos($page, "admin") ){
 }
 else{
     // On vérifie que la page est bien sur le serveur
-    if (file_exists("include/" . $page) && $page != "index.php") {
-        require_once("./include/".$page);
+    if (file_exists("inclus/" . $page) && $page != "index.php") {
+        require_once("./inclus/".$page);
     }
     else{
         echo "Erreur Include : le fichier " . $page . " est introuvable.";

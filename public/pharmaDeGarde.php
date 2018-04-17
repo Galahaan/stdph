@@ -8,7 +8,7 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 if( empty($page) ){
-$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+$page = "fonctions"; // page à inclure : fonctions.php qui lui-même inclut constantes.php
 
 // On construit le nom de la page à inclure en prenant 2 précautions :
 // - ajout dynamique de l'extension .php
@@ -30,8 +30,8 @@ if( strpos($page, "admin") ){
 }
 else{
     // On vérifie que la page est bien sur le serveur
-    if (file_exists("include/" . $page) && $page != "index.php") {
-    	require_once("./include/".$page);
+    if (file_exists("inclus/" . $page) && $page != "index.php") {
+    	require_once("./inclus/".$page);
     }
     else{
     	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -145,7 +145,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 			<p>- cliquez sur le plan ci-dessous</p>
 			<p>- puis sur l'icône &nbsp;<img src='img/itineraire.png' alt='itinéraire'></p>
 			<p>... et laissez-vous guider.</p>
-			<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2709.4418958453143!2d-1.5537605841504296!3d47.227501579161355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805ee99ed6c5d25%3A0x18995709d53782b2!2sCommissariat+de+Police+Central+de+Nantes!5e0!3m2!1sfr!2sfr!4v1517266865893' title='nouvelle page google map' allowfullscreen></iframe>
+			<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2709.4418958453143!2d-1.5537605841504296!3d47.227501579161355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805ee99ed6c5d25%3A0x18995709d53782b2!2sCommissariat+de+Police+Central+de+Nantes!5e0!3m2!1sfr!2sfr!4v1517266865893' width='600' height='450' title='nouvelle page google map' allowfullscreen></iframe>
 		<?php endif ?>
 
 		</section>

@@ -56,7 +56,7 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 if( empty($page) ){
-$page = "functions"; // page à inclure : functions.php qui lui-même inclut constantes.php
+$page = "fonctions"; // page à inclure : fonctions.php qui lui-même inclut constantes.php
 
 // On construit le nom de la page à inclure en prenant 2 précautions :
 // - ajout dynamique de l'extension .php
@@ -72,14 +72,14 @@ $page = str_replace("%","protect",$page);
 // On interdit l'inclusion de dossiers protégés par htaccess.
 // S'il s'agit simplement de trouver la chaîne "admin" dans le nom de la page,
 // strpos() peut très bien le faire, et surtout plus vite !
-// if( preg_match("admin", $page) ){                        ok en PHP 5.6.30 mais plus en PHP 7.1.4  ********************
+// if( preg_match("admin", $page) ){
 if( strpos($page, "admin") ){
 	echo "Vous n'avez pas accès à ce répertoire";
 }
 else{
     // On vérifie que la page est bien sur le serveur
-    if (file_exists("include/" . $page) && $page != 'index.php') {
-    	require_once("./include/".$page);
+    if (file_exists("inclus/" . $page) && $page != "index.php") {
+    	require_once("./inclus/".$page);
     }
     else{
     	echo "Erreur Include : le fichier " . $page . " est introuvable.";
@@ -131,6 +131,13 @@ if( isset($_POST['bouton']) ){
 	// Message
 
 	$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
+	// NB: chunk_split est utilisée ici pour respecter la RFC 2045.
+	//     utilisée de cette façon, sans param. optionnels, elle
+	//     a pour rôle de scinder une chaîne, qui aurait été saisie
+	//     d'un seul coup, sans retour chariot, en plusieurs lignes de 76 car. max.
+	//     Mais si la chaîne fait moins de 76 car. au départ, chunk_split ajoute
+	//     quand même un retour chariot, ce qui ajoute 2 caractères ('invisibles').
+
 	if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
 		$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
 	}
@@ -151,7 +158,6 @@ if( isset($_POST['bouton']) ){
 		}
 	}
 }
-
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
@@ -269,7 +275,7 @@ if( isset($_POST['bouton']) ){
 			<p>- cliquez sur le plan ci-dessous</p>
 			<p>- puis sur l'icône &nbsp;<img src='img/itineraire.png' alt='itinéraire'></p>
 			<p>... et laissez-vous guider.</p>
-			<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.86958984165!2d-2.225360184281275!3d48.132038259525736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480e4df918267fb7%3A0xc0ed000930b8151c!2sPlace+du+Monument%2C+35290+Ga%C3%ABl!5e0!3m2!1sfr!2sfr!4v1518614624523' title='nouvelle page google map' allowfullscreen></iframe>
+			<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.86958984165!2d-2.225360184281275!3d48.132038259525736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480e4df918267fb7%3A0xc0ed000930b8151c!2sPlace+du+Monument%2C+35290+Ga%C3%ABl!5e0!3m2!1sfr!2sfr!4v1518614624523' width='600' height='450' title='nouvelle page google map' allowfullscreen></iframe>
 		</section>
 
 		<section id='iContactFormulaire' class='cSectionContour'><h3>Envoyer un message ...</h3>
@@ -479,7 +485,7 @@ if( isset($_POST['bouton']) ){
 			<?php
 
 			// - soit le formulaire n'a pas encore été rempli :
-			//        => on pré-remplit les champs avec les données de session
+			//        => on pré-remplit les champs avec les données de session (sans savoir si $_SESSION existe !)
 			//			 (mais si le formulaire a déjà été rempli, on ne modifie pas les valeurs saisies, d'où le if)
 
 			if( ! isset( $civilite )		){		$civilite		= $_SESSION['client']['civilite'];		};
@@ -504,25 +510,15 @@ if( isset($_POST['bouton']) ){
 
 			<form id='goocapt' action='?' method='post'>
 				<div class='cChampForm'>
-					<input type='radio' id='iCiviliteMme' name='civilite' value='Mme' required
-							<?php	if( isset($civilite) ){
-										if( $civilite == "Mme" ){
-											echo " checked";
-										}
-									}
-									else{
-										echo " autofocus";
-										$focusErreurMis = true;
-									}
-							?>
-						>
-					<label for='iCiviliteMme'>Mme</label>
+					<input type='radio' id='iCiviliteMme'  name='civilite' value='Mme'  required
+						<?= $civilite == "Mme"  ? "checked" : ""?> >
+					<label for='iCiviliteMme' >Mme</label>
 					<input type='radio' id='iCiviliteMlle' name='civilite' value='Mlle' required
-						<?= isset($civilite) && $civilite == "Mlle" ? "checked" : ""?> >
+						<?= $civilite == "Mlle" ? "checked" : ""?> >
 					<label for='iCiviliteMlle'>Melle</label>
-					<input type='radio' id='iCiviliteM' name='civilite' value='M.' required
-						<?= isset($civilite) && $civilite == "M." ? "checked" : ""?> >
-					<label for='iCiviliteM'>M.</label>
+					<input type='radio' id='iCiviliteM'    name='civilite' value='M.'   required
+						<?= $civilite == "M."   ? "checked" : ""?> >
+					<label for='iCiviliteM'   >M.</label>
 				</div>
 				<div class='cChampForm'>
 					<label for='iPrenom'>Prénom</label>
@@ -560,11 +556,11 @@ if( isset($_POST['bouton']) ){
 				<div class='cChampForm'>
 					<label for='iMessageTextarea'>Message</label>
 						<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required
-						<?php	if( isset($erreurs['message']) && $focusErreurMis == false ){
-									echo " autofocus";
-									$focusErreurMis = true;
-								}
-						?>
+							<?php	if( isset($erreurs['message']) && $focusErreurMis == false ){
+										echo " autofocus";
+										$focusErreurMis = true;
+									}
+							?>
 						><?= isset($messageClientTxt) ? $messageClientTxt : ""?></textarea>
 					<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
 				</div>

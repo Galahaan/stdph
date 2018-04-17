@@ -31,7 +31,7 @@ define("MC_CP",         "35290");
 define("MC_1",          "tilleuls");
 define("MC_2",          "gaëlite");
 
-// 'home' du site sur le serveur de l'hébergeur (functions.php)
+// 'home' du site sur le serveur de l'hébergeur (fonctions.php)
 define("HOME", "/home/bigouigfiy/"); // utilisé uniquement dans require_onceCLR qui n'est utilisée nulle part !
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -107,7 +107,7 @@ define("NB_CAR_MIN_MDP_HTM", 2);
 define("NB_CAR_MAX_MDP_HTM", 25);
 
 // Nombre de caractères min et max pour le texte libre :
-define("NB_CAR_MIN_MESSAGE", 3);
+define("NB_CAR_MIN_MESSAGE", 5);
 define("NB_CAR_MAX_MESSAGE", 1000);
 define("NB_CAR_MIN_MESSAGE_HTM", 1);
 define("NB_CAR_MAX_MESSAGE_HTM", 1000);
@@ -116,7 +116,7 @@ define("NB_CAR_MAX_MESSAGE_HTM", 1000);
 ///////////////                                                            ///////////////
 ///////////////           Horaires d'ouverture de la pharmacie             ///////////////
 ///////////////                                                            ///////////////
-///////////////           (ctes utilisées dans functions.php)              ///////////////
+///////////////           (ctes utilisées dans fonctions.php)              ///////////////
 ///////////////                                                            ///////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
