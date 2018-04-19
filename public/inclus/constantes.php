@@ -36,6 +36,64 @@ define("HOME", "/home/bigouigfiy/"); // utilisé uniquement dans require_onceCLR
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
+///////////////                       Mentions légales                     ///////////////
+///////////////                                                            ///////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////                      données spécifiques                   ///////////////
+
+// Pharmacien titulaire
+define("PHIEN_TITULAIRE", "Hubert des Rosiers");
+
+// N° inscr. Ordre (RPPS)
+define("PHIEN_RPPS", "12345678901");
+
+// N° de licence de la pharmacie
+define("PHIE_LICENCE", "35#123456");
+
+// N° individuel d'identification relatif à l'assujettissement à la TVA
+define("PHIE_TVA", "FR12345678901");
+
+// N° d'inscription au Registre du Commerce et des Sociétés (SIREN)
+define("PHIE_SIRET", "12345678900012");
+
+///////////////                       données générales                    ///////////////
+
+// Code APE
+define("PHIE_APE", "4773Z");
+
+// ARS territorialement compétente
+define("ARS_COORD", "ARS Bretagne - 6 pl. des Colombes - CS 14253 - 35042 Rennes cedex - +33 (0)2 90 08 80 00");
+define("ARS_URL", "https://www.bretagne.ars.sante.fr/");
+
+define("ARS_COORD", "ARS des Pays de la Loire - 17 bd Gaston Doumergue - CS 56233 - 44262 Nantes cedex 2 - 02 49 10 40 00");
+define("ARS_URL", "https://www.pays-de-la-loire.ars.sante.fr/");
+
+// Hébergeur du site
+define("HBG_COORD", "OVH - 2 rue Kellermann - BP 80157 - 59053 Roubaix cedex 1");
+define("HBG_URL", "https://www.ovh.com/fr/");
+
+// Agence Nationale de Sécurité du Médicament et des Produits de Santé
+define("ANSM_COORD", "ANSM - 143 / 147 bd Anatole France - 93285 St-Denis cedex - +33 (0)1 55 87 30 00");
+define("ANSM_URL", "http://ansm.sante.fr/");
+
+// Ordre National des Pharmaciens
+define("ORDRE_COORD", "Ordre national des pharmaciens - 12 rue Ampère - 75017 Paris - +33 (0)1 56 21 34 34");
+define("ORDRE_URL", "http://www.ordre.pharmacien.fr/");
+
+// Ministère en charge de la santé
+define("MINIS_COORD", "Ministère des solidarités et de la santé - 14 av. Duquesne - 75350 Paris 07 SP - +33 (0)1 40 56 60 00");
+define("MINIS_URL", "http://solidarites-sante.gouv.fr/");
+
+// Pour la VMI :
+// - chaque page comportera le logo commun mis en place au niveau communautaire et défini selon la directive européenne
+// - un élément sélectionnable, parfaitement identifié, permettra d'accéder au service de vente de médicaments.
+//   (les médicaments y seront présentés de manière claire, objective et non trompeuse)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+///////////////                                                            ///////////////
 ///////////////                  Base de données hébergée                  ///////////////
 ///////////////                                                            ///////////////
 //////////////////////////////////////////////////////////////////////////////////////////
