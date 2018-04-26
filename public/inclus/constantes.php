@@ -58,33 +58,47 @@ define("PHIE_TVA", "FR12345678901");
 // N° d'inscription au Registre du Commerce et des Sociétés (SIREN)
 define("PHIE_SIRET", "12345678900012");
 
-///////////////                       données générales                    ///////////////
-
 // Code APE
 define("PHIE_APE", "4773Z");
 
-// ARS territorialement compétente
-define("ARS_COORD", "ARS Bretagne - 6 pl. des Colombes - CS 14253 - 35042 Rennes cedex - +33 (0)2 90 08 80 00");
-define("ARS_URL", "https://www.bretagne.ars.sante.fr/");
-
-define("ARS_COORD", "ARS des Pays de la Loire - 17 bd Gaston Doumergue - CS 56233 - 44262 Nantes cedex 2 - 02 49 10 40 00");
-define("ARS_URL", "https://www.pays-de-la-loire.ars.sante.fr/");
+// URL de la pharmacie
+define("PHIE_URLC", "bigouig.fr");
 
 // Hébergeur du site
-define("HBG_COORD", "OVH - 2 rue Kellermann - BP 80157 - 59053 Roubaix cedex 1");
-define("HBG_URL", "https://www.ovh.com/fr/");
+define("PHIE_HBG_COORD", "OVH - 2 rue Kellermann - BP 80157 - 59053 Roubaix cedex 1");
+define("PHIE_HBG_URL", "https://www.ovh.com/fr/");
+define("PHIE_HBG_URLC", "ovh.com");
 
-// Agence Nationale de Sécurité du Médicament et des Produits de Santé
-define("ANSM_COORD", "ANSM - 143 / 147 bd Anatole France - 93285 St-Denis cedex - +33 (0)1 55 87 30 00");
+///////////////                       données générales                    ///////////////
+
+// Agence régionale de santé territorialement compétente
+define("ARS_COORD", "ARS Bretagne - 6 pl. des Colombes - CS 14253 - 35042 Rennes cedex - <a href='tel:+33290088000'>tel : 02 90 08 80 00</a>");
+define("ARS_URL", "https://www.bretagne.ars.sante.fr/");
+define("ARS_URLC", "bretagne.ars.sante.fr");
+
+define("ARS_COORD", "ARS des Pays de la Loire - 17 bd Gaston Doumergue - CS 56233 - 44262 Nantes cedex 2 - <a href='tel:+33249104000'>tel : 02 49 10 40 00</a>");
+define("ARS_URL", "https://www.pays-de-la-loire.ars.sante.fr/");
+define("ARS_URLC", "pays-de-la-loire.ars.sante.fr");
+
+// Agence nationale de sécurité du médicament et des produits de santé (ANSMPS)
+define("ANSM_COORD", "143 / 147 bd Anatole France - 93285 St-Denis cedex - <a href='tel:+33155873000'>tel : 01 55 87 30 00</a>");
 define("ANSM_URL", "http://ansm.sante.fr/");
+define("ANSM_URLC", "ansm.sante.fr");
 
-// Ordre National des Pharmaciens
-define("ORDRE_COORD", "Ordre national des pharmaciens - 12 rue Ampère - 75017 Paris - +33 (0)1 56 21 34 34");
+// Ordre national des pharmaciens
+define("ORDRE_COORD", "12 rue Ampère - 75017 Paris - <a href='tel:+33156213434'>tel : 01 56 21 34 34</a>");
 define("ORDRE_URL", "http://www.ordre.pharmacien.fr/");
+define("ORDRE_URLC", "ordre.pharmacien.fr");
 
-// Ministère en charge de la santé
-define("MINIS_COORD", "Ministère des solidarités et de la santé - 14 av. Duquesne - 75350 Paris 07 SP - +33 (0)1 40 56 60 00");
+// Ministère des solidarités et de la santé
+define("MINIS_COORD", "14 av. Duquesne - 75350 Paris 07 SP - <a href='tel:+33140566000'>tel : 01 40 56 60 00</a>");
 define("MINIS_URL", "http://solidarites-sante.gouv.fr/");
+define("MINIS_URLC", "solidarites-sante.gouv.fr");
+
+// Commission nationale de l'informatique et des libertés (CNIL)
+define("CNIL_COORD", "3 pl. de Fontenoy - TSA 80715 - 75334 Paris cedex 07 - <a href='tel:+33153732222'>tel : 01 53 73 22 22</a>");
+define("CNIL_URL", "https://www.cnil.fr/fr");
+define("CNIL_URLC", "cnil.fr");
 
 // Pour la VMI :
 // - chaque page comportera le logo commun mis en place au niveau communautaire et défini selon la directive européenne

@@ -57,7 +57,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 	<!-- Prise en compte du responsive design -->
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<meta http-equiv="refresh" content="60" />
+	<meta http-equiv="refresh" content="150" />
 
 	<!-- intégrer le CDN de fontAwesome -->
 	<!-- on le place AVANT l'appel à notre CSS pour se donner la possibilité -->
@@ -176,12 +176,8 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 	</main>
 
 	<footer>
-		<section><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
-			<p><?= NOM_PHARMA ?></p>
-			<p><?= ADR_PHARMA_L1 ?></p>
-			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p>tel - <?= TEL_PHARMA_DECO ?></p>
-			<p>fax - <?= FAX_PHARMA_DECO ?></p>
+		<section><h3>Mentions légales</h3>
+			<a href="menleg.php">Mentions légales</a>
 		</section>
 		<section><h3>Informations sur l'editeur du site</h3>
 			<p>Édition CLR - 2018</p>
