@@ -59,7 +59,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <link rel='stylesheet' type='text/css' href='css/style.css'>
-    <link rel='shortcut icon' href='img/favicon.ico'>
+    <link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>
 <body>
     <section id='iAide' class='cSectionContour'><h3>Aide à la navigation dans le site</h3>

@@ -65,7 +65,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
-	<link rel='shortcut icon' href='img/favicon.ico'>
+	<link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>
 
 <body>
@@ -81,11 +81,11 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 		<section>
 			<a href='index.php' accesskey='r'>
-				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
+				<img id='iLogoCroix' src='img/bandeau/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
 		</section>
 		<nav id='iNavigation'>
 			<ul>
@@ -136,32 +136,32 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 			<article>
 				<a href= <?= ( !empty($_SESSION) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>
-				<img src='img/prepaOrdonnance.jpg' alt=''>
+				<img src='img/index/prepaOrdonnance.jpg' alt=''>
 			</article>
 
 			<article>
 				<a href= <?= ( !empty($_SESSION) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> ><h4>Préparation de commande</h4></a>
-				<img src='img/prepaCommande.jpg' alt=''>
+				<img src='img/index/prepaCommande.jpg' alt=''>
 			</article>
 
 			<article>
 				<a href='pharmaDeGarde.php'><h4>Pharmacies de garde</h4></a>
-				<img src='img/pharmaDeGarde.jpg' alt=''>
+				<img src='img/index/pharmaDeGarde.jpg' alt=''>
 			</article>
 
 			<article>
 				<a href='promos.php'><h4>Promos</h4></a>
-				<img src='img/promos.jpg' alt=''>
+				<img src='img/index/promos.jpg' alt=''>
 			</article>
 
 			<article>
 				<a href='gammesProduits.php'><h4>Les gammes de produits</h4></a>
-				<img src='img/gammesProduits.jpg' alt=''>
+				<img src='img/index/gammesProduits.jpg' alt=''>
 			</article>
 
 			<article>
 				<a href='infos.php'><h4>Informations / Conseils</h4></a>
-				<img src='img/questions.jpg' alt=''>
+				<img src='img/index/questions.jpg' alt=''>
 			</article>
 
 			<?php
@@ -169,7 +169,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 				// <article>
 				// 	<a href='humour.php'><h4>La blague de Chuck Norris !..</h4></a>
-				// 	<img src='img/humour.jpg' alt=''>
+				// 	<img src='img/index/humour.jpg' alt=''>
 				// </article>
 			?>
  		</section>

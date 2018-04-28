@@ -56,7 +56,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
-	<link rel='shortcut icon' href='img/favicon.ico'>
+	<link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>
 
 <body>
@@ -72,11 +72,11 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 		<section>
 			<a href='index.php' accesskey='r'>
-				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
+				<img id='iLogoCroix' src='img/bandeau/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
 		</section>
 		<nav id='iNavigation'>
 			<ul>
@@ -125,30 +125,30 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 			</nav>
 
 			<article id='iGPubb'>
-				<div class='cImageDeco'><img src='img/bebe.jpg' alt=''><h4>Univers de bébé</h4></div>
+				<div class='cImageDeco'><img src='img/gammesProduits/bebe.jpg' alt=''><h4>Univers de bébé</h4></div>
 				<div>
-					<img src='img/bb_picot.png' alt=''><p>
+					<img src='img/gammesProduits/bb_picot.png' alt=''><p>
 					Nous avons choisi les laits de la gamme PICOT, ils sont bien.</p>
 				</div>
 				<div>
 					<p>Pour le soin du corps, nous vous proposons la gamme URIAGE pour la qualité de ses produits dont aucun ne contient de parabens.
-					</p><img src='img/bb_uriage.png' alt=''>
+					</p><img src='img/gammesProduits/bb_uriage.png' alt=''>
 				</div>
 				<div>
-					<img src='img/bb_bib.png' alt=''><p>
+					<img src='img/gammesProduits/bb_bib.png' alt=''><p>
 					Pour les biberons et tétines, nous conseillons les marques AVENT et MAM dont les produits ne contiennent pas de bisphénol A.</p>
 				</div>
 			</article>
 
 			<article id='iGPsdc'>
-				<div class='cImageDeco'><img src='img/soinDuCorps.jpg' alt=''><h4>Soins du corps</h4></div>
+				<div class='cImageDeco'><img src='img/gammesProduits/soinDuCorps.jpg' alt=''><h4>Soins du corps</h4></div>
 				<div>
-					<img src='img/corps_uriage_LD.png' alt=''><p>
+					<img src='img/gammesProduits/corps_uriage_LD.png' alt=''><p>
 					Nous avons sélectionné la gamme URIAGE dont aucun produit ne contient de parabens.</p>
 				</div>
 				<div>
 					<p>Bien qu'ils ne soient pas encore très répandus, nous vous proposons des déodorants sans parabens et sans sels d'aluminium.
-					</p><img src='img/corps_uriage_deo.png' alt=''>
+					</p><img src='img/gammesProduits/corps_uriage_deo.png' alt=''>
 				</div>
 			</article>
 

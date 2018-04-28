@@ -19,7 +19,7 @@ require_once("./inclus/constantes.php");
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <link rel='stylesheet' type='text/css' href='css/style.css'>
-    <link rel='shortcut icon' href='img/favicon.ico'>
+    <link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>
 
 <body>
@@ -35,11 +35,11 @@ require_once("./inclus/constantes.php");
 
         <section>
             <a href='index.php' accesskey='r'>
-                <img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
+                <img id='iLogoCroix' src='img/bandeau/croix_caducee.png' alt=''>
                 <h1><?= NOM_PHARMA ?></h1>
                 <h2><?= STI_PHARMA ?></h2>
             </a>
-            <p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+            <p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
         </section>
         <nav id='iNavigation'>
             <ul>
@@ -84,23 +84,23 @@ require_once("./inclus/constantes.php");
 
             <article><h4>Organismes partenaires</h4>
                 <p class='gauche'>Agence régionale de santé territorialement compétente</p>
-                <p><img src='img/ARS.png' alt=''></p>
+                <p><img src='img/menleg/ARS.png' alt=''></p>
                 <p class='droite'><?= str_replace(" - ","<br>",ARS_COORD) ?></p>
                 <p class='droite'><a href=<?= ARS_URL ?>><?= ARS_URLC ?></a></p>
                 <p class='gauche'>Agence nationale de sécurité du médicament et des produits de santé (ANSMPS)</p>
-                <p><img src='img/ANSM.png' alt=''></p>
+                <p><img src='img/menleg/ANSM.png' alt=''></p>
                 <p class='droite'><?= str_replace(" - ","<br>",ANSM_COORD) ?></p>
                 <p class='droite'><a href=<?= ANSM_URL ?>><?= ANSM_URLC ?></a></p>
                 <p class='gauche'>Ordre national des pharmaciens</p>
-                <p><img src='img/ONP.png' alt=''></p>
+                <p><img src='img/menleg/ONP.png' alt=''></p>
                 <p class='droite'><?= str_replace(" - ","<br>",ORDRE_COORD) ?></p>
                 <p class='droite'><a href=<?= ORDRE_URL ?>><?= ORDRE_URLC ?></a></p>
                 <p class='gauche'>Ministère des solidarités et de la santé</p>
-                <p><img src='img/RF.png' alt=''></p>
+                <p><img src='img/menleg/RF.png' alt=''></p>
                 <p class='droite'><?= str_replace(" - ","<br>",MINIS_COORD) ?></p>
                 <p class='droite'><a href=<?= MINIS_URL ?>><?= MINIS_URLC ?></a></p>
                 <p class='gauche'>Commission nationale de l'informatique et des libertés (CNIL)</p>
-                <p><img src='img/CNIL.png' alt=''></p>
+                <p><img src='img/menleg/CNIL.png' alt=''></p>
                 <p class='droite'><?= str_replace(" - ","<br>",CNIL_COORD) ?></p>
                 <p class='droite'><a href=<?= CNIL_URL ?>><?= CNIL_URLC ?></a></p>
             </article>

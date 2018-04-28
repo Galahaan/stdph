@@ -168,7 +168,7 @@ if( isset($_POST['bouton']) ){
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
 	<link rel='stylesheet' type='text/css' href='css/style.css'>
-	<link rel='shortcut icon' href='img/favicon.ico'>
+	<link rel='shortcut icon' href='img/icones/favicon.ico'>
 
 	<!-- <script src='https://www.google.com/recaptcha/api.js' async defer></script> -->
 <!-- 	<script>
@@ -191,11 +191,11 @@ if( isset($_POST['bouton']) ){
 
 		<section>
 			<a href='index.php' accesskey='r'>
-				<img id='iLogoCroix' src='img/croix_caducee.png' alt=''>
+				<img id='iLogoCroix' src='img/bandeau/croix_caducee.png' alt=''>
 				<h1><?= NOM_PHARMA ?></h1>
 				<h2><?= STI_PHARMA ?></h2>
 			</a>
-			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+			<p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
 		</section>
 		<nav id='iNavigation'>
 			<ul>
@@ -252,19 +252,19 @@ if( isset($_POST['bouton']) ){
 			<p><?= NOM_PHARMA ?></p>
 			<p><?= ADR_PHARMA_L1 ?></p>
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a>&nbsp;<img class='cClicIndexTaille' src='img/clicIndex.png' alt=''></p>
+			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a>&nbsp;<img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
 			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
 			<p id='iContactMail'><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
 			<p>
 				<a href='<?= ADR_FB_PHARMA ?>'>
-					<img class='cFaceGool' src='img/fb.png' alt='facebook'>
-					<img class='cFaceGool cCouleurNoire' src='img/fb_n.jpg' alt='facebook'>
+					<img class='cFaceGool' src='img/icones/fb.png' alt='facebook'>
+					<img class='cFaceGool cCouleurNoire' src='img/icones/fb_n.jpg' alt='facebook'>
 				</a>
 			</p>
 			<p>
 				<a href='<?= ADR_GG_PHARMA ?>'>
-					<img class='cFaceGool' src='img/gg.png' alt='google+'>
-					<img class='cFaceGool cCouleurNoire' src='img/gg_n.jpg' alt='google+'>
+					<img class='cFaceGool' src='img/icones/gg.png' alt='google+'>
+					<img class='cFaceGool cCouleurNoire' src='img/icones/gg_n.jpg' alt='google+'>
 				</a>
 			</p>
 		</section>
@@ -273,7 +273,7 @@ if( isset($_POST['bouton']) ){
 			<p>Si vous utilisez un smartphone, profitez de son GPS pour vous guider :</p>
 			<p>- activez la localisation</p>
 			<p>- cliquez sur le plan ci-dessous</p>
-			<p>- puis sur l'icône &nbsp;<img src='img/itineraire.png' alt='itinéraire'></p>
+			<p>- puis sur l'icône &nbsp;<img src='img/icones/itineraire.png' alt='itinéraire'></p>
 			<p>... et laissez-vous guider.</p>
 			<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.86958984165!2d-2.225360184281275!3d48.132038259525736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480e4df918267fb7%3A0xc0ed000930b8151c!2sPlace+du+Monument%2C+35290+Ga%C3%ABl!5e0!3m2!1sfr!2sfr!4v1518614624523' width='600' height='450' title='nouvelle page google map' allowfullscreen></iframe>
 		</section>

@@ -171,7 +171,7 @@ sup, sub{
 /* Image de fond */
 header section{
 	background-color: #D8D8D8;                /* dans le cas où l'image ne peut être chargée, ça fait un fond par défaut */
-	background-image: url('../img/fond.jpg'), url('../img/fond_light.jpg');
+	background-image: url('../img/bandeau/fond.jpg'), url('../img/bandeau/fond_light.jpg');
 	/* Les navigateurs chargeront en premier les images spécifiées en fin de ligne (fond_light.jpg)
 	   et chargeront ensuite vers la gauche (fond.jpg). */
 	background-size: cover;
