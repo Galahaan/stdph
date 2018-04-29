@@ -151,17 +151,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 		</section>
 	</main>
 
-	<footer>
-		<section><h3>Coordonnées de la <?= NOM_PHARMA ?></h3>
-			<p><?= NOM_PHARMA ?></p>
-			<p><?= ADR_PHARMA_L1 ?></p>
-			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
-			<p>tel - <?= TEL_PHARMA_DECO ?></p>
-			<p>fax - <?= FAX_PHARMA_DECO ?></p>
-		</section>
-		<section><h3>Informations sur l'editeur du site</h3>
-			<p>Édition CLR - 2018</p>
-		</section>
-	</footer>
+	<?php include('footer.php'); ?>
+
 </body>
 </html>
