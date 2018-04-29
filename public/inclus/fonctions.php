@@ -93,7 +93,9 @@ function require_onceCLR( $nomDuFichier ){
 // 		A FAIRE éventuellement :
 // 			utilisation des expressions régulières : remplacer tout ce qui n'est pas dans la liste par ''                       +++++++++
 // 			et la liste serait constituée de a-z, A-Z, -, âäàêëéèîïì ... ñ
-//
+//			
+//			Ce serait en effet beaucoup mieux, car il est impossible de lister tous les caractères spéciaux,					+++++++++
+//			et notamment ceux accessibles sur un smartphone
 //
 //
 // - la 2ème utilise en plus    strtr()     (équivalente en temps à str_replace())
@@ -106,7 +108,12 @@ function require_onceCLR( $nomDuFichier ){
 $trouverCar =
 ['_', '"', '²', '&', '~', '#', '{', '}', '[', ']', '|', '`', '^', '@', '(', ')', '°', '=',
  '+', '€', '¨', '^', '$', '£', '¤', '%', '*', 'µ', '?', ',', ';', ':', '!', '§', '<', '>', '/', '\\',
- '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
+ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', '×', '÷', '¥', '☺', '☻', '♥', '♦', '♣', '♠', '•',
+ '◘', '○', '◙', '♂', '♀', '♪', '♫', '☼', '►', '◄', '↕', '‼', '¶', '▬', '↨', '↑', '↓', '→', '←', '∟', '↔',
+ '▲', '▼', '⌂', 'ø', 'Ø', 'ƒ', 'ª', 'º', '¿', '®', '¬', '½', '¼', '¡', '«', '»', '░', '▒', '▓', '┤', '©',
+ '╣', '║', '╗', '╝', '¢', '┐', '└', '┴', '┬', '├', '─', '┼', '╚', '╔', '╩', '╦', '╠', '═', '╬', 'ð', 'Ð',
+ 'ı', '┘', '┌', '█', '▄', '¦', '▀', 'µ', 'þ', 'Þ', '¯', '´', '­', '±', '‗', '¾', '¶', '¸', '·', '¹', '³',
+ '²', '■'];
 
 $nouveauCar = [' ', "'"];
 
