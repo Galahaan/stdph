@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/header.php');
+include('inclus/entete.php');
 
 ?>
 	<main id='iMain'>
@@ -11,7 +11,7 @@ include('inclus/header.php');
 		</section>
 	</main>
 
-	<?php include('footer.php'); ?>
+	<?php include('inclus/pdp.php'); ?>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/headerF.php');
+include('inclus/enteteF.php');
 
 // ici on est obligé d'utiliser la fonction native telle quelle, sinon elle ne peut pas jouer son rôle de "_once" :
 require_once("./inclus/initDB.php");
@@ -208,7 +208,7 @@ if( isset($_POST['bouton']) ){
 
 	</main>
 
-	<?php include('footer.php'); ?>
+	<?php include('inclus/pdp.php'); ?>
 
 	<script src='scriptsJs/scripts.js' type='text/javascript'></script>
 

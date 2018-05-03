@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/headerFCCap.php');
+include('inclus/enteteFCCap.php');
 
 // Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
 // courante n'a pas été usurpée; je suis donc, das ce cas, obligé de l'écrire EN DUR :
@@ -406,7 +406,7 @@ if( isset($_POST['bouton']) ){
 
 	</main>
 
-	<?php include('footer.php'); ?>
+	<?php include('inclus/pdp.php'); ?>
 
 	<script src='scriptsJs/scripts.js' type='text/javascript'></script>
 

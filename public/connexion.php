@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/header.php');
+include('inclus/entete.php');
 
 // ici on est obligé d'utiliser la fonction native telle quelle, sinon elle ne peut pas jouer son rôle de "_once" :
 require_once("./inclus/initDB.php");
@@ -75,7 +75,7 @@ if( isset( $_POST['connexion'] ) ) {
 		</section>
 	</main>
 
-	<?php include('footer.php'); ?>
+	<?php include('inclus/pdp.php'); ?>
 
 </body>
 </html>

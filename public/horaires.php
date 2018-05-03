@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/headerR.php');
+include('inclus/enteteR.php');
 
 ?>
 	<main id='iMain'>
@@ -82,7 +82,7 @@ include('inclus/headerR.php');
 		</section>
 	</main>
 
-	<?php include('footer.php'); ?>
+	<?php include('inclus/pdp.php'); ?>
 
 </body>
 </html>
