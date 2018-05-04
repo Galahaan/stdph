@@ -130,10 +130,10 @@ body, h3, h4{
 	width: 3.2rem;
 }
 h1{
-	font-size: 4.5rem; /* bandeau : titre 'Pharmacie des Tilleuls' */
+	font-size: 4.5rem; /* bandeau : titre 'Nom de la pharmacie' */
 }
 h2{
-	font-size: 3rem; /* bandeau : sous-titre 'à Gaël ...' */
+	font-size: 3rem; /* bandeau : sous-titre 'adresse ...' */
 }
 #iTelBandeau{
 	font-size: 3.5rem; /* bandeau : sous-titre 'numéro de tel cliquable' */
@@ -203,7 +203,7 @@ h1{
 	top: 1.5rem;
 	left: 7%;
 }
-/* sous-titre : à Gaël ... */
+/* sous-titre : adresse ... */
 h2{
 	top: 54%;
 	left: 19%;
@@ -340,7 +340,6 @@ nav#iNavigation a{
 }
 #iIndexVignettes article{
 	position: relative; /* pour que les <a> et les <img> soient superposés */
-	/*margin-bottom: -0.6rem;  sinon, il y a une petite bande blanche en dessous de l'image ... ??!!   */
 }
 #iIndexVignettes article a{
 	position: absolute;
@@ -1125,12 +1124,12 @@ footer h3{
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
 	h1{
-		font-size: 5.5rem;				/* old 4.5 titre de la page : Pharmacie des Tilleuls */
+		font-size: 5.5rem;				/* old 4.5 titre de la page : Nom de la pharmacie */
 		top: 8%;
 		left: 22%;
 	}
 	h2{
-		font-size: 4.5rem;				/* old 3 sous-titre de la page : à Gaël ... */
+		font-size: 4.5rem;				/* old 3 sous-titre de la page : adresse ... */
 		top: 48%;
 		left: 20%;
 	}
@@ -1217,11 +1216,11 @@ footer h3{
 @media screen and (min-width: 600px){
 
 	h1{
-		font-size: 7rem;				/* old 5.5 - titre de la page : Pharmacie des Tilleuls */
+		font-size: 7rem;				/* old 5.5 - titre de la page : Nom de la pharmacie */
 		top: 7%;
 	}
 	h2{
-		font-size: 5rem;				/* old 4.5 - sous-titre de la page : à Gaël ... */
+		font-size: 5rem;				/* old 4.5 - sous-titre de la page : adresse ... */
 		left: 22%
 	}
 	#iTelBandeau{
@@ -1288,11 +1287,11 @@ footer h3{
 @media screen and (min-width: 900px){
 
 	h1{
-		font-size: 9rem;				/* old 7 - titre de la page : Pharmacie des Tilleuls */
+		font-size: 9rem;				/* old 7 - titre de la page : Nom de la pharmacie */
 		top: 10%;
 	}
 	h2{
-		font-size: 6rem;				/* old 5 - sous-titre de la page : à Gaël ... */
+		font-size: 6rem;				/* old 5 - sous-titre de la page : adresse ... */
 		left: 24%;
 	}
 	#iTelBandeau{
@@ -1348,5 +1347,95 @@ footer h3{
 	#iTelBandeau img, #iContactTel img{
 		display: none; /* sur un écran d'ordi, on n'affiche plus l'icône clicIndex */
 	}
+}
 
+/* 																														impression	*/
+@media print{
+
+	/*********************************  GENERIQUE  ********************************/
+
+	body{
+/*		width: auto!important;
+		margin: auto!important;*/
+		background-color: #FFF!important;
+		color: #000!important;
+	}
+	p, a, h1, h2, h3, h4, h5, h6, ul, ol, span, div{
+		color: #000!important;
+		/*margin: auto!important;*/
+	}
+	p{
+		orphans: 3; /* pas de ligne seule en bas  */
+		widows:  3; /* pas de ligne seule en haut */
+	}
+	ul, ol{
+		page-break-inside: avoid; /* pas de saut de page dans ces éléments */
+	}
+	h1, h2, h3{
+		page-break-after: avoid; /* pas de saut de page après ces éléments */
+	}
+
+	/* ça ne me sert pas, mais c'est juste bon à savoir ! */
+/*	a[href]:after{
+		content: " (" attr(href) ")"; /* affichage des url des liens
+	}*/
+
+	/********************************  SPECIFIQUE  ********************************/
+
+	/************ bandeau du haut ************/
+
+	header section{
+		padding: 0 0 25%;
+	}
+	body, h3, h4{
+		font-size: 1.8rem; /* taille par défaut de toutes les polices + les h3 et les h4 */
+	}
+	#iLogoCroix{
+		width: 14%;						/* taille et position de la croix */
+		display: block;
+		top: 0;
+	}
+	h1{
+		font-size: 7rem;				/* titre de la page : Nom de la pharmacie */
+		top: 0;
+		left: 25%;
+	}
+	h2{
+		font-size: 3.5rem;				/* sous-titre de la page : adresse ... */
+		top: 40%;
+		left: 35%;
+	}
+	#iTelBandeau{
+		font-size: 3.5rem;				/* n° de telephone */
+		top: 60%;
+		left: 35%;
+	}
+	#iTelBandeau img, #iContactTel img{
+		display: none; 					/* on n'affiche pas l'icône clicIndex */
+	}
+
+
+	/********************* page Index ********************/
+
+	#iIndexVignettes article{
+		width: 33.33%;  /* on met 3 vignettes */
+		float: left;    /*     en largeur     */
+	}
+
+	/******************** page Contact *******************/
+
+	#iContactInfosPratiques, #iContactCoordonnees{
+		width: 45%;
+		display: inline-block;  /* c'est là qu'on passe en 2 colonnes */
+		vertical-align: top;
+	}
+
+	/*************** page Mentions légales ***************/
+
+	#iMentionsLegales div{
+		page-break-inside: avoid; /* pas de saut de page au milieu d'un div */
+	}
+	#iMentionsLegales img{
+		width: 17%;
+	}
 }

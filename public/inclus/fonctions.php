@@ -555,6 +555,10 @@ function pageCourante( $request_uri ) {
 		case "infos":
 			$nomPage = "Informations / conseils";
 			break;
+
+		case "menleg":
+			$nomPage = "Mentions légales";
+			break;
 	}
 	return ['flag' => $flagPC, 'nom' => $nomPage];
 }
