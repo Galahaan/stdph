@@ -65,6 +65,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
     <!-- on recharge la page toutes les X secondes -->
     <meta http-equiv="refresh" content="300" />
 
+    <link rel='stylesheet' type='text/css' href='css/styleCouleurs.css'>
     <link rel='stylesheet' type='text/css' href='css/style.css'>
     <link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>

@@ -66,6 +66,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
     <!-- on le place AVANT l'appel à notre CSS pour se donner la possibilité -->
     <!-- de le modifier dans notre CSS puisque le fichier HTML est lu de haut en bas -->
     <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
+    <link rel='stylesheet' type='text/css' href='css/styleCouleurs.css'>
     <link rel='stylesheet' type='text/css' href='css/style.css'>
     <link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>

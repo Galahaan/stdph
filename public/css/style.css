@@ -1,61 +1,3 @@
-/* fond de la page                                             :  #D8D8D8  gris clair                   */
-/*  + fond du bandeau en cas de chargement lent                                                         */
-/* fond de la zone du site                (main)               :  white    blanc                        */
-/* dans le bandeau du haut                                     :  #364115  vert foncé                   */
-/*  - titres + tel                                                                                      */
-/*  - lignes fines dans les formulaires                                                                 */
-/*  - lignes gammes de produits                                                                         */
-/* menu de navigation, fond                                    :  #ADADAD  gris clair                   */
-/* menu de navigation, police                                  :  #DEFFC4  vert pâle                    */
-/* bandeau de connexion, fond                                  :  #575757  gris foncé 1                 */
-/* bandeau de connexion, police                                :  white    blanc                        */
-/* vignettes accueil, fond                                     :  #DEFFC4  vert pâle                    */
-/* vignettes accueil, police                                   :  #575757  gris foncé 1                 */
-/* créneaux ouverture                     (horaires)           :  rgba(148, 193, 29, .2)                */
-/* créneau actuel ouverture               (horaires)           :  rgba(148, 193, 29, .5)                */
-/* bouton de validation, fond                                  :  #A55AA5  mauve pâle                   */
-/*  + liens, tel, mail (cliquables)                                                                     */
-/*      - tel + mail                      (contact)                                                     */
-/*      - inscription                     (connexion)                                                   */
-/*      - connexion                       (inscription)                                                 */
-/*      - mode d'emploi                   (prepaOrdo)                                                   */
-/*      - chucknorrisfacts                (humour)                                                      */
-/* bouton de validation, hover                                 :  #585858  gris foncé 2                 */
-/*  + hover liens ...                                                                                   */
-/*      - tel + mail                      (contact)                                                     */
-/*      - inscription                     (connexion)                                                   */
-/*      - connexion                       (inscription)                                                 */
-/*      - mode emploi                     (prepaOrdo)                                                   */
-/*      - chucknorrisfacts                (humour)                                                      */
-/* heure actuelle                         (horaires)           :  #1967E5  bleu roi       old fuschia   */
-/* pharma ouverte                         (accueil)            :  #4DBC1C  vert 'fluo'                  */
-/* pharma fermée                          (accueil)            :  #FF4141  rouge                        */
-/* pharma ouvre dans ...                  (accueil)            :  black    noir                         */
-/* pharma ferme dans ...                  (accueil)            :  #FF4141  rouge      (#F29200  orange) */
-/* § alternés                                                                                           */
-/*      - 1 produit sur 2                 (gammesProduits)     :  #F8F8F8  gris très clair              */
-/*      - titres h4                       (menleg)             :  #E7FBE1  vert très clair              */
-/*                                                                                                      */
-
-/*   - tel commissariat (horaires)        supprimé  !!!                         */
-
-
-
-/* Police importée de Google fonts */
-/* (positionner cet import sur la 1ère ligne du fichier CSS, sinon ça peut bugger) */
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,700|Tangerine:700');
-
-	/* Il faut toujours définir une police 'générique' de secours: */
-	/* les polices génériques sont :                               */
-	/* serif, sans-serif, monospace, cursive, fantasy et system-ui */
-	/* (disponibles sur n'importe quelle machine)                  */
-	/*                                                             */
-	/* Voilà donc ce qui sera utilisé dans ce projet :             */
-    /*  font-family: 'Tangerine', fantasy;   pour l'image de fond  */
-    /*  font-family: 'Raleway', fantasy;     pour tout le reste    */
-    /*                                                             */
-    /*  penser à modifier si besoin l'épaisseur des polices :      */
-    /*  ie pas de bold mais du 700 (ou autre) ...                  */
 
 /* Supprimer toutes les marges de toutes les balises */
 *{
@@ -66,18 +8,6 @@
 
 /* Configurer l'utilisation des 'rem' => 1 rem = 10 px */
 html{ font-size: 62.5%; }  /* => associé à body{ font-size: 1.5rem; } */
-
-/* par défaut on force tous les liens en black */
-a{
-	text-decoration: none;
-	color: black;
-}
-
-/* pour souligner le mot du menu de nav. correspondant à la page courante */
-#iPageCourante{
-	text-decoration: underline;
-	font-weight: 700;
-}
 
 /* img = 100% de la largeur du parent */
 img{
@@ -92,24 +22,19 @@ img{
 }
 
 body{
-	/* ligne associée à l'import de la police Google fonts */
-	font-family: 'Raleway', fantasy;
  	text-align: center;/* étant donné que le texte est majoritairement centré dans tout le doc */
- 	background-color: #D8D8D8;
  	max-width: 95rem;
  	margin: auto;
 }
 
 /* Visiblement, le font-family du body n'est pas pris en compte dans le textarea, */
 /* et de plus, la taille n'est pas bonne pour les input ...                       */
-/* on les redéfinit donc ici plus spécifiquement :                                */
+/* (cf autre fichier CSS pour les polices et les couleurs) */
 .cChampForm input, .cChampForm textarea{
-	font-family: fantasy;
 	font-size: 1em;
 }
 
 main{
-	background-color: white;
 	/* pour ne pas que le footer remonte trop haut */
  	/*min-height: 40rem;*/
 }
@@ -139,38 +64,34 @@ h2{
 	font-size: 3.5rem; /* bandeau : sous-titre 'numéro de tel cliquable' */
 }
 #iIndexVignettes article h4{
-	font-size: 2.5rem; /* page index, titres des vignettes */
+	font-size: 2.5rem; /* index, titres des vignettes */
 }
 .fa-phone, .fa-fax, .fa-envelope{
-	font-size: 2rem; /* page contact, taille des icônes font-awesome : tel, fax et mail */
+	font-size: 2rem; /* contact, taille des icônes font-awesome : tel, fax et mail */
 }
 #iGammesProd article h4{
-	font-size: 3.5rem; /* page gammesProduits, titres des photos § */
+	font-size: 3.5rem; /* gammesProduits, titres des photos § */
 }
 sup, sub{
 	font-size: .7em; /* contact, ordo, comm et inscrip : 'saisie obligatoire' et 'mess. d'erreurs' */
 }
 #iHumour p:last-of-type{
-	font-size: 1.4rem;   /* page humour, 'Merci à ...' */
-}
-.cSemaine h4, .cSamedi h4{
-	font-weight: 400;  /* nom des jours (h4) de la page horaires en 'normal' */
+	font-size: 1.4rem;   /* humour, 'Merci à ...' */
 }
 .cSectionContour{
 	padding: 5% 2% 0; /* espace autour des sections principales du site */
 }
+/* affichés ou pas (validation W3C / braille), les titres */
+/* de toutes les sections ont un peu de marge dessous     */
 .cSectionContour h3{
-	padding-bottom: 5.8%; /* les titres de toutes les sections (affichés ou pas: validation W3C / accessibilité braille) */
-	font-weight: 700;     /* sont, par défaut, en gras, et ont un peu de marge dessous                                   */
+	padding-bottom: 5.8%;
 }
 
 /***************************************************************************************************************************************/
 /***************************************************         bandeau du haut         ***************************************************/
 /***************************************************************************************************************************************/
-
 /* Image de fond */
 header section{
-	background-color: #D8D8D8;                /* dans le cas où l'image ne peut être chargée, ça fait un fond par défaut */
 	background-image: url('../img/bandeau/fond.jpg'), url('../img/bandeau/fond_light.jpg');
 	/* Les navigateurs chargeront en premier les images spécifiées en fin de ligne (fond_light.jpg)
 	   et chargeront ensuite vers la gauche (fond.jpg). */
@@ -193,10 +114,7 @@ header section{
 
 /* titre + sous-titre + tel bandeau du haut */
 h1, h2, #iTelBandeau{
-	color: #364115;
-	font-weight: 700;
 	position: absolute;
-	font-family: 'Tangerine', fantasy; /* on souhaite une police particulière uniquement pour le bandeau du haut */
 }
 /* titre : Pharmacie ... */
 h1{
@@ -224,28 +142,12 @@ h2{
 	/* taille de lécran ! :)                                                                 */
 }
 
-/* NB : il faut respecter cet ordre de déclaration :                           */
-/*                  link > visited > hover > focus > active                    */
-/*      (pour que visited n'écrase pas hover, et que la navigation             */
-/*       au clavier se passe bien sous IE : hover > focus > active)            */
-/* Par défaut dans le body, on a mis les liens en black, mais ici,             */
-/* pour le bandeau => même couleur que celle de la police                      */
-#iTelBandeau a{
-	color: #364115;
-}
-
 /***********************************************************************************************/
 /********************************       menu de navigation       *******************************/
 /***********************************************************************************************/
 nav#iNavigation{
-	background-color: #ADADAD;
 	text-align: right;
 	padding: 0.5rem;
-}
-/* par défaut dans le body, on a mis les liens en black              */
-/* ici => couleur de contraste par rapport au fond du menu ci-dessus */
-nav#iNavigation a{
-	color: #DEFFC4;
 }
 #iNavigation ul{
 	margin:	auto;
@@ -255,7 +157,6 @@ nav#iNavigation a{
 	display: inline-block;
 	margin-right: 0rem;
 	padding-left: .4rem;
-	font-weight: 400;
 }
 #iNavigation li:first-child{
 	position: absolute;
@@ -269,10 +170,8 @@ nav#iNavigation a{
 /**********************                bandeau de connexion               **********************/
 /***********************************************************************************************/
 #iBandeauConnex{
-	background-color: #575757;
 	width: 96%;
 	padding: 0 2%;
-	color: white;
 }
 #iClientConnecte{
 	display: inline-block;
@@ -284,16 +183,10 @@ nav#iNavigation a{
 	width: 34%;
 	text-align: right;
 }
-/* par défaut dans le body, on a mis les liens en black              */
-/* ici => couleur de contraste par rapport au fond du menu ci-dessus */
-#iLienConnex a{
-	color: white;
-}
 
 /***************************************************************************************************************************************/
 /*******************************************          pages connexion et inscription         *******************************************/
 /***************************************************************************************************************************************/
-
 /* la petite ligne de séparation avec le § sur l'inscription     */
 /* est codée dans la partie 'page contact' ci-dessous            */
 
@@ -301,42 +194,12 @@ nav#iNavigation a{
 #iConnexionInscription p:nth-of-type(2){
 	padding-bottom: 5%;
 }
-/* on le colore et on en profite pour paramétrer le lien de la page inscription  */
-/* par défaut dans le body, on a mis les liens en black ...      */
-#iConnexionInscription a, #iInscription a{
-	color: #A55AA5;
-	text-decoration: underline;
-}
-
-/* on le colore au passage de la souris et on en profite */
-/* pour paramétrer le lien de la page inscription        */
-#iConnexionInscription a:hover, #iInscription a:hover{
-	color: #585858;
-	font-weight: 700;
-}
 
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
 /***************************************************************************************************************************************/
-
 #iIndexIntro{
 	padding: 8% 2%;
-}
-/* Ces <span> sont ajoutés dans la fonction 'ouverturePharmacie' et non directement dans index.html */
-#iIndexIntro span{
-	font-weight: 700;
-}
-#iIndexIntro .cOuverte{
-	color: #4DBC1C;
-}
-#iIndexIntro .cFermee{
-	color: #FF4141;
-}
-#iIndexIntro .cOuvreDans{
-	color: black;
-}
-#iIndexIntro .cFermeDans{
-	color: #FF4141;
 }
 #iIndexVignettes article{
 	position: relative; /* pour que les <a> et les <img> soient superposés */
@@ -345,11 +208,8 @@ nav#iNavigation a{
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-color: #DEFFC4;
-	color: #575757;
 	width: 100%;
 	height: 100%;
-	font-weight: 700;
 	/*line-height: 1.4em;  line-height = hauteur de l'interligne, si jamais le nom de la vignette ne tient pas sur une seule ligne */
 	opacity: 0;
 }
@@ -387,14 +247,11 @@ nav#iNavigation a{
 	text-align: justify;
 	padding: 1% 0;
 }
-#iContactInfosPratiques span{
-	font-weight: 700;
-}
 
 /************     coordonnées et liens vers réseaux sociaux     ************/
 
-/* page contact et page connexion           */
-/* ligne fine de séparation au dessus du §  */
+/* page contact et page connexion :         */
+/* petit trait horizontal au dessus du §    */
 /* (en version mobile uniquement !)         */
 #iContactCoordonnees:before, #iContactPlan:before, #iContactFormulaire:before, #iConnexionInscription:before{
 	content: '';
@@ -402,7 +259,6 @@ nav#iNavigation a{
 	height: .2rem;
 	width: 4rem;
 	margin: 0 auto 2rem;
-	background-color: #364115;
 }
 /* marge au dessus du n° de tel (ie en dessous de '35290 Gaël') */
 #iContactTel{
@@ -415,17 +271,6 @@ nav#iNavigation a{
 	position: relative;    /* #iContactTel en a aussi besoin ci-dessous pour le clicIndex */
 	top: 0;
 	left: -0.8rem;
-}
-/* tel cliquable + mail, de couleur et soulignés              */
-/* (par défaut dans le body, on a mis les liens en black)     */
-/* ici on veut les colorer au passage de la souris            */
-#iContactTel a, #iContactMail a{
-	text-decoration: underline;
-	color: #A55AA5;
-}
-#iContactTel a:hover, #iContactMail a:hover{
-	color: #585858;
-	font-weight: 700;
 }
 /* icône du clicIndex (#iContactTel est déjà en position relative, cf ci-dessus) */
 #iContactTel img{
@@ -492,8 +337,7 @@ nav#iNavigation a{
 
 /* lignes fines entre les champs, taille des champs ...                                                        */
 .cChampForm{
-	border: none;
-	border-top: .1rem solid #364115;
+	/* border-top:   cf § sur les couleurs */
 	padding: 1.5rem 0;
 	width: 100%;
 	text-align: right;
@@ -529,7 +373,6 @@ nav#iNavigation a{
 sub{
 	display: block;
 	padding-right: 1%;
-	color: red;
 	/* pour positionner le message un peu plus bas                                                             */
 	position: relative;
 	top: .8rem;
@@ -542,20 +385,12 @@ sub{
 
 /* déco du bouton de validation du formulaire                                                                  */
 .cBoutonOk button{
-	background-color: #A55AA5;
-	color: white;
 	width: auto;
-	font-weight: 400;
 	padding: 1rem;
 	margin-right: 2rem;
 	border: none;
 	border-radius: 5px;
 }
-
-.cBoutonOk button:hover{
-	background-color: #585858;
-}
-
 
 /*--------------------------------------------------------------------------------                             */
 /*                                                                                                             */
@@ -590,12 +425,6 @@ sub{
 	text-align: justify;
 }
 
-/* N'oubliez pas l'original de l'ordonnance ... */
-.cCouleurRouge{
-	color: red;
-	font-weight: 700;
-}
-
 /* position et marges autour de 'Mode d'emploi' */
 #iOrdoPrepaOrdo article:first-of-type{
 	text-align: left;
@@ -610,17 +439,6 @@ sub{
 	top: 0.8rem;
 	/* cf ctrl+F #iTelBandeau img{ pour plus d'explications */
 }
-/* couleur(s) du lien 'Mode d'emploi'                    */
-/* par défaut dans le body, on a mis les liens en black  */
-#iOrdoLienModeEmploi a{
-	text-decoration: underline;
-	color: #A55AA5;
-}
-/* on le colore au passage de la souris */
-#iOrdoLienModeEmploi a:hover{
-	color: #585858;
-	font-weight: 700;
-}
 /* par défaut, le mode d'emploi est masqué */
 #iOrdoModeEmploi{
 	display: none;
@@ -634,8 +452,6 @@ sub{
 #iOrdoModeEmploi{
 	padding: 7%;
 	margin: 2% 2% 8%;
-	background-color: #5B5B5B;
-	color: white;
 	text-align: left;
 }
 /* centrage de l'intro */
@@ -644,22 +460,11 @@ sub{
 	margin-bottom: 5%;
 }
 
-/* les 4 étapes en gras */
-#iOrdoModeEmploi span{
-	font-weight: 700;
-	text-decoration: underline;
-}
-
 /* un peu d'espace entre les différents points du mode d'emploi */
 #iOrdoModeEmploi ol li, #iOrdoModeEmploi ol li span{
 	margin: 4% 0;
 }
 
-/* message pour l'accès impossible aux fichiers sur certains smartphones */
-#iOrdoModeEmploi ul li p:nth-of-type(2){
-	color: orange;
-	font-weight: 700;
-}
 /* décalage des puces de 2e niveau */
 #iOrdoModeEmploi ul{
 	margin-left: 8%;
@@ -675,10 +480,6 @@ sub{
 /***************************************************          page horaires          ***************************************************/
 /***************************************************************************************************************************************/
 
-/* l'heure qu'il est */
-.cHeureDuJour{
-	color: #1967E5;
-}
 #iHorairesTableau article{
 	text-align: left;
 	padding-bottom: .5rem;
@@ -687,52 +488,21 @@ sub{
 #iHorairesTableau article div, #iHorairesTableau article h4{
 	display: inline-block;
 }
-/* - couleur de fond par défaut des créneaux horaires d'ouverture */
-/* - couleur de fond d'un créneau écoulé du jour en cours         */
-#iHorairesTableau article div, #iHorairesTableau #iAujourdhui .cCreneauOff{			/*  Attention: il y a d'autres instructions pour #iAujourdhui .cCreneauOff  */
-	background-color: rgba(148, 193, 29, .2);
-}
-/* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
-#iHorairesTableau #iAujourdhui div, #iHorairesTableau #iAujourdhui h4{
-	background-color: rgba(148, 193, 29, .5);
-	font-weight: 700;
-	color: #1967E5;
-}
-/* on ne veut pas mettre le jour actuel et le tiret en fond vert */
-.cSemaine h4, .cSamedi h4, .cSemaine .cTiret,
-#iHorairesTableau #iAujourdhui h4, #iHorairesTableau #iAujourdhui .cTiret{
-	background-color: white;
-	color: black;
-}
-/* et le tiret reste en normal */
-#iHorairesTableau #iAujourdhui .cTiret{
-	font-weight: normal;
-}
-/* pour finir de désactiver un créneau passé du jour actuel */
-/* on a déjà mis la couleur de fond un peu plus haut        */
-#iHorairesTableau #iAujourdhui .cCreneauOff{
-	color: black;
-	font-weight: normal;
-}
+
 /* =======================     Pour créer un trait vertical représentant l'heure     ============================= */
 .cSemaine, .cSamedi{
 	position: relative;
 }
 #iHorairesTableau #iAujourdhui #iTraitHoraire{
-	background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final, ie 'transparence totale'. */
-	/* NB: j'avais testé 'opacity: 0;' => mais TOUT disaparaît, y compris la border */
-
-	border-left: solid #1967E5 2px;
+	/* border-left: solid #xxx 2px; c'est ça qui fait le trait vertical, cf § sur les couleurs */
 	position: absolute;
 	top: 0; /* la valeur du left est déterminée en PHP dans le HTML */
 }
 #iHorairesTableau #iAujourdhui .cEffacerTrait, #iHorairesTableau article .cEffacerTrait{
-	background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final, cf NB ci-dessus */
 	position: absolute;
 	top: 0;
 	left: 0;
 }
-
 
 /* =============================================================================================================== */
 /* ========================                                                               ======================== */
@@ -743,7 +513,6 @@ sub{
 /* jours de la semaine */
 #iHorairesTableau article h4{
 	width: 23%;
-	background-color: white;
 }
 /* 8h30 */
 #iHorairesTableau .cSemaine div:nth-child(2){
@@ -758,7 +527,6 @@ sub{
 }
 /* - */
 #iHorairesTableau .cSemaine .cTiret{
-	background-color: white;
 	width: 5%;
 	text-align: center;
 }
@@ -775,7 +543,6 @@ sub{
 }
 /* samedi */
 #iHorairesTableau .cSamedi h4{
-	background-color: white;
 	width: 26.75%;      /* cette valeur bizarre permet d'aligner '9h le samedi' avec '9h en semaine' */
 }
 /* samedi 9h */
@@ -797,8 +564,6 @@ sub{
 /* =============================================================================================================== */
 
 
-
-
 /***************************************************************************************************************************************/
 /************************************************          page pharma de garde         ************************************************/
 /***************************************************************************************************************************************/
@@ -806,11 +571,6 @@ sub{
 /* texte justifié dans les 2 sections */
 #iPdG3237, #iPdGplan{
 	text-align: justify;
-}
-
-/* on met en gras quelques mots */
-#iPdGplan span{
-	font-weight: 700;
 }
 
 /* -----------   Section 3237   ----------- */
@@ -855,39 +615,6 @@ sub{
 }
 
 /***************************************************************************************************************************************/
-/****************************************************           page humour          ***************************************************/
-/***************************************************************************************************************************************/
-
-/* section humour */
-#iHumour{
-	min-height: 31rem; /* pour ne pas que le bas de l'écran remonte trop haut */
-	position: relative;
-}
-
-/* la blague */
-#iHumour p:first-of-type{
-	padding-bottom: 8rem; /* permet de laisser toujours une marge entre la fin de la blague et (*) */
-}
-
-/* Merci à ... */
-#iHumour p:last-of-type{
-	font-family: Arial;
-	text-align: left;
-	position: absolute;
-	bottom: 2rem;		/* calé en bas, juste au dessus du footer */
-	left: 2rem;
-}
-/* par défaut dans le body, on a mis les liens en black      */
-#iHumour a{
-	text-decoration: underline;
-	color: #A55AA5;
-}
-#iHumour a:hover{
-	color: #585858;
-	font-weight: 700;
-}
-
-/***************************************************************************************************************************************/
 /*********************************************          page gammes de produits          ***********************************************/
 /***************************************************************************************************************************************/
 
@@ -916,7 +643,6 @@ sub{
 
 /* titres placés sur les images */
 #iGammesProd article h4{
-	color: #364115;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -939,11 +665,6 @@ sub{
 }
 #iGammesProd article div:not(.cImageDeco) img{
 	width: 40%;
-}
-
-/* alternance de gris et de blanc entre les différents produits d'un même § */
-#iGammesProd article div:nth-child(2n+1){
-	background-color: #F8F8F8;
 }
 
 /***************************************************************************************************************************************/
@@ -975,12 +696,10 @@ sub{
 	text-align: center;
 	text-decoration: underline;
 	padding: 8% 0;
-	background-color: #E7FBE1;
 }
 /* entité */
 #iMentionsLegales .gauche{
 	text-align: left;
-	font-weight: 700;
 	padding: 2%;
 }
 /* logo */
@@ -994,15 +713,6 @@ sub{
 	text-align: right;
 	padding: 0 2% 4% 10%;
 }
-/* coloration des liens */
-#iMentionsLegales a{
-	color: #A55AA5;
-	text-decoration: underline;
-}
-#iMentionsLegales a:hover{
-	color: #585858;
-	font-weight: 700;
-}
 
 /***************************************************************************************************************************************/
 /****************************************************             Footer            ****************************************************/
@@ -1014,14 +724,11 @@ footer{
 }
 /* footer 1ère section : Mentions légales */
 footer section:first-of-type{
-	background-color: white;
 	padding: 5% 2%;
 }
 
 /* footer 2ème section : Editeur du site */
 footer section:last-of-type{
-	background-color: #575757;
-	color: white;
 	padding: 5% 2%;
 }
 
@@ -1065,9 +772,6 @@ footer section:last-of-type{
 /**********************************************************************/
 /* <h3> toujours affichés (c'est le cas par défaut)                   */
 /* ici on regroupe les exceptions :                                   */
-#iIndexIntro h3{
-	font-weight: 400; /* La ph. est actuellement ... */
-}
 #iPdG3237 h3{
 	padding-bottom: 0; /* soit on est au beau milieu du texte, soit la section est vide */
 }
@@ -1364,11 +1068,11 @@ footer h3{
 	body{
 /*		width: auto!important;
 		margin: auto!important;*/
-		background-color: #FFF!important;
-		color: #000!important;
+		background-color: white!important;
+		color: black!important;
 	}
 	p, a, h1, h2, h3, h4, h5, h6, ul, ol, span, div{
-		color: #000!important;
+		color: black!important;
 		/*margin: auto!important;*/
 	}
 	p{
