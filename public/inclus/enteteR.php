@@ -1,6 +1,46 @@
 <?php
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
+
+//////////////////////////////////     § anti-aspiration du site     /////////////////////////////////
+
+if( isset($_SESSION['isAspi']) ){
+
+    // on s'envoie un mail contenant l'adresse IP du visiteur
+    // (car il s'agit peut être d'un vrai moteur de recherche)
+
+    // 1) adresse IP du visiteur
+    if( isset($_SERVER['HTTP_CLIENT_IP']) ){
+        $ip = $_SERVER['HTTP_CLIENT_IP']; // IP si internet partagé
+    }
+    elseif( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ){
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR']; // IP derrière un proxy
+    }
+    else {
+        $ip = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : ''); // IP 'normale'
+    }
+
+
+    $domaine = @gethostbyaddr($ip) or ($domaine = 'IP non résolue');
+
+    $contenu = '<html><head><title>Aspirateur</title></head><body>'.
+    'Aspirateur détecté ... confirmation ?<br><br>'.
+    'Son IP : '.$ip.'<br>'.
+    'Domaine : '.$domaine.''.
+    '</body></html>';
+
+    mail("clr.tstph@use.startmail.com", "Aspirateur ?..", $contenu, "From: bigouigfiy@cluster020.hosting.ovh.net\r\nReply-To: \r\nContent-Type: text/html; charset=\"iso-8859-1\"\r\n");
+
+    // on bloque l'affichage
+    echo "Aspirer un site, c'est mal ...";
+    exit();
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +112,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 <body>
     <header>
+        <div id='iPiegeAR'><a href='stopRobots.php'><img src='pixel.png'></a></div>
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
             <ol>
                 <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>

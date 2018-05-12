@@ -15,12 +15,12 @@ include('inclus/enteteR.php');
 		<section id='iIndexVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
 
 			<article>
-				<a href= <?= ( !empty($_SESSION) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>
 				<img src='img/index/prepaOrdonnance.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href= <?= ( !empty($_SESSION) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> ><h4>Préparation de commande</h4></a>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> ><h4>Préparation de commande</h4></a>
 				<img src='img/index/prepaCommande.jpg' alt=''>
 			</article>
 
