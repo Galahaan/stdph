@@ -113,7 +113,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 <body onload='placerFocus("iFocus")'>
     <header>
-        <a href='stopRobots.php'><img src='pixel.png'></a>
+        <div id='iPiegeAR'><a href='stopRobots.php'><img src='pixel.png'></a></div>
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
             <ol>
                 <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
