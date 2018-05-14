@@ -834,7 +834,9 @@ footer h3{
 		text-align: left;
 		padding-left: 10%;
 	}
-	#iHorairesTableau{         /* le tableau graphique des horaires est remplacé par une phrase les résumant */
+	/* - iHorairesTableau : le tableau graphique des horaires est remplacé par une phrase les résumant */
+	/* - iPiegeAA         : on n'affiche pas le lien anti-aspiration (enteteXX.php)                    */
+	#iHorairesTableau, #iPiegeAA{         
 		display: none;
 	}
 }

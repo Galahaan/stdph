@@ -109,7 +109,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 <body>
     <header>
-        <div id='iPiegeAA'><a href='stopRobots.php'><img src='pixel.png'></a></div>
+        <div id='iPiegeAA'><a href='stopRobots.php'><img src='img/bandeau/tapette.png'></a></div>
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
             <ol>
                 <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
