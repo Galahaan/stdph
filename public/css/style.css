@@ -349,7 +349,7 @@ nav#iNavigation{
 
 /* lignes fines entre les champs, taille des champs ...                                                        */
 .cChampForm{
-	/* border-top:   cf § sur les couleurs */
+	/* border-top:   cf CSS sur les couleurs */
 	padding: 1.5rem 0;
 	width: 100%;
 	text-align: right;
@@ -506,7 +506,7 @@ sub{
 	position: relative;
 }
 #iHorairesTableau #iAujourdhui #iTraitHoraire{
-	/* border-left: solid #xxx 2px; c'est ça qui fait le trait vertical, cf § sur les couleurs */
+	/* border-left: solid #xxx 2px; c'est ça qui fait le trait vertical, cf CSS sur les couleurs */
 	position: absolute;
 	top: 0; /* la valeur du left est déterminée en PHP dans le HTML */
 }
@@ -650,7 +650,7 @@ sub{
 /* pour caler les titres des articles sur l'image */
 #iGammesProd article .cImageDeco{
 	position: relative;
-	border: 0.3rem solid #364115;
+	/* border: 0.3rem solid #xxx; la bordure autour de l'image, cf CSS sur les couleurs */
 }
 
 /* titres placés sur les images */
@@ -774,6 +774,7 @@ footer section:last-of-type{
 /*        - #iContactInfosPratiques h3                                */
 /*        - #iContactCoordonnees h3                                   */
 /*        - #iPdGplan h3                                              */
+/*        - footer h3                                                 */
 /*                                                                    */
 /* - <h3> affichés uniquement pour les medias braille                 */
 /*        - #iIndexVignettes h3                                       */
@@ -806,6 +807,8 @@ footer h3{
 
 /**********************************************************************/
 /* <h3> affichés uniquement pour les medias braille                   */
+
+
 
 /*																														NOT BRAILLE	*/
 @media not braille{

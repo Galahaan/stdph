@@ -289,10 +289,13 @@ nav#iNavigation a{
 /*********************************************          page gammes de produits          ***********************************************/
 /***************************************************************************************************************************************/
 #iGammesProd article h4{
-    color: #364115; /* titres placés sur les images */
+    color: #364115;               /* titres placés sur les images */
 }
 #iGammesProd article div:nth-child(2n+1){
-    background-color: #F8F8F8; /* alternance de gris et de blanc entre les différents produits d'un même § */
+    background-color: #F8F8F8;    /* alternance de gris et de blanc entre les différents produits d'un même § */
+}
+#iGammesProd article .cImageDeco{
+    border: 0.3rem solid #364115; /* bordure de l'image */
 }
 
 /***************************************************************************************************************************************/
