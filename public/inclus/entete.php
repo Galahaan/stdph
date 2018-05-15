@@ -24,8 +24,8 @@ if( isset($_SESSION['isAspi']) ){
     $domaine = @gethostbyaddr($ip) or ($domaine = 'IP non résolue');
 
     $contenu = '<html><head><title>Aspirateur</title></head><body>'.
-    'Aspirateur détecté ... confirmation ?<br><br>'.
-    'Son IP : '.$ip.'<br>'.
+    'Aspirateur potentiel => demande de confirmation ...<br><br>'.
+    'IP      : '.$ip.'<br>'.
     'Domaine : '.$domaine.''.
     '</body></html>';
 
