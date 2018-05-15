@@ -780,6 +780,7 @@ footer section:last-of-type{
 /*        - #iIndexVignettes h3                                       */
 /*                                                                    */
 /* - <h3> affichés uniquement pour les medias non braille             */
+/*         aucun                                                      */
 /*                                                                    */
 
 /**********************************************************************/
@@ -795,6 +796,7 @@ h3#iPdGh32{
 	text-align: center; /* c'est le cas du vrai titre (et la section est vide) */
 }
 
+/*                                                                    */
 /**********************************************************************/
 /* <h3> jamais affichés (mais nécessaires pour la validation W3C)     */
 #iHorairesTableau h3,             /* 'Horaires d'ouverture de la ...' */
@@ -805,11 +807,9 @@ footer h3{
 	display: none;
 }
 
+/*                                                                    */
 /**********************************************************************/
 /* <h3> affichés uniquement pour les medias braille                   */
-
-
-
 /*																														NOT BRAILLE	*/
 @media not braille{
 	/* je suis obligé de faire les choses "à l'envers" :                                                         */
@@ -830,15 +830,16 @@ footer h3{
 	}
 }
 
-
 /*																															BRAILLE	*/
 @media braille{
-	.cBraille{
-		text-align: left;
-		padding-left: 10%;
-	}
-	/* - iHorairesTableau : le tableau graphique des horaires est remplacé par une phrase les résumant */
-	/* - iPiegeAA         : on n'affiche pas le lien anti-aspiration (enteteXX.php)                    */
+
+	/* NB : Apparemment, la propriété 'display: none' n'a aucun effet sur les lecteurs d'écran.     :(   */
+	/*      Que l'on soit dans le § général (cf qqs h3 ci-dessus en 'display: none'),                    */
+	/*      ou en @media braille, cela ne change rien, les lecteurs d'écran affichent tout !             */
+
+	/* Ci-dessous, c'est ce que l'on souhaitait, mais cela n'a aucun effet    :(                         */
+	/* - iHorairesTableau : le tableau graphique des horaires est remplacé par une phrase les résumant   */
+	/* - iPiegeAA         : on n'affiche pas le lien anti-aspiration (enteteXX.php)                      */
 	#iHorairesTableau, #iPiegeAA{         
 		display: none;
 	}
@@ -937,7 +938,6 @@ footer h3{
 	#iHumour p:last-of-type{
 		font-size: 1.6rem;				/* old : 1.4rem					*/
 	}
-
 }
 
 /* 																															600 px	*/
