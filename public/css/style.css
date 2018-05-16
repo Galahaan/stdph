@@ -96,6 +96,12 @@ sup, sub{
 	border: 0;
 	margin: auto;
 }
+/* pour que les bandeaux 'nav' et 'connexion' restent visibles en haut de l'écran */
+header{
+	position: sticky;
+	top: -15%;
+	z-index: 1; /* là c'est bon, mais sinon, certains éléments passent devant ... pourquoi ??? */
+}
 
 /* Image de fond */
 header section{
@@ -845,6 +851,10 @@ footer h3{
 /* 																															460 px	*/
 @media screen and (min-width: 460px){
 
+	header{
+		top: -50%; /* position sticky qu'il faut réajuster */
+	}
+
 	body, h3, h4{
 		font-size: 2rem; 				/* old 1.7 */
 	}
@@ -940,6 +950,10 @@ footer h3{
 /* 																															600 px	*/
 @media screen and (min-width: 600px){
 
+	header{
+		top: -64%; /* position sticky qu'il faut réajuster */
+	}
+
 	h1{
 		font-size: 7rem;				/* old 5.5 - titre de la page : Nom de la pharmacie */
 		top: 7%;
@@ -1011,6 +1025,10 @@ footer h3{
 /* 																															900 px	*/
 @media screen and (min-width: 900px){
 
+	header{
+		top: -48%; /* position sticky qu'il faut réajuster */
+	}
+
 	h1{
 		font-size: 9rem;				/* old 7 - titre de la page : Nom de la pharmacie */
 		top: 10%;
@@ -1068,6 +1086,10 @@ footer h3{
 
 /* 																															1600 px	*/
 @media screen and (min-width: 1600px){
+
+	header{
+		top: -32%; /* position sticky qu'il faut réajuster */
+	}
 
 	#iTelBandeau img, #iContactTel img{
 		display: none; /* sur un écran d'ordi, on n'affiche plus l'icône clicIndex */
