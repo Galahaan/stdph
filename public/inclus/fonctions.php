@@ -325,7 +325,7 @@ function dateFr() {
 function heureActuelle( $format ) {
 	date_default_timezone_set("Europe/Paris");
 	if( $format == 'H' ){
-		$heure = date('G\hi');
+		$heure = date('G\hi'); //   NB: le '\' est simplement le car. d'échappement ! ;)
 	}
 	else{
 		$heure = (int)date('G') + round( (float)date('i') / 60, 2 ); // heure au format DECIMAL :    heure (0 -> 23) + ( minutes (00 -> 59) / 60 )

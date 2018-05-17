@@ -4,35 +4,46 @@ session_start(); // en début de chaque fichier utilisant $_SESSION
 
 //////////////////////////////////     § anti-aspiration du site     /////////////////////////////////
 
-if( isset($_SESSION['isAspi']) ){
+// si $_SESSION['bot'] est définie, c'est que l'on revient de tapette.php,
+// ie que la tapette s'est déclenchée, on veut donc en savoir plus !
+// => on s'envoie un mail avec les IP et les noms de domaine du robot
 
-    // on s'envoie un mail contenant l'adresse IP du visiteur
-    // (car il s'agit peut être d'un vrai moteur de recherche)
+if( isset($_SESSION['bot']) ){
 
-    // 1) adresse IP du visiteur
-    if( isset($_SERVER['HTTP_CLIENT_IP']) ){
-        $ip = $_SERVER['HTTP_CLIENT_IP']; // IP si internet partagé
+    // histoire de n'envoyer le mail qu'une seule fois, si jamais le robot insiste :
+    if( !isset($_SESSION['bot']['mailEnvoye']) ){
+
+        $_SESSION['bot']['mailEnvoye'] = true;
+
+        $contenu =  "<html><head><title>" . date('D j M Y') . " - " . date('G\hi') .
+                        " - Moteur de recherche ou Aspirateur ?</title></head>" .
+                    "<body><br><br>" .
+                        "IP 1      : " . $_SESSION['bot']['ip1'] . "<br>" .
+                        "Domaine 1 : " . $_SESSION['bot']['do1'] . "<br>";
+
+        if( $_SESSION['bot']['isAspi'] == true ){
+            // si on est dans ce cas, c'est que les 2 IP sont différentes, donc on complète le mail :
+            $contenu .=
+                        "IP 2      : " . $_SESSION['bot']['ip2'] . "<br>" .
+                        "Domaine 2 : " . $_SESSION['bot']['do2'] . "<br>" .
+                        "<br>Ce robot a donc été bloqué ..." .
+                    "</body></html>";
+        }
+
+        mail( $_SESSION['bot']['mailDest'],
+              date('D j M Y') . " - " . date('G\hi') . " - passage d'un robot chez " . $_SESSION['bot']['url'],
+              $contenu,
+              "From: " . mb_encode_mimeheader($_SESSION['bot']['url'], "UTF-8", "B") .
+              "<" . $_SESSION['bot']['mailExp'] . ">" .
+              "\r\nReply-To: \r\nContent-Type: text/html; charset=\"UTF-8\"\r\n"
+            );
     }
-    elseif( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ){
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR']; // IP derrière un proxy
-    }
-    else {
-        $ip = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : ''); // IP 'normale'
-    }
+}
 
+if( $_SESSION['bot']['isAspi'] == true ){
 
-    $domaine = @gethostbyaddr($ip) or ($domaine = 'IP non résolue');
-
-    $contenu = '<html><head><title>Aspirateur</title></head><body>'.
-   'Aspirateur potentiel => demande de confirmation ...<br><br>'.
-    'IP      : '.$ip.'<br>'.
-    'Domaine : '.$domaine.''.
-    '</body></html>';
-
-    mail("clr.tstph@use.startmail.com", "Aspirateur ?..", $contenu, "From: bigouigfiy@cluster020.hosting.ovh.net\r\nReply-To: \r\nContent-Type: text/html; charset=\"iso-8859-1\"\r\n");
-
-    // on bloque l'affichage
-    echo "Aspirer un site, c'est mal ...";
+    // on bloque l'affichage après un petit message
+    echo "sorry";
     exit();
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +124,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
 <body onload='placerFocus("iFocus")'>
     <header>
-        <div id='iPiegeAA'><a href='stopRobots.php'><img src='img/bandeau/tapette.png'></a></div>
+        <div id='iPiegeAA'><a href='tapette.php'><img src='img/bandeau/tapette.png'></a></div>
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
             <ol>
                 <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
