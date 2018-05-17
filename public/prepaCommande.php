@@ -1,5 +1,12 @@
 <?php
 
+// Si le nom de la page est saisi directement dans la barre d'adresse, alors
+// que la personne ne s'est pas encore connectée => retour accueil direct !
+session_start();
+if( !isset($_SESSION['client']) ){
+	header('Location: index.php');
+}
+
 include('inclus/enteteF.php');
 
 // Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
