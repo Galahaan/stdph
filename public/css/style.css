@@ -809,13 +809,13 @@ footer h3{
 /*                                                                    */
 /**********************************************************************/
 /* <h3> affichés uniquement pour les medias braille                   */
-<<<<<<< HEAD
+/*                                                                    */
+/* aucun                                                              */
 
-/* aucun */
-
-=======
->>>>>>> dev
 /*																														NOT BRAILLE	*/
+/**********************************************************************/
+/* <h3> affichés uniquement pour les medias non braille               */
+/*                                                                    */
 @media not braille{
 	/* je suis obligé de faire les choses "à l'envers" :                                                         */
 	/*    -> comme la propriété css 'display' permet d'effacer un élément (display: none)                        */
