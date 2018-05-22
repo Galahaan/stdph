@@ -767,13 +767,13 @@ footer section:last-of-type{
 /*        - #iPdG3237 h3 (ie #iPdGh31 et #iPdGh32 )                   */
 /*        - #iAide h3                                                 */
 /*        - #iMentionsLegales h3                                      */
+/*        - footer h3                                                 */
 /*                                                                    */
 /* - <h3> jamais affichés (mais nécessaires pour la validation W3C)   */
 /*        - #iHorairesTableau h3                                      */
 /*        - #iContactInfosPratiques h3                                */
 /*        - #iContactCoordonnees h3                                   */
 /*        - #iPdGplan h3                                              */
-/*        - footer h3                                                 */
 /*                                                                    */
 /* - <h3> affichés uniquement pour les medias braille                 */
 /*        - #iIndexVignettes h3                                       */
@@ -794,6 +794,7 @@ footer section:last-of-type{
 h3#iPdGh32{
 	text-align: center; /* c'est le cas du vrai titre (et la section est vide) */
 }
+/* cf styleCouleurs.css pour footer h3 => font-weight */
 
 /*                                                                    */
 /**********************************************************************/
@@ -801,8 +802,8 @@ h3#iPdGh32{
 #iHorairesTableau h3,             /* 'Horaires d'ouverture de la ...' */
 #iContactInfosPratiques h3,       /* 'Informations pratiques'         */
 #iContactCoordonnees h3,          /* 'Coordonnées de la ...'          */
-#iPdGplan h3,                     /* 'Localiser le commissariat ...'  */
-footer h3{
+#iPdGplan h3                      /* 'Localiser le commissariat ...'  */
+{
 	display: none;
 }
 
@@ -1000,9 +1001,8 @@ footer h3{
 	/* icône de guidage GPS */
 	/* cf ctrl+F #iPdGplan img{ */
 
-	/*******************************         Footer         *******************************/
+	/******************************  page mentions légales  *******************************/
 
-	/* Mentions légales */
 	#iMentionsLegales .gauche{
 		padding-left: 15%;
 	}
