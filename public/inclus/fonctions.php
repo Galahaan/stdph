@@ -602,6 +602,10 @@ $cdn     = "";
 		case "index":
 		case "horaires":
 			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
+			// idealement, j'aurais mis le '<' dans la ch. de car. ci-dessus et j'aurais simplement
+			// appelé $enteteSpecs['refresh'] dans entete.php ... sauf que quand je mets le '<', ça doit être
+			// interprété comme une faille potentielle, et rien ne passe, la chaîne est vide.
+			// d'où l'ajout du '<' uniquement après l'appel de la fonction dans entete.php :-(
 			break;
 
 		case "inscription":
