@@ -39,7 +39,16 @@ include('inclus/entete.php');
 			<p><?= HORAIRES_PHARMACIE ?></p>
 		</section>
 
-		<section id='iHorairesTableau' class='cSectionContour'><h3>Horaires d'ouverture de la <?= NOM_PHARMA ?></h3>
+		<?php // Pour cacher ce rontudju de tableau aux lecteurs d'écrans, c'est pas simple !!                     ?>
+		<?php // - 1     - vérifier si le display:none du CSS fonctionne sur Jaws ...                              ?>
+		<?php //           (en enlevant le aria-hidden ci-dessous, sinon on ne saura pas lequel a un effet)        ?>
+		<?php // - 1 bis - si le display:none ne fonctionne pas, essayer le aria-hidden ci-dessous                 ?>
+		<?php // - 2     - spécifiquement pour Lynx, comme les 2 cas ci-dessus ne fonctionnent pas,                ?>
+		<?php //            si on détecte ce navigateur, on masque le tableau                                      ?>
+
+		<?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
+
+		<section id='iHorairesTableau' class='cSectionContour' aria-hidden='true'><h3>Horaires d'ouverture de la <?= NOM_PHARMA ?></h3>
 			<article class='cSemaine' <?= ($auj == "lun") ? "id='iAujourdhui'" : "" ?>  >
 				<h4>lundi</h4><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
@@ -80,6 +89,9 @@ include('inclus/entete.php');
 
 			</article>
 		</section>
+
+		<?php endif ?>
+
 	</main>
 
 	<?php include('inclus/pdp.php'); ?>

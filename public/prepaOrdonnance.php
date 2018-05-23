@@ -448,6 +448,7 @@ if( isset($_POST['bouton']) ){
 				<article>
 					<p id='iOrdoLienModeEmploi'>
 						<a href='#iOrdoModeEmploi'>Mode d'emploi</a>&nbsp;&nbsp;<img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''>
+						<a href='#iOrdoFinME' class='cBraille'>fin du mode d'emploi</a>
 					</p>
 					<div id='iOrdoModeEmploi'>
 						<div>Il suffit de suivre ces <span>4 étapes :</span></div>
@@ -477,7 +478,7 @@ if( isset($_POST['bouton']) ){
 						Nous nous occupons de la suite !
 					</div>
 				</article>
-				<sup>Veuillez renseigner tous les champs ci-dessous svp. (pièce jointe < <?= TAILLE_MAX_PJ / 1024 / 1024 ?> Mo)</sup>
+				<sup id='iOrdoFinME'>Veuillez renseigner tous les champs ci-dessous svp. (pièce jointe < <?= TAILLE_MAX_PJ / 1024 / 1024 ?> Mo)</sup>
 				<form method='POST' enctype='multipart/form-data'>
 					<div class='cChampForm'>
 						<input type='radio' id='iCiviliteMme'  name='civilite' value='Mme'  required

@@ -113,8 +113,11 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <?php
-    // selon les pages, on peut vouloir un refresh automatique (notamment quand l'heure est affichée !) ?>
+    // selon les pages, on peut vouloir un refresh automatique (notamment quand l'heure est affichée !)
+    // (mais pas pour Lynx, qui ne le prend pas en compte, et ça gène la navigation)                      ?>
+    <?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
     <?= ! empty($enteteSpecs['refresh']) ? "<" . $enteteSpecs['refresh'] : "" ?>
+    <?php endif ?>
 
     <?php // selon les pages, on peut avoir besoin du CDN de fontAwesome.
           // (on l'appelle en PREMIER, comme ça notre CSS reste prioritaire puisque le fichier HTML est lu de haut en bas) ?>
@@ -127,7 +130,13 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
 
 <body <?= $enteteSpecs['focus'] ?> >
     <header>
+
+        <?php // pour Lynx, on enlève le lien vers le piège.                             ?>
+        <?php // il n'est pas grave en soi, mais ça fait un lien inutile en haut de page ?>
+        <?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
         <div id='iPiegeAA'><a href='tapette.php'><img src='img/bandeau/tapette.png'></a></div>
+        <?php endif ?>
+
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
             <ol>
                 <li><a href='#iMain'       accesskey='c'>[c] contenu de la page <?= $pageCourante['nom'] ?></a></li>

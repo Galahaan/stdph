@@ -23,7 +23,12 @@ include('inclus/entete.php');
 
 		</section>
 
-		<section id='iPdGplan' class='cSectionContour'><h3>Localiser le commissariat de police</h3>
+		<section id='iPdGplan' class='cSectionContour'>
+
+			<?php // pour Lynx, on enlève le h3 ?>
+			<?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
+			<h3>Localiser le commissariat de police</h3>
+			<?php endif ?>
 
 		<?php // si les gardes fonctionnent sans passer par le commissariat, il n'y a RIEN d'autre à afficher ?>
 		<?php if( HEURE_SOIR_POLICE_D != "X" ) : ?>
