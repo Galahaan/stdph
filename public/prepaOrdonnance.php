@@ -533,7 +533,7 @@ if( isset($_POST['bouton']) ){
 							<p>Apportez-nous des précisions qui vous semblent utiles sur votre traitement.
 								<br>Peut-être avez-vous déjà certains produits qu'il serait donc inutile d'ajouter à la préparation ?..</p>
 						<label for='iMessageTextarea'>Message</label>
-								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required 
+								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required placeholder='>'
 									<?php	if( isset($erreurs['message']) && $focusErreurMis == false ) {
 												echo " autofocus";
 												$focusErreurMis = true;

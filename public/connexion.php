@@ -48,6 +48,7 @@ if( isset( $_POST['connexion'] ) ) {
 
 			<p class='cBraille'>
 				(*) Si vous ne disposez pas encore d'identifiants, vous pouvez vous inscrire <a href='inscription.php'>ici.</a>
+				(La CNIL protège vos données, cf mentions légales ci-dessous)
 			</p>
 
 			<p><?= ( ! empty($erreur) ) ? $erreur : "" ?></p>

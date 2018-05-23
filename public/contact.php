@@ -371,7 +371,7 @@ if( isset($_POST['bouton']) ){
 				</div>
 				<div class='cChampForm'>
 					<label for='iMessageTextarea'>Message</label>
-						<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required
+						<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required placeholder='>'
 							<?php	if( isset($erreurs['message']) && $focusErreurMis == false ){
 										echo " autofocus";
 										$focusErreurMis = true;

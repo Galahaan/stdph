@@ -62,28 +62,29 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
     <link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>
 <body>
-    <section id='iAide' class='cSectionContour'><h3>Aide à la navigation dans le site</h3>
+    <section id='iAide' class='cSectionContour'><h1>Aide à la navigation dans le site</h1>
 
-        <h4>Raccourcis clavier</h4>
-        <p>Quand ils existent, ils sont indiqués par des [lettres entre crochets].
-        La combinaison de touches dépend de l'OS (Windows, Linux, Mac, ...) et du navigateur utilisé (Mozilla Firefox, Google Chrome, Microsoft Internet Explorer, Opera, Apple Safari, ...).
-        <br>
-        <a href='https://www.w3schools.com/tags/att_global_accesskey.asp'>(lien : source W3schools sur les raccourcis clavier)</a>
-        <br><br>
+        <h2>Raccourcis clavier</h2>
+        <p>Quand ils existent, ils sont indiqués par des [lettres entre crochets].<br><br>
         <?= $_SERVER['HTTP_USER_AGENT'] ?>
         <br><br>
         <?php $racClavier = racClavier($_SERVER['HTTP_USER_AGENT']); $phrase = $racClavier['phrase']; $combi = $racClavier['combi']; ?>
         <?= $phrase ?>
-        <br><br>
+        <br>
         <?php if( $combi != "" ) : ?>
-            exemple: [r] accueil => indique le raccourci clavier <?= $combi ?> + r pour retourner à l'<a href='index.php' accesskey='r'>accueil</a>
+            Exemple: [r] accueil => indique le raccourci clavier <?= $combi ?> + r pour retourner à l'<a href='index.php' accesskey='r'>accueil</a>
         <?php endif ?>
+        <br><br>
+        Pour info, la combinaison de touches dépend de l'OS (Windows, Linux, Mac, ...) et du navigateur utilisé (Mozilla Firefox, Google Chrome, Microsoft Edge ou I.E., Opera, Apple Safari, ...).
+        <br>
+        <a href='https://www.w3schools.com/tags/att_global_accesskey.asp'>(lien : source W3schools sur les raccourcis clavier)</a>
+        <br>
         </p>
 
-        <h4>Bandeau supérieur</h4>
+        <h2>Bandeau supérieur</h2>
         <p>Toutes les pages du site contiennent, dans leur partie supérieure, un bandeau divisé en 4 parties :
             <ol>
-                <li>un lien vers la page actuelle d'aide à la navigation</li>
+                <li>un menu de liens pour atteindre les différentes zones de la page et l'aide actuelle</li>
                 <li>un bandeau décoratif contenant un lien vers la page d'accueil (le lien englobe le logo croix + le nom de la pharmacie + son emplacement)</li>
                 <li>un menu de navigation comprenant 4 entrées : page d'accueil, horaires, équipe et contact</li>
                 <li>un lien de connexion / déconnexion, servant aux utilisateurs inscrits sur le site, pour accéder à certains services</li>
@@ -91,22 +92,6 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
         </p>
         <p>Le contenu propre à chaque page se situe donc en dessous de ce bandeau.</p>
 
-        <h4>Services proposés en page d'accueil</h4>
-        <p>L'accès aux services proposés par la pharmacie se fait par la page d'accueil. En voici la liste :
-            <ol>
-                <li>préparation d'ordonnance (nécessite une inscription) : permet d'envoyer une ordonnance pour venir chercher les produits dès qu'ils auront été préparés (<a href='connexion.php'>lien direct</a>)</li>
-
-                <li>préparation de commande (nécessite une inscription) : comme pour l'ordonnance, mais pour des produits sans prescription médicale (<a href='connexion.php'>lien direct</a>)</li>
-
-                <li>liste des pharmacies de garde via le site resogarde, ou indications pour se rendre au commissariat de police (<a href='pharmaDeGarde.php'>lien direct</a>)</li>
-
-                <li>promotions en cours (<a href='promos.php'>lien direct</a>)</li>
-
-                <li>liste des marques de produits suivies par la pharmacie et rapidement disponibles (<a href='gammesProduits.php'>lien direct</a>)</li>
-
-                <li>informations / conseils sur différents sujets (<a href='infos.php'>lien direct</a>)</li>
-            </ol>
-        </p>
     </section>
 </body>
 </html>

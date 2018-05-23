@@ -686,6 +686,16 @@ sub{
 /***************************************************************************************************************************************/
 /************************************************              page aide              **************************************************/
 /***************************************************************************************************************************************/
+#iAide h1, #iAide h2{
+	position: static;   /* pour 'supprimer' le 'position: absolute' du bandeau */
+}
+#iAide h1{
+	font-size: 3rem;
+}
+#iAide h2{
+	font-size: 2.5rem;
+	text-align: left;
+}
 #iAide p{
 	padding-bottom: 2rem;
 	text-align: left;
@@ -753,7 +763,7 @@ footer section:last-of-type{
 
 
 /* Cette petite partie n'a en fait pas été traitée plus haut mais     */
-/* concerne les titres <h3> qui peuvent être dans 4 états différents. */
+/* concerne les titres <h3> qui peuvent être dans 3 états différents. */
 /* (il était donc judicieux de les rassembler dans un même endroit)   */
 /*                                                                    */
 /* - <h3> toujours affichés (c'est le cas par défaut)                 */
@@ -765,21 +775,18 @@ footer section:last-of-type{
 /*        - #iCommPrepaComm h3                                        */
 /*        - #iGammesProd h3                                           */
 /*        - #iPdG3237 h3 (ie #iPdGh31 et #iPdGh32 )                   */
-/*        - #iAide h3                                                 */
 /*        - #iMentionsLegales h3                                      */
 /*        - footer h3                                                 */
 /*                                                                    */
 /* - <h3> jamais affichés (mais nécessaires pour la validation W3C)   */
 /*        - #iHorairesTableau h3                                      */
-/*        - #iContactInfosPratiques h3                                */
-/*        - #iContactCoordonnees h3                                   */
 /*        - #iPdGplan h3                                              */
 /*                                                                    */
 /* - <h3> affichés uniquement pour les medias braille                 */
 /*        - #iIndexVignettes h3                                       */
+/*        - #iContactInfosPratiques h3                                */
+/*        - #iContactCoordonnees h3                                   */
 /*                                                                    */
-/* - <h3> affichés uniquement pour les medias non braille             */
-/*         aucun                                                      */
 /*                                                                    */
 
 /**********************************************************************/
@@ -800,22 +807,14 @@ h3#iPdGh32{
 /**********************************************************************/
 /* <h3> jamais affichés (mais nécessaires pour la validation W3C)     */
 #iHorairesTableau h3,             /* 'Horaires d'ouverture de la ...' */
-#iContactInfosPratiques h3,       /* 'Informations pratiques'         */
-#iContactCoordonnees h3,          /* 'Coordonnées de la ...'          */
 #iPdGplan h3                      /* 'Localiser le commissariat ...'  */
 {
 	display: none;
 }
 
-/*                                                                    */
-/**********************************************************************/
-/* <h3> affichés uniquement pour les medias braille                   */
-/*                                                                    */
-/* aucun                                                              */
-
 /*																														NOT BRAILLE	*/
 /**********************************************************************/
-/* <h3> affichés uniquement pour les medias non braille               */
+/* <h3> affichés uniquement pour les medias braille                   */
 /*                                                                    */
 @media not braille{
 	/* je suis obligé de faire les choses "à l'envers" :                                                         */
@@ -824,7 +823,11 @@ h3#iPdGh32{
 	/*       (il n'existe pas de 'display: on', même si 'display: block' peut parfois nous rendre service)       */
 	/*    -> ainsi, au lieu de dire "j'efface les titres, mais pour les medias de type braille, je les affiche", */
 	/*       => je dis "pour les medias de type non braille (@media not braille), j'efface les titres"           */
-	#iIndexVignettes h3{          /* 'Services proposés par la ph...' */
+
+	#iIndexVignettes h3,		  /* 'Services proposés par la ph...' */
+	#iContactInfosPratiques h3,	  /* 'Informations pratiques'         */
+	#iContactCoordonnees h3 	  /* 'Coordonnées de la ...'          */
+	{
 		display: none;
 	}
 

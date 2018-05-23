@@ -36,11 +36,10 @@ if( isset($_SESSION['bot']) ){
         }
 
         mail( $_SESSION['bot']['mailDest'],
-              date('D j M Y') . " - " . date('G\hi') . " - passage d'un robot chez " . $_SESSION['bot']['url'],
-              $contenu,
-              "From: " . mb_encode_mimeheader($_SESSION['bot']['url'], "UTF-8", "B") .
-              "<" . $_SESSION['bot']['mailExp'] . ">" .
-              "\r\nReply-To: \r\nContent-Type: text/html; charset=\"UTF-8\"\r\n"
+                date('D j M Y') . " - " . date('G\hi') . " - passage d'un robot chez " . $_SESSION['bot']['url'],
+                $contenu,
+                "From: " . $_SESSION['bot']['url'] . " <" . $_SESSION['bot']['mailExp'] . ">" .
+                "\r\nReply-To: \r\nContent-Type: text/html; charset=\"UTF-8\"\r\n"
             );
     }
 }
@@ -99,7 +98,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 // pour personnaliser l'entete en fonction de la page qui l'a appelé
 // (appel d'un CDN, refresh de la page, positionnement d'un focus, ...)
 $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
-echo "<br>";
+
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
@@ -131,10 +130,10 @@ echo "<br>";
         <div id='iPiegeAA'><a href='tapette.php'><img src='img/bandeau/tapette.png'></a></div>
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
             <ol>
-                <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
+                <li><a href='#iMain'       accesskey='c'>[c] contenu de la page <?= $pageCourante['nom'] ?></a></li>
                 <li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
                 <li><a href='#iLienConnex' accesskey='x'>[x] Connexion/Inscription/Deconnexion</a></li>
-                <li><a href='#iMain'       accesskey='c'>[c] contenu de <?= $pageCourante['nom'] ?></a></li>
+                <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
             </ol>
         </nav>
 

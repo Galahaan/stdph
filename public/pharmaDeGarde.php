@@ -31,6 +31,7 @@ include('inclus/entete.php');
 			<p>À partir de <span><?= HEURE_SOIR_POLICE_H ?></span>, et jusqu'à <span><?= HEURE_MATIN_POLICE_H ?></span> le lendemain matin, il faut se rendre, avec une pièce d'<span>identité</span> et une <span>ordonnance</span>, au <span>commissariat de police</span> situé :</p>
 			<p><?= ADRESSE_POLICE ?></p>
 			<p>Si vous utilisez un smartphone, profitez de son GPS pour vous y rendre :</p>
+			<p>- activez la localisation</p>
 			<p>- cliquez sur le plan ci-dessous</p>
 			<p>- puis sur l'icône &nbsp;<img src='img/icones/itineraire.png' alt='itinéraire'></p>
 			<p>... et laissez-vous guider.</p>
