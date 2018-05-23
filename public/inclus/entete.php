@@ -2,7 +2,12 @@
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
 
-//////////////////////////////////     § anti-aspiration du site     /////////////////////////////////
+ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+/////     § anti-aspiration du site
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // si $_SESSION['bot'] est définie, c'est que l'on revient de tapette.php,
 // ie que la tapette s'est déclenchée, on veut donc en savoir plus !
@@ -46,17 +51,10 @@ if( $_SESSION['bot']['isAspi'] == true ){
     echo "sorry";
     exit();
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
-
-///////////////////////////////////////////////////////////////////////////////////////////////
 /////     INCLUDE sécurisé
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if( empty($page) ){
 $page = "fonctions"; // page à inclure : fonctions.php qui lui-même inclut constantes.php
@@ -91,15 +89,17 @@ else{
         echo "Erreur Include : le fichier " . $page . " est introuvable.";
     }
 }
-///////////////////////////////////////////////////////////////////////////////////////////////
-/////     FIN INCLUDE sécurisé
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // on détermine la page courante ...
 // 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
 // 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
 $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
+// pour personnaliser l'entete en fonction de la page qui l'a appelé
+// (appel d'un CDN, refresh de la page, positionnement d'un focus, ...)
+$enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
+echo "<br>";
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
@@ -107,26 +107,34 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
     <title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
     <meta charset='utf-8'>
 
-    <!-- Mots clés de la page -->
+    <?php // Mots clés de la page ?>
     <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
 
-    <!-- Prise en compte du responsive design -->
+    <?php // Prise en compte du responsive design ?>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <?php
+    // selon les pages, on peut vouloir un refresh automatique (notamment quand l'heure est affichée !) ?>
+    <?= ! empty($enteteSpecs['refresh']) ? "<" . $enteteSpecs['refresh'] : "" ?>
+
+    <?php // selon les pages, on peut avoir besoin du CDN de fontAwesome.
+          // (on l'appelle en PREMIER, comme ça notre CSS reste prioritaire puisque le fichier HTML est lu de haut en bas) ?>
+    <?= ! empty($enteteSpecs['cdn'])     ? "<" . $enteteSpecs['cdn']     : "" ?>
 
     <link rel='stylesheet' type='text/css' href='css/styleCouleurs.css'>
     <link rel='stylesheet' type='text/css' href='css/style.css'>
     <link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>
 
-<body>
+<body <?= $enteteSpecs['focus'] ?> >
     <header>
         <div id='iPiegeAA'><a href='tapette.php'><img src='img/bandeau/tapette.png'></a></div>
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
             <ol>
                 <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
                 <li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
-                <li><a href='#iLienConnex' accesskey='c'>[c] Connexion/Inscription/Deconnexion</a></li>
-                <li><a href='#iMain'       accesskey='m'>[m] contenu de <?= $pageCourante['nom'] ?></a></li>
+                <li><a href='#iLienConnex' accesskey='x'>[x] Connexion/Inscription/Deconnexion</a></li>
+                <li><a href='#iMain'       accesskey='c'>[c] contenu de <?= $pageCourante['nom'] ?></a></li>
             </ol>
         </nav>
 

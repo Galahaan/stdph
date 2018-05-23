@@ -141,7 +141,7 @@ $minusAccMajus =
 // Elle renvoie en sortie le prénom, "nettoyé" si besoin, ainsi qu'une erreur éventuelle
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function filtrerPrenom($prenomPOST) {
+function filtrerPrenom( $prenomPOST ){
 
 	// on commence par donner à la fonction filtrerPrenom() la
 	// connaissance des 2 variables $trouverCar et $nouveauCar :
@@ -191,7 +191,7 @@ function filtrerPrenom($prenomPOST) {
 // Elle renvoie en sortie le nom, "nettoyé" si besoin, ainsi qu'une erreur éventuelle
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function filtrerNom($nomPOST) {
+function filtrerNom( $nomPOST ){
 
 	global $trouverCar, $nouveauCar, $minusAccMajus;
 	$nbCar = strlen($nomPOST);
@@ -219,17 +219,17 @@ function filtrerNom($nomPOST) {
 // Fonction qui sert à obtenir l'adresse IP du client
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function getIpAdr() {
+function getIpAdr(){
 	// IP si internet partagé
-	if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+	if( isset($_SERVER['HTTP_CLIENT_IP']) ){
 		$ip = $_SERVER['HTTP_CLIENT_IP'];
 	}
 	// IP derrière un proxy
-	elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+	elseif( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ){
 		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 	}
 	// Sinon : IP normale
-	else {
+	else{
 		$ip = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
 	}
 	return $ip;
@@ -244,7 +244,7 @@ function getIpAdr() {
 // Elle retourne la réponse de Google : captcha validé ou non.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function testCaptcha( $user_response ) {
+function testCaptcha( $user_response ){
     $fields_string = '';
     $fields = array(
         'secret' => '6LcPQyUUAAAAAFVpINP0NVsIu80r7V-CrBEkW8tL',
@@ -278,7 +278,7 @@ print_r(json_decode($result, true));
 // - on transforme les multiples occurrences d’espace en 1 seul espace
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function superTrim( $string ) {
+function superTrim( $string ){
 	$string = trim($string);
 	$string = str_replace('\t', ' ',  $string);
 	$string = preg_replace('/[ ]+/', ' ',  $string);
@@ -300,7 +300,7 @@ function superTrim( $string ) {
 // C'est pourquoi on définit notre propre fonction ici.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function dateFr() {
+function dateFr(){
 	$jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 	$mois  = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 	date_default_timezone_set("Europe/Paris");
@@ -322,7 +322,7 @@ function dateFr() {
 //
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function heureActuelle( $format ) {
+function heureActuelle( $format ){
 	date_default_timezone_set("Europe/Paris");
 	if( $format == 'H' ){
 		$heure = date('G\hi'); //   NB: le '\' est simplement le car. d'échappement ! ;)
@@ -346,7 +346,7 @@ function heureActuelle( $format ) {
 // - la pharmacie ferme dans X mn
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function ouverturePharmacie( $jour, $heure ) {
+function ouverturePharmacie( $jour, $heure ){
 
 	if( $jour != "sam" && $jour != "dim" ){
 		// on est un jour de semaine hors samedi :
@@ -425,7 +425,7 @@ function ouverturePharmacie( $jour, $heure ) {
 //				"largeurs et marges des jours et des créneaux horaires"
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function getDeltaP( $heure ) {
+function getDeltaP( $heure ){
 
 	// 8h30 = référence 0 pour le trait vertical, même pour le samedi.
 	// côté css, pour que le trait vertical soit à 8h30, il faut le décaler de la largeur du jour de la semaine, soit 23%.
@@ -490,7 +490,7 @@ function getDeltaP( $heure ) {
 //       ex. 'Accueil' à la place de '/index.php'
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function pageCourante( $request_uri ) {
+function pageCourante( $request_uri ){
 
 	// on extrait le nom de la page courante :
 	$page = ltrim($request_uri, '/');
@@ -565,6 +565,60 @@ function pageCourante( $request_uri ) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
+//							enteteSpecs( $page )
+//
+// Cette fonction, utilisée en tête de chaque fichier du site, permet d'ajouter
+// à l'en-tête une ou plusieurs spécificités liées à la page appelante.
+//
+// La fonction prend comme paramètre d'entrée la page appelante.
+//
+// Elle renvoie un tableau de 3 éléments, qui correspondent aux 3 spécificités potentielles,
+// sous forme de chaînes de caractères représentant du code HTML.
+//
+// - 'refresh'
+//             pour rafraîchir la page toutes les XX secondes. (cf constantes.php)
+//
+// - 'cdn'
+//             dans le cas où l'on a besoin d'appeler le cdn de bootstrap
+//
+// - 'focus'
+//             pour placer un focus sur un élément de la page (pour le braille)
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+function enteteSpecs( $request_uri ){
+
+// on extrait le nom de la page courante :
+$page = ltrim($request_uri, '/');
+
+// on enlève l'extension '.php' :
+$page = rtrim($page, 'hp.');
+
+$refresh = "";
+$focus   = "";  // initialisations
+$cdn     = "";
+
+	switch( $page ){
+
+		case "index":
+		case "horaires":
+			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
+			break;
+
+		case "inscription":
+		case "prepaCommande":
+		case "prepaOrdonnance":
+			$focus = " onload='placerFocus(\"iFocus\")'";
+			break;
+
+		case "contact":
+			$focus = " onload='placerFocus(\"iFocus\")'";
+			$cdn   = "link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>";
+	}
+	return ['refresh' => $refresh, 'focus' => $focus, 'cdn' => $cdn];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
 //							racClavier( $http_user_agent )
 //
 // Cette fonction, utilisée par aide.php, a pour but d'indiquer à l'utilisateur la bonne
@@ -581,7 +635,7 @@ function pageCourante( $request_uri ) {
 // - une chaîne de caractères toute simple donnant la combinaison de touches, ex.: 'ALT'
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function racClavier( $http_user_agent ) {
+function racClavier( $http_user_agent ){
 
 	// Dans un 1er temps, on identifie le navigateur :
 
@@ -710,10 +764,10 @@ function racClavier( $http_user_agent ) {
 	}
 
 	if($combi != ""){
-		$phrase .= "la combinaison est : " . $combi . " + touche(s) d'accès";
+		$phrase .= "la combinaison est : " . $combi . " + touche(s) d'accès.";
 	}
 	else{
-		$phrase .= "les raccourcis clavier sont malheureusement indisponibles :-/";
+		$phrase .= "les raccourcis clavier sont malheureusement indisponibles. :-/";
 	}
 
 	return ['phrase' => $phrase, 'combi' => $combi];

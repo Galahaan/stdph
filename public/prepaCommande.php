@@ -7,7 +7,7 @@ if( !isset($_SESSION['client']) ){
 	header('Location: index.php');
 }
 
-include('inclus/enteteF.php');
+include('inclus/entete.php');
 
 // Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
 // courante n'a pas été usurpée; je suis donc, das ce cas, obligé de l'écrire EN DUR :

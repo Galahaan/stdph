@@ -230,6 +230,10 @@ define('PAS_DE_REBOURS', 5);	// en minutes ( ex. ... dans moins de 15, 10, 5 mn 
 define('HORAIRES_PHARMACIE',
     "La pharmacie est ouverte du lundi au vendredi de 8h30 à 12h30 et de 14h à 19h30, et le samedi de 9h à 16h.");
 
+// Durée de rafraîchissement des pages index et horaires (en secondes)
+// (pour que l'heure affichée soit toujours acceptable)
+define('REFRESH', 300);
+
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
 ///////////////                     Horaires de garde                      ///////////////

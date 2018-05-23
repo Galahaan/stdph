@@ -54,6 +54,54 @@ if( $_SESSION['bot']['isAspi'] == true ){
 
 ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
+?>
+
+<!-- Ce § a été copié sur la page des captcha de google  -->
+<!-- je pense que c'est celui dont j'ai besoin           -->
+<!-- il faut regarder de plus près les scripts JS ...    -->
+
+<!-- https://developers.google.com/recaptcha/docs/invisible -->
+<!-- Invoking the invisible reCAPTCHA challenge after client side validation. -->
+
+<html>
+<head>
+<script>
+  function onSubmit(token) {
+    alert('thanks ' + document.getElementById('field').value);
+  }
+
+  function validate(event) {
+    event.preventDefault();
+    if (!document.getElementById('field').value) {
+      alert('You must add text to the required field');
+    } else {
+      grecaptcha.execute();
+    }
+  }
+
+  function onload() {
+    var element = document.getElementById('submit');
+    element.onclick = validate;
+  }
+</script>
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+</head>
+<body onload='placerFocus("iFocus")'>
+   <form>
+     Name: (required) <input id='field' name='field'>
+     <div id='recaptcha' class='g-recaptcha'
+          data-sitekey='6LcPQyUUAAAAAPTt3tR1KVuHoq9XVMs-74gHSOxY'
+          data-callback='onSubmit'
+          data-size='invisible'></div>
+     <button id='submit'>submit</button>
+   </form>
+    <script>onload();</script>
+</body>
+</html>
+
+
+<?php
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////     INCLUDE sécurisé
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,9 +161,20 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
     <!-- Prise en compte du responsive design -->
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
+    <!-- intégrer le CDN de fontAwesome -->
+    <!-- on le place AVANT l'appel à notre CSS pour se donner la possibilité -->
+    <!-- de le modifier dans notre CSS puisque le fichier HTML est lu de haut en bas -->
+    <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
     <link rel='stylesheet' type='text/css' href='css/styleCouleurs.css'>
     <link rel='stylesheet' type='text/css' href='css/style.css'>
     <link rel='shortcut icon' href='img/icones/favicon.ico'>
+
+    <!-- <script src='https://www.google.com/recaptcha/api.js' async defer></script> -->
+<!--    <script>
+        function onSubmit(token) {
+            document.getElementById("goocapt").submit();
+        }
+    </script> -->
 </head>
 
 <body onload='placerFocus("iFocus")'>
@@ -125,8 +184,8 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
             <ol>
                 <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
                 <li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
-                <li><a href='#iLienConnex' accesskey='c'>[c] Connexion/Inscription/Deconnexion</a></li>
-                <li><a href='#iMain'       accesskey='m'>[m] contenu de <?= $pageCourante['nom'] ?></a></li>
+                <li><a href='#iLienConnex' accesskey='x'>[x] Connexion/Inscription/Deconnexion</a></li>
+                <li><a href='#iMain'       accesskey='c'>[c] contenu de <?= $pageCourante['nom'] ?></a></li>
             </ol>
         </nav>
 

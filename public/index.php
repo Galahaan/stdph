@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/enteteR.php');
+include('inclus/entete.php');
 
 ?>
 	<main id='iMain'>
