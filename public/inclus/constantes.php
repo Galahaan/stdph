@@ -11,32 +11,50 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // Nom de la pharmacie
-define("NOM_PHARMA", "Pharmacie des Tilleuls");
-define("STI_PHARMA", "       à Gaël");
+define("NOM_PHARMA"        , "Pharmacie des Tilleuls");
+define("STI_PHARMA"        , "à Gaël");
 
 // Adresse de la pharmacie
-define("ADR_PHARMA_L1", "place des Tilleuls");
-define("ADR_PHARMA_L2", "");
-define("CP_PHARMA",     "35290");
-define("VIL_PHARMA",    "Gaël");
+define("ADR_PHARMA_L1"     , "place des Tilleuls");
+define("ADR_PHARMA_L2"     , "");
+define("CP_PHARMA"         , "35290");
+define("VIL_PHARMA"        , "Gaël");
 
 // Tel, fax, mail, facebook, google+
-define("TEL_PHARMA_DECO", "01 23 45 67 89");
-define("TEL_PHARMA_UTIL", "+33123456789");
-define("FAX_PHARMA_DECO", "00 12 34 56 78");
-define("ADR_MAIL_PHARMA", "contact@pharmaciedestilleuls.fr");
-define("ADR_FB_PHARMA",   "https://www.facebook.com/Pharmacie-Le-Reste-700447003388902");
-define("ADR_GG_PHARMA",   "https://plus.google.com/113407799173132476603/about");
+define("TEL_PHARMA_DECO"   , "01 23 45 67 89");
+define("TEL_PHARMA_UTIL"   , "+33123456789");
+define("FAX_PHARMA_DECO"   , "00 12 34 56 78");
+define("ADR_MAIL_PHARMA"   , "contact@pharmaciedestilleuls.fr");
+define("ADR_FB_PHARMA"     , "https://www.facebook.com/Pharmacie-Le-Reste-700447003388902");
+define("ADR_GG_PHARMA"     , "https://plus.google.com/113407799173132476603/about");
 
-// Mots-clés pour le référencement
-define("MC_NOM_PHARMA", "des tilleuls");
-define("MC_QUARTIER",   "gaël");
-define("MC_CP",         "35290");
-define("MC_1",          "tilleuls");
-define("MC_2",          "gaëlite");
+//////////////////////////////////////////////////////////////////////////////////////////
+///////////////                                                            ///////////////
+///////////////    Meta description et Mots-Clés pour le référencement     ///////////////
+///////////////                                                            ///////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-// 'home' du site sur le serveur de l'hébergeur (fonctions.php)
-define("HOME", "/home/bigouigfiy/"); // utilisé uniquement dans require_onceCLR qui n'est utilisée nulle part !
+// (éviter de mettre des apostrophes dans les phrases, j'ai peur que cela gène les robots)
+
+define("META_DESC_INDEX"   , "La pharmacie, située à Gaël (Ille-et-Vilaine) vous conseille et répond à vos besoins en médicaments, services en ligne, location de matériel.");
+define("META_DESC_HORAIRES", "Horaires d ouverture de la pharmacie : du lundi au vendredi de 8h30 à 12h30 puis de 14h à 19h, et le samedi de 9h à 16h.");
+define("META_DESC_EQUIPE"  , "Valérie, Hélène, Christine et Alice vous accueillent chaque jour avec le sourire.");
+define("META_DESC_CONTACT" , "Vous trouverez ci-dessous tous les renseignements pour vous rendre à la pharmacie, en bus, en voiture, ou à vélo ainsi que pour nous joindre.");
+define("META_DESC_INSCRIP" , "Pour accéder aux services en ligne de la pharmacie, vous devez vous inscrire en créant un compte.");
+define("META_DESC_CONNEX"  , "Pour accéder aux services en ligne de la pharmacie, connectez-vous grâce à vos identifiants.");
+define("META_DESC_PREP_O"  , "La pharmacie vous propose son service de téléchargement d ordonnance en ligne.");
+define("META_DESC_PREP_C"  , "La pharmacie vous propose son service de prise de commande en ligne, autrement appelé [clic and collect].");
+define("META_DESC_P_GARDE" , "Trouvez facilement la pharmacie de garde la plus proche de chez vous, ou le commissariat de police éventuel dont elle dépend.");
+define("META_DESC_PROMOS"  , "Vous trouverez ici l ensemble des promotions en cours à la pharmacie.");
+define("META_DESC_GAMMES"  , "Retrouvez ici les gammes de parapharmacie suivies et conseillées par la pharmacie.");
+define("META_DESC_INFOS"   , "La pharmacie vous informe sur des sujets de santé en général, ou d actualité.");
+define("META_DESC_MENLEG"  , "Cette page est dédiée aux mentions légales, concernant les données utilisées ou diffusées dans ce site.");
+
+define("MC_NOM_PHARMA"     , "des tilleuls");
+define("MC_QUARTIER"       , "gaël");
+define("MC_1"              , "35290");
+define("MC_2"              , "");
+define("MC_3"              , "");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
@@ -131,12 +149,14 @@ define("TABLE_CLIENTS", "clientsBIG");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
-///////////////        Infos hébergeur concernant l'envoi des mails        ///////////////
-///////////////                                                            ///////////////
-///////////////      (pages prepaOrdonnance, prepaCommande et contact)     ///////////////
+///////////////                     Infos hébergeur                        ///////////////
 ///////////////                                                            ///////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+// 'home' du site sur le serveur de l'hébergeur (fonctions.php)
+define("HOME", "/home/bigouigfiy/"); // utilisé uniquement dans require_onceCLR qui n'est utilisée nulle part !
+
+// pour l'envoi de mails : pages prepaOrdonnance, prepaCommande et contact
 // adresse de l'expéditeur des mails via l'hébergeur du site :
 define("ADR_EXP_HBG", "bigouigfiy@cluster020.hosting.ovh.net");
 

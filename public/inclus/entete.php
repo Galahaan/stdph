@@ -106,8 +106,9 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
     <title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
     <meta charset='utf-8'>
 
-    <?php // Mots clés de la page ?>
-    <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
+    <?php // Description et Mots Clés de la page ?>
+    <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
+    <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
 
     <?php // Prise en compte du responsive design ?>
     <meta name='viewport' content='width=device-width, initial-scale=1'>

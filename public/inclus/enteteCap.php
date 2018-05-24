@@ -156,7 +156,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
     <meta charset='utf-8'>
 
     <!-- Mots clés de la page -->
-    <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_CP ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= $pageCourante['nom'] ?>'>
+    <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>, <?= $pageCourante['nom'] ?>'>
 
     <!-- Prise en compte du responsive design -->
     <meta name='viewport' content='width=device-width, initial-scale=1'>

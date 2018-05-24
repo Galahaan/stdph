@@ -593,32 +593,80 @@ $page = ltrim($request_uri, '/');
 // on enlève l'extension '.php' :
 $page = rtrim($page, 'hp.');
 
-$refresh = "";
-$focus   = "";  // initialisations
-$cdn     = "";
+$description = "";
+$refresh     = "";    // initialisations
+$focus       = "";
+$cdn         = "";
+
+// NB: pour les pages horaires, contact, inscription, prepaOrdo et prepaComm, idéalement,
+// j'aurais voulu écrire les lignes d'instructions HTML complètes entre guillemets "",
+// pour les récupérer dans la page appelante en sortie de la fonction, ex. $enteteSpecs['refresh'] ...
+// MAIS !.. quand je mets le '<' de début de balise, ça doit être interprété comme une faille potentielle,
+// et rien ne passe, la chaîne transférée par la fonction est vide.
+// => d'où l'ajout du '<' uniquement après l'appel de la fonction dans entete.php :-(
 
 	switch( $page ){
 
 		case "index":
-		case "horaires":
+			$description = META_DESC_INDEX;
 			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
-			// idealement, j'aurais mis le '<' dans la ch. de car. ci-dessus et j'aurais simplement
-			// appelé $enteteSpecs['refresh'] dans entete.php ... sauf que quand je mets le '<', ça doit être
-			// interprété comme une faille potentielle, et rien ne passe, la chaîne est vide.
-			// d'où l'ajout du '<' uniquement après l'appel de la fonction dans entete.php :-(
 			break;
 
-		case "inscription":
-		case "prepaCommande":
-		case "prepaOrdonnance":
-			$focus = " onload='placerFocus(\"iFocus\")'";
+		case "horaires":
+			$description = META_DESC_HORAIRES;
+			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
+			break;
+
+		case "equipe":
+			$description = META_DESC_EQUIPE;
 			break;
 
 		case "contact":
+			$description = META_DESC_CONTACT;
 			$focus = " onload='placerFocus(\"iFocus\")'";
 			$cdn   = "link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>";
+			break;
+
+		case "inscription":
+			$description = META_DESC_INSCRIP;
+			$focus = " onload='placerFocus(\"iFocus\")'";
+			break;
+
+		case "connexion":
+			$description = META_DESC_CONNEX;
+			break;
+
+		case "prepaOrdonnance":
+			$description = META_DESC_PREP_O;
+			$focus = " onload='placerFocus(\"iFocus\")'";
+			break;
+
+		case "prepaCommande":
+			$description = META_DESC_PREP_C;
+			$focus = " onload='placerFocus(\"iFocus\")'";
+			break;
+
+		case "pharmaDeGarde":
+			$description = META_DESC_P_GARDE;
+			break;
+
+		case "promos":
+			$description = META_DESC_PROMOS;
+			break;
+
+		case "gammesProduits":
+			$description = META_DESC_GAMMES;
+			break;
+
+		case "infos":
+			$description = META_DESC_INFOS;
+			break;
+
+		case "menleg":
+			$description = META_DESC_MENLEG;
+			break;
 	}
-	return ['refresh' => $refresh, 'focus' => $focus, 'cdn' => $cdn];
+	return ['description' => $description, 'refresh' => $refresh, 'focus' => $focus, 'cdn' => $cdn];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
