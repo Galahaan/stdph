@@ -351,48 +351,48 @@ function ouverturePharmacie( $jour, $heure ){
 	if( $jour != "sam" && $jour != "dim" ){
 		// on est un jour de semaine hors samedi :
 		if( ($heure < (OMATD - REBOURSD)) || ($heure >= FAMID) ){
-			$infoOuverture = "La pharmacie est actuellement <strong class='cFermee'>fermée</strong>."; // les <strong> ne sont pris en compte en CSS que pour la page index
+			$infoOuverture = "La pharmacie est actuellement <span class='cFermee'>fermée</span>."; // les <span> ne sont pris en compte en CSS que pour la page index
 		}
 		else if( $heure < OMATD ){
-			$infoOuverture = "Patience, la pharmacie ouvre dans <strong class='cOuvreDans'>moins de " . ceil( ceil( (OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</strong>.";
+			$infoOuverture = "Patience, la pharmacie ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= OMATD) && ($heure < (FMATD - REBOURSD)) ){
-			$infoOuverture = "La pharmacie est actuellement <strong class='cOuverte'>ouverte</strong>.";
+			$infoOuverture = "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < FMATD ){
-			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <strong class='cFermeDans'>moins de " . ceil( ceil( (FMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</strong>.";
+			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (FMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= FMATD) && ($heure < (OAMID - REBOURSD)) ){
-			$infoOuverture = "C'est la pause déjeuner, la pharmacie est actuellement <strong class='cFermee'>fermée</strong>.";
+			$infoOuverture = "C'est la pause déjeuner, la pharmacie est actuellement <span class='cFermee'>fermée</span>.";
 		}
 		else if( $heure < OAMID ){
-			$infoOuverture = "Patience, la pharmacie ré-ouvre dans <strong class='cOuvreDans'>moins de " . ceil( ceil( (OAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</strong>.";
+			$infoOuverture = "Patience, la pharmacie ré-ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (OAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= OAMID) && ($heure < (FAMID - REBOURSD)) ){
-			$infoOuverture = "La pharmacie est actuellement <strong class='cOuverte'>ouverte</strong>.";
+			$infoOuverture = "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < FAMID ){
-			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <strong class='cFermeDans'>moins de " . ceil( ceil( (FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</strong>.";
+			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
 	else if( $jour == "sam" ){
 		// on est un samedi :
 		if( ($heure < (SA_OMATD - REBOURSD)) || ($heure >= SA_FAMID) ){
-			$infoOuverture = "La pharmacie est actuellement <strong class='cFermee'>fermée</strong>.";
+			$infoOuverture = "La pharmacie est actuellement <span class='cFermee'>fermée</span>.";
 		}
 		else if( $heure < SA_OMATD ){
-			$infoOuverture = "Patience, la pharmacie ouvre dans <strong class='cOuvreDans'>moins de " . ceil( ceil( (SA_OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</strong>.";
+			$infoOuverture = "Patience, la pharmacie ouvre dans <span class='cOuvreDans'>moins de " . ceil( ceil( (SA_OMATD - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 		else if( ($heure >= SA_OMATD) && ($heure < (SA_FAMID - REBOURSD)) ){
-			$infoOuverture = "La pharmacie est actuellement <strong class='cOuverte'>ouverte</strong>.";
+			$infoOuverture = "La pharmacie est actuellement <span class='cOuverte'>ouverte</span>.";
 		}
 		else if( $heure < SA_FAMID ){
-			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <strong class='cFermeDans'>moins de " . ceil( ceil( (SA_FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</strong>.";
+			$infoOuverture = "Hâtez-vous, la pharmacie ferme dans <span class='cFermeDans'>moins de " . ceil( ceil( (SA_FAMID - $heure) * 60 ) / PAS_DE_REBOURS ) * PAS_DE_REBOURS . " minutes</span>.";
 		}
 	}
 	else{
 		// on est un dimanche :
-		$infoOuverture = "La pharmacie est actuellement <strong class='cFermee'>fermée</strong>, nous vous souhaitons un bon week-end !";
+		$infoOuverture = "La pharmacie est actuellement <span class='cFermee'>fermée</span>, nous vous souhaitons un bon week-end !";
 	}
 	return $infoOuverture;
 }
