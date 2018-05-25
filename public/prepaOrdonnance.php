@@ -440,8 +440,8 @@ if( isset($_POST['bouton']) ){
 				<div id='iBlablaIntro'>
 					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
 					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail de leur mise à disposition.</p>
-					<p><span class='cCouleurRouge'>Attention</span>, venez à la pharmacie <span class='cCouleurRouge'>avec l'original de l'ordonnance</span>.</p>
-					<p>Pensez aussi à la <span class='cCouleurRouge'>carte vitale</span> et à la <span class='cCouleurRouge'>carte de mutuelle</span>.</p>
+					<p><span class='cCouleurRouge'>Attention</span>, venez à la pharmacie <strong class='cCouleurRouge'>avec l'original de l'ordonnance</strong>.</p>
+					<p>Pensez aussi à la <strong class='cCouleurRouge'>carte vitale</strong> et à la <strong class='cCouleurRouge'>carte de mutuelle</strong>.</p>
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 

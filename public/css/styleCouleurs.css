@@ -180,9 +180,9 @@ nav#iNavigation a{
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
 /***************************************************************************************************************************************/
-/* Les <span> sont ajoutés dans la fonction 'ouverturePharmacie' et */
-/* contiennent les class utilisées ci-dessous (cOuverte, ...)       */
-#iIndexIntro span{
+/* Les <strong> sont ajoutés dans la fonction 'ouverturePharmacie' et */
+/* contiennent les class utilisées ci-dessous (cOuverte, ...)         */
+#iIndexIntro strong{
     font-weight: 700;
 }
 #iIndexIntro .cOuverte{
@@ -208,6 +208,9 @@ nav#iNavigation a{
 /***************************************************************************************************************************************/
 .cHeureDuJour{
     color: #1967E5; /* l'heure qu'il est */
+}
+#iHorairesIntro strong{
+    font-weight: 700;  /* ouverte / fermée */
 }
 .cSemaine h4, .cSamedi h4{
     font-weight: 400;  /* nom des jours (h4) en 'normal' */
@@ -261,7 +264,7 @@ nav#iNavigation a{
 /* on met qqs mots en gras :                               */
 /* contact         : n° du bus, nom de l'arrêt, ...        */
 /* pharma de garde : horaires, pièces à présenter, ...     */
-#iContactInfosPratiques span, #iPdGplan span{
+#iContactInfosPratiques strong, #iPdGplan span, #iPdGplan strong{
     font-weight: 700;
 }
 

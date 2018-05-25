@@ -288,7 +288,7 @@ define('ADRESSE_POLICE', "6 place Waldeck-Rousseau à Nantes");
 // lignes de bus / tram / métro, parking privé, ...
 define('CONTACT_INFOS_PRATIQUES',
     "<p>La pharmacie dispose d'un parking pour sa clientèle.</p>
-    <p>En <span>chronobus C6</span>, descendez à l'arrêt <span>St Joseph de Porterie</span> :
+    <p>En <strong>chronobus C6</strong>, descendez à l'arrêt <strong>St Joseph de Porterie</strong> :
          la pharmacie est alors à moins d'une minute.</p>");
 
 ?>
