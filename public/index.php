@@ -10,9 +10,10 @@ include('inclus/entete.php');
 
 			$heure  = heureActuelle("");		// heure au format "décimal"
 		?>
-		<section id='iIndexIntro'><h3><?= ouverturePharmacie( $auj, $heure ) ?></h3></section>
+		<section id='iIndex' class='cSectionContour'>
+			<p><?= ouverturePharmacie( $auj, $heure ) ?></p>
 
-		<section id='iIndexVignettes'><h3>Services proposés par la <?= NOM_PHARMA ?></h3>
+			<p>Vous trouverez ci-dessous l'ensemble des &nbsp;</p><h3>services proposés par l'officine.</h3>
 
 			<article>
 				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>

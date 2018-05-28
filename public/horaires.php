@@ -33,12 +33,8 @@ include('inclus/entete.php');
 
 		<section id='iHorairesIntro' class='cSectionContour'><h3><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class='cHeureDuJour'>". $heureH . "</span>" ?></h3>
 			<p><?= ouverturePharmacie( $auj, $heure ) ?></p>
+			<p class='cBraille'><?= HORAIRES_PHARMACIE ?></p>
 		</section>
-
-		<section class='cBraille'>
-			<p><?= HORAIRES_PHARMACIE ?></p>
-		</section>
-
 		<?php // Pour cacher ce rontudju de tableau aux lecteurs d'écrans, c'est pas simple !!                     ?>
 		<?php // - 1     - vérifier si le display:none du CSS fonctionne sur Jaws ...                              ?>
 		<?php //           (en enlevant le aria-hidden ci-dessous, sinon on ne saura pas lequel a un effet)        ?>
