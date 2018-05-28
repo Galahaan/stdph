@@ -58,7 +58,7 @@ h2{
 #iTelBandeau{
 	font-size: 3.5rem; /* bandeau : sous-titre 'numéro de tel cliquable' */
 }
-#iIndexVignettes article h4{
+#iIndex article h4{
 	font-size: 2.5rem; /* index, titres des vignettes */
 }
 .fa-phone, .fa-fax, .fa-envelope{
@@ -207,13 +207,20 @@ nav#iNavigation{
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
 /***************************************************************************************************************************************/
-#iIndexIntro{
-	padding: 8% 2%;
+.cSectionContour#iIndex{
+	padding-left: 0;
+	padding-right: 0;     /* pour annuler, exceptionnellement, les paddings de .cSectionContour */
 }
-#iIndexVignettes article{
+#iIndex p:first-child{
+	padding-bottom: 5.8%; /* 'la pharmacie est actuellement ...' */
+}
+#iIndex p:nth-child(2), #iIndex h3{
+	display: inline-block; /* 'services ...' => pour que la phrase soit sur une seule ligne */
+}
+#iIndex article{
 	position: relative; /* pour que les <a> et les <img> soient superposés */
 }
-#iIndexVignettes article a{
+#iIndex article a{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -225,11 +232,11 @@ nav#iNavigation{
 
 /* NB : il faut respecter cet ordre de déclaration : link > visited > hover > focus > active */
 /*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
-#iIndexVignettes article a:hover, #iIndexVignettes article a:focus, #iIndexVignettes article a:active{
+#iIndex article a:hover, #iIndex article a:focus, #iIndex article a:active{
 	opacity: .85;
 }
 
-#iIndexVignettes article h4{
+#iIndex article h4{
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -241,7 +248,7 @@ nav#iNavigation{
 
 /* pour supprimer l'espace de qqs pixels sous l'image */
 /* alsacreations.com/astuce/lire/52-espaces-sous-les-images.html */
-#iIndexVignettes article img{
+#iIndex article img{
 	display: block;
 }
 
@@ -766,8 +773,11 @@ footer section:last-of-type{
 /* concerne les titres <h3> qui peuvent être dans 3 états différents. */
 /* (il était donc judicieux de les rassembler dans un même endroit)   */
 /*                                                                    */
-/* - <h3> toujours affichés (c'est le cas par défaut)                 */
-/*        - #iIndexIntro h3                                           */
+/* - <h3> toujours affichés                                           */
+/*        (c'est le cas par défaut,                                   */
+/*         avec font-weight en gras, cf styleCouleurs.css)            */
+/*                                                                    */
+/*        - #iIndex h3                                                */
 /*        - #iHorairesIntro h3                                        */
 /*        - #iContactPlan h3                                          */
 /*        - #iContactFormulaire h3                                    */
@@ -783,7 +793,6 @@ footer section:last-of-type{
 /*        - #iPdGplan h3                                              */
 /*                                                                    */
 /* - <h3> affichés uniquement pour les medias braille                 */
-/*        - #iIndexVignettes h3                                       */
 /*        - #iContactInfosPratiques h3                                */
 /*        - #iContactCoordonnees h3                                   */
 /*                                                                    */
@@ -792,6 +801,9 @@ footer section:last-of-type{
 /**********************************************************************/
 /* <h3> toujours affichés (c'est le cas par défaut)                   */
 /* ici on regroupe les exceptions :                                   */
+#iIndex h3{
+	padding-bottom: 5.8%; /* cf .cSectionContour h3 tout en haut */
+}
 #iPdG3237 h3{
 	padding-bottom: 0; /* soit on est au beau milieu du texte, soit la section est vide */
 }
@@ -801,7 +813,10 @@ footer section:last-of-type{
 h3#iPdGh32{
 	text-align: center; /* c'est le cas du vrai titre (et la section est vide) */
 }
-/* cf styleCouleurs.css pour footer h3 => font-weight */
+/* cf styleCouleurs.css pour le font-weight de
+	footer h3
+	#iIndex h3  'Services proposés par ...'
+*/
 
 /*                                                                    */
 /**********************************************************************/
@@ -824,7 +839,6 @@ h3#iPdGh32{
 	/*    -> ainsi, au lieu de dire "j'efface les titres, mais pour les medias de type braille, je les affiche", */
 	/*       => je dis "pour les medias de type non braille (@media not braille), j'efface les titres"           */
 
-	#iIndexVignettes h3,		  /* 'Services proposés par la ph...' */
 	#iContactInfosPratiques h3,	  /* 'Informations pratiques'         */
 	#iContactCoordonnees h3 	  /* 'Coordonnées de la ...'          */
 	{
@@ -884,7 +898,7 @@ h3#iPdGh32{
 		top: 2rem;						/* old 1.8 */
 	}
 	/* page Index : on affiche 2 vignettes en largeur */
-	#iIndexVignettes article{
+	#iIndex article{
 		width: 50%;
 		float: left;
 	}
@@ -1035,7 +1049,7 @@ h3#iPdGh32{
 	}
 
 	/* page Index : on passe en 3 vignettes en largeur */
-	#iIndexVignettes article{
+	#iIndex article{
 		width: 33.33%;
 	}
 
@@ -1153,7 +1167,7 @@ h3#iPdGh32{
 
 	/********************* page Index ********************/
 
-	#iIndexVignettes article{
+	#iIndex article{
 		width: 33.33%;  /* on met 3 vignettes */
 		float: left;    /*     en largeur     */
 	}

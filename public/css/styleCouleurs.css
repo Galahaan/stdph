@@ -95,10 +95,10 @@ main{
 .cSectionContour h3{
     font-weight: 700;
 }
-#iIndexIntro h3{
-    font-weight: 400; /* exception : La ph. est actuellement ... */
+/* exceptions pour index et footer */
+#iIndex h3, footer h3{
+    font-weight: 400;
 }
-
 
 /***************************************************************************************************************************************/
 /*********************************                    tous les liens 'normaux' du site                **********************************/
@@ -180,24 +180,34 @@ nav#iNavigation a{
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
 /***************************************************************************************************************************************/
+<<<<<<< HEAD
 /* Les <span> sont ajoutés dans la fonction 'ouverturePharmacie' et */
 /* contiennent les class utilisées ci-dessous (cOuverte, ...)       */
 #iIndexIntro span{
+||||||| merged common ancestors
+/* Les <strong> sont ajoutés dans la fonction 'ouverturePharmacie' et */
+/* contiennent les class utilisées ci-dessous (cOuverte, ...)         */
+#iIndexIntro strong{
+=======
+/* Les <span> sont ajoutés dans la fonction 'ouverturePharmacie' et */
+/* contiennent les class utilisées ci-dessous (cOuverte, ...)       */
+#iIndex span{
+>>>>>>> dev
     font-weight: 700;
 }
-#iIndexIntro .cOuverte{
+#iIndex .cOuverte{
     color: #4DBC1C;
 }
-#iIndexIntro .cFermee{
+#iIndex .cFermee{
     color: #FF4141;
 }
-#iIndexIntro .cOuvreDans{
+#iIndex .cOuvreDans{
     color: black;
 }
-#iIndexIntro .cFermeDans{
+#iIndex .cFermeDans{
     color: #FF4141;
 }
-#iIndexVignettes article a{
+#iIndex article a{
     background-color: #DEFFC4;
     color: #575757;
     font-weight: 700;
@@ -318,7 +328,4 @@ footer section:first-of-type{
 footer section:last-of-type{
     background-color: #575757; /* footer 2ème section : Editeur du site */
     color: white;
-}
-footer h3{
-    font-weight: 400;
 }
