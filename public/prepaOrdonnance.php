@@ -553,7 +553,7 @@ if( isset($_POST['bouton']) ){
 
 	<?php include('inclus/pdp.php'); ?>
 
-	<script src='scriptsJs/scripts.js' type='text/javascript'></script>
+	<script src='scriptsJs/scripts.js'></script>
 
 </body>
 </html>

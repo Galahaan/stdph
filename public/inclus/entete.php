@@ -135,7 +135,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
         <?php // pour Lynx, on enlève le lien vers le piège.                             ?>
         <?php // il n'est pas grave en soi, mais ça fait un lien inutile en haut de page ?>
         <?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
-        <div id='iPiegeAA'><a href='tapette.php'><img src='img/bandeau/tapette.png'></a></div>
+        <div id='iPiegeAA'><a href='tapette.php'><img src='img/bandeau/tapette.png' alt='tapette à moucherons'></a></div>
         <?php endif ?>
 
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
