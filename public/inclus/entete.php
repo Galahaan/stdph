@@ -103,7 +103,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-    <title><?= NOM_PHARMA . " - " . $pageCourante['nom'] ?></title>
+    <title><?= NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 . " - " . $pageCourante['nom'] ?></title>
     <meta charset='utf-8'>
 
     <?php // Description et Mots Clés de la page ?>
@@ -124,7 +124,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
           // (on l'appelle en PREMIER, comme ça notre CSS reste prioritaire puisque le fichier HTML est lu de haut en bas) ?>
     <?= ! empty($enteteSpecs['cdn'])     ? "<" . $enteteSpecs['cdn']     : "" ?>
 
-    <link rel='stylesheet' type='text/css' href='css/styleCouleurs.css'>
+    <link rel='stylesheet' type='text/css' href='css/theme.css'>
     <link rel='stylesheet' type='text/css' href='css/style.css'>
     <link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>
@@ -151,7 +151,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
             <a href='index.php' accesskey='r'>
                 <img id='iLogoCroix' src='img/bandeau/croix_caducee.png' alt=''>
                 <h1><?= NOM_PHARMA ?></h1>
-                <h2><?= STI_PHARMA ?></h2>
+                <p><?= LOC_PHARMA_2 ?></p>
             </a>
             <p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
         </section>

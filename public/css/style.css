@@ -52,7 +52,7 @@ body, h3, h4{
 h1{
 	font-size: 4.5rem; /* bandeau : titre 'Nom de la pharmacie' */
 }
-h2{
+h1+p{
 	font-size: 3rem; /* bandeau : sous-titre 'adresse ...' */
 }
 #iTelBandeau{
@@ -107,7 +107,7 @@ header section{
 	margin: auto;
 	padding-top: 15%;
 	padding-bottom: 15%;
-	position: relative; /* pour positionner le h1, le h2, l'icône clicIndex et la croix en haut à gauche */
+	position: relative; /* pour positionner le h1, le h1+p, l'icône clicIndex et la croix en haut à gauche */
 }
 
 /* Image de la croix positionnée en haut à gauche */
@@ -120,23 +120,23 @@ header section{
 }
 
 /* titre + sous-titre + tel bandeau du haut */
-h1, h2, #iTelBandeau{
+h1, h1+p, #iTelBandeau{
 	position: absolute;
 }
 /* titre : Pharmacie ... */
 h1{
-	top: 1.5rem;
+	top: 0.5rem;
 	left: 7%;
 }
 /* sous-titre : adresse ... */
-h2{
-	top: 54%;
+h1+p{
+	top: 44%;
 	left: 19%;
 }
 
 /* numéro de téléphone cliquable */
 #iTelBandeau{
-	top: 52%;
+	top: 58%;
 	left: 45%;
 }
 /* icône du clicIndex dans le bandeau */
@@ -496,12 +496,13 @@ sub{
 /***************************************************          page horaires          ***************************************************/
 /***************************************************************************************************************************************/
 
+/* chaque jour de la semaine */
 #iHorairesTableau article{
 	text-align: left;
 	padding-bottom: .5rem;
 }
-/* pour que chaque article, contenant le h4 et les div, ne prenne qu'une seule ligne */
-#iHorairesTableau article div, #iHorairesTableau article h4{
+/* pour que chaque article, contenant le h4 (jour) et les div (heures), ne prenne qu'une seule ligne */
+#iHorairesTableau article h4, #iHorairesTableau article div{
 	display: inline-block;
 }
 
@@ -775,7 +776,7 @@ footer section:last-of-type{
 /*                                                                    */
 /* - <h3> toujours affichés                                           */
 /*        (c'est le cas par défaut,                                   */
-/*         avec font-weight en gras, cf styleCouleurs.css)            */
+/*         avec font-weight en gras, cf theme.css)            */
 /*                                                                    */
 /*        - #iIndex h3                                                */
 /*        - #iHorairesIntro h3                                        */
@@ -813,7 +814,7 @@ footer section:last-of-type{
 h3#iPdGh32{
 	text-align: center; /* c'est le cas du vrai titre (et la section est vide) */
 }
-/* cf styleCouleurs.css pour le font-weight de
+/* cf theme.css pour le font-weight de
 	footer h3
 	#iIndex h3  'Services proposés par ...'
 */
@@ -877,13 +878,13 @@ h3#iPdGh32{
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
 	h1{
 		font-size: 5.5rem;				/* old 4.5 titre de la page : Nom de la pharmacie */
-		top: 8%;
-		left: 22%;
+		top: 2%;
+		left: 18%;
 	}
-	h2{
+	h1+p{
 		font-size: 4.5rem;				/* old 3 sous-titre de la page : adresse ... */
-		top: 48%;
-		left: 20%;
+		top: 38%;
+		left: 24%;
 	}
 	#iLogoCroix{
 		width: 14%;
@@ -891,7 +892,7 @@ h3#iPdGh32{
 	}
 	#iTelBandeau{
 		font-size: 4rem;				/* old 3.5 */
-		top: 52%;
+		top: 62%;
 		left: 52%;
 	}
 	#iTelBandeau img{
@@ -970,8 +971,9 @@ h3#iPdGh32{
 		font-size: 7rem;				/* old 5.5 - titre de la page : Nom de la pharmacie */
 		top: 7%;
 	}
-	h2{
+	h1+p{
 		font-size: 5rem;				/* old 4.5 - sous-titre de la page : adresse ... */
+		top: 44%;
 		left: 22%
 	}
 	#iTelBandeau{
@@ -1040,7 +1042,7 @@ h3#iPdGh32{
 		font-size: 9rem;				/* old 7 - titre de la page : Nom de la pharmacie */
 		top: 10%;
 	}
-	h2{
+	h1+p{
 		font-size: 6rem;				/* old 5 - sous-titre de la page : adresse ... */
 		left: 24%;
 	}
@@ -1150,7 +1152,7 @@ h3#iPdGh32{
 		top: 0;
 		left: 25%;
 	}
-	h2{
+	h1+p{
 		font-size: 3.5rem;				/* sous-titre de la page : adresse ... */
 		top: 40%;
 		left: 35%;

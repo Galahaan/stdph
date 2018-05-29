@@ -147,7 +147,7 @@ sub{
 header section{
     background-color: #D8D8D8; /* dans le cas où l'image ne peut être chargée, ça fait un fond par défaut */
 }
-h1, h2, #iTelBandeau, #iTelBandeau a{
+h1, h1+p, #iTelBandeau, #iTelBandeau a{
     font-family: 'Tangerine', fantasy; /* titre + sous-titre + tel */
     color: #364115;                    /* (police différente uniquement pour le bandeau du haut) */
     font-weight: 700;
@@ -180,19 +180,10 @@ nav#iNavigation a{
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
 /***************************************************************************************************************************************/
-<<<<<<< HEAD
-/* Les <span> sont ajoutés dans la fonction 'ouverturePharmacie' et */
-/* contiennent les class utilisées ci-dessous (cOuverte, ...)       */
-#iIndexIntro span{
-||||||| merged common ancestors
-/* Les <strong> sont ajoutés dans la fonction 'ouverturePharmacie' et */
-/* contiennent les class utilisées ci-dessous (cOuverte, ...)         */
-#iIndexIntro strong{
-=======
+
 /* Les <span> sont ajoutés dans la fonction 'ouverturePharmacie' et */
 /* contiennent les class utilisées ci-dessous (cOuverte, ...)       */
 #iIndex span{
->>>>>>> dev
     font-weight: 700;
 }
 #iIndex .cOuverte{

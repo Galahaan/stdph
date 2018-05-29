@@ -11,8 +11,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // Nom de la pharmacie
-define("NOM_PHARMA"        , "Pharmacie des Tilleuls");
-define("STI_PHARMA"        , "à Gaël");
+define("NOM_PHARMA"        , "Pharmacie des Tilleuls");  // dans <title> + bandeau
+define("LOC_PHARMA_1"      , " à ");                     // que dans <title>
+define("LOC_PHARMA_2"      , "Gaël, Ille et Vilaine");   // dans <title> + bandeau
 
 // Adresse de la pharmacie
 define("ADR_PHARMA_L1"     , "place des Tilleuls");
