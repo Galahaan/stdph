@@ -84,14 +84,13 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
         </p>
 
         <h2>Bandeau supérieur</h2>
-        <p>Toutes les pages du site contiennent, dans leur partie supérieure, un bandeau divisé en 4 parties :
-            <ol>
-                <li>un menu de liens pour atteindre les différentes zones de la page et l'aide actuelle</li>
-                <li>un bandeau décoratif contenant un lien vers la page d'accueil (le lien englobe le logo croix + le nom de la pharmacie + son emplacement)</li>
-                <li>un menu de navigation comprenant 4 entrées : page d'accueil, horaires, équipe et contact</li>
-                <li>un lien de connexion / déconnexion, servant aux utilisateurs inscrits sur le site, pour accéder à certains services</li>
-            </ol>
-        </p>
+        <p>Toutes les pages du site contiennent, dans leur partie supérieure, un bandeau constitué de 4 éléments :</p>
+        <ol>
+            <li>un menu de liens pour atteindre les différentes zones de la page et l'aide actuelle</li>
+            <li>un bandeau décoratif contenant un lien vers la page d'accueil (le lien englobe le logo croix + le nom de la pharmacie + son emplacement)</li>
+            <li>un menu de navigation comprenant 4 entrées : page d'accueil, horaires, équipe et contact</li>
+            <li>un lien de connexion / déconnexion, servant aux utilisateurs inscrits sur le site, pour accéder à certains services</li>
+        </ol>
         <p>Le contenu propre à chaque page se situe donc en dessous de ce bandeau.</p>
 
     </section>
