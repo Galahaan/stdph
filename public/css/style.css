@@ -81,6 +81,11 @@ sup, sub{
 .cSectionContour h3{
 	padding-bottom: 5.8%;
 }
+/* on utilise cette classe pour que des phrases, constituées de plusieurs balises, soient bien sur une seule ligne. */
+/* (ex. <p class='cIB'>Le </p><h3 class='cIB'>ciel </h3><p class='cIB'>est bleu.</p>) */
+.cIB{
+	display: inline-block;
+}
 
 /***************************************************************************************************************************************/
 /***************************************************         bandeau du haut         ***************************************************/
@@ -213,9 +218,6 @@ nav#iNavigation{
 }
 #iIndex p:first-child{
 	padding-bottom: 5.8%; /* 'la pharmacie est actuellement ...' */
-}
-#iIndex p:nth-child(2), #iIndex h3{
-	display: inline-block; /* 'services ...' => pour que la phrase soit sur une seule ligne */
 }
 #iIndex article{
 	position: relative; /* pour que les <a> et les <img> soient superposés */
@@ -805,18 +807,18 @@ footer section:last-of-type{
 #iIndex h3{
 	padding-bottom: 5.8%; /* cf .cSectionContour h3 tout en haut */
 }
-#iPdG3237 h3{
-	padding-bottom: 0; /* soit on est au beau milieu du texte, soit la section est vide */
+/* ... 'pharmacie de garde' ... */
+#iPdGh31{
+	padding-bottom: 0; /* juste en-dessous, c'est la grosse croix, et ça présente mieux sans espace dessous */
 }
-#iPdG3237 p:first-of-type, h3#iPdGh31{
-	display: inline-block; /* c'est le cas où l'on est au beau milieu du texte */
-}
-h3#iPdGh32{
-	text-align: center; /* c'est le cas du vrai titre (et la section est vide) */
+/* 'Pharmacie de garde' */
+#iPdGh32{
+	text-align: center; /* dans ce cas, le h3 est le titre de la section, donc on le centre */
 }
 /* cf theme.css pour le font-weight de
 	footer h3
 	#iIndex h3  'Services proposés par ...'
+	#iPdGh31  '... pharmacie de garde en cliquant ...'
 */
 
 /*                                                                    */

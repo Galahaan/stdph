@@ -13,7 +13,8 @@ include('inclus/entete.php');
 		<section id='iIndex' class='cSectionContour'>
 			<p><?= ouverturePharmacie( $auj, $heure ) ?></p>
 
-			<p>Vous trouverez ci-dessous l'ensemble des &nbsp;</p><h3>services proposés par l'officine.</h3>
+			<p  class='cIB'>Vous trouverez ci-dessous l'ensemble des &nbsp;</p>
+			<h3 class='cIB'>services proposés par l'officine.</h3>
 
 			<article>
 				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>

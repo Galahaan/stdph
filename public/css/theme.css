@@ -96,7 +96,7 @@ main{
     font-weight: 700;
 }
 /* exceptions pour index et footer */
-#iIndex h3, footer h3{
+#iIndex h3, footer h3, #iPdGh31{
     font-weight: 400;
 }
 
