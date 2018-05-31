@@ -10,9 +10,9 @@ include('inclus/entete.php');
 
 		<?php // si les gardes fonctionnent sans passer par le commissariat, ou si on est dans la journée : ?>
 		<?php if( (HEURE_SOIR_POLICE_D == "X") || ((HEURE_MATIN_POLICE_D <= $heure) && ($heure < HEURE_SOIR_POLICE_D)) ) : ?>
-			<p  class='cIB'>Trouvez la&nbsp;</p>
-			<h3 class='cIB' id='iPdGh31'>pharmacie de garde</h3>
-			<p  class='cIB'>&nbsp;la plus proche de chez vous en cliquant sur la croix ci-dessous :</p>
+			<p  class='cIL'>Trouvez la&nbsp;</p>
+			<h2 class='cIL' id='iPdGh21'>pharmacie de garde</h2>
+			<p  class='cIL'>&nbsp;la plus proche de chez vous en cliquant sur la croix ci-dessous :</p>
 			<p id='iPdGcroix'>
 				<a href='http://www.3237.fr/'>
 					<img src='img/icones/croix_garde.png' alt=''>
@@ -20,16 +20,16 @@ include('inclus/entete.php');
 				</a>
 			</p>
 		<?php else : // on est en horaires de garde -> on affiche juste le titre ?>
-			<h3 id='iPdGh32'>Pharmacie de garde</h3>
+			<h2 id='iPdGh22'>Pharmacie de garde</h2>
 		<?php endif ?>
 
 		</section>
 
 		<section id='iPdGplan' class='cSectionContour'>
 
-			<?php // pour Lynx, on enlève le h3 ?>
+			<?php // pour Lynx, on enlève le h2 ?>
 			<?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
-			<h3>Localiser le commissariat de police</h3>
+			<h2>Localiser le commissariat de police</h2>
 			<?php endif ?>
 
 		<?php // si les gardes fonctionnent sans passer par le commissariat, il n'y a RIEN d'autre à afficher ?>

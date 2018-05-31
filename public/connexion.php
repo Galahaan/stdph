@@ -44,7 +44,10 @@ if( isset( $_POST['connexion'] ) ) {
 }
 ?>
 	<main id='iMain'>
-		<section id='iConnexionIDs' class='cSectionContour'><h3>Veuillez saisir vos identifiants (*)</h3>
+		<section id='iConnexionIDs' class='cSectionContour'>
+			<p class='cIL'>Veuillez saisir vos identifiants de&nbsp;</p><h2 class='cIL'>connexion</h2><p class='cIL'>&nbsp;(*)</p>
+
+			<br><br><?php // je sais, ces <br> sont affreux, mais depuis le 'inline' des p et h2 ci-dessus, je n'ai pas mieux ! ?>
 
 			<p class='cBraille'>
 				(*) Si vous ne disposez pas encore d'identifiants, vous pouvez vous inscrire <a href='inscription.php'>ici.</a>
@@ -69,7 +72,7 @@ if( isset( $_POST['connexion'] ) ) {
 			</form>
 		</section>
 
-		<section id='iConnexionInscription'  class='cSectionContour'><h3>(*) Création d'un compte</h3>
+		<section id='iConnexionInscription'  class='cSectionContour'><h2>(*) Création d'un compte</h2>
 			<p>Si vous ne disposez pas encore d'identifiants, vous pouvez vous inscrire en suivant le lien : </p>
 			<p>(La CNIL protège vos données, cf mentions légales ci-dessous)</p>
 			<p><a href='inscription.php'>>  inscription  <</a></p>

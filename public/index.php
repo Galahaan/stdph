@@ -13,8 +13,9 @@ include('inclus/entete.php');
 		<section id='iIndex' class='cSectionContour'>
 			<p><?= ouverturePharmacie( $auj, $heure ) ?></p>
 
-			<p  class='cIB'>Vous trouverez ci-dessous l'ensemble des &nbsp;</p>
-			<h3 class='cIB'>services proposés par l'officine.</h3>
+			<p class='cIL'>Vous trouverez ci-dessous l'ensemble des &nbsp;</p><h2 class='cIL'>services proposés par l'officine.</h2>
+
+			<br><br><?php // je sais, ces <br> sont affreux, mais depuis le 'inline' des p et h2 ci-dessus, je n'ai pas mieux ! ?>
 
 			<article>
 				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>

@@ -4,7 +4,7 @@ include('inclus/entete.php');
 
 ?>
 	<main id='iMain'>
-		<section id='iInfos' class='cSectionContour'><h3>Bon à savoir !..</h3>
+		<section id='iInfos' class='cSectionContour'><h2>Bon à savoir !..</h2>
 					Mangez 5 fruits et légumes par jour ! :-/
 		</section>
 	</main>

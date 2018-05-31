@@ -4,7 +4,7 @@ include('inclus/entete.php');
 
 ?>
 	<main id='iMain'>
-		<section id='iGammesProd' class='cSectionContour'><h3>Les Marques que vous trouverez à la pharmacie</h3>
+		<section id='iGammesProd' class='cSectionContour'><h2>Les Marques que vous trouverez à la pharmacie</h2>
 
 			<nav>
 				<ul>

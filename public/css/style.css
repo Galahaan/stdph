@@ -34,8 +34,8 @@ body{
 	font-size: 1em;
 }
 
-body, h3, h4{
-	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h3 et les h4 */
+body, h2, h4{
+	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h2 et les h4 */
 	/* 		horaires.php : 																							*/
 	/* on utilise le h4 pour chaque jour de la semaine, il FAUT donc qu'il ait la même taille que celle du body 	*/
 	/* sinon, le trait de l'heure se décale vers le haut, les jours sont écrits plus gros ... bref c'est la merde ! */
@@ -78,13 +78,13 @@ sup, sub{
 }
 /* affichés ou pas (validation W3C / braille), les titres */
 /* de toutes les sections ont un peu de marge dessous     */
-.cSectionContour h3{
+.cSectionContour h2{
 	padding-bottom: 5.8%;
 }
 /* on utilise cette classe pour que des phrases, constituées de plusieurs balises, soient bien sur une seule ligne. */
-/* (ex. <p class='cIB'>Le </p><h3 class='cIB'>ciel </h3><p class='cIB'>est bleu.</p>) */
-.cIB{
-	display: inline-block;
+/* (ex. <p class='cIL'>Le </p><h2 class='cIL'>ciel </h2><p class='cIL'>est bleu.</p>) */
+.cIL{
+	display: inline;
 }
 
 /***************************************************************************************************************************************/
@@ -644,8 +644,8 @@ sub{
 	padding-left: 0;
 	padding-right: 0;
 }
-/* sélectionne   <article>   qui est placé immédiatement après   <h3>   qui est un enfant (direct ou pas) de   #iGammesProd   */
-#iGammesProd > h3 + article{
+/* sélectionne   <article>   qui est placé immédiatement après   <h2>   qui est un enfant (direct ou pas) de   #iGammesProd   */
+#iGammesProd > h2 + article{
 	padding-top: 2rem;
 }
 /* image d'introduction au § */
@@ -773,66 +773,65 @@ footer section:last-of-type{
 
 
 /* Cette petite partie n'a en fait pas été traitée plus haut mais     */
-/* concerne les titres <h3> qui peuvent être dans 3 états différents. */
+/* concerne les titres <h2> qui peuvent être dans 3 états différents. */
 /* (il était donc judicieux de les rassembler dans un même endroit)   */
 /*                                                                    */
-/* - <h3> toujours affichés                                           */
+/* - <h2> toujours affichés                                           */
 /*        (c'est le cas par défaut,                                   */
-/*         avec font-weight en gras, cf theme.css)            */
+/*         avec font-weight en gras, cf theme.css)                    */
 /*                                                                    */
-/*        - #iIndex h3                                                */
-/*        - #iHorairesIntro h3                                        */
-/*        - #iContactPlan h3                                          */
-/*        - #iContactFormulaire h3                                    */
-/*        - #iOrdoPrepaOrdo h3                                        */
-/*        - #iCommPrepaComm h3                                        */
-/*        - #iGammesProd h3                                           */
-/*        - #iPdG3237 h3 (ie #iPdGh31 et #iPdGh32 )                   */
-/*        - #iMentionsLegales h3                                      */
-/*        - footer h3                                                 */
+/*        - #iIndex h2                                                */
+/*        - #iHorairesIntro h2                                        */
+/*        - #iContactPlan h2                                          */
+/*        - #iContactFormulaire h2                                    */
+/*        - #iOrdoPrepaOrdo h2                                        */
+/*        - #iCommPrepaComm h2                                        */
+/*        - #iGammesProd h2                                           */
+/*        - #iPdG3237 h2 (ie #iPdGh21 et #iPdGh22 )                   */
+/*        - #iMentionsLegales h2                                      */
+/*        - footer h2                                                 */
 /*                                                                    */
-/* - <h3> jamais affichés (mais nécessaires pour la validation W3C)   */
-/*        - #iHorairesTableau h3                                      */
-/*        - #iPdGplan h3                                              */
+/* - <h2> jamais affichés (mais nécessaires pour la validation W3C)   */
+/*        - #iHorairesTableau h2                                      */
+/*        - #iPdGplan h2                                              */
 /*                                                                    */
-/* - <h3> affichés uniquement pour les medias braille                 */
-/*        - #iContactInfosPratiques h3                                */
-/*        - #iContactCoordonnees h3                                   */
+/* - <h2> affichés uniquement pour les medias braille                 */
+/*        - #iContactInfosPratiques h2                                */
+/*        - #iContactCoordonnees h2                                   */
 /*                                                                    */
 /*                                                                    */
 
 /**********************************************************************/
-/* <h3> toujours affichés (c'est le cas par défaut)                   */
+/* <h2> toujours affichés (c'est le cas par défaut)                   */
 /* ici on regroupe les exceptions :                                   */
-#iIndex h3{
-	padding-bottom: 5.8%; /* cf .cSectionContour h3 tout en haut */
-}
+
 /* ... 'pharmacie de garde' ... */
-#iPdGh31{
+#iPdGh21{
 	padding-bottom: 0; /* juste en-dessous, c'est la grosse croix, et ça présente mieux sans espace dessous */
 }
 /* 'Pharmacie de garde' */
-#iPdGh32{
-	text-align: center; /* dans ce cas, le h3 est le titre de la section, donc on le centre */
+#iPdGh22{
+	text-align: center; /* dans ce cas, le h2 est le titre de la section, donc on le centre */
+	padding-bottom: 0;  /* juste en-dessous, il y a une .cSectionContour avec déjà son padd-bott à 5.8% */
 }
 /* cf theme.css pour le font-weight de
-	footer h3
-	#iIndex h3  'Services proposés par ...'
-	#iPdGh31  '... pharmacie de garde en cliquant ...'
+	footer h2
+	#iIndex h2  'Services proposés par ...'
+	#iPdGh21  '... pharmacie de garde en cliquant ...'
 */
 
 /*                                                                    */
 /**********************************************************************/
-/* <h3> jamais affichés (mais nécessaires pour la validation W3C)     */
-#iHorairesTableau h3,             /* 'Horaires d'ouverture de la ...' */
-#iPdGplan h3                      /* 'Localiser le commissariat ...'  */
+/* <h2> jamais affichés (mais nécessaires pour la validation W3C)     */
+#iHorairesTableau h2,             /* 'Horaires d'ouverture de la ...' */
+#iPdGplan h2                      /* 'Localiser le commissariat ...'  */
 {
 	display: none;
 }
 
 /*																														NOT BRAILLE	*/
 /**********************************************************************/
-/* <h3> affichés uniquement pour les medias braille                   */
+/* <h2> affichés uniquement pour les medias braille                   */
 /*                                                                    */
 @media not braille{
 	/* je suis obligé de faire les choses "à l'envers" :                                                         */
@@ -842,13 +841,13 @@ footer section:last-of-type{
 	/*    -> ainsi, au lieu de dire "j'efface les titres, mais pour les medias de type braille, je les affiche", */
 	/*       => je dis "pour les medias de type non braille (@media not braille), j'efface les titres"           */
 
-	#iContactInfosPratiques h3,	  /* 'Informations pratiques'         */
-	#iContactCoordonnees h3 	  /* 'Coordonnées de la ...'          */
+	#iContactInfosPratiques h2,	  /* 'Informations pratiques'         */
+	#iContactCoordonnees h2 	  /* 'Coordonnées de la ...'          */
 	{
 		display: none;
 	}
 
-/* Fin de la gestion de l'affichage des <h3>                          */
+/* Fin de la gestion de l'affichage des <h2>                          */
 /**********************************************************************/
 
 	.cBraille{
@@ -860,7 +859,7 @@ footer section:last-of-type{
 @media braille{
 
 	/* NB : Apparemment, la propriété 'display: none' n'a aucun effet sur les lecteurs d'écran.     :(   */
-	/*      Que l'on soit dans le § général (cf qqs h3 ci-dessus en 'display: none'),                    */
+	/*      Que l'on soit dans le § général (cf qqs h2 ci-dessus en 'display: none'),                    */
 	/*      ou en @media braille, cela ne change rien, les lecteurs d'écran affichent tout !             */
 
 	/* Ci-dessous, c'est ce que l'on souhaitait, mais cela n'a aucun effet    :(                         */
@@ -874,7 +873,7 @@ footer section:last-of-type{
 /* 																															460 px	*/
 @media screen and (min-width: 460px){
 
-	body, h3, h4{
+	body, h2, h4{
 		font-size: 2rem; 				/* old 1.7 */
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
@@ -1141,8 +1140,8 @@ footer section:last-of-type{
 	header section{
 		padding: 0 0 25%;
 	}
-	body, h3, h4{
-		font-size: 1.8rem; /* taille par défaut de toutes les polices + les h3 et les h4 */
+	body, h2, h4{
+		font-size: 1.8rem; /* taille par défaut de toutes les polices + les h2 et les h4 */
 	}
 	#iLogoCroix{
 		width: 14%;						/* taille et position de la croix */

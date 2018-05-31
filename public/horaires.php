@@ -31,7 +31,7 @@ include('inclus/entete.php');
 			// ouverturePharmacie() génère un message sur l'état d'ouverture ou de fermeture de la pharmacie (ou de leur proximité)
 		?>
 
-		<section id='iHorairesIntro' class='cSectionContour'><h3><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class='cHeureDuJour'>". $heureH . "</span>" ?></h3>
+		<section id='iHorairesIntro' class='cSectionContour'><h2><?= $aujourdhui . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class='cHeureDuJour'>". $heureH . "</span>" ?></h2>
 			<p><?= ouverturePharmacie( $auj, $heure ) ?></p>
 			<p class='cBraille'><?= HORAIRES_PHARMACIE ?></p>
 		</section>
@@ -44,7 +44,7 @@ include('inclus/entete.php');
 
 		<?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
 
-		<section id='iHorairesTableau' class='cSectionContour' aria-hidden='true'><h3>Horaires d'ouverture de la <?= NOM_PHARMA ?></h3>
+		<section id='iHorairesTableau' class='cSectionContour' aria-hidden='true'><h2>Horaires d'ouverture de la <?= NOM_PHARMA ?></h2>
 			<article class='cSemaine' <?= ($auj == "lun") ? "id='iAujourdhui'" : "" ?>  >
 				<h4>lundi</h4><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 

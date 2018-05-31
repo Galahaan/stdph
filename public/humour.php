@@ -4,7 +4,7 @@ include('inclus/entete.php');
 
 ?>
 	<main id='iMain'>
-		<section id='iHumour' class='cSectionContour'><h3>La thérapie par l'humour ! (*)</h3>
+		<section id='iHumour' class='cSectionContour'><h2>La thérapie par l'humour ! (*)</h2>
 		<?php
 			// https://www.chucknorrisfacts.fr/api/api
 			do{

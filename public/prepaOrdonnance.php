@@ -163,7 +163,7 @@ if( isset($_POST['bouton']) ){
 }
 ?>
 	<main id='iMain'>
-		<section id='iOrdoPrepaOrdo' class='cSectionContour'><h3>Préparation d'ordonnance</h3>
+		<section id='iOrdoPrepaOrdo' class='cSectionContour'><h2>Préparation d'ordonnance</h2>
  
 			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
 
@@ -344,7 +344,7 @@ if( isset($_POST['bouton']) ){
 					// puisque le message est suffisamment explicite :
 					$effaceContenuPage =
 						"<style type='text/css'>" .
-								"#iOrdoPrepaOrdo h3 { display: none }" .
+								"#iOrdoPrepaOrdo h2 { display: none }" .
 						"</style>";
 
 					// puis on affichera le message de confirmation

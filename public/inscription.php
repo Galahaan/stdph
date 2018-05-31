@@ -67,7 +67,7 @@ if( isset($_POST['bouton']) ){
 }
 ?>
 	<main id='iMain'>
-		<section id='iInscription' class='cSectionContour'><h3>Création de votre compte</h3>
+		<section id='iInscription' class='cSectionContour'><h2>Création de votre compte</h2>
 
 		<?php if( isset($_POST['bouton']) && !isset($erreurs) && !$mailExisteDeja ) : ?>
 

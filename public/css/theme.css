@@ -92,11 +92,11 @@ main{
 
 /* affichés ou pas (validation W3C / braille), les titres */
 /* de toutes les sections sont, par défaut, en gras       */
-.cSectionContour h3{
+.cSectionContour h2{
     font-weight: 700;
 }
 /* exceptions pour index et footer */
-#iIndex h3, footer h3, #iPdGh31{
+#iIndex h2, footer h2, #iPdGh21{
     font-weight: 400;
 }
 

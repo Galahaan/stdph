@@ -5,7 +5,7 @@ include('inclus/entete.php');
 ?>
     <main id='iMain'>
 
-        <section id='iMentionsLegales' class='cSectionContour'><h3>Mentions légales</h3>
+        <section id='iMentionsLegales' class='cSectionContour'><h2>Mentions légales</h2>
 
             <article><h4>Organismes partenaires</h4>
                 <div>
