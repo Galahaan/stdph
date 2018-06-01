@@ -34,11 +34,11 @@ body{
 	font-size: 1em;
 }
 
-body, h2, h4{
-	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h2 et les h4 */
-	/* 		horaires.php : 																							*/
-	/* on utilise le h4 pour chaque jour de la semaine, il FAUT donc qu'il ait la même taille que celle du body 	*/
-	/* sinon, le trait de l'heure se décale vers le haut, les jours sont écrits plus gros ... bref c'est la merde ! */
+body, h2, p.cJour{
+	font-size: 1.7rem; /* taille par défaut de toutes les polices + les h2 et les p.cJour */
+	/* 		horaires.php : 																								*/
+	/* on utilise le p.cJour pour chaque jour de la semaine, il FAUT donc qu'il ait la même taille que celle du body 	*/
+	/* sinon, le trait de l'heure se décale vers le haut, les jours sont écrits plus gros ... bref c'est la merde ! 	*/
 }
 /* icône du clicIndex */
 /* on l'exprime en 'rem' pour qu'elle ait la même taille à tous les endroits où             */
@@ -52,7 +52,7 @@ body, h2, h4{
 h1{
 	font-size: 4.5rem; /* bandeau : titre 'Nom de la pharmacie' */
 }
-h1+p{
+h1+strong{
 	font-size: 3rem; /* bandeau : sous-titre 'adresse ...' */
 }
 #iTelBandeau{
@@ -112,7 +112,7 @@ header section{
 	margin: auto;
 	padding-top: 15%;
 	padding-bottom: 15%;
-	position: relative; /* pour positionner le h1, le h1+p, l'icône clicIndex et la croix en haut à gauche */
+	position: relative; /* pour positionner le h1, le h1+strong, l'icône clicIndex et la croix en haut à gauche */
 }
 
 /* Image de la croix positionnée en haut à gauche */
@@ -125,7 +125,7 @@ header section{
 }
 
 /* titre + sous-titre + tel bandeau du haut */
-h1, h1+p, #iTelBandeau{
+h1, h1+strong, #iTelBandeau{
 	position: absolute;
 }
 /* titre : Pharmacie ... */
@@ -134,7 +134,7 @@ h1{
 	left: 7%;
 }
 /* sous-titre : adresse ... */
-h1+p{
+h1+strong{
 	top: 44%;
 	left: 19%;
 }
@@ -228,7 +228,8 @@ nav#iNavigation{
 	left: 0;
 	width: 100%;
 	height: 100%;
-	/*line-height: 1.4em;  line-height = hauteur de l'interligne, si jamais le nom de la vignette ne tient pas sur une seule ligne */
+	/* si jamais le nom de la vignette ne tient pas sur une seule ligne,  */
+	/* on peut régler la hauteur de l'interligne :   line-height: 1.4em;  */
 	opacity: 0;
 }
 
@@ -355,7 +356,7 @@ nav#iNavigation{
 
 /* lignes fines entre les champs, taille des champs ...                                                        */
 .cChampForm{
-	/* border-top:   cf CSS sur les couleurs */
+	/* cf theme.css pour le border-top: */
 	padding: 1.5rem 0;
 	width: 100%;
 	text-align: right;
@@ -503,8 +504,8 @@ sub{
 	text-align: left;
 	padding-bottom: .5rem;
 }
-/* pour que chaque article, contenant le h4 (jour) et les div (heures), ne prenne qu'une seule ligne */
-#iHorairesTableau article h4, #iHorairesTableau article div{
+/* pour que chaque article, contenant le p.cJour (jour) et les div (heures), ne prenne qu'une seule ligne */
+#iHorairesTableau p.cJour, #iHorairesTableau article div{
 	display: inline-block;
 }
 
@@ -513,7 +514,7 @@ sub{
 	position: relative;
 }
 #iHorairesTableau #iAujourdhui #iTraitHoraire{
-	/* border-left: solid #xxx 2px; c'est ça qui fait le trait vertical, cf CSS sur les couleurs */
+	/* cf theme.css pour le trait vertical qui est représenté par :   border-left: solid #xxx 2px; */
 	position: absolute;
 	top: 0; /* la valeur du left est déterminée en PHP dans le HTML */
 }
@@ -530,7 +531,7 @@ sub{
 /* ========================  !!! si modifications => les reporter dans fonctions.php !!!  ======================== */
 /* ========================                                                               ======================== */
 /* jours de la semaine */
-#iHorairesTableau article h4{
+#iHorairesTableau p.cJour{
 	width: 23%;
 }
 /* 8h30 */
@@ -561,7 +562,7 @@ sub{
 	padding-right: 1%;
 }
 /* samedi */
-#iHorairesTableau .cSamedi h4{
+#iHorairesTableau .cSamedi p.cJour{
 	width: 26.75%;      /* cette valeur bizarre permet d'aligner '9h le samedi' avec '9h en semaine' */
 }
 /* samedi 9h */
@@ -657,7 +658,7 @@ sub{
 /* pour caler les titres des articles sur l'image */
 #iGammesProd article .cImageDeco{
 	position: relative;
-	/* border: 0.3rem solid #xxx; la bordure autour de l'image, cf CSS sur les couleurs */
+	/* cf theme.css pour la bordure autour de l'image :   border: 0.3rem solid #xxx;  */
 }
 
 /* titres placés sur les images */
@@ -873,7 +874,7 @@ footer section:last-of-type{
 /* 																															460 px	*/
 @media screen and (min-width: 460px){
 
-	body, h2, h4{
+	body, h2, p.cJour{
 		font-size: 2rem; 				/* old 1.7 */
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
@@ -882,7 +883,7 @@ footer section:last-of-type{
 		top: 2%;
 		left: 18%;
 	}
-	h1+p{
+	h1+strong{
 		font-size: 4.5rem;				/* old 3 sous-titre de la page : adresse ... */
 		top: 38%;
 		left: 24%;
@@ -972,7 +973,7 @@ footer section:last-of-type{
 		font-size: 7rem;				/* old 5.5 - titre de la page : Nom de la pharmacie */
 		top: 7%;
 	}
-	h1+p{
+	h1+strong{
 		font-size: 5rem;				/* old 4.5 - sous-titre de la page : adresse ... */
 		top: 44%;
 		left: 22%
@@ -1043,7 +1044,7 @@ footer section:last-of-type{
 		font-size: 9rem;				/* old 7 - titre de la page : Nom de la pharmacie */
 		top: 10%;
 	}
-	h1+p{
+	h1+strong{
 		font-size: 6rem;				/* old 5 - sous-titre de la page : adresse ... */
 		left: 24%;
 	}
@@ -1140,8 +1141,8 @@ footer section:last-of-type{
 	header section{
 		padding: 0 0 25%;
 	}
-	body, h2, h4{
-		font-size: 1.8rem; /* taille par défaut de toutes les polices + les h2 et les h4 */
+	body, h2, p.cJour{
+		font-size: 1.8rem; /* taille par défaut de toutes les polices + les h2 et les p.cJour */
 	}
 	#iLogoCroix{
 		width: 14%;						/* taille et position de la croix */
@@ -1153,7 +1154,7 @@ footer section:last-of-type{
 		top: 0;
 		left: 25%;
 	}
-	h1+p{
+	h1+strong{
 		font-size: 3.5rem;				/* sous-titre de la page : adresse ... */
 		top: 40%;
 		left: 35%;

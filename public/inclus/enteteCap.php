@@ -193,7 +193,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
             <a href='index.php' accesskey='r'>
                 <img id='iLogoCroix' src='img/bandeau/croix_caducee.png' alt=''>
                 <h1><?= NOM_PHARMA ?></h1>
-                <p><?= LOC_PHARMA_2 ?></p>
+                <strong><?= LOC_PHARMA_2 ?></strong>
             </a>
             <p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
         </section>

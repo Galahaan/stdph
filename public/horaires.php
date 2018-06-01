@@ -46,7 +46,7 @@ include('inclus/entete.php');
 
 		<section id='iHorairesTableau' class='cSectionContour' aria-hidden='true'><h2>Horaires d'ouverture de la <?= NOM_PHARMA ?></h2>
 			<article class='cSemaine' <?= ($auj == "lun") ? "id='iAujourdhui'" : "" ?>  >
-				<h4>lundi</h4><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+				<p class='cJour'>lundi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
 				<?php // comme cette dernière <div> est en position absolute, c'est pas grave si on laisse
 				      // de la place dans l'éditeur après la <div> précédente : l'espace ne se verra pas en HTML ?>
@@ -55,31 +55,31 @@ include('inclus/entete.php');
 
 			</article>
 			<article class='cSemaine' <?= ($auj == "mar") ? "id='iAujourdhui'" : "" ?>  >
-				<h4>mardi</h4><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+				<p class='cJour'>mardi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
 				<div <?= ($auj == "mar" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
 			<article class='cSemaine' <?= ($auj == "mer") ? "id='iAujourdhui'" : "" ?>  >
-				<h4>mercredi</h4><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+				<p class='cJour'>mercredi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
 				<div <?= ($auj == "mer" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
 			<article class='cSemaine' <?= ($auj == "jeu") ? "id='iAujourdhui'" : "" ?>  >
-				<h4>jeudi</h4><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+				<p class='cJour'>jeudi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
 				<div <?= ($auj == "jeu" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
 			<article class='cSemaine' <?= ($auj == "ven") ? "id='iAujourdhui'" : "" ?>  >
-				<h4>vendredi</h4><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+				<p class='cJour'>vendredi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
 
 				<div <?= ($auj == "ven" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
 			<article class='cSamedi' <?= ($auj == "sam") ? "id='iAujourdhui'" : "" ?>  >
-				<h4>samedi</h4><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> >9h</div><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> >16h</div>
+				<p class='cJour'>samedi</p><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> >9h</div><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> >16h</div>
 
 				<div <?= ($auj == "sam" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 

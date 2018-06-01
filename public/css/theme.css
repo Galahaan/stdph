@@ -147,7 +147,7 @@ sub{
 header section{
     background-color: #D8D8D8; /* dans le cas où l'image ne peut être chargée, ça fait un fond par défaut */
 }
-h1, h1+p, #iTelBandeau, #iTelBandeau a{
+h1, h1+strong, #iTelBandeau, #iTelBandeau a{
     font-family: 'Tangerine', fantasy; /* titre + sous-titre + tel */
     color: #364115;                    /* (police différente uniquement pour le bandeau du haut) */
     font-weight: 700;
@@ -210,8 +210,8 @@ nav#iNavigation a{
 .cHeureDuJour{
     color: #1967E5; /* l'heure qu'il est */
 }
-.cSemaine h4, .cSamedi h4{
-    font-weight: 400;  /* nom des jours (h4) en 'normal' */
+.cSemaine p.cJour, .cSamedi p.cJour{
+    font-weight: 400;  /* nom des jours (p.cJour) en 'normal' */
 }
 /* - couleur de fond par défaut des créneaux horaires d'ouverture */
 /* - et couleur de fond d'un créneau écoulé du jour en cours      */
@@ -219,14 +219,14 @@ nav#iNavigation a{
     background-color: rgba(148, 193, 29, .2);
 }
 /* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
-#iHorairesTableau #iAujourdhui div, #iHorairesTableau #iAujourdhui h4{
+#iHorairesTableau #iAujourdhui div, #iHorairesTableau #iAujourdhui p.cJour{
     background-color: rgba(148, 193, 29, .5);
     font-weight: 700;
     color: #1967E5;
 }
 /* on ne veut pas mettre le jour actuel et le tiret en fond vert */
-.cSemaine h4, .cSamedi h4, .cSemaine .cTiret,
-#iHorairesTableau #iAujourdhui h4, #iHorairesTableau #iAujourdhui .cTiret{
+.cSemaine p.cJour, .cSamedi p.cJour, .cSemaine .cTiret,
+#iHorairesTableau #iAujourdhui p.cJour, #iHorairesTableau #iAujourdhui .cTiret{
     background-color: white;
     color: black;
 }
@@ -252,7 +252,7 @@ nav#iNavigation a{
 }
 
 /* largeurs et marges des jours et des créneaux horaires ****************************************************************/
-#iHorairesTableau article h4, #iHorairesTableau .cSemaine .cTiret, #iHorairesTableau .cSamedi h4{
+#iHorairesTableau p.cJour, #iHorairesTableau .cSemaine .cTiret, #iHorairesTableau .cSamedi p.cJour{
     background-color: white; /* jours de la semaine, tiret du midi, samedi */
 }
 
