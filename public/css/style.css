@@ -513,12 +513,12 @@ sub{
 .cSemaine, .cSamedi{
 	position: relative;
 }
-#iHorairesTableau #iAujourdhui #iTraitHoraire{
+#iHorairesTraitVH{
 	/* cf theme.css pour le trait vertical qui est représenté par :   border-left: solid #xxx 2px; */
 	position: absolute;
 	top: 0; /* la valeur du left est déterminée en PHP dans le HTML */
 }
-#iHorairesTableau #iAujourdhui .cEffacerTrait, #iHorairesTableau article .cEffacerTrait{
+#iHorairesAujourdhui .cEffacerTrait, #iHorairesTableau article .cEffacerTrait{
 	position: absolute;
 	top: 0;
 	left: 0;

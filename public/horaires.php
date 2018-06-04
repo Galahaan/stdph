@@ -45,43 +45,43 @@ include('inclus/entete.php');
 		<?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
 
 		<section id='iHorairesTableau' class='cSectionContour' aria-hidden='true'><h2>Horaires d'ouverture de la <?= NOM_PHARMA ?></h2>
-			<article class='cSemaine' <?= ($auj == "lun") ? "id='iAujourdhui'" : "" ?>  >
-				<p class='cJour'>lundi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+			<article class='cSemaine' <?= ($auj == "lun") ? "id='iHorairesAujourdhui'" : "" ?>  >
+				<p class='cJour'>lundi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= OMATH ?></div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= FMATH ?></div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= OAMIH ?></div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= FAMIH ?></div>
 
 				<?php // comme cette dernière <div> est en position absolute, c'est pas grave si on laisse
 				      // de la place dans l'éditeur après la <div> précédente : l'espace ne se verra pas en HTML ?>
 
-				<div <?= ($auj == "lun" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
+				<div <?= ($auj == "lun" && $dessinerTrait == true) ? "id='iHorairesTraitVH'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
-			<article class='cSemaine' <?= ($auj == "mar") ? "id='iAujourdhui'" : "" ?>  >
-				<p class='cJour'>mardi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+			<article class='cSemaine' <?= ($auj == "mar") ? "id='iHorairesAujourdhui'" : "" ?>  >
+				<p class='cJour'>mardi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= OMATH ?></div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= FMATH ?></div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= OAMIH ?></div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= FAMIH ?></div>
 
-				<div <?= ($auj == "mar" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
-
-			</article>
-			<article class='cSemaine' <?= ($auj == "mer") ? "id='iAujourdhui'" : "" ?>  >
-				<p class='cJour'>mercredi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
-
-				<div <?= ($auj == "mer" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
+				<div <?= ($auj == "mar" && $dessinerTrait == true) ? "id='iHorairesTraitVH'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
-			<article class='cSemaine' <?= ($auj == "jeu") ? "id='iAujourdhui'" : "" ?>  >
-				<p class='cJour'>jeudi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
+			<article class='cSemaine' <?= ($auj == "mer") ? "id='iHorairesAujourdhui'" : "" ?>  >
+				<p class='cJour'>mercredi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= OMATH ?></div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= FMATH ?></div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= OAMIH ?></div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= FAMIH ?></div>
 
-				<div <?= ($auj == "jeu" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
-
-			</article>
-			<article class='cSemaine' <?= ($auj == "ven") ? "id='iAujourdhui'" : "" ?>  >
-				<p class='cJour'>vendredi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >8h30</div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> >12h30</div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >14h</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> >19h30</div>
-
-				<div <?= ($auj == "ven" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
+				<div <?= ($auj == "mer" && $dessinerTrait == true) ? "id='iHorairesTraitVH'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
-			<article class='cSamedi' <?= ($auj == "sam") ? "id='iAujourdhui'" : "" ?>  >
-				<p class='cJour'>samedi</p><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> >9h</div><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> >16h</div>
+			<article class='cSemaine' <?= ($auj == "jeu") ? "id='iHorairesAujourdhui'" : "" ?>  >
+				<p class='cJour'>jeudi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= OMATH ?></div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= FMATH ?></div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= OAMIH ?></div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= FAMIH ?></div>
 
-				<div <?= ($auj == "sam" && $dessinerTrait == true) ? "id='iTraitHoraire'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
+				<div <?= ($auj == "jeu" && $dessinerTrait == true) ? "id='iHorairesTraitVH'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
+
+			</article>
+			<article class='cSemaine' <?= ($auj == "ven") ? "id='iHorairesAujourdhui'" : "" ?>  >
+				<p class='cJour'>vendredi</p><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= OMATH ?></div><div <?= ($matinOff) ? "class='cCreneauOff'" : "" ?> ><?= FMATH ?></div><div class='cTiret'>-</div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= OAMIH ?></div><div <?= ($apremOff) ? "class='cCreneauOff'" : "" ?> ><?= FAMIH ?></div>
+
+				<div <?= ($auj == "ven" && $dessinerTrait == true) ? "id='iHorairesTraitVH'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
+
+			</article>
+			<article class='cSamedi' <?= ($auj == "sam") ? "id='iHorairesAujourdhui'" : "" ?>  >
+				<p class='cJour'>samedi</p><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> ><?= SA_OMATH ?></div><div <?= ($samediOff) ? "class='cCreneauOff'" : "" ?> ><?= SA_FAMIH ?></div>
+
+				<div <?= ($auj == "sam" && $dessinerTrait == true) ? "id='iHorairesTraitVH'" : "class='cEffacerTrait'" ?> style='left:<?= $deltaP ?>%'>&nbsp;</div>
 
 			</article>
 		</section>

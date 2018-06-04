@@ -215,44 +215,44 @@ nav#iNavigation a{
 }
 /* - couleur de fond par défaut des créneaux horaires d'ouverture */
 /* - et couleur de fond d'un créneau écoulé du jour en cours      */
-#iHorairesTableau article div, #iHorairesTableau #iAujourdhui .cCreneauOff{         /*  Attention: il y a d'autres instructions pour #iAujourdhui .cCreneauOff  */
-    background-color: rgba(148, 193, 29, .2);
+#iHorairesTableau article div, #iHorairesTableau #iHorairesAujourdhui .cCreneauOff{
+    background-color: rgba(148, 193, 29, .2);      /*  Attention: il y a d'autres instructions pour #iHorairesAujourdhui .cCreneauOff  */
 }
 /* la ligne 'aujourd'hui' est mise en valeur => couleur de fond un peu plus soutenue et police différente  */
-#iHorairesTableau #iAujourdhui div, #iHorairesTableau #iAujourdhui p.cJour{
+#iHorairesTableau #iHorairesAujourdhui div, #iHorairesTableau #iHorairesAujourdhui p.cJour{
     background-color: rgba(148, 193, 29, .5);
     font-weight: 700;
     color: #1967E5;
 }
 /* on ne veut pas mettre le jour actuel et le tiret en fond vert */
 .cSemaine p.cJour, .cSamedi p.cJour, .cSemaine .cTiret,
-#iHorairesTableau #iAujourdhui p.cJour, #iHorairesTableau #iAujourdhui .cTiret{
+#iHorairesTableau #iHorairesAujourdhui p.cJour, #iHorairesTableau #iHorairesAujourdhui .cTiret{
     background-color: white;
     color: black;
 }
 /* et le tiret reste en normal */
-#iHorairesTableau #iAujourdhui .cTiret{
+#iHorairesTableau #iHorairesAujourdhui .cTiret{
     font-weight: normal;
 }
 /* pour finir de désactiver un créneau passé du jour actuel */
 /* on a déjà mis la couleur de fond un peu plus haut        */
-#iHorairesTableau #iAujourdhui .cCreneauOff{
+#iHorairesTableau #iHorairesAujourdhui .cCreneauOff{
     color: black;
     font-weight: normal;
 }
 /* trait vertical représentant l'heure **********************************************************************************/
-#iHorairesTableau #iAujourdhui #iTraitHoraire{
+#iHorairesTableau #iHorairesAujourdhui #iHorairesTraitVH{
     background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final, ie 'transparence totale'. */
     /* NB: j'avais testé 'opacity: 0;' => mais TOUT disaparaît, y compris la border */
 
     border-left: solid #1967E5 2px;
 }
-#iHorairesTableau #iAujourdhui .cEffacerTrait, #iHorairesTableau article .cEffacerTrait{
+#iHorairesTableau #iHorairesAujourdhui .cEffacerTrait, #iHorairesTableau article .cEffacerTrait{
     background-color: rgba(255, 255, 255, 0); /* en fait, seul importe le 0 final, cf NB ci-dessus */
 }
 
 /* largeurs et marges des jours et des créneaux horaires ****************************************************************/
-#iHorairesTableau p.cJour, #iHorairesTableau .cSemaine .cTiret, #iHorairesTableau .cSamedi p.cJour{
+#iHorairesTableau p.cJour, #iHorairesTableau .cSemaine .cTiret{
     background-color: white; /* jours de la semaine, tiret du midi, samedi */
 }
 

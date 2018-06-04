@@ -399,7 +399,7 @@ function ouverturePharmacie( $jour, $heure ){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//							getDeltaP( $heure )
+//							getDeltaP( $heure )         'deltaP'  pour  'delta en %'
 //
 // Cette fonction, utilisée par horaires.php, détermine 2 valeurs
 // destinées à l'affichage dynamique du curseur de l'heure actuelle.
@@ -407,12 +407,12 @@ function ouverturePharmacie( $jour, $heure ){
 // La fonction prend comme paramètre d'entrée l'heure actuelle au format DECIMAL.
 //
 // Elle renvoie donc 2 valeurs, rangées dans un tableau :
-// - la 1ère est le % dont il faut décaler (left: ) la div du trait vertical (id #iTraitHoraire),
+// - la 1ère est le % dont il faut décaler (left: ) la div du trait vertical (id #iHorairesTraitVH),
 //   représentant l'heure actuelle
 //
 // - la 2ème, au format BOOLEEN, indique s'il faut afficher le trait ou non.
-//   (on affiche le trait entre 8h30 et 19h30, sinon on n'affiche pas le trait)
-//
+//   (on affiche le trait entre OMATD et FAMID, sinon on n'affiche pas le trait)
+//							    8h30  et 19h30
 //
 //
 //		          >>>   ATTENTION   <<<
@@ -436,9 +436,9 @@ function getDeltaP( $heure ){
 
 	if( $heure >= OMATD && $heure < FAMID){
 
-		$dessinerTrait = true; // pour afficher l'id 'iTraitHoraire' dans le div du jour
+		$dessinerTrait = true; // pour afficher l'id 'iHorairesTraitVH' dans le div du jour
 
-		// le nom 'deltaP' est sensé évoquer 'delta %'
+		// le nom 'deltaP' est censé évoquer 'delta %'
 		$deltaP = 23; // 23%, auxquels on va rajouter des % en fonction du créneau horaire
 
 		if( $heure < FMATD ){
