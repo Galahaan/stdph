@@ -61,7 +61,7 @@
 
 /* § alternés                                                                                                    */
 /*      - 1 produit sur 2                          (gammesProduits)     :  #F8F8F8  gris très clair              */
-/*      - titres h4                                (menleg)             :  #E7FBE1  vert très clair              */
+/*      - titres h3                                (menleg)             :  #E7FBE1  vert très clair              */
 
 
 /* NB : pour les liens, il faut respecter cet ordre de déclaration :           */
@@ -289,7 +289,7 @@ nav#iNavigation a{
 /***************************************************************************************************************************************/
 /*********************************************          page gammes de produits          ***********************************************/
 /***************************************************************************************************************************************/
-#iGammesProd article h4{
+#iGammesProd article h3{
     color: #364115;               /* titres placés sur les images */
 }
 #iGammesProd article div:nth-child(2n+1){
@@ -302,7 +302,7 @@ nav#iNavigation a{
 /***************************************************************************************************************************************/
 /************************************************        page mentions légales        **************************************************/
 /***************************************************************************************************************************************/
-#iMentionsLegales h4{
+#iMentionsLegales h3{
     background-color: #E7FBE1; /* fond du § titre */
 }
 #iMentionsLegales .gauche{

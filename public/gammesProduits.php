@@ -14,7 +14,7 @@ include('inclus/entete.php');
 			</nav>
 
 			<article id='iGPubb'>
-				<div class='cImageDeco'><img src='img/gammesProduits/bebe.jpg' alt=''><h4>Univers de bébé</h4></div>
+				<div class='cImageDeco'><img src='img/gammesProduits/bebe.jpg' alt=''><h3>Univers de bébé</h3></div>
 				<div>
 					<img src='img/gammesProduits/bb_picot.png' alt=''><p>
 					Nous avons choisi les laits de la gamme PICOT, ils sont bien.</p>
@@ -30,7 +30,7 @@ include('inclus/entete.php');
 			</article>
 
 			<article id='iGPsdc'>
-				<div class='cImageDeco'><img src='img/gammesProduits/soinDuCorps.jpg' alt=''><h4>Soins du corps</h4></div>
+				<div class='cImageDeco'><img src='img/gammesProduits/soinDuCorps.jpg' alt=''><h3>Soins du corps</h3></div>
 				<div>
 					<img src='img/gammesProduits/corps_uriage_LD.png' alt=''><p>
 					Nous avons sélectionné la gamme URIAGE dont aucun produit ne contient de parabens.</p>

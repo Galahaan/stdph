@@ -7,7 +7,7 @@ include('inclus/entete.php');
 
         <section id='iMentionsLegales' class='cSectionContour'><h2>Mentions légales</h2>
 
-            <article><h4>Organismes partenaires</h4>
+            <article><h3>Organismes partenaires</h3>
                 <div>
                     <p class='gauche'>Agence régionale de santé territorialement compétente</p>
                     <p><img src='img/menleg/ARS.png' alt=''></p>
@@ -39,7 +39,7 @@ include('inclus/entete.php');
                     <p class='droite'><a href=<?= CNIL_URL ?>><?= CNIL_URLC ?></a></p>
                 </div>
             </article>
-            <article><h4>Pharmacie</h4>
+            <article><h3>Pharmacie</h3>
                 <div>
                     <p class='gauche'>n° de licence</p>
                     <p class='droite'><?= PHIE_LICENCE ?></p>
@@ -62,7 +62,7 @@ include('inclus/entete.php');
                     <p class='droite'><a href=<?= PHIE_HBG_URL ?>><?= PHIE_HBG_URLC ?></a></p>
                 </div>
             </article>
-            <article><h4>Pharmacien</h4>
+            <article><h3>Pharmacien</h3>
                 <div>
                     <p class='gauche'>Titulaire</p>
                     <p class='droite'><?= PHIEN_TITULAIRE ?></p>

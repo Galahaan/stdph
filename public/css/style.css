@@ -58,13 +58,13 @@ h1+strong{
 #iTelBandeau{
 	font-size: 3.5rem; /* bandeau : sous-titre 'numéro de tel cliquable' */
 }
-#iIndex article h4{
+#iIndex article h3{
 	font-size: 2.5rem; /* index, titres des vignettes */
 }
 .fa-phone, .fa-fax, .fa-envelope{
 	font-size: 2rem; /* contact, taille des icônes font-awesome : tel, fax et mail */
 }
-#iGammesProd article h4{
+#iGammesProd article h3{
 	font-size: 3.5rem; /* gammesProduits, titres des photos § */
 }
 sup, sub{
@@ -239,7 +239,7 @@ nav#iNavigation{
 	opacity: .85;
 }
 
-#iIndex article h4{
+#iIndex article h3{
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -662,7 +662,7 @@ sub{
 }
 
 /* titres placés sur les images */
-#iGammesProd article h4{
+#iGammesProd article h3{
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -711,7 +711,7 @@ sub{
 	padding-bottom: 2rem;
 	text-align: left;
 }
-#iAide ol, #iAide h4{
+#iAide ol, #iAide h3{
 	padding-bottom: 1rem;
 	text-align: left;
 }
@@ -724,7 +724,7 @@ sub{
 /***************************************************************************************************************************************/
 
 /* petite mise en page */
-#iMentionsLegales h4{
+#iMentionsLegales h3{
 	text-align: center;
 	text-decoration: underline;
 	padding: 8% 0;

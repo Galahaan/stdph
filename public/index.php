@@ -18,32 +18,32 @@ include('inclus/entete.php');
 			<br><br><?php // je sais, ces <br> sont affreux, mais depuis le 'inline' des p et h2 ci-dessus, je n'ai pas mieux ! ?>
 
 			<article>
-				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h4>Préparation d'ordonnance</h4></a>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h3>Préparation d'ordonnance</h3></a>
 				<img src='img/index/prepaOrdonnance.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> ><h4>Préparation de commande</h4></a>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> ><h3>Préparation de commande</h3></a>
 				<img src='img/index/prepaCommande.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href='pharmaDeGarde.php'><h4>Pharmacies de garde</h4></a>
+				<a href='pharmaDeGarde.php'><h3>Pharmacies de garde</h3></a>
 				<img src='img/index/pharmaDeGarde.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href='promos.php'><h4>Promos</h4></a>
+				<a href='promos.php'><h3>Promos</h3></a>
 				<img src='img/index/promos.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href='gammesProduits.php'><h4>Les gammes de produits</h4></a>
+				<a href='gammesProduits.php'><h3>Les gammes de produits</h3></a>
 				<img src='img/index/gammesProduits.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href='infos.php'><h4>Informations / Conseils</h4></a>
+				<a href='infos.php'><h3>Informations / Conseils</h3></a>
 				<img src='img/index/questions.jpg' alt=''>
 			</article>
 
@@ -51,7 +51,7 @@ include('inclus/entete.php');
 				// matériel médical / contention ?
 
 				// <article>
-				// 	<a href='humour.php'><h4>La blague de Chuck Norris !..</h4></a>
+				// 	<a href='humour.php'><h3>La blague de Chuck Norris !..</h3></a>
 				// 	<img src='img/index/humour.jpg' alt=''>
 				// </article>
 			?>
