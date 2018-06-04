@@ -18,12 +18,12 @@ include('inclus/entete.php');
 			<br><br><?php // je sais, ces <br> sont affreux, mais depuis le 'inline' des p et h2 ci-dessus, je n'ai pas mieux ! ?>
 
 			<article>
-				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php'" ?> ><h3>Préparation d'ordonnance</h3></a>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Préparation d'ordonnance</h3></a>
 				<img src='img/index/prepaOrdonnance.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaCommande.php'" : "'connexion.php'" ?> ><h3>Préparation de commande</h3></a>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaCommande.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Préparation de commande</h3></a>
 				<img src='img/index/prepaCommande.jpg' alt=''>
 			</article>
 

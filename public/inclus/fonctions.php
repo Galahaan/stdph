@@ -487,7 +487,7 @@ function getDeltaP( $heure ){
 //   (dans le but de souligner ce mot)
 //
 // - le nom 'enjolivé' de la page :
-//       ex. 'Accueil' à la place de '/index.php'
+//       ex. 'Accueil & Services' à la place de '/index.php'
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 function pageCourante( $request_uri ){
@@ -506,7 +506,7 @@ function pageCourante( $request_uri ){
 	switch( $page ){
 		case "index":
 			$flagPC = "1000";
-			$nomPage = "Accueil";
+			$nomPage = "Accueil & Services";
 			break;
 
 		case "horaires":
@@ -522,14 +522,6 @@ function pageCourante( $request_uri ){
 		case "contact":
 			$flagPC = "0001";
 			$nomPage = "Contact";
-			break;
-
-		case "connexion":
-			$nomPage = "Connexion";
-			break;
-
-		case "inscription":
-			$nomPage = "Inscription";
 			break;
 
 		case "prepaOrdonnance":
@@ -553,11 +545,19 @@ function pageCourante( $request_uri ){
 			break;
 
 		case "infos":
-			$nomPage = "Informations / conseils";
+			$nomPage = "Informations & conseils";
 			break;
 
 		case "menleg":
 			$nomPage = "Mentions légales";
+			break;
+
+		case "connexion":
+			$nomPage = "Connexion";
+			break;
+
+		case "inscription":
+			$nomPage = "Inscription";
 			break;
 	}
 	return ['flag' => $flagPC, 'nom' => $nomPage];
@@ -572,8 +572,18 @@ function pageCourante( $request_uri ){
 //
 // La fonction prend comme paramètre d'entrée la page appelante.
 //
-// Elle renvoie un tableau de 3 éléments, qui correspondent aux 3 spécificités potentielles,
+// Elle renvoie un tableau de 5 éléments, qui correspondent aux 5 spécificités potentielles,
 // sous forme de chaînes de caractères représentant du code HTML.
+//
+// - 'description'
+//             c'est le contenu de la balise 'meta description' (cf constantes.php)
+//
+// - 'robots'
+//             c'est le contenu de la balise 'meta robots' (cf constantes.php)
+//
+//             NB: - par défaut, toutes les pages sont en 'index, follow, all'
+//                 - connexion et inscription sont en 'noindex, nofollow, none'
+//                 - seule index.php a une gestion de ses liens au cas par cas.
 //
 // - 'refresh'
 //             pour rafraîchir la page toutes les XX secondes. (cf constantes.php)
@@ -594,7 +604,8 @@ $page = ltrim($request_uri, '/');
 $page = rtrim($page, 'hp.');
 
 $description = "";
-$refresh     = "";    // initialisations
+$robots      = "index, follow, all";
+$refresh     = "";                        // initialisations
 $focus       = "";
 $cdn         = "";
 
@@ -609,6 +620,7 @@ $cdn         = "";
 
 		case "index":
 			$description = META_DESC_INDEX;
+			$robots = "";
 			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
 			break;
 
@@ -625,15 +637,6 @@ $cdn         = "";
 			$description = META_DESC_CONTACT;
 			$focus = " onload='placerFocus(\"iFocus\")'";
 			$cdn   = "link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>";
-			break;
-
-		case "inscription":
-			$description = META_DESC_INSCRIP;
-			$focus = " onload='placerFocus(\"iFocus\")'";
-			break;
-
-		case "connexion":
-			$description = META_DESC_CONNEX;
 			break;
 
 		case "prepaOrdonnance":
@@ -665,8 +668,17 @@ $cdn         = "";
 		case "menleg":
 			$description = META_DESC_MENLEG;
 			break;
+
+		case "connexion":
+			$robots = META_BOTS_CONNEX;
+			break;
+
+		case "inscription":
+			$robots = META_BOTS_INSCRIP;
+			$focus = " onload='placerFocus(\"iFocus\")'";
+			break;
 	}
-	return ['description' => $description, 'refresh' => $refresh, 'focus' => $focus, 'cdn' => $cdn];
+	return ['description' => $description, 'robots' => $robots, 'refresh' => $refresh, 'focus' => $focus, 'cdn' => $cdn];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

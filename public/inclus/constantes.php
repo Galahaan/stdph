@@ -12,7 +12,7 @@
 
 // Nom de la pharmacie
 define("NOM_PHARMA"        , "Pharmacie des Tilleuls");  // dans <title> + bandeau
-define("LOC_PHARMA_1"      , " à ");                     // que dans <title>
+define("LOC_PHARMA_1"      , " à ");                     // que dans <title>               60 car. max pour <title> !
 define("LOC_PHARMA_2"      , "Gaël, Ille et Vilaine");   // dans <title> + bandeau
 
 // Adresse de la pharmacie
@@ -37,23 +37,25 @@ define("ADR_GG_PHARMA"     , "https://plus.google.com/113407799173132476603/abou
 
 // (éviter de mettre des apostrophes dans les phrases, j'ai peur que cela gène les robots)
 
-define("META_DESC_INDEX"   , "La pharmacie, située à Gaël (Ille-et-Vilaine) vous conseille et répond à vos besoins en médicaments, services en ligne, location de matériel.");
+// 200 car. max pour la description !
+define("META_DESC_INDEX"   , "La pharmacie, située à Gaël (Ille-et-Vilaine) vous conseille et répond à vos besoins en médicaments, services en ligne (ordonnance et commande), location de matériel.");
 define("META_DESC_HORAIRES", "Horaires d ouverture de la pharmacie : du lundi au vendredi de 8h30 à 12h30 puis de 14h à 19h, et le samedi de 9h à 16h.");
 define("META_DESC_EQUIPE"  , "Valérie, Hélène, Christine et Alice vous accueillent chaque jour avec le sourire.");
-define("META_DESC_CONTACT" , "Vous trouverez ci-dessous tous les renseignements pour vous rendre à la pharmacie, en bus, en voiture, ou à vélo ainsi que pour nous joindre.");
-define("META_DESC_INSCRIP" , "Pour accéder aux services en ligne de la pharmacie, vous devez vous inscrire en créant un compte.");
-define("META_DESC_CONNEX"  , "Pour accéder aux services en ligne de la pharmacie, connectez-vous grâce à vos identifiants.");
+define("META_DESC_CONTACT" , "Vous trouverez ci-dessous tous les renseignements pratiques pour vous rendre à la pharmacie, en bus, en voiture, ou à vélo, ainsi que pour nous joindre.");
 define("META_DESC_PREP_O"  , "La pharmacie vous propose son service de téléchargement d ordonnance en ligne.");
-define("META_DESC_PREP_C"  , "La pharmacie vous propose son service de prise de commande en ligne, autrement appelé [clic and collect].");
+define("META_DESC_PREP_C"  , "La pharmacie vous propose son service de prise de commande en ligne, autrement appelé clic and collect, ou encore drive.");
 define("META_DESC_P_GARDE" , "Trouvez facilement la pharmacie de garde la plus proche de chez vous, ou le commissariat de police éventuel dont elle dépend.");
-define("META_DESC_PROMOS"  , "Vous trouverez ici l ensemble des promotions en cours à la pharmacie.");
+define("META_DESC_PROMOS"  , "Vous trouverez ici l ensemble des promotions et des réductions en cours à la pharmacie.");
 define("META_DESC_GAMMES"  , "Retrouvez ici les gammes de parapharmacie suivies et conseillées par la pharmacie.");
-define("META_DESC_INFOS"   , "La pharmacie vous informe sur des sujets de santé en général, ou d actualité.");
-define("META_DESC_MENLEG"  , "Cette page est dédiée aux mentions légales, concernant les données utilisées ou diffusées dans ce site.");
+define("META_DESC_INFOS"   , "La pharmacie vous informe sur des sujets de santé en général, ou d actualité, et vous prodigue quelques conseils bien utiles.");
+define("META_DESC_MENLEG"  , "Cette page est dédiée aux mentions légales, concernant notamment les données utilisées ou diffusées dans ce site, et le traitement de vos données personnelles.");
 
-define("MC_NOM_PHARMA"     , "des tilleuls");
+define("META_BOTS_CONNEX"  , "noindex, nofollow, none"); // par défaut, les autres pages auront "index, follow, all"
+define("META_BOTS_INSCRIP" , "noindex, nofollow, none"); // sauf index.php dont les liens sont traités au cas par cas.
+
+define("MC_NOM_PHARMA"     , "tilleuls");
 define("MC_QUARTIER"       , "gaël");
-define("MC_1"              , "35290");
+define("MC_1"              , "");
 define("MC_2"              , "");
 define("MC_3"              , "");
 

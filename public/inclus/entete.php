@@ -20,21 +20,31 @@ if( isset($_SESSION['bot']) ){
 
         $_SESSION['bot']['mailEnvoye'] = true;
 
-        $contenu =  "<html><head><title>" . date('D j M Y') . " - " . date('G\hi') .
-                        " - Moteur de recherche ou Aspirateur ?</title></head>" .
-                    "<body><br><br>" .
+        $contenu =  "<html>" .
+                    "<body>" .
+                        "<b>" . date('D j M Y') . " - " . date('G\hi') . " - Moteur de recherche ou Aspirateur ?" . "</b>" .
+                        "<br><br>" .
                         "IP 1      : " . $_SESSION['bot']['ip1'] . "<br>" .
                         "Domaine 1 : " . $_SESSION['bot']['do1'] . "<br>";
 
         if( $_SESSION['bot']['isAspi'] == true ){
-            // si on est dans ce cas, c'est que les 2 IP sont différentes, donc on complète le mail :
+            // si on est dans ce cas, c'est que les 2 IP sont différentes, donc on complète le contenu :
             $contenu .=
+                        "<br>" .
                         "IP 2      : " . $_SESSION['bot']['ip2'] . "<br>" .
                         "Domaine 2 : " . $_SESSION['bot']['do2'] . "<br>" .
-                        "<br>Ce robot a donc été bloqué ..." .
-                    "</body></html>";
+                        "<br>Ce robot a donc été bloqué ..." . "<br><br>";
         }
 
+        // message de fin et balises de clôture du contenu :
+        $contenu .=
+                        "<br>" .
+                        "Plus d'infos peut-être sur " .
+                        "<a href='http://www.user-agents.org/'>user-agents.org</a>" .
+                    "</body>" .
+                    "</html>";
+
+        // Envoi du mail :
         mail( $_SESSION['bot']['mailDest'],
                 date('D j M Y') . " - " . date('G\hi') . " - passage d'un robot chez " . $_SESSION['bot']['url'],
                 $contenu,
@@ -47,7 +57,7 @@ if( isset($_SESSION['bot']) ){
 if( $_SESSION['bot']['isAspi'] == true ){
 
     // on bloque l'affichage après un petit message
-    echo "sorry";
+    echo "rather see elsewhere, please";
     exit();
 }
 
@@ -103,12 +113,14 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-    <title><?= NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 . " - " . $pageCourante['nom'] ?></title>
     <meta charset='utf-8'>
 
-    <?php // Description et Mots Clés de la page ?>
+    <?php // Pour un bon positionnement dans les résultats des moteurs de recherche, renseigner     ?>
+    <?php // ces balises est très important, surtout title (max 60 c.) et description (max 200 c.)  ?>
+    <title><?= NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 . " - " . $pageCourante['nom'] ?></title>
     <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
     <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
+    <?= ! empty($enteteSpecs['robots']) ? "<meta name='robots' content='" . $enteteSpecs['robots'] . "'>" : "" ?>
 
     <?php // Prise en compte du responsive design ?>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
