@@ -231,7 +231,7 @@ define('FMATH', '12h30');
 define('OAMID', 14);
 define('OAMIH', '14h');
 
-// ... à 19h30							pour l'instant je n'utilise pas les constantes '...H'
+// ... à 19h30
 define('FAMID', 19.5);
 define('FAMIH', '19h30');
 
