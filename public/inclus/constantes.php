@@ -1,7 +1,11 @@
 <?php
 
-
-// il faut aussi aller dans tapette.php et les erreur-XXX.php !..
+// il y a aussi des constantes dans :
+//
+//     - tapette.php
+//     - /erreurs/erreur-....php     (401, 403, 404, 500, index)
+//     - .htaccess de la racine
+//
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
