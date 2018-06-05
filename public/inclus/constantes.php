@@ -1,7 +1,7 @@
 <?php
 
 
-// il faut aussi aller dans tapette.php !..
+// il faut aussi aller dans tapette.php et les erreur-XXX.php !..
 
 
 //////////////////////////////////////////////////////////////////////////////////////////

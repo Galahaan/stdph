@@ -1,4 +1,4 @@
-﻿#
+#
 # Redirection http -> https
 #
 RewriteEngine On
@@ -9,15 +9,20 @@ RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 #
 # Définition de l'index par défaut à charger, ou, si non trouvé, de la page à afficher à la place
 #
-DirectoryIndex index.php /erreurs/erreur_403.php
+# DirectoryIndex index.php /erreurs/erreur-index.php
+#
+# Le pb, c'est que, dans le cas où j'essaie d'accéder à /img ou /css, c'est cette erreur-index qui est affichée à la place de la 403.
+# Alors que si j'essaie d'accéder à /inclus, j'ai bien l'erreur 403.
+# Il est vrai que le .htaccess de img et css est un 'Options -Indexes' alors que celui de inclus est un 'deny from all',
+# mais c'est quand même une erreur 403 qui est levée dans tous les cas ... je ne comprends pas !
+# Pour remédier au pb, comme je ne pense pas que l'erreur-index soit levée bien souvent, je supprime cette possibilité. :/
+#
+DirectoryIndex index.php
 
 
 #
 # En cas d'absence de fichier 'index.html', pour empêcher l'affichage du contenu du répertoire :
 # (si je mets un "deny from all", c'est trop puissant et le site ne fonctionne plus :/   )
-#
-# NB: A priori cette instruction se propage dans toute l'arborescence située 'dessous'
-#     mais par mesure de précaution, je l'ai quand même mise dans d'autres .htaccess ;)
 #
 Options -Indexes
 
@@ -25,10 +30,10 @@ Options -Indexes
 #
 # Pages d'erreurs personnalisées
 #
-ErrorDocument 401 /erreurs/erreur_401.php
-ErrorDocument 403 /erreurs/erreur_403.php
-ErrorDocument 404 /erreurs/erreur_404.php
-ErrorDocument 500 /erreurs/erreur_500.php
+ErrorDocument 401 /erreurs/erreur-401.php
+ErrorDocument 403 /erreurs/erreur-403.php
+ErrorDocument 404 /erreurs/erreur-404.php
+ErrorDocument 500 /erreurs/erreur-500.php
 
 
 #
@@ -69,7 +74,6 @@ ExpiresByType application/x-font-woff   "access plus 1 week"
 ExpiresByType image/svg+xml             "access plus 1 week"
 ExpiresByType application/vnd.ms-fontobject "access plus 1 week"
 # CSS and JavaScript
-ExpiresByType text/css                  "access plus 1 hour"
-ExpiresByType application/javascript    "access plus 1 hour"
+ExpiresByType text/css                  "access plus 1 week"
+ExpiresByType application/javascript    "access plus 1 week"
 </IfModule>
-
