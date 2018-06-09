@@ -82,8 +82,8 @@ sup, sub{
 	padding-bottom: 5.8%;
 }
 /* on utilise cette classe pour que des phrases, constituées de plusieurs balises, soient bien sur une seule ligne. */
-/* (ex. <p class='cIL'>Le </p><h2 class='cIL'>ciel </h2><p class='cIL'>est bleu.</p>) */
-.cIL{
+/* (ex. <p class='cInLi'>Le </p><h2 class='cInLi'>ciel </h2><p class='cInLi'>est bleu.</p>) */
+.cInLi{
 	display: inline;
 }
 

@@ -10,9 +10,9 @@ include('inclus/entete.php');
 
 		<?php // si les gardes fonctionnent sans passer par le commissariat, ou si on est dans la journée : ?>
 		<?php if( (HEURE_SOIR_POLICE_D == "X") || ((HEURE_MATIN_POLICE_D <= $heure) && ($heure < HEURE_SOIR_POLICE_D)) ) : ?>
-			<p  class='cIL'>Trouvez la&nbsp;</p>
-			<h2 class='cIL' id='iPdGh21'>pharmacie de garde</h2>
-			<p  class='cIL'>&nbsp;la plus proche de chez vous en cliquant sur la croix ci-dessous :</p>
+			<p  class='cInLi'>Trouvez la&nbsp;</p>
+			<h2 class='cInLi' id='iPdGh21'>pharmacie de garde</h2>
+			<p  class='cInLi'>&nbsp;la plus proche de chez vous en cliquant sur la croix ci-dessous :</p>
 			<p id='iPdGcroix'>
 				<a href='http://www.3237.fr/'>
 					<img src='img/icones/croix_garde.png' alt=''>

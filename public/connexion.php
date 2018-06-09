@@ -45,7 +45,7 @@ if( isset( $_POST['connexion'] ) ) {
 ?>
 	<main id='iMain'>
 		<section id='iConnexionIDs' class='cSectionContour'>
-			<p class='cIL'>Veuillez saisir vos identifiants de&nbsp;</p><h2 class='cIL'>connexion</h2><p class='cIL'>&nbsp;(*)</p>
+			<p class='cInLi'>Veuillez saisir vos identifiants de&nbsp;</p><h2 class='cInLi'>connexion</h2><p class='cInLi'>&nbsp;(*)</p>
 
 			<br><br><?php // je sais, ces <br> sont affreux, mais depuis le 'inline' des p et h2 ci-dessus, je n'ai pas mieux ! ?>
 
