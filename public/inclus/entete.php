@@ -115,6 +115,11 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
 <head>
     <meta charset='utf-8'>
 
+    <?php // Cette balise sert à dire à Google : "je suis le propriétaire du site, et je souhaite utiliser,        ?>
+    <?php // par l'intermédiaire de mon compte Google, les outils de suivi de référencement proposés par Google."  ?>
+    <?php // Cette balise DOIT être conservée de façon permanente tant que l'on souhaite utiliser ces outils.      ?>
+    <meta name="google-site-verification" content="<?= GOOGLE_VALIDATION_CODE ?>" />
+
     <?php // Pour un bon positionnement dans les résultats des moteurs de recherche, renseigner     ?>
     <?php // ces balises est très important, surtout title (max 60 c.) et description (max 200 c.)  ?>
     <title><?= NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 . " - " . $pageCourante['nom'] ?></title>

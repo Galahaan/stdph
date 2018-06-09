@@ -8,6 +8,11 @@
 //
 
 
+// code de validation, pour pouvoir utiliser, grâce à un compte Google, ses outils de suivi de référencement
+// (à garder de façon permanente tant qu'on utilise les outils)
+define("GOOGLE_VALIDATION_CODE", "ICq5hVjiCr2jyrnl8hiUUMZ01PPrOg-reaW0kCrGz6o");
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
 ///////////////                Coordonnées de la pharmacie                 ///////////////
