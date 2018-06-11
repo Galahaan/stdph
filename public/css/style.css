@@ -217,6 +217,11 @@ nav#iNavigation{
 #iIndex p:first-of-type{
 	padding-bottom: 5.8%; /* 'la pharmacie est actuellement ...' */
 }
+#iIndex div{
+	padding-right: 2%;    /* pour la petite introduction au-dessus des vignettes */
+	padding-left: 2%;     /* (mêmes paddings latéraux que pour cSectionContour)  */
+	text-align: justify;
+}
 #iIndex article{
 	position: relative; /* pour que les <a> et les <img> soient superposés */
 }

@@ -122,7 +122,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
 
     <?php // Pour un bon positionnement dans les résultats des moteurs de recherche, renseigner     ?>
     <?php // ces balises est très important, surtout title (max 60 c.) et description (max 200 c.)  ?>
-    <title><?= NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 . " - " . $pageCourante['nom'] ?></title>
+    <title><?= $pageCourante['nom'] . " - " . NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 ?></title>
     <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
     <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
     <?= ! empty($enteteSpecs['robots']) ? "<meta name='robots' content='" . $enteteSpecs['robots'] . "'>" : "" ?>
