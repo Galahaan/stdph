@@ -52,7 +52,7 @@ include('inclus/entete.php');
 				<div class='cImageDeco'><img src='img/gammesProduits/article-pso.jpg' alt=''><h3>Produits solaires</h3></div>
 				<div>
 					<img src='img/gammesProduits/pso.png' alt=''>
-					<p>Ici encore, de l'indice 30 à l'indice 50, nous vous proposons la game URIAGE qui ne contient ni parabens, ni octocrylène, co-responsable de la destruction des coraux.
+					<p>Ici encore, de l'indice 30 à l'indice 50, nous vous proposons la gamme URIAGE qui ne contient ni parabens, ni octocrylène, co-responsable de la destruction des coraux.
 					<br>
 					<br>
 					Et n'oubliez-pas que, pour être efficacement protégé, il faut se mettre de la crème toutes les heures au minimum.</p>
