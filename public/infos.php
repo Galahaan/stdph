@@ -5,7 +5,11 @@ include('inclus/entete.php');
 ?>
 	<main id='iMain'>
 		<section id='iInfos' class='cSectionContour'><h2>Bon à savoir !..</h2>
-					Mangez 5 fruits et légumes par jour ! :-/
+            <article>
+                <p>En attendant de lire les articles préparés par votre pharmacien, n'hésitez pas à le consulter en cliquant sur la rubrique 'Contact'.</p>
+                <br><br>
+                <p>D'ici là, n'oubliez pas de manger 5 fruits et légumes par jour ! :-)</p>
+            </article>
 		</section>
 	</main>
 

@@ -641,6 +641,14 @@ sub{
 /*********************************************          page gammes de produits          ***********************************************/
 /***************************************************************************************************************************************/
 
+/* menu des rubriques */
+#iGammesProd nav{
+	padding: 2% 5%;
+}
+#iGammesProd nav ul li{
+	padding: 0 4%;
+	display: inline-block;
+}
 
 /* Comme la classe cSectionContour définit des marges latérales, et qu'ici, */
 /* exceptionnellement, on n'en veut pas, on les supprime :                  */
@@ -691,10 +699,26 @@ sub{
 }
 
 /***************************************************************************************************************************************/
-/************************************************        pages infos et promos        **************************************************/
+/************************************************        pages promos et infos        **************************************************/
 /***************************************************************************************************************************************/
 #iPromos, #iInfos{
 	min-height: 30vh; /* hauteur min = 30% du viewport, ie de la taille de l'écran, complétée par le bas */
+}
+
+#iPromos article{
+	padding: 0 8% 5%;
+	text-align: left;
+}
+#iPromos article h3{
+	padding-bottom: 2%;
+}
+#iPromos article img{
+	width: 38%;
+	float: left;
+}
+
+#iInfos article{
+	text-align: justify;
 }
 
 /***************************************************************************************************************************************/
