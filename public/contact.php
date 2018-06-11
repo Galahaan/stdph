@@ -74,7 +74,8 @@ if( isset($_POST['bouton']) ){
 			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a>&nbsp;<img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
 			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
 			<p id='iContactMail'><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
-			<p>
+			<?php
+/*			<p>
 				<a href='<?= ADR_FB_PHARMA ?>'>
 					<img class='cFaceGool' src='img/icones/fb.png' alt='facebook'>
 					<img class='cFaceGool cCouleurNoire' src='img/icones/fb_n.jpg' alt='facebook'>
@@ -86,6 +87,7 @@ if( isset($_POST['bouton']) ){
 					<img class='cFaceGool cCouleurNoire' src='img/icones/gg_n.jpg' alt='google+'>
 				</a>
 			</p>
+*/			?>
 		</section>
 
 		<section id='iContactPlan' class='cSectionContour'><h2>Se rendre sur place ...</h2>
