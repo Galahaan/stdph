@@ -211,10 +211,10 @@ nav#iNavigation{
 /****************************************************           page index          ****************************************************/
 /***************************************************************************************************************************************/
 .cSectionContour#iIndex{
-	padding-left: 0;
-	padding-right: 0;     /* pour annuler, exceptionnellement, les paddings de .cSectionContour */
+	padding-left: 0;      /* on annule, exceptionnellement, les paddings de .cSectionContour   */
+	padding-right: 0;     /* pour que les vignettes prennent toute la largeur de la la section */
 }
-#iIndex p:first-child{
+#iIndex p:first-of-type{
 	padding-bottom: 5.8%; /* 'la pharmacie est actuellement ...' */
 }
 #iIndex article{
