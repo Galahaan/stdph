@@ -4,7 +4,10 @@
 //
 //     - tapette.php
 //     - /erreurs/erreur-....php     (401, 403, 404, 500, index)
-//     - .htaccess de la racine
+//     - .htaccess de la racine      => vérifier que le .htaccess du serveur est bien identique
+//
+// 
+// et penser à supprimer l'affichage des erreyrs dans entete.php : ini_set("display_errors", 1);
 //
 
 
@@ -186,7 +189,7 @@ define("SW_ADRESSE_SITE_PHARMACIE", "https://www.bigouig.fr/");
 define("MAIL_DEST_PHARMA", "clr.tstph@use.startmail.com");
 
 // pour vérifier les 1ers mails officiels :
-//	define("MAIL_DEST_CLR",    "clr.tstph@use.startmail.com");
+define("MAIL_DEST_CLR",    "clr.tstph@use.startmail.com");
 
 // taille max de la pièce jointe : 5 Mo = 5242880 octets
 define("TAILLE_MAX_PJ", 5242880);

@@ -1,7 +1,7 @@
 <?php
 
 define('NOM_PHARMA', "Pharmacie des Tilleuls");
-define('URL', "https://www.bigouig.fr");
+define('PHIE_URL', "https://www.bigouig.fr");
 
 ?>
 
@@ -13,15 +13,15 @@ define('URL', "https://www.bigouig.fr");
     <title><?= NOM_PHARMA ?> - Erreur 403</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-    <link rel='stylesheet' type='text/css' href='<?= URL ?>/css/theme.css'>
-    <link rel='stylesheet' type='text/css' href='<?= URL ?>/css/style.css'>
+    <link rel='stylesheet' type='text/css' href='<?= PHIE_URL ?>/css/theme.css'>
+    <link rel='stylesheet' type='text/css' href='<?= PHIE_URL ?>/css/style.css'>
     <link rel='shortcut icon' href='img/icones/favicon.ico'>
 </head>
 
 <body>
     <header>
         <section class='cBraille'>Erreur 403 : 'accès refusé'.
-            <p><a href='<?= URL ?>'>retour à l'accueil</a></p>
+            <p><a href='<?= PHIE_URL ?>'>retour à l'accueil</a></p>
         </section>
         <section>
             <h1><?= NOM_PHARMA ?></h1>
@@ -37,7 +37,7 @@ define('URL', "https://www.bigouig.fr");
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <p><a href='<?= URL ?>'>=> retour à l'accueil</a></p>
+        <p><a href='<?= PHIE_URL ?>'>=> retour à l'accueil</a></p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>

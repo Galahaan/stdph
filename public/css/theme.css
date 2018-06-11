@@ -5,17 +5,17 @@
 
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700|Tangerine:700');
 
-    /* Il faut toujours définir une police 'générique' de secours: */
-    /* les polices génériques sont :                               */
-    /* serif, sans-serif, monospace, cursive, fantasy et system-ui */
-    /* (disponibles sur n'importe quelle machine)                  */
-    /*                                                             */
-    /* Voilà donc ce qui sera utilisé dans ce projet :             */
-    /*  font-family: 'Tangerine', fantasy;   pour l'image de fond  */
-    /*  font-family: 'Raleway', fantasy;     pour tout le reste    */
-    /*                                                             */
-    /*  penser à modifier si besoin l'épaisseur des polices :      */
-    /*  ie pas de bold mais du 700 (ou autre) ...                  */
+    /* Il faut toujours définir une police 'générique' de secours:           */
+    /* les polices génériques sont :                                         */
+    /* serif, sans-serif, monospace, cursive, fantasy et system-ui           */
+    /* (disponibles sur n'importe quelle machine)                            */
+    /*                                                                       */
+    /* Voilà donc ce qui sera utilisé dans ce projet :                       */
+    /*  font-family: 'Tangerine', fantasy;   pour l'image de fond            */
+    /*  font-family: 'Raleway', fantasy;     pour tout le reste              */
+    /*                                                                       */
+    /*  penser à modifier si besoin l'épaisseur des polices :                */
+    /*  ie pas de bold mais du 700 (ou autre) ...                            */
 
 
 
@@ -24,7 +24,7 @@
 /* fond de la page                                 (body)               :  #D8D8D8  gris clair                   */
 /*  + fond du bandeau en cas de chargement lent    (header section)                                              */
 
-/* fond de la zone du site                         (main)               :  white    blanc                        */
+/* fond de la zone du site                         (main)               :  white                                 */
 
 /* textes dans le bandeau du haut (titres + tel)                        :  #364115  vert foncé                   */
 /*  + lignes fines dans les formulaires                                                                          */
@@ -34,13 +34,13 @@
 /* menu de navigation, textes                                           :  #DEFFC4  vert pâle                    */
 
 /* bandeau de connexion, fond                                           :  #575757  gris foncé 1                 */
-/* bandeau de connexion, textes                                         :  white    blanc                        */
+/* bandeau de connexion, textes                                         :  white                                 */
 
 /* vignettes accueil, fond                         (accueil)            :  #DEFFC4  vert pâle                    */
 /* vignettes accueil, textes                       (accueil)            :  #575757  gris foncé 1                 */
 /* pharma ouverte                                  (accueil)            :  #4DBC1C  vert 'fluo'                  */
 /* pharma fermée                                   (accueil)            :  #FF4141  rouge                        */
-/* pharma ouvre dans ...                           (accueil)            :  black    noir                         */
+/* pharma ouvre dans ...                           (accueil)            :  black                                 */
 /* pharma ferme dans ...                           (accueil)            :  #FF4141  rouge      (#F29200  orange) */
 
 /* bouton de validation, fond                                           :  #A55AA5  mauve pâle                   */
@@ -53,7 +53,7 @@
 /* bouton de validation, hover                                          :  #585858  gris foncé 2                 */
 /*  + hover sur tous les liens 'normaux' du site                                                                 */
 
-/* heure actuelle                                  (horaires)           :  #1967E5  bleu roi       old fuschia   */
+/* heure actuelle                                  (horaires)           :  #1967E5  bleu roi                     */
 /*  + créneau actuel, texte                        (horaires)                                                    */
 /*  + trait vertical heure actuelle                (horaires)                                                    */
 /* créneaux ouverture, fond                        (horaires)           :  rgba(148, 193, 29, .2)                */
@@ -62,6 +62,12 @@
 /* § alternés                                                                                                    */
 /*      - 1 produit sur 2                          (gammesProduits)     :  #F8F8F8  gris très clair              */
 /*      - titres h3                                (menleg)             :  #E7FBE1  vert très clair              */
+
+/* footer 1 fond (menleg)                                               :  white                                 */
+/* footer 1 texte                                                       :  standard                              */
+
+/* footer 2 fond (éditeur)                                              :  #575757  gris foncé                   */
+/* footer 2 texte                                                       :  white                                 */
 
 
 /* NB : pour les liens, il faut respecter cet ordre de déclaration :           */
@@ -112,6 +118,7 @@ main{
 #iConnexionInscription a:hover, #iInscription a:hover, #iContactTel a:hover, #iContactMail a:hover, #iOrdoLienModeEmploi a:hover, #iMentionsLegales a:hover, #iHumour a:hover{
     color: #585858;
     font-weight: 700;
+    text-decoration: none;   /* ça permet de mieux marquer la différence (accessibilité) */
 }
 
 /***************************************************************************************************************************************/
@@ -253,7 +260,7 @@ nav#iNavigation a{
 
 /* largeurs et marges des jours et des créneaux horaires ****************************************************************/
 #iHorairesTableau p.cJour, #iHorairesTableau .cSemaine .cTiret{
-    background-color: white; /* jours de la semaine, tiret du midi, samedi */
+    background-color: white; /* jours de la semaine, tiret du midi */
 }
 
 /***************************************************************************************************************************************/
@@ -314,7 +321,7 @@ nav#iNavigation a{
 /****************************************************             Footer            ****************************************************/
 /***************************************************************************************************************************************/
 footer section:first-of-type{
-    background-color: white; /* footer 1ère section : Mentions légales */
+    background-color: white;   /* footer 1ère section : Mentions légales */
 }
 footer section:last-of-type{
     background-color: #575757; /* footer 2ème section : Editeur du site */

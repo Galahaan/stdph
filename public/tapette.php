@@ -2,6 +2,11 @@
 
 session_start();
 
+define("PHIE_URLC"    , "pharmacielereste.fr");
+define("MAIL_DEST_CLR", "clr.tstph@use.startmail.com");
+define("ADR_EXP_HBG"  , "pharmacihc@cluster021.hosting.ovh.net");
+
+
 // Si on arrive ici, c'est que le lien du pixel transparent de l'en-tête a été suivi,
 // c'est donc soit un robot de navigateur, soit un aspirateur ...
 //
@@ -43,13 +48,12 @@ $_SESSION['bot']['do1'] = $do1;
 $_SESSION['bot']['ip2'] = $ip2;
 $_SESSION['bot']['do2'] = $do2;
 
-$_SESSION['bot']['url']        = "bigouig";
-$_SESSION['bot']['mailDest']   = "clr.tstph@use.startmail.com";
-$_SESSION['bot']['mailExp']    = "bigouigfiy@cluster020.hosting.ovh.net";
+$_SESSION['bot']['url']        = PHIE_URLC;
+$_SESSION['bot']['mailDest']   = MAIL_DEST_CLR;
+$_SESSION['bot']['mailExp']    = ADR_EXP_HBG;
 
 
 // retour vers l'accueil
 header('Location: index.php');
 
 ?>
-

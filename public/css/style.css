@@ -160,8 +160,6 @@ h1+strong{
 nav#iNavigation{
 	text-align: right;
 	padding: 0.5rem;
-	position: sticky;
-	top: 0;
 }
 #iNavigation ul{
 	margin:	auto;
@@ -875,16 +873,16 @@ footer section:last-of-type{
 @media screen and (min-width: 460px){
 
 	body, h2, p.cJour{
-		font-size: 2rem; 				/* old 1.7 */
+		font-size: 2rem;
 	}
 	/* On augmente un peu les tailles de polices et le nombre de vignettes en largeur */
 	h1{
-		font-size: 5.5rem;				/* old 4.5 titre de la page : Nom de la pharmacie */
+		font-size: 5.5rem;
 		top: 2%;
 		left: 18%;
 	}
 	h1+strong{
-		font-size: 4.5rem;				/* old 3 sous-titre de la page : adresse ... */
+		font-size: 4.5rem;
 		top: 38%;
 		left: 24%;
 	}
@@ -893,12 +891,12 @@ footer section:last-of-type{
 		display: block;
 	}
 	#iTelBandeau{
-		font-size: 4rem;				/* old 3.5 */
+		font-size: 4rem;
 		top: 62%;
 		left: 52%;
 	}
 	#iTelBandeau img{
-		top: 2rem;						/* old 1.8 */
+		top: 2rem;
 	}
 	/* page Index : on affiche 2 vignettes en largeur */
 	#iIndex article{
@@ -935,11 +933,16 @@ footer section:last-of-type{
 		max-width: 65.5%; /* à fait aligné avec les input situées au-dessus */
 	}
 
+	/*      page gammesProduits      */
+
 	/* réglage de la taille des images                                                              =>  à ajouter dans les media queries +++++++++++++   */
 	/*#iGammesProd article div:not(.cImageDeco) img{
 		width: 80%;
 	}
 	*/
+	#iGammesProd article h3{
+		font-size: 2.7rem;
+	}
 
 	/*      page PharmaDeGarde      */
 
@@ -970,19 +973,19 @@ footer section:last-of-type{
 @media screen and (min-width: 600px){
 
 	h1{
-		font-size: 7rem;				/* old 5.5 - titre de la page : Nom de la pharmacie */
+		font-size: 7rem;
 		top: 7%;
 	}
 	h1+strong{
-		font-size: 5rem;				/* old 4.5 - sous-titre de la page : adresse ... */
+		font-size: 5rem;
 		top: 44%;
 		left: 22%
 	}
 	#iTelBandeau{
-		font-size: 5rem;				/* old 4 en mobile - numéro de tel cliquable */
+		font-size: 5rem;
 	}
 	#iTelBandeau img{
-		top: 2.5rem;					/* old 2 */
+		top: 2.5rem;
 	}
 	nav#iNavigation{
 		padding: 1rem; /* hauteur du bandeau de nav */
@@ -1001,12 +1004,12 @@ footer section:last-of-type{
 
 	/* font-awesome pour les icônes 'tel', 'fax' et 'mail' */
 	.fa-phone, .fa-fax, .fa-envelope{
-		font-size: 3rem;				/* old 2 */
+		font-size: 3rem;
 	}
 
 	/* icône du clicIndex */
 	#iContactTel img{
-		top: 2.5rem;					/* old 1.8 */
+		top: 2.5rem;
 	}
 	/* on décale un peu vers la droite le blabla */
 	#iContactPlan p{
@@ -1014,13 +1017,19 @@ footer section:last-of-type{
 	}
 	/* icône de guidage GPS */
 	#iContactPlan p img, #iPdGplan img{
-		width: 4.5rem;					/* old 4   */
+		width: 4.5rem;
 	}
 
 	/*******************************   page pharmaDeGarde   *******************************/
 
 	/* icône de guidage GPS */
 	/* cf ctrl+F #iPdGplan img{ */
+
+	/*******************************   page gammesProduits   ******************************/
+
+	#iGammesProd article h3{
+		font-size: 2.9rem;
+	}
 
 	/******************************  page mentions légales  *******************************/
 
@@ -1041,15 +1050,15 @@ footer section:last-of-type{
 @media screen and (min-width: 900px){
 
 	h1{
-		font-size: 9rem;				/* old 7 - titre de la page : Nom de la pharmacie */
+		font-size: 9rem;
 		top: 10%;
 	}
 	h1+strong{
-		font-size: 6rem;				/* old 5 - sous-titre de la page : adresse ... */
+		font-size: 6rem;
 		left: 24%;
 	}
 	#iTelBandeau{
-		font-size: 6rem;				/* old 5 */
+		font-size: 6rem;
 	}
 
 	/* page Index : on passe en 3 vignettes en largeur */
@@ -1088,6 +1097,11 @@ footer section:last-of-type{
 
 	/* icône de guidage GPS */
 	/* cf ctrl+F #iPdGplan img{ */
+
+	/* page gammesProduits */
+	#iGammesProd article h3{
+		font-size: 3.8rem;
+	}
 
 	/* Mentions légales */
 	#iMentionsLegales img{
