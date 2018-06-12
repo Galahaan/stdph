@@ -50,11 +50,14 @@ include('inclus/entete.php');
 			</article>
 
 			<?php
-				// matériel médical / contention ?
+				// <article>
+				// 	<a href='materiel-medical.php'><h3>Materiel médical</h3></a>
+				// 	<img src='img/index/materiel.jpg' alt=''>
+				// </article>
 
 				// <article>
-				// 	<a href='humour.php'><h3>La blague de Chuck Norris !..</h3></a>
-				// 	<img src='img/index/humour.jpg' alt=''>
+				// 	<a href='contention.php'><h3>Contention</h3></a>
+				// 	<img src='img/index/contention.jpg' alt=''>
 				// </article>
 			?>
  		</section>

@@ -70,9 +70,6 @@ h1+strong{
 sup, sub{
 	font-size: .7em; /* contact, ordo, comm et inscrip : 'saisie obligatoire' et 'mess. d'erreurs' */
 }
-#iHumour p:last-of-type{
-	font-size: 1.4rem;   /* humour, 'Merci à ...' */
-}
 .cSectionContour{
 	padding: 5% 2% 0; /* espace autour des sections principales du site */
 }
@@ -988,13 +985,6 @@ footer section:last-of-type{
 	}
 	#iMentionsLegales .droite{
 		padding-right: 5%;
-	}
-
-	/*           page humour           */
-
-	/* "Merci à ..." */
-	#iHumour p:last-of-type{
-		font-size: 1.6rem;				/* old : 1.4rem					*/
 	}
 }
 
