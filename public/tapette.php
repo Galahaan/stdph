@@ -2,9 +2,9 @@
 
 session_start();
 
-define("PHIE_URLC"    , "pharmacielereste.fr");
+define("PHIE_URLC"    , "bigouig.fr");
 define("MAIL_DEST_CLR", "clr.tstph@use.startmail.com");
-define("ADR_EXP_HBG"  , "pharmacihc@cluster021.hosting.ovh.net");
+define("ADR_EXP_HBG"  , "bigouigfiy@cluster020.hosting.ovh.net");
 
 
 // Si on arrive ici, c'est que le lien du pixel transparent de l'en-tête a été suivi,

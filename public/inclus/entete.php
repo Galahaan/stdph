@@ -16,7 +16,7 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 if( isset($_SESSION['bot']) ){
 
     // histoire de n'envoyer le mail qu'une seule fois, si jamais le robot insiste :
-    if( !isset($_SESSION['bot']['mailEnvoye']) ){
+//    if( !isset($_SESSION['bot']['mailEnvoye']) ){
 
         $_SESSION['bot']['mailEnvoye'] = true;
 
@@ -46,12 +46,12 @@ if( isset($_SESSION['bot']) ){
 
         // Envoi du mail :
         mail( $_SESSION['bot']['mailDest'],
-                date('D j M Y') . " - " . date('G\hi') . " - passage d'un robot chez " . $_SESSION['bot']['url'],
+                date('d/m/y') . " - " . date('G\hi') . " - passage de " . $_SESSION['bot']['do1'],
                 $contenu,
                 "From: " . $_SESSION['bot']['url'] . " <" . $_SESSION['bot']['mailExp'] . ">" .
                 "\r\nReply-To: \r\nContent-Type: text/html; charset=\"UTF-8\"\r\n"
             );
-    }
+//    }
 }
 
 if( $_SESSION['bot']['isAspi'] == true ){

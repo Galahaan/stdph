@@ -2,7 +2,12 @@
 
 session_start(); // en début de chaque fichier utilisant $_SESSION
 
-//////////////////////////////////     § anti-aspiration du site     /////////////////////////////////
+ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+/////     § anti-aspiration du site
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // si $_SESSION['bot'] est définie, c'est que l'on revient de tapette.php,
 // ie que la tapette s'est déclenchée, on veut donc en savoir plus !
@@ -15,27 +20,36 @@ if( isset($_SESSION['bot']) ){
 
         $_SESSION['bot']['mailEnvoye'] = true;
 
-        $contenu =  "<html><head><title>" . date('D j M Y') . " - " . date('G\hi') .
-                        " - Moteur de recherche ou Aspirateur ?</title></head>" .
-                    "<body><br><br>" .
+        $contenu =  "<html>" .
+                    "<body>" .
+                        "<b>" . date('D j M Y') . " - " . date('G\hi') . " - Moteur de recherche ou Aspirateur ?" . "</b>" .
+                        "<br><br>" .
                         "IP 1      : " . $_SESSION['bot']['ip1'] . "<br>" .
                         "Domaine 1 : " . $_SESSION['bot']['do1'] . "<br>";
 
         if( $_SESSION['bot']['isAspi'] == true ){
-            // si on est dans ce cas, c'est que les 2 IP sont différentes, donc on complète le mail :
+            // si on est dans ce cas, c'est que les 2 IP sont différentes, donc on complète le contenu :
             $contenu .=
+                        "<br>" .
                         "IP 2      : " . $_SESSION['bot']['ip2'] . "<br>" .
                         "Domaine 2 : " . $_SESSION['bot']['do2'] . "<br>" .
-                        "<br>Ce robot a donc été bloqué ..." .
-                    "</body></html>";
+                        "<br>Ce robot a donc été bloqué ..." . "<br><br>";
         }
 
+        // message de fin et balises de clôture du contenu :
+        $contenu .=
+                        "<br>" .
+                        "Plus d'infos peut-être sur " .
+                        "<a href='http://www.user-agents.org/'>user-agents.org</a>" .
+                    "</body>" .
+                    "</html>";
+
+        // Envoi du mail :
         mail( $_SESSION['bot']['mailDest'],
-              date('D j M Y') . " - " . date('G\hi') . " - passage d'un robot chez " . $_SESSION['bot']['url'],
-              $contenu,
-              "From: " . mb_encode_mimeheader($_SESSION['bot']['url'], "UTF-8", "B") .
-              "<" . $_SESSION['bot']['mailExp'] . ">" .
-              "\r\nReply-To: \r\nContent-Type: text/html; charset=\"UTF-8\"\r\n"
+                date('d/m/y') . " - " . date('G\hi') . " - " . $_SESSION['bot']['do1'],
+                $contenu,
+                "From: " . $_SESSION['bot']['url'] . " <" . $_SESSION['bot']['mailExp'] . ">" .
+                "\r\nReply-To: \r\nContent-Type: text/html; charset=\"UTF-8\"\r\n"
             );
     }
 }
@@ -43,16 +57,9 @@ if( isset($_SESSION['bot']) ){
 if( $_SESSION['bot']['isAspi'] == true ){
 
     // on bloque l'affichage après un petit message
-    echo "sorry";
+    echo "rather see elsewhere, please";
     exit();
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en prod !
 
 ?>
 
@@ -102,9 +109,9 @@ ini_set("display_errors", 1);  // affichage des erreurs - à virer à la mise en
 
 <?php
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 /////     INCLUDE sécurisé
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if( empty($page) ){
 $page = "fonctions"; // page à inclure : fonctions.php qui lui-même inclut constantes.php
@@ -139,32 +146,42 @@ else{
         echo "Erreur Include : le fichier " . $page . " est introuvable.";
     }
 }
-///////////////////////////////////////////////////////////////////////////////////////////////
-/////     FIN INCLUDE sécurisé
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // on détermine la page courante ...
 // 1° => pour souligner le mot dans le menu de nav. : $pageCourante['flag']
 // 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
 $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
+// pour personnaliser l'entete en fonction de la page qui l'a appelé
+// (appel d'un CDN, refresh de la page, positionnement d'un focus, ...)
+$enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
+
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-    <title><?= NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 . " - " . $pageCourante['nom'] ?></title>
     <meta charset='utf-8'>
 
-    <!-- Mots clés de la page -->
-    <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>, <?= $pageCourante['nom'] ?>'>
+    <?php // Cette balise sert à dire à Google : "je suis le propriétaire du site, et je souhaite utiliser,        ?>
+    <?php // par l'intermédiaire de mon compte Google, les outils de suivi de référencement proposés par Google."  ?>
+    <?php // Cette balise DOIT être conservée de façon permanente tant que l'on souhaite utiliser ces outils.      ?>
+    <meta name="google-site-verification" content="<?= GOOGLE_VALIDATION_CODE ?>" />
 
-    <!-- Prise en compte du responsive design -->
+    <?php // Pour un bon positionnement dans les résultats des moteurs de recherche, renseigner     ?>
+    <?php // ces balises est très important, surtout title (max 60 c.) et description (max 200 c.)  ?>
+    <title><?= $pageCourante['nom'] . " - " . NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 ?></title>
+    <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
+    <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
+    <?= ! empty($enteteSpecs['robots']) ? "<meta name='robots' content='" . $enteteSpecs['robots'] . "'>" : "" ?>
+
+    <?php // Prise en compte du responsive design ?>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-    <!-- intégrer le CDN de fontAwesome -->
-    <!-- on le place AVANT l'appel à notre CSS pour se donner la possibilité -->
-    <!-- de le modifier dans notre CSS puisque le fichier HTML est lu de haut en bas -->
-    <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>
+    <?php // on a besoin du CDN de fontAwesome.
+          // (on l'appelle en PREMIER, comme ça notre CSS reste prioritaire puisque le fichier HTML est lu de haut en bas) ?>
+    <?= ! empty($enteteSpecs['cdn'])     ? "<" . $enteteSpecs['cdn']     : "" ?>
+
     <link rel='stylesheet' type='text/css' href='css/theme.css'>
     <link rel='stylesheet' type='text/css' href='css/style.css'>
     <link rel='shortcut icon' href='img/icones/favicon.ico'>
@@ -177,15 +194,21 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
     </script> -->
 </head>
 
-<body onload='placerFocus("iFocus")'>
+<body <?= $enteteSpecs['focus'] ?> >
     <header>
-        <div id='iPiegeAA'><a href='tapette.php'><img src='img/bandeau/tapette.png'></a></div>
+
+        <?php // pour Lynx, on enlève le lien vers le piège.                             ?>
+        <?php // il n'est pas grave en soi, mais ça fait un lien inutile en haut de page ?>
+        <?php if( strpos($_SERVER['HTTP_USER_AGENT'], 'ynx') == FALSE ) : ?>
+        <div id='iPiegeAA'><a href='tapette.php'><img src='img/bandeau/tapette.png' alt='tapette à moucherons'></a></div>
+        <?php endif ?>
+
         <nav class='cBraille'><?= $pageCourante['nom'] ?>
             <ol>
-                <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
+                <li><a href='#iMain'       accesskey='c'>[c] contenu de la page <?= $pageCourante['nom'] ?></a></li>
                 <li><a href='#iNavigation' accesskey='n'>[n] Menu de navigation</a></li>
                 <li><a href='#iLienConnex' accesskey='x'>[x] Connexion/Inscription/Deconnexion</a></li>
-                <li><a href='#iMain'       accesskey='c'>[c] contenu de <?= $pageCourante['nom'] ?></a></li>
+                <li><a href='aide.php'     accesskey='h'>[h] Aide à la navigation dans le site</a></li>
             </ol>
         </nav>
 
