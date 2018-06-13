@@ -29,6 +29,8 @@ define("GOOGLE_VALIDATION_CODE", "ICq5hVjiCr2jyrnl8hiUUMZ01PPrOg-reaW0kCrGz6o");
 //                                               + la virgule et l'espace                        2
 define("NOM_PHARMA"        , "Pharmacie des Tilleuls");           // dans <title> + bandeau     22
 define("LOC_PHARMA_TTL"    , " à Gaël");                          // dans <title>                7
+define("LOC_PHARMA_TTL_IDX", " à Gaël, Ille et Vilaine");         // dans <title> de l'index seulement
+
 define("LOC_PHARMA_BND"    , "Gaël, Ille et Vilaine");            // dans bandeau
 
 // Adresse de la pharmacie
@@ -320,7 +322,7 @@ define('CONTACT_INFOS_PRATIQUES',
 
 // Tout est utilisé dans 'fonctions / pageCourante()',
 // sauf PAGE_ACCUEIL qui est aussi dans entete.php, avec son flag associé.
-define("PAGE_ACCUEIL" , "Accueil & Services");
+define("PAGE_ACCUEIL" , "Accueil");
 define("PAGE_HORAIRES", "Horaires");
 define("PAGE_EQUIPE"  , "Équipe");
 define("PAGE_CONTACT" , "Contact");

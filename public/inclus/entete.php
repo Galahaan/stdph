@@ -105,8 +105,9 @@ else{
 // 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
 $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
-// Quand on arrive directement sur l'URL du site, ie sans preciser '/index.php',
-// $pageCourante n'est alors pas définie, ce qui génère un <title> incomplet => donc on le complète !
+// Quand on arrive directement sur l'URL du site, ie sans préciser '/index.php',
+// $pageCourante n'est alors pas définie, ce qui génère un <title> incomplet et le mot 'Accueil' non souligné
+// => donc on corrige ça !
 if( !isset($pageCourante['nom']) ){ $pageCourante['nom'] = PAGE_ACCUEIL; $pageCourante['flag'] = "1000"; }
 
 // pour personnaliser l'entete en fonction de la page qui l'a appelé
@@ -124,9 +125,19 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
     <?php // Cette balise DOIT être conservée de façon permanente tant que l'on souhaite utiliser ces outils.      ?>
     <meta name="google-site-verification" content="<?= GOOGLE_VALIDATION_CODE ?>" />
 
-    <?php // Pour un bon positionnement dans les résultats des moteurs de recherche, renseigner     ?>
-    <?php // ces balises est très important, surtout title (max 65 c.) et description (max 200 c.)  ?>
-    <title><?= $pageCourante['nom'] . ", " . NOM_PHARMA . LOC_PHARMA_TTL ?></title>
+    <?php
+    // Pour un bon positionnement dans les résultats des moteurs de recherche, il est très important
+    // de renseigner les balises <title> (max 65 c.) et <meta description> (max 200 c.)
+    //
+    // Dans le cas de l'index, étant donné que ce sera le plus vu dans les résultats de recherches,
+    // on lui donne un <title> qui ne suit pas le format de celui des autres pages
+    ?>
+    <?php if( $pageCourante['nom'] == PAGE_ACCUEIL ) : ?>
+        <title><?= NOM_PHARMA . LOC_PHARMA_TTL_IDX ?></title>
+    <?php else : ?>
+        <title><?= $pageCourante['nom'] . ", " . NOM_PHARMA . LOC_PHARMA_TTL ?></title>
+    <?php endif ?>
+
     <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
     <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
     <?= ! empty($enteteSpecs['robots']) ? "<meta name='robots' content='" . $enteteSpecs['robots'] . "'>" : "" ?>
