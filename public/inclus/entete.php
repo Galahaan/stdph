@@ -105,11 +105,6 @@ else{
 // 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
 $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
-// Quand on arrive directement sur l'URL du site, ie sans préciser '/index.php',
-// $pageCourante n'est alors pas définie, ce qui génère un <title> incomplet et le mot 'Accueil' non souligné
-// => donc on corrige ça !
-if( !isset($pageCourante['nom']) ){ $pageCourante['nom'] = PAGE_ACCUEIL; $pageCourante['flag'] = "1000"; }
-
 // pour personnaliser l'entete en fonction de la page qui l'a appelé
 // (appel d'un CDN, refresh de la page, positionnement d'un focus, ...)
 $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);

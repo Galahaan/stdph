@@ -56,7 +56,7 @@ define("ADR_GG_PHARMA"     , "https://plus.google.com/113407799173132476603/abou
 // (éviter de mettre des apostrophes dans les phrases, j'ai peur que cela gène les robots)
 
 // 200 car. max pour la description !
-define("META_DESC_INDEX"   , "La pharmacie, située à Gaël (Ille-et-Vilaine) vous conseille et répond à vos besoins en médicaments, services en ligne (ordonnance et commande), location de matériel.");
+define("META_DESC_INDEX"   , "La pharmacie, située à Gaël (Ille-et-Vilaine) vous conseille et répond à vos besoins en médicaments, commande et ordonnance en ligne, location de matériel ...");
 define("META_DESC_HORAIRES", "Horaires d ouverture de la pharmacie : du lundi au vendredi de 8h30 à 12h30 puis de 14h à 19h, et le samedi de 9h à 16h.");
 define("META_DESC_EQUIPE"  , "Valérie, Hélène, Christine et Alice vous accueillent chaque jour avec le sourire.");
 define("META_DESC_CONTACT" , "Vous trouverez ci-dessous tous les renseignements pratiques pour vous rendre à la pharmacie, en bus, en voiture, ou à vélo, ainsi que pour nous joindre.");

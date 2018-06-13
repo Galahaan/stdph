@@ -505,8 +505,8 @@ function pageCourante( $request_uri ){
 	// on positionne alors à '1' le digit de la page courante
 	switch( $page ){
 		case "index":
-			$flagPC = "1000";          // c'est aussi écrit en dur dans entete.php
-			$nomPage = PAGE_ACCUEIL;   // pour le cas où la page '/index.php' n'est pas précisée
+			$flagPC = "1000";          // c'est aussi ce qu'on met pour le cas 'default'
+			$nomPage = PAGE_ACCUEIL;   // (ie page '/index.php' non précisée dans l'URL)
 			break;
 
 		case "horaires":
@@ -563,6 +563,10 @@ function pageCourante( $request_uri ){
 		case "aide":
 			$nomPage = PAGE_AIDE;
 			break;
+
+		default :
+			$flagPC = "1000";          // dans le cas où la page '/index.php' n'est pas précisée
+			$nomPage = PAGE_ACCUEIL;   // dans l'URL, on sait qu'on est quand même sur la page index
 	}
 	return ['flag' => $flagPC, 'nom' => $nomPage];
 }
@@ -622,8 +626,8 @@ $cdn         = "";
 
 	switch( $page ){
 
-		case "index":
-			$description = META_DESC_INDEX;
+		case "index":                         // c'est aussi ce qu'on met pour le cas 'default'
+			$description = META_DESC_INDEX;   // (ie page '/index.php' non précisée dans l'URL)
 			$robots = "";
 			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
 			break;
@@ -681,6 +685,11 @@ $cdn         = "";
 			$robots = META_BOTS_INSCRIP;
 			$focus = " onload='placerFocus(\"iFocus\")'";
 			break;
+
+		default :                             // dans le cas où la page '/index.php' n'est pas précisée
+			$description = META_DESC_INDEX;   // dans l'URL, on sait qu'on est quand même sur la page index
+			$robots = "";
+			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
 	}
 	return ['description' => $description, 'robots' => $robots, 'refresh' => $refresh, 'focus' => $focus, 'cdn' => $cdn];
 }
