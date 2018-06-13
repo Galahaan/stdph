@@ -505,63 +505,63 @@ function pageCourante( $request_uri ){
 	// on positionne alors à '1' le digit de la page courante
 	switch( $page ){
 		case "index":
-			$flagPC = "1000";
-			$nomPage = "Accueil & Services";
+			$flagPC = "1000";          // c'est aussi écrit en dur dans entete.php
+			$nomPage = PAGE_ACCUEIL;   // pour le cas où la page '/index.php' n'est pas précisée
 			break;
 
 		case "horaires":
 			$flagPC = "0100";
-			$nomPage = "Horaires";
+			$nomPage = PAGE_HORAIRES;
 			break;
 
 		case "equipe":
 			$flagPC = "0010";
-			$nomPage = "Équipe";
+			$nomPage = PAGE_EQUIPE;
 			break;
 
 		case "contact":
 			$flagPC = "0001";
-			$nomPage = "Contact";
+			$nomPage = PAGE_CONTACT;
 			break;
 
 		case "prepaOrdonnance":
-			$nomPage = "Ordonnance en ligne";
+			$nomPage = PAGE_ORDO;
 			break;
 
 		case "prepaCommande":
-			$nomPage = "Commande en ligne";
+			$nomPage = PAGE_COMM;
 			break;
 
 		case "pharmaDeGarde":
-			$nomPage = "Pharmacie de garde";
+			$nomPage = PAGE_GARDE;
 			break;
 
 		case "promos":
-			$nomPage = "Promotions";
+			$nomPage = PAGE_PROMOS;
 			break;
 
 		case "gammesProduits":
-			$nomPage = "Gammes de produits";
+			$nomPage = PAGE_GAMMES;
 			break;
 
 		case "infos":
-			$nomPage = "Informations & conseils";
+			$nomPage = PAGE_INFOS;
 			break;
 
 		case "menleg":
-			$nomPage = "Mentions légales";
+			$nomPage = PAGE_MENLEG;
 			break;
 
 		case "connexion":
-			$nomPage = "Connexion";
+			$nomPage = PAGE_CONNEX;
 			break;
 
 		case "inscription":
-			$nomPage = "Inscription";
+			$nomPage = PAGE_INSCRIP;
 			break;
 
 		case "aide":
-			$nomPage = "Aide";
+			$nomPage = PAGE_AIDE;
 			break;
 	}
 	return ['flag' => $flagPC, 'nom' => $nomPage];

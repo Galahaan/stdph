@@ -24,10 +24,11 @@ define("GOOGLE_VALIDATION_CODE", "ICq5hVjiCr2jyrnl8hiUUMZ01PPrOg-reaW0kCrGz6o");
 
 // Nom de la pharmacie
 // Attention : le <title> ne doit pas dépasser 60 / 65 caractères.
-//             or il commence par le nom de chaque page, et le + long est 'Informations et conseils' = 25
-//             + la virgule et l'espace                                                                 2
-define("NOM_PHARMA"        , "Pharmacie des Tilleuls");  // dans <title> + bandeau                     22
-define("LOC_PHARMA_TTL"    , " à Gaël");                 // dans <title>                                7
+//             or il commence par le nom de chaque page, cf à la fin de ce fichier,
+//                                      et le + long est 'Informations et conseils' = 23
+//                                    + la virgule et l'espace                         2
+define("NOM_PHARMA"        , "Pharmacie des Tilleuls");  // dans <title> + bandeau    22
+define("LOC_PHARMA_TTL"    , " à Gaël");                 // dans <title>               7
 define("LOC_PHARMA_BND"    , "Gaël, Ille et Vilaine");   // dans bandeau
 
 // Adresse de la pharmacie
@@ -230,7 +231,7 @@ define("NB_CAR_MAX_MESSAGE_HTM", 1000);
 ///////////////                                                            ///////////////
 ///////////////           Horaires d'ouverture de la pharmacie             ///////////////
 ///////////////                                                            ///////////////
-///////////////           (ctes utilisées dans fonctions.php)              ///////////////
+///////////////                      (fonctions.php)                       ///////////////
 ///////////////                                                            ///////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -308,5 +309,30 @@ define('CONTACT_INFOS_PRATIQUES',
     "<p>La pharmacie dispose d'un parking pour sa clientèle.</p>
     <p>En <span>chronobus C6</span>, descendez à l'arrêt <span>St Joseph de Porterie</span> :
          la pharmacie est alors à moins d'une minute.</p>");
+
+//////////////////////////////////////////////////////////////////////////////////////////
+///////////////                                                            ///////////////
+///////////////                   Noms des pages du site                   ///////////////
+///////////////                                                            ///////////////
+///////////////                (fonctions.php et entete.php)               ///////////////
+///////////////                                                            ///////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// Tout est utilisé dans 'fonctions / pageCourante()',
+// sauf PAGE_ACCUEIL qui est aussi dans entete.php, avec son flag associé.
+define("PAGE_ACCUEIL" , "Accueil & Services");
+define("PAGE_HORAIRES", "Horaires");
+define("PAGE_EQUIPE"  , "Équipe");
+define("PAGE_CONTACT" , "Contact");
+define("PAGE_ORDO"    , "Ordonnance en ligne");
+define("PAGE_COMM"    , "Commande en ligne");
+define("PAGE_GARDE"   , "Pharmacie de garde");
+define("PAGE_PROMOS"  , "Promotions");
+define("PAGE_GAMMES"  , "Gammes de produits");
+define("PAGE_INFOS"   , "Informations & conseils");
+define("PAGE_MENLEG"  , "Mentions légales");
+define("PAGE_CONNEX"  , "Connexion");
+define("PAGE_INSCRIP" , "Inscription");
+define("PAGE_AIDE"    , "Aide");
 
 ?>
