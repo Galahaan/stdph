@@ -46,7 +46,7 @@ if( isset($_SESSION['bot']) ){
 
         // Envoi du mail :
         mail( $_SESSION['bot']['mailDest'],
-                date('d/m/y') . " - " . date('G\hi') . " - " . $_SESSION['bot']['do1'],
+                date('d/m/y') . " - " . date('G\hi') . " - passage de " . $_SESSION['bot']['do1'],
                 $contenu,
                 "From: " . $_SESSION['bot']['url'] . " <" . $_SESSION['bot']['mailExp'] . ">" .
                 "\r\nReply-To: \r\nContent-Type: text/html; charset=\"UTF-8\"\r\n"
@@ -153,6 +153,10 @@ else{
 // 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
 $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
+// Quand on arrive directement sur l'URL du site, ie sans preciser '/index.php',
+// $pageCourante n'est alors pas définie, ce qui génère un <title> incomplet => donc on le complète !
+if( !isset($pageCourante['nom']) ){ $pageCourante['nom'] = "Accueil & Services"; }
+
 // pour personnaliser l'entete en fonction de la page qui l'a appelé
 // (appel d'un CDN, refresh de la page, positionnement d'un focus, ...)
 $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
@@ -169,8 +173,8 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
     <meta name="google-site-verification" content="<?= GOOGLE_VALIDATION_CODE ?>" />
 
     <?php // Pour un bon positionnement dans les résultats des moteurs de recherche, renseigner     ?>
-    <?php // ces balises est très important, surtout title (max 60 c.) et description (max 200 c.)  ?>
-    <title><?= $pageCourante['nom'] . " - " . NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 ?></title>
+    <?php // ces balises est très important, surtout title (max 65 c.) et description (max 200 c.)  ?>
+    <title><?= $pageCourante['nom'] . ", " . NOM_PHARMA . LOC_PHARMA_TTL ?></title>
     <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
     <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
     <?= ! empty($enteteSpecs['robots']) ? "<meta name='robots' content='" . $enteteSpecs['robots'] . "'>" : "" ?>
@@ -216,7 +220,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
             <a href='index.php' accesskey='r'>
                 <img id='iLogoCroix' src='img/bandeau/croix_caducee.png' alt=''>
                 <h1><?= NOM_PHARMA ?></h1>
-                <strong><?= LOC_PHARMA_2 ?></strong>
+                <strong><?= LOC_PHARMA_BND ?></strong>
             </a>
             <p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
         </section>

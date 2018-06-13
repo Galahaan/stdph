@@ -525,15 +525,15 @@ function pageCourante( $request_uri ){
 			break;
 
 		case "prepaOrdonnance":
-			$nomPage = "Préparation d'ordonnance";
+			$nomPage = "Ordonnance en ligne";
 			break;
 
 		case "prepaCommande":
-			$nomPage = "Préparation de commande";
+			$nomPage = "Commande en ligne";
 			break;
 
 		case "pharmaDeGarde":
-			$nomPage = "Pharmacies de garde";
+			$nomPage = "Pharmacie de garde";
 			break;
 
 		case "promos":
@@ -558,6 +558,10 @@ function pageCourante( $request_uri ){
 
 		case "inscription":
 			$nomPage = "Inscription";
+			break;
+
+		case "aide":
+			$nomPage = "Aide";
 			break;
 	}
 	return ['flag' => $flagPC, 'nom' => $nomPage];

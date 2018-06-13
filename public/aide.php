@@ -50,7 +50,7 @@ $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-    <title><?= NOM_PHARMA . LOC_PHARMA_1 . LOC_PHARMA_2 . " - " . $pageCourante['nom'] ?></title>
+    <title><?= $pageCourante['nom'] . ", " . NOM_PHARMA . LOC_PHARMA_TTL ?></title>
     <meta charset='utf-8'>
 
     <?php // Description et Mots Clés de la page ?>
