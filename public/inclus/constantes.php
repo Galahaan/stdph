@@ -25,11 +25,11 @@ define("GOOGLE_VALIDATION_CODE", "ICq5hVjiCr2jyrnl8hiUUMZ01PPrOg-reaW0kCrGz6o");
 // Nom de la pharmacie
 // Attention : le <title> ne doit pas dépasser 60 / 65 caractères.
 //             or il commence par le nom de chaque page, cf à la fin de ce fichier,
-//                                      et le + long est 'Informations et conseils' = 23
-//                                    + la virgule et l'espace                         2
-define("NOM_PHARMA"        , "Pharmacie des Tilleuls");  // dans <title> + bandeau    22
-define("LOC_PHARMA_TTL"    , " à Gaël");                 // dans <title>               7
-define("LOC_PHARMA_BND"    , "Gaël, Ille et Vilaine");   // dans bandeau
+//                                                 et le + long est 'Informations & conseils' = 23
+//                                               + la virgule et l'espace                        2
+define("NOM_PHARMA"        , "Pharmacie des Tilleuls");           // dans <title> + bandeau     22
+define("LOC_PHARMA_TTL"    , " à Gaël");                          // dans <title>                7
+define("LOC_PHARMA_BND"    , "Gaël, Ille et Vilaine");            // dans bandeau
 
 // Adresse de la pharmacie
 define("ADR_PHARMA_L1"     , "place des Tilleuls");
