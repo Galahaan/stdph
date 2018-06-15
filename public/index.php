@@ -51,7 +51,7 @@ include('inclus/entete.php');
 
 			<?php
 				// <article>
-				// 	<a href='materiel-medical.php'><h3>Materiel médical</h3></a>
+				// 	<a href='materiel-medical.php'><h3>Matériel médical</h3></a>
 				// 	<img src='img/index/materiel.jpg' alt=''>
 				// </article>
 

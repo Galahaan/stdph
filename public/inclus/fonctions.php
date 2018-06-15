@@ -474,7 +474,7 @@ function getDeltaP( $heure ){
 // - souligner, dans le menu de navigation, le mot correspondant à la page active
 //   (si c'est une des 4 du menu de navigation)
 //
-// - ajouter un <title> à chaque page du site
+// - définir le <title> de chaque page du site
 //
 // La fonction prend comme paramètre d'entrée la page courante obtenue par
 // la super globale   $_SERVER['REQUEST_URI']
