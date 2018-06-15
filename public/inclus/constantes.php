@@ -293,67 +293,60 @@ define('CONTACT_INFOS_PRATIQUES' ,
 // Attention : pour le <title>           :     nb car. max =  65                           |  65 car.
 //             pour la <meta description :     nb car. max =  160
 
-define('PHIE'          , "pharmacie des Tilleuls");
-//                        " .      PHIE      . "
-define('V'             , "Gaël");
-//                        ".V."
-define('Q'             , "Ille et Vilaine");
-//                        " .    Q    . "
-
 define('NOM_INDEX'     , "Accueil");
-define('TTL_INDEX'     ,  NOM_PHARMA         . " à " .    Q    . ", ".V."");
-define('DESC_INDEX'    , "La " .      PHIE      . " située à " .    Q    . " sur la commune de ".V." vous fournit conseils et médicaments, commande et ordonnance en ligne, matériel");
+define('TTL_INDEX'     , "Pharmacie des Tilleuls à Gaël, Ille et Vilaine");
+define('DESC_INDEX'    , "La pharmacie des Tilleuls située à Gaël en Ille et Vilaine vous fournit conseils et médicaments, commande et ordonnance en ligne, matériel");
 
 define('NOM_HORAIRES'  , "Horaires");
-define('TTL_HORAIRES'  , "Horaires de la " .      PHIE      . " à " .    Q    . "");
+define('TTL_HORAIRES'  , "Horaires de la pharmacie des Tilleuls à Gaël");
 define('DESC_HORAIRES' , "Horaires d ouverture de la pharmacie : du lundi au vendredi de 8h30 à 12h30 puis de 14h à 19h, et le samedi de 9h à 16h. Visualisation dynamique en temps réel");
 
 define('NOM_EQUIPE'    , "Équipe");
-define('TTL_EQUIPE'    , "L'équipe souriante et compétente de la " . PHIE);
-define('DESC_EQUIPE'   , "Compétence amabilité et sourire sont les atouts de l équipe de la " .      PHIE      . " constituée de Valérie, Hélène, Christine et Alice");
+define('TTL_EQUIPE'    , "L'équipe souriante et compétente de la pharmacie des Tilleuls");
+define('DESC_EQUIPE'   , "Compétence amabilité et sourire sont les atouts de l équipe de la pharmacie des Tilleuls constituée de Valérie, Hélène, Christine et Alice");
 
 define('NOM_CONTACT'   , "Contact");
-define('TTL_CONTACT'   , "Joindre la " .      PHIE      . " : bus voiture courrier ou mail");
-define('DESC_CONTACT'  , "Vous trouverez ici les infos pratiques pour aller à la " .      PHIE      . " en bus ou en voiture ainsi que pour nous joindre par mail ou par courrier.");
+define('TTL_CONTACT'   , "Joindre la pharmacie des Tilleuls : bus voiture courrier ou mail");
+define('DESC_CONTACT'  , "Vous trouverez ici les infos pratiques pour aller à la pharmacie des Tilleuls en bus ou en voiture ainsi que pour nous joindre par mail ou par courrier.");
 
 define('NOM_ORDO'      , "Ordonnance en ligne");
-define('TTL_ORDO'      , "Ordonnance en ligne : la " .      PHIE      . " s'occupe de tout");
-define('DESC_PREP_O'   , "La " .      PHIE      . " vous propose son service d ordonnance en ligne. Téléchargement et gain de temps : tout est en stock, c est comme au drive !");
+define('TTL_ORDO'      , "Ordonnance en ligne : la pharmacie des Tilleuls s'occupe de tout");
+define('DESC_PREP_O'   , "La pharmacie des Tilleuls vous propose un service d ordonnance en ligne. Téléchargement et gain de temps : tout est en stock, c est comme au drive !");
 
 define('NOM_COMM'      , "Commande en ligne");
-define('TTL_COMM'      , "Commande en ligne : la " .      PHIE      . " s'occupe de tout");
-define('DESC_PREP_C'   , "La " .      PHIE      . " vous propose son service de commande en ligne : \"Click and collect\" : tout est en stock, c est comme au drive !");
+define('TTL_COMM'      , "Commande en ligne : la pharmacie des Tilleuls se charge de tout");
+define('DESC_PREP_C'   , "La pharmacie des Tilleuls dispose du service de commande en ligne : \"Click and collect\" : tout est en stock, c est comme au drive !");
 
 define('NOM_GARDE'     , "Pharmacie de garde");
-define('TTL_GARDE'     , "Pharmacie de garde autour de " .    Q    . " et ".V."");
+define('TTL_GARDE'     , "Pharmacie de garde autour de Gaël");
 define('DESC_P_GARDE'  , "Trouvez facilement la pharmacie de garde la plus proche de chez vous, ou le commissariat de police éventuel dont elle dépend et suivez le GPS.");
 
 define('NOM_PROMOS'    , "Promotions");
-define('TTL_PROMOS'    , "Promotions et avantages à la " . PHIE);
-define('DESC_PROMOS'   , "Vous trouverez ici l ensemble des promotions et des réductions en cours à la pharmacie.");
+define('TTL_PROMOS'    , "Promotions et avantages à la pharmacie des Tilleuls");
+define('DESC_PROMOS'   , "Vous trouverez ici l ensemble des promotions et des réductions en cours à la pharmacie des Tilleuls.");
 
 define('NOM_GAMMES'    , "Gammes de produits");
-define('TTL_GAMMES'    , "Les gammes et marques proposées à la " . PHIE);
-define('DESC_GAMMES'   , "Les gammes conseillées par la " .      PHIE      . " le sont toujours en respect de la bioéthique, de l environnement, et de la qualité");
+define('TTL_GAMMES'    , "Les gammes et marques proposées à la pharmacie des Tilleuls");
+define('DESC_GAMMES'   , "Les gammes conseillées par la pharmacie des Tilleuls le sont toujours en respect de la bioéthique, de l environnement, et de la qualité");
 
 define('NOM_INFOS'     , "Informations et conseils");
-define('TTL_INFOS'     , "Informations et conseils judicieux à la " . PHIE);
-define('DESC_INFOS'    , "La " .      PHIE      . " vous informe sur la santé en général, ou ponctuellement sur un sujet d actualité ou présentant un caractère d urgence.");
+define('TTL_INFOS'     , "Informations et conseils judicieux par la pharmacie des Tilleuls");
+define('DESC_INFOS'    , "La pharmacie des Tilleuls vous informe sur la santé en général, ou ponctuellement sur un sujet d actualité ou présentant un caractère d urgence.");
 
 define('NOM_MENLEG'    , "Mentions légales");
-define('TTL_MENLEG'    , "Mentions légales - " .         NOM_PHARMA);
-define('DESC_MENLEG'   , "La " .      PHIE      . " vous informe scrupuleusement sur le traitement de vos données personnelles ainsi que sur celles utilisées dans ce site.");
+define('TTL_MENLEG'    , "Mentions légales - " . NOM_PHARMA);
+define('DESC_MENLEG'   , "La pharmacie des Tilleuls vous informe scrupuleusement sur le traitement de vos données personnelles ainsi que sur celles utilisées dans ce site.");
 
 define('NOM_AIDE'      , "Aide");
-define('TTL_AIDE'      , "Aide - " .         NOM_PHARMA);
-define('DESC_AIDE'     , "Aide à la navigation dans le site de la " .      PHIE      . " : architecture, menus et raccourcis clavier.");
+define('TTL_AIDE'      , "Aide - " . NOM_PHARMA);
+define('DESC_AIDE'     , "Aide à la navigation dans le site de la pharmacie des Tilleuls : architecture, menus et raccourcis clavier.");
 
 define('NOM_CONNEX'    , "Connexion");
-define('TTL_CONNEX'    , "Connexion - " .         NOM_PHARMA);
+define('TTL_CONNEX'    , "Connexion - " . NOM_PHARMA);
 define('BOTS_CONNEX'   , "noindex, nofollow, none");  // on ne référence pas la page connexion
 
 define('NOM_INSCRIP'   , "Inscription");
-define('TTL_INSCRIP'   , "Inscription - " .         NOM_PHARMA);
+define('TTL_INSCRIP'   , "Inscription - " . NOM_PHARMA);
 define('BOTS_INSCRIP'  , "noindex, nofollow, none");  // on ne référence pas la page inscription
 
 define('BOTS_DEFT'     , "noindex, nofollow, none");  // ou   "index, follow, all"   par défaut, pour les pages du site
