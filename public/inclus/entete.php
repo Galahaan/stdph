@@ -125,7 +125,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
     <title><?= $pageCourante['titre'] ?></title>
     <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
     <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
-    <?= ! empty($enteteSpecs['robots']) ? "<meta name='robots' content='" . $enteteSpecs['robots'] . "'>" : "" ?>
+    <meta name='robots' content='<?= $enteteSpecs['robots'] ?>'>
 
     <?php // Prise en compte du responsive design ?>
     <meta name='viewport' content='width=device-width, initial-scale=1'>

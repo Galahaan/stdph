@@ -624,7 +624,7 @@ $page = ltrim($request_uri, '/');
 $page = rtrim($page, 'hp.');
 
 $description = "";
-$robots      = "index, follow, all";
+$robots      = BOTS_DEFT;
 $refresh     = "";                        // initialisations
 $focus       = "";
 $cdn         = "";
@@ -694,7 +694,6 @@ $cdn         = "";
 
 		default :                        // si ce n'est aucun des cas précédents, ou si la page '/index.php'
 			$description = DESC_INDEX;   // n'est pas précisée dans l'URL => on est sur la page index !
-			$robots      = "";
 			$refresh     = "meta http-equiv='refresh' content='" . REFRESH . "' />";
 	}
 	return ['description' => $description, 'robots' => $robots, 'refresh' => $refresh, 'focus' => $focus, 'cdn' => $cdn];

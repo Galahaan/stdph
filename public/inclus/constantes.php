@@ -344,17 +344,19 @@ define('NOM_MENLEG'    , "Mentions légales");
 define('TTL_MENLEG'    , "Mentions légales - " .         NOM_PHARMA);
 define('DESC_MENLEG'   , "La " .      PHIE      . " vous informe scrupuleusement sur le traitement de vos données personnelles ainsi que sur celles utilisées dans ce site.");
 
-define('NOM_CONNEX'    , "Connexion");
-define('TTL_CONNEX'    , "Connexion - " .         NOM_PHARMA);
-define('BOTS_CONNEX'   , "noindex, nofollow, none"); // par défaut, les autres pages auront 'index, follow, all'
-
-define('NOM_INSCRIP'   , "Inscription");
-define('TTL_INSCRIP'   , "Inscription - " .         NOM_PHARMA);
-define('BOTS_INSCRIP'  , "noindex, nofollow, none"); // sauf index.php dont les liens sont traités au cas par cas.
-
 define('NOM_AIDE'      , "Aide");
 define('TTL_AIDE'      , "Aide - " .         NOM_PHARMA);
 define('DESC_AIDE'     , "Aide à la navigation dans le site de la " .      PHIE      . " : architecture, menus et raccourcis clavier.");
+
+define('NOM_CONNEX'    , "Connexion");
+define('TTL_CONNEX'    , "Connexion - " .         NOM_PHARMA);
+define('BOTS_CONNEX'   , "noindex, nofollow, none");  // on ne référence pas la page connexion
+
+define('NOM_INSCRIP'   , "Inscription");
+define('TTL_INSCRIP'   , "Inscription - " .         NOM_PHARMA);
+define('BOTS_INSCRIP'  , "noindex, nofollow, none");  // on ne référence pas la page inscription
+
+define('BOTS_DEFT'     , "noindex, nofollow, none");  // ou   "index, follow, all"   par défaut, pour les pages du site
 
 define('MC_NOM_PHARMA' , "tilleuls");
 define('MC_QUARTIER'   , "gaël");
