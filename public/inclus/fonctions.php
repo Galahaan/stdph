@@ -560,6 +560,11 @@ function pageCourante( $request_uri ){
 			$titrePage = TTL_MENLEG;
 			break;
 
+		case "aide":
+			$nomPage   = NOM_AIDE;
+			$titrePage = TTL_AIDE;
+			break;
+
 		case "connexion":
 			$nomPage   = NOM_CONNEX;
 			$titrePage = TTL_CONNEX;
@@ -568,11 +573,6 @@ function pageCourante( $request_uri ){
 		case "inscription":
 			$nomPage   = NOM_INSCRIP;
 			$titrePage = TTL_INSCRIP;
-			break;
-
-		case "aide":
-			$nomPage   = NOM_AIDE;
-			$titrePage = TTL_AIDE;
 			break;
 
 		default :
@@ -681,6 +681,10 @@ $cdn         = "";
 
 		case "menleg":
 			$description = DESC_MENLEG;
+			break;
+
+		case "aide":
+			$description = DESC_AIDE;
 			break;
 
 		case "connexion":

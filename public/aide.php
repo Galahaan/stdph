@@ -46,16 +46,21 @@ else{
 // 2° => pour compléter le 'title' et le menu destinés à l'accessibilité : $pageCourante['nom']
 $pageCourante = pageCourante($_SERVER['REQUEST_URI']);
 
+// pour personnaliser l'entete en fonction de la page qui l'a appelé
+// (appel d'un CDN, refresh de la page, positionnement d'un focus, ...)
+$enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
+
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
-    <title><?= $pageCourante['nom'] . ", " . NOM_PHARMA . LOC_PHARMA_TTL ?></title>
+    <title><?= $pageCourante['titre'] ?></title>
     <meta charset='utf-8'>
 
     <?php // Description et Mots Clés de la page ?>
-    <meta name='description' content="Page dédiée à l'accessibilité : synthèse sur la navigation dans le site" >
+    <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
     <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
+    <meta name='robots' content='<?= $enteteSpecs['robots'] ?>'>
 
     <?php // Prise en compte du responsive design ?>
     <meta name='viewport' content='width=device-width, initial-scale=1'>

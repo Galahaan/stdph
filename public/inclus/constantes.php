@@ -326,7 +326,7 @@ define('TTL_PROMOS'    , "Promotions et avantages à la pharmacie des Tilleuls")
 define('DESC_PROMOS'   , "Vous trouverez ici l ensemble des promotions et des réductions en cours à la pharmacie des Tilleuls.");
 
 define('NOM_GAMMES'    , "Gammes de produits");
-define('TTL_GAMMES'    , "Les gammes et marques proposées à la pharmacie des Tilleuls");
+define('TTL_GAMMES'    , "Les gammes et marques proposées par la pharmacie des Tilleuls");
 define('DESC_GAMMES'   , "Les gammes conseillées par la pharmacie des Tilleuls le sont toujours en respect de la bioéthique, de l environnement, et de la qualité");
 
 define('NOM_INFOS'     , "Informations et conseils");
@@ -339,7 +339,7 @@ define('DESC_MENLEG'   , "La pharmacie des Tilleuls vous informe scrupuleusement
 
 define('NOM_AIDE'      , "Aide");
 define('TTL_AIDE'      , "Aide - " . NOM_PHARMA);
-define('DESC_AIDE'     , "Aide à la navigation dans le site de la pharmacie des Tilleuls : architecture, menus et raccourcis clavier.");
+define('DESC_AIDE'     , "Page dédiée à l accessibilité : synthèse sur la navigation dans le site de la pharmacie des Tilleuls : architecture, menus et raccourcis clavier.");
 
 define('NOM_CONNEX'    , "Connexion");
 define('TTL_CONNEX'    , "Connexion - " . NOM_PHARMA);
