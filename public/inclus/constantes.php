@@ -23,15 +23,8 @@ define("GOOGLE_VALIDATION_CODE", "ICq5hVjiCr2jyrnl8hiUUMZ01PPrOg-reaW0kCrGz6o");
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // Nom de la pharmacie
-// Attention : le <title> ne doit pas dépasser 60 / 65 caractères.
-//             or il commence par le nom de chaque page, cf à la fin de ce fichier,
-//                                                     et le + long est 'Informations & conseils' = 23
-//                                                   + la virgule et l'espace                        2
-define("NOM_PHARMA"        , "Pharmacie des Tilleuls");               // dans <title> + bandeau     22
-define("LOC_PHARMA_TTL"    , " à Gaël");                              // dans <title>                7
-define("LOC_PHARMA_TTL_IDX", " à Gaël, Ille et Vilaine");             // dans <title> de l'index seulement
-
-define("LOC_PHARMA_BND"    , "Gaël, Ille et Vilaine");                // dans bandeau
+define("NOM_PHARMA"        , "Pharmacie des Tilleuls");
+define("LOC_PHARMA"        , "Gaël, Ille et Vilaine");
 
 // Adresse de la pharmacie
 define("ADR_PHARMA_L1"     , "place des Tilleuls");
@@ -46,36 +39,6 @@ define("FAX_PHARMA_DECO"   , "00 12 34 56 78");
 define("ADR_MAIL_PHARMA"   , "contact@pharmaciedestilleuls.fr");
 define("ADR_FB_PHARMA"     , "https://www.facebook.com/Pharmacie-Le-Reste-700447003388902");
 define("ADR_GG_PHARMA"     , "https://plus.google.com/113407799173132476603/about");
-
-//////////////////////////////////////////////////////////////////////////////////////////
-///////////////                                                            ///////////////
-///////////////    Meta description et Mots-Clés pour le référencement     ///////////////
-///////////////                                                            ///////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-
-// (éviter de mettre des apostrophes dans les phrases, j'ai peur que cela gène les robots)
-
-// 200 car. max pour la description !
-define("META_DESC_INDEX"   , "La pharmacie, située à Gaël (Ille-et-Vilaine) vous conseille et répond à vos besoins en médicaments, commande et ordonnance en ligne, location de matériel ...");
-define("META_DESC_HORAIRES", "Horaires d ouverture de la pharmacie : du lundi au vendredi de 8h30 à 12h30 puis de 14h à 19h, et le samedi de 9h à 16h.");
-define("META_DESC_EQUIPE"  , "Valérie, Hélène, Christine et Alice vous accueillent chaque jour avec le sourire.");
-define("META_DESC_CONTACT" , "Vous trouverez ci-dessous tous les renseignements pratiques pour vous rendre à la pharmacie, en bus, en voiture, ou à vélo, ainsi que pour nous joindre.");
-define("META_DESC_PREP_O"  , "La pharmacie vous propose son service de téléchargement d ordonnance en ligne.");
-define("META_DESC_PREP_C"  , "La pharmacie vous propose son service de prise de commande en ligne, autrement appelé clic and collect, ou encore drive.");
-define("META_DESC_P_GARDE" , "Trouvez facilement la pharmacie de garde la plus proche de chez vous, ou le commissariat de police éventuel dont elle dépend.");
-define("META_DESC_PROMOS"  , "Vous trouverez ici l ensemble des promotions et des réductions en cours à la pharmacie.");
-define("META_DESC_GAMMES"  , "Retrouvez ici les gammes de parapharmacie suivies et conseillées par la pharmacie.");
-define("META_DESC_INFOS"   , "La pharmacie vous informe sur des sujets de santé en général, ou d actualité, et vous prodigue quelques conseils bien utiles.");
-define("META_DESC_MENLEG"  , "Cette page est dédiée aux mentions légales, concernant notamment les données utilisées ou diffusées dans ce site, et le traitement de vos données personnelles.");
-
-define("META_BOTS_CONNEX"  , "noindex, nofollow, none"); // par défaut, les autres pages auront "index, follow, all"
-define("META_BOTS_INSCRIP" , "noindex, nofollow, none"); // sauf index.php dont les liens sont traités au cas par cas.
-
-define("MC_NOM_PHARMA"     , "tilleuls");
-define("MC_QUARTIER"       , "gaël");
-define("MC_1"              , "");
-define("MC_2"              , "");
-define("MC_3"              , "");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
@@ -314,27 +277,85 @@ define('CONTACT_INFOS_PRATIQUES',
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
-///////////////                   Noms des pages du site                   ///////////////
+///////////////                  nom enjolivé des pages                    ///////////////
+///////////////                + <title>                                   ///////////////
+///////////////                + <meta name='description'>                 ///////////////
 ///////////////                                                            ///////////////
-///////////////                (fonctions.php et entete.php)               ///////////////
+///////////////               (fonctions.php et entete.php)                ///////////////
 ///////////////                                                            ///////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-// Tout est utilisé dans 'fonctions / pageCourante()',
-// sauf PAGE_ACCUEIL qui est aussi dans entete.php, avec son flag associé.
-define("PAGE_ACCUEIL" , "Accueil");
-define("PAGE_HORAIRES", "Horaires");
-define("PAGE_EQUIPE"  , "Équipe");
-define("PAGE_CONTACT" , "Contact");
-define("PAGE_ORDO"    , "Ordonnance en ligne");
-define("PAGE_COMM"    , "Commande en ligne");
-define("PAGE_GARDE"   , "Pharmacie de garde");
-define("PAGE_PROMOS"  , "Promotions");
-define("PAGE_GAMMES"  , "Gammes de produits");
-define("PAGE_INFOS"   , "Informations & conseils");
-define("PAGE_MENLEG"  , "Mentions légales");
-define("PAGE_CONNEX"  , "Connexion");
-define("PAGE_INSCRIP" , "Inscription");
-define("PAGE_AIDE"    , "Aide");
+// nom et <title> : dans 'fonctions / pageCourante()'
+//     (sauf NOM_PAGE_INDEX qui est aussi dans entete.php, avec son flag associé)
+//
+// <meta description> : dans 'fonctions / enteteSpecs()'
+//
+// Attention : pour le <title>           :     nb car. max =  65                          |  65 car.
+//             pour la <meta description :     nb car. max =  160
+
+define("NOM_PHIE"     , "pharmacie des Tilleuls");
+//                       " .    NOM_PHIE    . "
+
+define("NOM_INDEX"    , "Accueil");
+define("TTL_INDEX"    ,  NOM_PHARMA         . " à Gaël en Ille et Vilaine");
+define("DESC_INDEX"   , "La pharmacie située à Gaël en Ille-et-Vilaine vous conseille et répond à vos besoins en médicaments, commande et ordonnance en ligne, location de matériel ...");
+
+define("NOM_HORAIRES" , "Horaires");
+define("TTL_HORAIRES" , "Horaires de la " .    NOM_PHIE    . " à Gaël");
+define("DESC_HORAIRES", "Horaires d ouverture de la pharmacie : du lundi au vendredi de 8h30 à 12h30 puis de 14h à 19h, et le samedi de 9h à 16h. Visualisation dynamique en temps réel");
+
+define("NOM_EQUIPE"   , "Équipe");
+define("TTL_EQUIPE"   , "L'équipe souriante et compétente de la " . NOM_PHIE);
+define("DESC_EQUIPE"  , "Compétence amabilité et sourire sont les atouts de l équipe de la " .    NOM_PHIE    . " constituée de Valérie, Hélène, Christine et Alice");
+
+define("NOM_CONTACT"  , "Contact");
+define("TTL_CONTACT"  , "Joindre la " .    NOM_PHIE    . " : bus voiture courrier ou mail");
+define("DESC_CONTACT" , "Vous trouverez ici les infos pratiques pour aller à la " .    NOM_PHIE    . " en bus ou en voiture ainsi que pour nous joindre par mail ou par courrier.");
+
+define("NOM_ORDO"     , "Ordonnance en ligne");
+define("TTL_ORDO"     , "Ordonnance en ligne : la " .    NOM_PHIE    . " s'occupe de tout");
+define("DESC_PREP_O"  , "La " .    NOM_PHIE    . " vous propose son service d ordonnance en ligne. Téléchargement et gain de temps : tout est en stock, c est comme au drive !");
+
+define("NOM_COMM"     , "Commande en ligne");
+define("TTL_COMM"     , "Commande en ligne : la " .    NOM_PHIE    . " s'occupe de tout");
+define("DESC_PREP_C"  , "La " .    NOM_PHIE    . " vous propose son service de commande en ligne : \"Click and collect\" : tout est en stock, c est comme au drive !");
+
+define("NOM_GARDE"    , "Pharmacie de garde");
+define("TTL_GARDE"    , "Pharmacie de garde autour de Gaël et ses environs");
+define("DESC_P_GARDE" , "Trouvez facilement la pharmacie de garde la plus proche de chez vous, ou le commissariat de police éventuel dont elle dépend et suivez le GPS.");
+
+define("NOM_PROMOS"   , "Promotions");
+define("TTL_PROMOS"   , "Promotions et avantages à la " . NOM_PHIE);
+define("DESC_PROMOS"  , "Vous trouverez ici l ensemble des promotions et des réductions en cours à la pharmacie.");
+
+define("NOM_GAMMES"   , "Gammes de produits");
+define("TTL_GAMMES"   , "Les gammes et marques proposées à la " . NOM_PHIE);
+define("DESC_GAMMES"  , "Les gammes conseillées par la " .    NOM_PHIE    . " le sont toujours en respect de la bioéthique, de l environnement, et de la qualité");
+
+define("NOM_INFOS"    , "Informations et conseils");
+define("TTL_INFOS"    , "Informations et conseils judicieux à la " . NOM_PHIE);
+define("DESC_INFOS"   , "La " .    NOM_PHIE    . " vous informe sur la santé en général, ou ponctuellement sur un sujet d actualité ou présentant un caractère d urgence.");
+
+define("NOM_MENLEG"   , "Mentions légales");
+define("TTL_MENLEG"   , "Mentions légales - " .         NOM_PHARMA);
+define("DESC_MENLEG"  , "La " .    NOM_PHIE    . " vous informe scrupuleusement sur le traitement de vos données personnelles ainsi que sur celles utilisées dans ce site.");
+
+define("NOM_CONNEX"   , "Connexion");
+define("TTL_CONNEX"   , "Connexion - " .         NOM_PHARMA);
+define("BOTS_CONNEX"  , "noindex, nofollow, none"); // par défaut, les autres pages auront "index, follow, all"
+
+define("NOM_INSCRIP"  , "Inscription");
+define("TTL_INSCRIP"  , "Inscription - " .         NOM_PHARMA);
+define("BOTS_INSCRIP" , "noindex, nofollow, none"); // sauf index.php dont les liens sont traités au cas par cas.
+
+define("NOM_AIDE"     , "Aide");
+define("TTL_AIDE"     , "Aide - " .         NOM_PHARMA);
+define("DESC_AIDE"    , "Aide à la navigation dans le site de la " .    NOM_PHIE    . " : architecture, menus et raccourcis clavier.");
+
+define("MC_NOM_PHARMA", "tilleuls");
+define("MC_QUARTIER"  , "gaël");
+define("MC_1"         , "");
+define("MC_2"         , "");
+define("MC_3"         , "");
 
 ?>

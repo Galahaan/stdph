@@ -15,7 +15,7 @@ include('inclus/entete.php');
 
 			<div>
 			<p class='cInLi'>Vous trouverez ci-dessous les &nbsp;</p><h2 class='cInLi'>services proposés par l'officine</h2>
-			<p class='cInLi'>, comme l'<strong>ordonnance en ligne</strong> et la <strong>commande en ligne</strong>, qui nécessitent un compte client, mais aussi les <strong>pharmacies de garde</strong>, les gammes de produits que nous suivons, des informations & conseils, les promotions en cours.</p>
+			<p class='cInLi'>, comme l'<strong>ordonnance en ligne</strong> et la <strong>commande en ligne</strong>, qui nécessitent un compte client, mais aussi les <strong>pharmacies de garde</strong>, les gammes de produits que nous suivons, des informations et conseils, les promotions en cours.</p>
 			</div>
 			<br><br><?php // je sais, ces <br> sont affreux, mais depuis le 'inline' des p et h2 ci-dessus, je n'ai pas mieux ! ?>
 

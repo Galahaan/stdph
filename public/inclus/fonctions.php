@@ -474,20 +474,22 @@ function getDeltaP( $heure ){
 // - souligner, dans le menu de navigation, le mot correspondant à la page active
 //   (si c'est une des 4 du menu de navigation)
 //
-// - ajouter au 'title' de chaque page du site le nom de cette page
+// - ajouter un <title> à chaque page du site
 //
 // La fonction prend comme paramètre d'entrée la page courante obtenue par
 // la super globale   $_SERVER['REQUEST_URI']
 //
-// Elle renvoie un tableau de 2 éléments :
+// Elle renvoie un tableau de 3 éléments :
 //
 // - une chaîne de 4 caractères dont 1 seul est positionné à '1' :
 //   celui correspondant à la page courante du menu de navigation, dans cet ordre :
 //   index / horaires / équipe / contact
 //   (dans le but de souligner ce mot)
 //
-// - le nom 'enjolivé' de la page :
-//       ex. 'Accueil & Services' à la place de '/index.php'
+// - le nom 'enjolivé' de la page, défini dans constantes.php
+//   (ex. 'Accueil' à la place de '/index.php')
+//
+// - le titre de la page, défini dans constantes.php
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 function pageCourante( $request_uri ){
@@ -504,71 +506,81 @@ function pageCourante( $request_uri ){
 
 	// on positionne alors à '1' le digit de la page courante
 	switch( $page ){
-		case "index":
-			$flagPC = "1000";          // c'est aussi ce qu'on met pour le cas 'default'
-			$nomPage = PAGE_ACCUEIL;   // (ie page '/index.php' non précisée dans l'URL)
-			break;
 
 		case "horaires":
-			$flagPC = "0100";
-			$nomPage = PAGE_HORAIRES;
+			$flagPC    = "0100";
+			$nomPage   = NOM_HORAIRES;
+			$titrePage = TTL_HORAIRES;
 			break;
 
 		case "equipe":
-			$flagPC = "0010";
-			$nomPage = PAGE_EQUIPE;
+			$flagPC    = "0010";
+			$nomPage   = NOM_EQUIPE;
+			$titrePage = TTL_EQUIPE;
 			break;
 
 		case "contact":
-			$flagPC = "0001";
-			$nomPage = PAGE_CONTACT;
+			$flagPC    = "0001";
+			$nomPage   = NOM_CONTACT;
+			$titrePage = TTL_CONTACT;
 			break;
 
 		case "prepaOrdonnance":
-			$nomPage = PAGE_ORDO;
+			$nomPage   = NOM_ORDO;
+			$titrePage = TTL_ORDO;
 			break;
 
 		case "prepaCommande":
-			$nomPage = PAGE_COMM;
+			$nomPage   = NOM_COMM;
+			$titrePage = TTL_COMM;
 			break;
 
 		case "pharmaDeGarde":
-			$nomPage = PAGE_GARDE;
+			$nomPage   = NOM_GARDE;
+			$titrePage = TTL_GARDE;
 			break;
 
 		case "promos":
-			$nomPage = PAGE_PROMOS;
+			$nomPage   = NOM_PROMOS;
+			$titrePage = TTL_PROMOS;
 			break;
 
 		case "gammesProduits":
-			$nomPage = PAGE_GAMMES;
+			$nomPage   = NOM_GAMMES;
+			$titrePage = TTL_GAMMES;
 			break;
 
 		case "infos":
-			$nomPage = PAGE_INFOS;
+			$nomPage   = NOM_INFOS;
+			$titrePage = TTL_INFOS;
 			break;
 
 		case "menleg":
-			$nomPage = PAGE_MENLEG;
+			$nomPage   = NOM_MENLEG;
+			$titrePage = TTL_MENLEG;
 			break;
 
 		case "connexion":
-			$nomPage = PAGE_CONNEX;
+			$nomPage   = NOM_CONNEX;
+			$titrePage = TTL_CONNEX;
 			break;
 
 		case "inscription":
-			$nomPage = PAGE_INSCRIP;
+			$nomPage   = NOM_INSCRIP;
+			$titrePage = TTL_INSCRIP;
 			break;
 
 		case "aide":
-			$nomPage = PAGE_AIDE;
+			$nomPage   = NOM_AIDE;
+			$titrePage = TTL_AIDE;
 			break;
 
 		default :
-			$flagPC = "1000";          // dans le cas où la page '/index.php' n'est pas précisée
-			$nomPage = PAGE_ACCUEIL;   // dans l'URL, on sait qu'on est quand même sur la page index
+			$flagPC    = "1000";         // si ce n'est aucun des cas précédents, ou si la page '/index.php'
+			$nomPage   = NOM_INDEX;      // n'est pas précisée dans l'URL => on est sur la page index !
+			$titrePage = TTL_INDEX;
 	}
-	return ['flag' => $flagPC, 'nom' => $nomPage];
+	return ['flag' => $flagPC, 'nom' => $nomPage, 'titre' => $titrePage];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -626,70 +638,64 @@ $cdn         = "";
 
 	switch( $page ){
 
-		case "index":                         // c'est aussi ce qu'on met pour le cas 'default'
-			$description = META_DESC_INDEX;   // (ie page '/index.php' non précisée dans l'URL)
-			$robots = "";
-			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
-			break;
-
 		case "horaires":
-			$description = META_DESC_HORAIRES;
-			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
+			$description = DESC_HORAIRES;
+			$refresh     = "meta http-equiv='refresh' content='" . REFRESH . "' />";
 			break;
 
 		case "equipe":
-			$description = META_DESC_EQUIPE;
+			$description = DESC_EQUIPE;
 			break;
 
 		case "contact":
-			$description = META_DESC_CONTACT;
-			$focus = " onload='placerFocus(\"iFocus\")'";
-			$cdn   = "link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>";
+			$description = DESC_CONTACT;
+			$focus       = " onload='placerFocus(\"iFocus\")'";
+			$cdn         = "link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>";
 			break;
 
 		case "prepaOrdonnance":
-			$description = META_DESC_PREP_O;
-			$focus = " onload='placerFocus(\"iFocus\")'";
+			$description = DESC_PREP_O;
+			$focus       = " onload='placerFocus(\"iFocus\")'";
 			break;
 
 		case "prepaCommande":
-			$description = META_DESC_PREP_C;
-			$focus = " onload='placerFocus(\"iFocus\")'";
+			$description = DESC_PREP_C;
+			$focus       = " onload='placerFocus(\"iFocus\")'";
 			break;
 
 		case "pharmaDeGarde":
-			$description = META_DESC_P_GARDE;
+			$description = DESC_P_GARDE;
 			break;
 
 		case "promos":
-			$description = META_DESC_PROMOS;
+			$description = DESC_PROMOS;
 			break;
 
 		case "gammesProduits":
-			$description = META_DESC_GAMMES;
+			$description = DESC_GAMMES;
 			break;
 
 		case "infos":
-			$description = META_DESC_INFOS;
+			$description = DESC_INFOS;
 			break;
 
 		case "menleg":
-			$description = META_DESC_MENLEG;
+			$description = DESC_MENLEG;
 			break;
 
 		case "connexion":
-			$robots = META_BOTS_CONNEX;
+			$robots      = BOTS_CONNEX;
 			break;
 
 		case "inscription":
-			$robots = META_BOTS_INSCRIP;
-			$focus = " onload='placerFocus(\"iFocus\")'";
+			$robots      = BOTS_INSCRIP;
+			$focus       = " onload='placerFocus(\"iFocus\")'";
 			break;
 
-		default :                             // dans le cas où la page '/index.php' n'est pas précisée
-			$description = META_DESC_INDEX;   // dans l'URL, on sait qu'on est quand même sur la page index
-			$robots = "";
-			$refresh = "meta http-equiv='refresh' content='" . REFRESH . "' />";
+		default :                        // si ce n'est aucun des cas précédents, ou si la page '/index.php'
+			$description = DESC_INDEX;   // n'est pas précisée dans l'URL => on est sur la page index !
+			$robots      = "";
+			$refresh     = "meta http-equiv='refresh' content='" . REFRESH . "' />";
 	}
 	return ['description' => $description, 'robots' => $robots, 'refresh' => $refresh, 'focus' => $focus, 'cdn' => $cdn];
 }

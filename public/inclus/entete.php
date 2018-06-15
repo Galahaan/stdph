@@ -120,19 +120,9 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
     <?php // Cette balise DOIT être conservée de façon permanente tant que l'on souhaite utiliser ces outils.      ?>
     <meta name="google-site-verification" content="<?= GOOGLE_VALIDATION_CODE ?>" />
 
-    <?php
-    // Pour un bon positionnement dans les résultats des moteurs de recherche, il est très important
-    // de renseigner les balises <title> (max 65 c.) et <meta description> (max 200 c.)
-    //
-    // Dans le cas de l'index, étant donné que ce sera le plus vu dans les résultats de recherches,
-    // on lui donne un <title> qui ne suit pas le format de celui des autres pages
-    ?>
-    <?php if( $pageCourante['nom'] == PAGE_ACCUEIL ) : ?>
-        <title><?= NOM_PHARMA . LOC_PHARMA_TTL_IDX ?></title>
-    <?php else : ?>
-        <title><?= $pageCourante['nom'] . ", " . NOM_PHARMA . LOC_PHARMA_TTL ?></title>
-    <?php endif ?>
-
+    <?php // Pour un bon positionnement dans les résultats des moteurs de recherche, il est très important ?>
+    <?php // de renseigner les balises <title> (max 65 c.) et <meta name='description'> (max 200 c.)       ?>
+    <title><?= $pageCourante['titre'] ?></title>
     <meta name='description' content='<?= $enteteSpecs['description'] ?>'>
     <meta name='keywords' content='pharmacie, <?= MC_NOM_PHARMA ?>, <?= MC_QUARTIER ?>, <?= $pageCourante['nom'] ?>, <?= MC_1 ?>, <?= MC_2 ?>, <?= MC_3 ?>'>
     <?= ! empty($enteteSpecs['robots']) ? "<meta name='robots' content='" . $enteteSpecs['robots'] . "'>" : "" ?>
@@ -178,7 +168,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
             <a href='index.php' accesskey='r'>
                 <img id='iLogoCroix' src='img/bandeau/croix_caducee.png' alt=''>
                 <h1><?= NOM_PHARMA ?></h1>
-                <strong><?= LOC_PHARMA_BND ?></strong>
+                <strong><?= LOC_PHARMA ?></strong>
             </a>
             <p id='iTelBandeau'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><?= TEL_PHARMA_DECO ?></a><img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
         </section>
