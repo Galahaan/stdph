@@ -116,12 +116,12 @@ main{
 /*********************************                    tous les liens 'normaux' du site                **********************************/
 /*********************************      pages connexion, inscription, contact, prepaOrdo, menleg      **********************************/
 /***************************************************************************************************************************************/
-#iConnexionInscription a, #iInscription a, #iContactTel a, #iContactMail a, #iOrdoLienModeEmploi a, #iMentionsLegales a{
+#iConnexionInscription a, #iInscription a, #iContactTel a, #iContactMail a, #iOrdoLienModeEmploi a, #iMenLeg a{
     color: rgb(165, 90, 165);
     text-decoration: underline;
 }
 /* hover des liens précédents */
-#iConnexionInscription a:hover, #iInscription a:hover, #iContactTel a:hover, #iContactMail a:hover, #iOrdoLienModeEmploi a:hover, #iMentionsLegales a:hover{
+#iConnexionInscription a:hover, #iInscription a:hover, #iContactTel a:hover, #iContactMail a:hover, #iOrdoLienModeEmploi a:hover, #iMenLeg a:hover{
     color: rgb(88, 88, 88);
     font-weight: 700;
     text-decoration: none;   /* ça permet de mieux marquer la différence (accessibilité) */
@@ -315,10 +315,10 @@ nav#iNavigation a{
 /***************************************************************************************************************************************/
 /************************************************        page mentions légales        **************************************************/
 /***************************************************************************************************************************************/
-#iMentionsLegales h3{
+#iMenLeg h3{
     background-color: rgb(231, 251, 225); /* fond du § titre */
 }
-#iMentionsLegales .gauche{
+#iMenLeg .gauche{
     font-weight: 700;          /* mots de la colonne de gauche */
 }
 

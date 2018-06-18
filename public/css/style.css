@@ -748,26 +748,32 @@ sub{
 /***************************************************************************************************************************************/
 
 /* petite mise en page */
-#iMentionsLegales h3{
+#iMenLeg h3{
 	text-align: center;
 	text-decoration: underline;
 	padding: 8% 0;
 }
 /* entité */
-#iMentionsLegales .gauche{
+#iMenLeg h4{
 	text-align: left;
 	padding: 2%;
 }
 /* logo */
-#iMentionsLegales img{
+#iMenLeg img{
 	padding-left: 2%;
 	width: 25%;
 	float: left;
 }
 /* coordonnées de l'entité */
-#iMentionsLegales .droite{
+#iMenLeg .cDroite{
 	text-align: right;
-	padding: 0 2% 4% 10%;
+	padding: 0 2% 4% 30%;
+}
+/* le dernier <p> de chaque article des Organismes Partenaires, comme pour la CNIL par exemple, */
+/* permet d'ajouter un petit texte explicatif                                                   */
+#iMenLegOP p:last-of-type{
+	text-align: justify;
+	padding: 0 2% 4%;
 }
 
 /***************************************************************************************************************************************/
@@ -813,7 +819,7 @@ footer section:last-of-type{
 /*        - #iCommPrepaComm h2                                        */
 /*        - #iGammesProd h2                                           */
 /*        - #iPdG3237 h2 (ie #iPdGh21 et #iPdGh22 )                   */
-/*        - #iMentionsLegales h2                                      */
+/*        - #iMenLeg h2                                      */
 /*        - footer h2                                                 */
 /*                                                                    */
 /* - <h2> jamais affichés (mais nécessaires pour la validation W3C)   */
@@ -976,16 +982,19 @@ footer section:last-of-type{
 	/* cf ctrl+F #iPdGplan img{ */
 
 	/* Mentions légales */
-	#iMentionsLegales .gauche{
-		padding-left: 5%;
+	#iMenLeg h4{
+		padding: 5%;
 	}
-	#iMentionsLegales img{
+	#iMenLeg img{
 		padding-left: 5%;
 		width: 18%;
 	}
-	#iMentionsLegales .droite{
+	#iMenLeg .cDroite{
 		padding-right: 5%;
 	}
+	#iMenLegOP p:last-of-type{
+		padding-left: 5%;
+		padding-right: 5%;
 }
 
 /* 																															600 px	*/
@@ -1052,14 +1061,18 @@ footer section:last-of-type{
 
 	/******************************  page mentions légales  *******************************/
 
-	#iMentionsLegales .gauche{
+	#iMenLeg h4{
 		padding-left: 15%;
 	}
-	#iMentionsLegales img{
+	#iMenLeg img{
 		padding-left: 15%;
 		width: 15%;
 	}
-	#iMentionsLegales .droite{
+	#iMenLeg .cDroite{
+		padding-right: 15%;
+	}
+	#iMenLegOP p:last-of-type{
+		padding-left: 15%;
 		padding-right: 15%;
 	}
 }
@@ -1123,7 +1136,7 @@ footer section:last-of-type{
 	}
 
 	/* Mentions légales */
-	#iMentionsLegales img{
+	#iMenLeg img{
 		width: 12%;
 	}
 }
@@ -1219,10 +1232,10 @@ footer section:last-of-type{
 
 	/*************** page Mentions légales ***************/
 
-	#iMentionsLegales div{
+	#iMenLeg div{
 		page-break-inside: avoid; /* pas de saut de page au milieu d'un div */
 	}
-	#iMentionsLegales img{
+	#iMenLeg img{
 		width: 17%;
 	}
 }
