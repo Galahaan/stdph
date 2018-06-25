@@ -184,9 +184,12 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
             <?php
                 if( isset($_SESSION['client']) ){
 
-                    // si le client est connecté, on affiche son nom et le lien pour se déconnecter :
+                    // si le client est connecté, on affiche son nom, le lien vers l'accès à son compte, et le lien pour se déconnecter :
                     echo "<div id='iClientConnecte'>";
-                        echo $_SESSION['client']['prenom'] . " " . $_SESSION['client']['nom'];
+                        echo "<a href='mon-compte.php'>" .
+                                    $_SESSION['client']['prenom'] . "&nbsp;&nbsp;" .
+                                    $_SESSION['client']['nom'] .
+                             "</a>";
                     echo "</div>";
 
                     echo "<div id='iLienConnex'>";

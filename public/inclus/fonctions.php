@@ -575,6 +575,11 @@ function pageCourante( $request_uri ){
 			$titrePage = TTL_INSCRIP;
 			break;
 
+		case "mon-compte":
+			$nomPage   = NOM_COMPTE;
+			$titrePage = TTL_COMPTE;
+			break;
+
 		default :
 			$flagPC    = "1000";         // si ce n'est aucun des cas précédents, ou si la page '/index.php'
 			$nomPage   = NOM_INDEX;      // n'est pas précisée dans l'URL => on est sur la page index !
@@ -694,6 +699,10 @@ $cdn         = "";
 		case "inscription":
 			$robots      = BOTS_INSCRIP;
 			$focus       = " onload='placerFocus(\"iFocus\")'";
+			break;
+
+		case "mon-compte":
+			$robots      = BOTS_COMPTE;
 			break;
 
 		default :                        // si ce n'est aucun des cas précédents, ou si la page '/index.php'

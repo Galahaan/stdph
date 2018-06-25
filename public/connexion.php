@@ -26,6 +26,7 @@ if( isset( $_POST['connexion'] ) ) {
 			$_SESSION['client']['nom'] = $client['nom'];
 			$_SESSION['client']['prenom'] = $client['prenom'];
 			$_SESSION['client']['mail'] = $client['mail'];
+			$_SESSION['client']['tel'] = $client['tel'];
 
 			// on retourne à l'accueil :
 			// A noter : ici, la fonction header fonctionne bien parce qu'on est bien au dessus

@@ -128,8 +128,8 @@ main{
 }
 
 /***************************************************************************************************************************************/
-/***********************************                           5 formulaires                         ***********************************/
-/***********************************     contact, connexion, inscription, ordonnance et commande     ***********************************/
+/******************************                                6 formulaires                              ******************************/
+/******************************    contact, connexion, inscription, ordonnance, commande et mon-compte    ******************************/
 /***************************************************************************************************************************************/
 #iContactCoordonnees:before, #iContactPlan:before, #iContactFormulaire:before, #iConnexionInscription:before{
     background-color: rgb(54, 65, 21); /* petit trait horizontal entre les § */
@@ -145,13 +145,16 @@ main{
 sub{
     color: rgb(255, 0, 0); /* mess. d'erreurs */
 }
-.cBoutonOk button{
+.cBoutonOk button, .cBoutonKO a{
     background-color: rgb(165, 90, 165); /* déco du bouton de validation */
     color: white;
     font-weight: 400;
 }
-.cBoutonOk button:hover{
+.cBoutonOk button:hover, .cBoutonKO a:hover{
     background-color: rgb(88, 88, 88);
+}
+#iMCProcedure input{
+    border: 0.1rem solid rgb(165, 90, 165);
 }
 
 /***************************************************************************************************************************************/
@@ -186,8 +189,11 @@ nav#iNavigation a{
     background-color: rgb(87, 87, 87); /* bandeau de connexion */
     color: white; /* nom de la personne connectée */
 }
-#iLienConnex a{
+#iLienConnex a, #iClientConnecte a{
     color: white; /* connexion / déconnexion */
+}
+#iClientConnecte a:hover{
+    font-weight: 700;
 }
 
 /***************************************************************************************************************************************/

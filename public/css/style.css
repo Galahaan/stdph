@@ -182,15 +182,24 @@ nav#iNavigation{
 	width: 96%;
 	padding: 0 2%;
 }
+#iClientConnecte, #iLienConnex{
+	display: inline-block;  /* pour que 'prenom nom' et '(dé)connexion' apparaissent sur la même ligne */
+}
+/* proportions entre les 2 <div> de la ligne */
 #iClientConnecte{
-	display: inline-block;
 	width: 65%;
 	text-align: left;
 }
 #iLienConnex{
-	display: inline-block;
 	width: 34%;
 	text-align: right;
+}
+/* pour montrer que le nom de la personne est un lien */
+#iClientConnecte a{
+	text-decoration: underline;
+}
+#iClientConnecte a:hover{
+	text-decoration: none;  /* et dans theme.css, on le met en gras */
 }
 
 /***************************************************************************************************************************************/
@@ -202,6 +211,22 @@ nav#iNavigation{
 /* on met un peu d'espace au-dessus du lien 'inscription'        */
 #iConnexionInscription p:nth-of-type(2){
 	padding-bottom: 5%;
+}
+
+/***************************************************************************************************************************************/
+/*******************************************                 page mon-compte                 *******************************************/
+/***************************************************************************************************************************************/
+/* description de la procédure sécurisée */
+#iMCProcedure p, #iMCProcedure li, #iMCProcedure form{
+	padding-bottom: 3%;
+	text-align: justify;
+}
+#iMCProcedure li{
+	margin-left: 5%; /* sinon les n° des <li> sont trop à gauche, dans la marge */
+}
+#iMCProcedure form, #iMCProcedure div{
+	display: inline-block;
+	text-align: center;
 }
 
 /***************************************************************************************************************************************/
@@ -349,9 +374,9 @@ nav#iNavigation{
 /* plus rien de spécial ... */
 
 /***************************************************************************************************************/
-/* Cette partie est commune aux 5 formulaires :                                                                */
+/* Cette partie est commune aux 6 formulaires :                                                                */
 /*                                                                                                             */
-/*       => contact, connexion, inscription, ordonnance et commande                                            */
+/*       => contact, connexion, inscription, ordonnance, commande et mon-compte                                */
 /*                                                                                                             */
 
 /* lignes fines entre les champs, taille des champs ...                                                        */
@@ -366,10 +391,13 @@ nav#iNavigation{
 	padding-right: 20%;
 }
 /* proportions entre label et input pour les champs du formulaire                                              */
-.cChampForm input:not([type='radio']){
+.cChampForm input:not([type='radio']), .cChampForm .cInput{
 	width: 58%;
 	margin-left: 3%;
 	margin-right: 1.5%;
+}
+.cChampForm .cLabel, .cChampForm .cInput{
+	display: inline-block;
 }
 .cChampForm [type='radio']{
 	margin-left: 5%;
@@ -397,18 +425,30 @@ sub{
 	top: .8rem;
 }
 
-/* proportion entre label et button pour le bouton de validation                                               */
+/* calage à droite du bouton de validation                                                                     */
 .cBoutonOk{
 	text-align: right;
 }
 
-/* déco du bouton de validation du formulaire                                                                  */
-.cBoutonOk button{
+/* déco des boutons de validation et d'annulation                                                              */
+.cBoutonOk button, .cBoutonKO a{
 	width: auto;
 	padding: 1rem;
 	margin-right: 2rem;
 	border: none;
 	border-radius: 5px;
+	font-size: 1.3rem;   /* si on ne précise pas la font-size ici, apparemment la balise <button> en a une     */
+	                     /* en "interne", autour de 1.2 rem, qui ne bouge pas avec la taille du body           */
+}
+/* pour aligner les boutons 'annuler' et 'valider' */
+#iMCDonneesPerso div.cBoutonOk, #iMCDonneesPerso div.cBoutonKO{
+	display: inline-block;
+}
+/* champ de saisie du code de validation */
+#iMCProcedure input{
+    padding: 1rem;
+    border-radius: 5px;  /* la couleur est dans theme.css */
+    width: 18rem;
 }
 
 /*--------------------------------------------------------------------------------                             */
@@ -820,6 +860,8 @@ footer section:last-of-type{
 /*        - #iGammesProd h2                                           */
 /*        - #iPdG3237 h2 (ie #iPdGh21 et #iPdGh22 )                   */
 /*        - #iMenLeg h2                                               */
+/*        - #iMCDonneesPerso h2                                       */
+/*        - #iMCProcedure h2                                          */
 /*        - footer h2                                                 */
 /*                                                                    */
 /* - <h2> jamais affichés (mais nécessaires pour la validation W3C)   */

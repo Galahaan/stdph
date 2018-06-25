@@ -349,6 +349,10 @@ define('NOM_INSCRIP'   , "Inscription");
 define('TTL_INSCRIP'   , "Inscription - " . NOM_PHARMA);
 define('BOTS_INSCRIP'  , "noindex, nofollow, none");  // on ne référence pas la page inscription
 
+define('NOM_COMPTE'    , "Mon compte");
+define('TTL_COMPTE'    , "Mon compte - " . NOM_PHARMA);
+define('BOTS_COMPTE'   , "noindex, nofollow, none");  // on ne référence pas la page mon-compte
+
 define('BOTS_DEFT'     , "noindex, nofollow, none");  // ou   "index, follow, all"   par défaut, pour les pages du site
 
 define('MC_NOM_PHARMA' , "tilleuls");
