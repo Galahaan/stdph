@@ -194,12 +194,8 @@ nav#iNavigation{
 	width: 34%;
 	text-align: right;
 }
-/* pour montrer que le nom de la personne est un lien */
-#iClientConnecte a{
-	text-decoration: underline;
-}
 #iClientConnecte a:hover{
-	text-decoration: none;  /* et dans theme.css, on le met en gras */
+	text-decoration: underline;  /* et dans theme.css, on le met en gras */
 }
 
 /***************************************************************************************************************************************/
@@ -224,9 +220,11 @@ nav#iNavigation{
 #iMCProcedure li{
 	margin-left: 5%; /* sinon les n° des <li> sont trop à gauche, dans la marge */
 }
-#iMCProcedure form, #iMCProcedure div{
-	display: inline-block;
-	text-align: center;
+#iMCProcedure form{
+	text-align: center; /* centrage du bouton de 'demande de code' */
+}
+#iMCProcedure div{
+	display: inline-block; /* centrage de 'saisie' et 'validation du code' */
 }
 
 /***************************************************************************************************************************************/
@@ -425,25 +423,28 @@ sub{
 	top: .8rem;
 }
 
-/* calage à droite du bouton de validation                                                                     */
-.cBoutonOk{
+/* calage à droite des boutons de validation                                                                   */
+#iValider{
 	text-align: right;
+	padding-right: 2rem;
 }
 
 /* déco des boutons de validation et d'annulation                                                              */
-.cBoutonOk button, .cBoutonKO a{
-	width: auto;
+.cDecoBoutOK, .cDecoBoutKO{
 	padding: 1rem;
-	margin-right: 2rem;
 	border: none;
 	border-radius: 5px;
 	font-size: 1.3rem;   /* si on ne précise pas la font-size ici, apparemment la balise <button> en a une     */
 	                     /* en "interne", autour de 1.2 rem, qui ne bouge pas avec la taille du body           */
 }
-/* pour aligner les boutons 'annuler' et 'valider' */
-#iMCDonneesPerso div.cBoutonOk, #iMCDonneesPerso div.cBoutonKO{
-	display: inline-block;
+.cDecoBoutKO{
+	padding: 1.1rem 1rem 0.9rem 1rem; /* sinon (mais pourquoi ?!!), les 2 boutons sont très légèrement décalés */
+	margin-right: 2rem;
 }
+.cDecoBoutOK:hover, .cDecoBoutKO:hover{
+    text-decoration: underline;   /* et dans theme.css, on le met dans une autre couleur */
+}
+
 /* champ de saisie du code de validation */
 #iMCProcedure input{
     padding: 1rem;

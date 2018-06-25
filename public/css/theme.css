@@ -145,14 +145,16 @@ main{
 sub{
     color: rgb(255, 0, 0); /* mess. d'erreurs */
 }
-.cBoutonOk button, .cBoutonKO a{
-    background-color: rgb(165, 90, 165); /* déco du bouton de validation */
+/* déco des boutons (validation, annulation, ...) */
+.cDecoBoutOK, .cDecoBoutKO{
+    background-color: rgb(165, 90, 165);
     color: white;
     font-weight: 400;
 }
-.cBoutonOk button:hover, .cBoutonKO a:hover{
+.cDecoBoutOK:hover, .cDecoBoutKO:hover{
     background-color: rgb(88, 88, 88);
 }
+/* case de saisie du code de modification des données, reçu par mail */
 #iMCProcedure input{
     border: 0.1rem solid rgb(165, 90, 165);
 }

@@ -7,7 +7,7 @@ require_once("./inclus/initDB.php");
 
 $erreur = "";
 
-if( isset( $_POST['connexion'] ) ) {
+if( isset( $_POST['valider'] ) ) {
 
 	$mail = $_POST['mail'];
 	$password = $_POST['password'];
@@ -67,8 +67,8 @@ if( isset( $_POST['connexion'] ) ) {
 					<input type='password' id='idPassword' name='password' required>
 				</div>
 
-				<div class='cBoutonOk'>
-					<button name='connexion'>Connexion</button>
+				<div id='iValider'>
+					<button class='cDecoBoutOK' name='valider'>Connexion</button>
 				</div>
 			</form>
 		</section>

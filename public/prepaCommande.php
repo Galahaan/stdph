@@ -15,7 +15,7 @@ include('inclus/entete.php');
 define("PAGE_EN_COURS", "prepaCommande.php");
 
 // Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
-if( isset($_POST['bouton']) ){
+if( isset($_POST['valider']) ){
 
 	// Civilité
 
@@ -63,7 +63,7 @@ if( isset($_POST['bouton']) ){
 	<main id='iMain'>
 		<section id='iCommPrepaComm' class='cSectionContour'><h2>Préparation de commande</h2>
  
-			<?php if( isset($_POST['bouton']) && !isset($erreurs)) : ?>
+			<?php if( isset($_POST['valider']) && !isset($erreurs)) : ?>
 
 				<?php
 
@@ -349,8 +349,8 @@ if( isset($_POST['bouton']) ){
 								><?= isset($messageClientTxt) ? $messageClientTxt : "" ?></textarea>
 						<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
 					</div>
-					<div class='cBoutonOk'>
-						<button name='bouton'>Envoyer</button>
+					<div id='iValider'>
+						<button class='cDecoBoutOK' name='valider'>Envoyer</button>
 					</div>
 				</form>
 			<?php endif ?>

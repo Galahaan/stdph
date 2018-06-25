@@ -7,7 +7,7 @@ require_once("./inclus/initDB.php");
 
 // Si le formulaire vient d'être validé, et avant de savoir si on va
 // sauvegarder les infos en BDD, on "nettoie" les champs :
-if( isset($_POST['bouton']) ){
+if( isset($_POST['valider']) ){
 
 	// Civilité
 
@@ -69,7 +69,7 @@ if( isset($_POST['bouton']) ){
 	<main id='iMain'>
 		<section id='iInscription' class='cSectionContour'><h2>Création de votre compte</h2>
 
-		<?php if( isset($_POST['bouton']) && !isset($erreurs) && !$mailExisteDeja ) : ?>
+		<?php if( isset($_POST['valider']) && !isset($erreurs) && !$mailExisteDeja ) : ?>
 
 			<?php
 			//    le formulaire a été rempli  ET  il n'y a pas d'erreurs  ET  le mail n'existait pas encore en BDD
@@ -198,8 +198,8 @@ if( isset($_POST['bouton']) ){
 						>
 					<?php if( isset($erreurs['password']) ) { echo "<sub>" . $erreurs['password'] . "</sub>"; } ?>
 				</div>
-				<div class='cBoutonOk'>
-					<button name='bouton'>Valider</button>
+				<div id='iValider'>
+					<button class='cDecoBoutOK' name='valider'>Valider</button>
 				</div>
 			</form>
 		</section>
