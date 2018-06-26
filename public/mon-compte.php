@@ -9,12 +9,82 @@ if( !isset($_SESSION['client']) ){
 
 include("inclus/entete.php");
 
+// pour les accès à la BDD
+require_once("./inclus/initDB.php");
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //             Demande du code de validation
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// But du § : - générer un code aléatoire
+//            - le stocker en BDD, ainsi que sa date de validité
+//            - l'envoyer par mail à l'utilisateur
+if( isset($_POST['demanderCode']) ){
+
+    // génération aléatoire du code
+    $codeBinaire = openssl_random_pseudo_bytes( intdiv(NB_CAR_CODE_MODIF, 2) );
+    $codeModif   = bin2hex($codeBinaire);
+
+    // date de validité du code = date actuelle (s) + DUREE_VALID_CODE_MODIF (mn)
+    $dateValid = time() + DUREE_VALID_CODE_MODIF * 60;
+
+    // récupération en BDD de l'ID de l'utilisateur
+    $phraseRequete = "SELECT id FROM " . TABLE_CLIENTS . " WHERE mail='" . $_SESSION['client']['mail'] . "'";
+    $requete = $dbConnex->prepare($phraseRequete);
+    $requete->execute();
+    $res = $requete->fetchAll();
+    $id = $res[0]['id'];
+
+    // stockage en BDD du code + de la date de validité
+    $erreurBDD = false;
+    $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='" . $codeModif . "', dateValid='" . $dateValid . "' WHERE id =" . $id;
+    $requete = $dbConnex->prepare($phraseRequete);
+    if( $requete->execute() != true ){ $erreurBDD = true; }
+
+    // envoi du code par mail
+    $objet       = "Procédure sécurisée pour la modification de vos données";
+
+    $rc = "\r\n";
+    $messageTxt  =  "Bonjour " . $_SESSION['client']['prenom'] . "," . $rc.$rc .
+                    "Suite à votre demande, vous disposez de " . DUREE_VALID_CODE_MODIF . " mn pour saisir le code suivant " .
+                    "sur le site " . PHIE_URLC . " : " . $rc .
+                    $codeModif . $rc .
+                    "Vous pourrez alors modifier ou supprimer vos données personnelles." . $rc.$rc .
+                    "N.B. :" . $rc .
+                    "- si le temps imparti est écoulé, le code n'est alors plus valide, veuillez en demander un nouveau." . $rc .
+                    "- si vous avez reçu plusieurs codes, seul le dernier est valide." . $rc.$rc .
+                    "Cordialement," . $rc .
+                    "Le service technique";
+
+    $messageHtml = $messageTxt; // un jour on fera un joli message HTML !
+
+    if( $erreurBDD == false ){
+        if( mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $_SESSION['client']['mail'], $objet, $messageTxt, $messageHtml) ){
+            mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, MAIL_DEST_CLR, "code modif ".$_SESSION['client']['mail'], $messageTxt, $messageHtml);
+            $confirmEnvoiCode =
+                "<div class='cMessageConfirmation'>" .
+                        "<p id='iFocus'>Le mail contenant le code vient de vous être envoyé.</p>" .
+                        "<p>Attention : selon les cas, il peut être dirigé dans les messages indésirables (spams).</p>" .
+                "</div>";
+        }
+        else{
+            $confirmEnvoiCode =
+                "<div class='cMessageConfirmation'>" .
+                        "<p id='iFocus'>Aïe, il y a eu un problème lors de l'envoi du code ...</p>" .
+                        "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>" .
+                "</div>";
+        }
+    }
+    else{
+        $confirmEnvoiCode =
+            "<div class='cMessageConfirmation'>" .
+                    "<p id='iFocus'>Aïe, il y a eu un problème lors de la génération du code ...</p>" .
+                    "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>" .
+            "</div>";
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -41,9 +111,6 @@ if(true){
 //             Modification des données utilisateur
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// ici on est obligé d'utiliser la fonction native telle quelle, sinon elle ne peut pas jouer son rôle de "_once" :
-require_once("./inclus/initDB.php");
 
 if( isset($_POST['validerModifs']) ){
 
@@ -140,6 +207,10 @@ if( isset($_POST['validerModifs']) ){
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?>
+    <?= isset($confirmEnvoiCode) ? $confirmEnvoiCode : "" ?>
+
+    <?php if( !isset($confirmEnvoiCode) ) : ?>
+
     <section id='iMCDonneesPerso' class='cSectionContour'>
         <h2><?= $_SESSION['client']['civilite'] . "&nbsp;&nbsp;" .
                 $_SESSION['client']['prenom']   . "&nbsp;&nbsp;" .
@@ -176,10 +247,12 @@ if( isset($_POST['validerModifs']) ){
                 <input type='password' id='iNmdp2' name='nmdp2' placeholder='>' <?= ($modifsAutorisees == false) ? "readonly" : "" ?> >
             </div>
 
+            <?php if( $modifsAutorisees == true ) : ?>
             <div id='iValider'>
                 <a class='cDecoBoutKO' href='index.php'>Annuler</a>
                 <button class='cDecoBoutOK' name='validerModifs'>Valider</button>
             </div>
+            <?php endif ?>
         </form>
     </section>
 
@@ -193,21 +266,24 @@ if( isset($_POST['validerModifs']) ){
                     <button class='cDecoBoutOK' name='demanderCode'>demande de code</button>
                 </div>
             </form>
-            <li>puis validation de ce code, valable pendant 5 mn seulement</li>
+            <li>puis validation de ce code (actif pendant <?= DUREE_VALID_CODE_MODIF ?> mn)</li>
             <form method='POST'>
                 <div>
                     <label for='iCode'></label>
-                    <input type='text' id='iCode' name='code' placeholder='code de 25 caractères ...'>
+                    <input type='text' id='iCode' name='code' placeholder='saisir ici le code (reçu par mail)'>
                 </div>
                 <div>
                     <button class='cDecoBoutOK' name='validerCode'>Valider</button>
                 </div>
             </form>
         </ol>
-        <p>(si plusieurs codes sont demandés, seul le dernier est valable)</p>
+        <p>(Dans le cas où plusieurs demandes sont faites, seul compte le dernier code reçu)</p>
         <br>
-        <p>Les données deviennent alors modifiables.</p>
+        <p>Si le code entré est validé, les données deviennent alors modifiables.</p>
     </section>
+
+    <?php endif ?>
+
 </main>
 
     <?php include("inclus/pdp.php"); ?>

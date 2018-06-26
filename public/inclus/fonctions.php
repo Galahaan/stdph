@@ -263,7 +263,7 @@ function testCaptcha( $user_response ){
     $result = curl_exec($ch);
     curl_close($ch);
 
-print_r(json_decode($result, true));
+	print_r(json_decode($result, true));
 
     return json_decode($result, true);
 }
@@ -622,24 +622,24 @@ function pageCourante( $request_uri ){
 ///////////////////////////////////////////////////////////////////////////////////////////////
 function enteteSpecs( $request_uri ){
 
-// on extrait le nom de la page courante :
-$page = ltrim($request_uri, '/');
+	// on extrait le nom de la page courante :
+	$page = ltrim($request_uri, '/');
 
-// on enlève l'extension '.php' :
-$page = rtrim($page, 'hp.');
+	// on enlève l'extension '.php' :
+	$page = rtrim($page, 'hp.');
 
-$description = "";
-$robots      = BOTS_DEFT;
-$refresh     = "";                        // initialisations
-$focus       = "";
-$cdn         = "";
+	$description = "";
+	$robots      = BOTS_DEFT;
+	$refresh     = "";                        // initialisations
+	$focus       = "";
+	$cdn         = "";
 
-// NB: pour les pages horaires, contact, inscription, prepaOrdo et prepaComm, idéalement,
-// j'aurais voulu écrire les lignes d'instructions HTML complètes entre guillemets "",
-// pour les récupérer dans la page appelante en sortie de la fonction, ex. $enteteSpecs['refresh'] ...
-// MAIS !.. quand je mets le '<' de début de balise, ça doit être interprété comme une faille potentielle,
-// et rien ne passe, la chaîne transférée par la fonction est vide.
-// => d'où l'ajout du '<' uniquement après l'appel de la fonction dans entete.php :-(
+	// NB: pour les pages horaires, contact, inscription, prepaOrdo et prepaComm, idéalement,
+	// j'aurais voulu écrire les lignes d'instructions HTML complètes entre guillemets "",
+	// pour les récupérer dans la page appelante en sortie de la fonction, ex. $enteteSpecs['refresh'] ...
+	// MAIS !.. quand je mets le '<' de début de balise, ça doit être interprété comme une faille potentielle,
+	// et rien ne passe, la chaîne transférée par la fonction est vide.
+	// => d'où l'ajout du '<' uniquement après l'appel de la fonction dans entete.php :-(
 
 	switch( $page ){
 
@@ -867,5 +867,56 @@ function racClavier( $http_user_agent ){
 
 	return ['phrase' => $phrase, 'combi' => $combi];
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
+//							mailTxHt( $expeNom, $expeMailHbg, $expeMailReply,
+//									  $destiMail,
+//									  $objet,
+//									  $messageTxt, $messageHtml )
+//
+// Fonction qui envoie un mail contenant 2 parties textuelles :
+// - la 1ère partie au format TXT brut
+// - la 2ème partie au format HTML
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+function mailTxHt( $expeNom, $expeMailHbg, $expeMailReply, $destiMail, $objet, $messageTxt, $messageHtml ){
+
+	$rc = "\r\n";
+	$boundary = md5(rand());
+	$separateur = $rc . "--" . $boundary . $rc;
+
+	$header =	"From: " . $expeNom . " <" . $expeMailHbg . "> " . $rc .
+				"Reply-To: " . $expeMailReply . $rc .
+				"MIME-Version: 1.0" . $rc .
+				"Content-Type: multipart/alternative; boundary=" . $boundary;
+
+	$objet = mb_encode_mimeheader($objet, "UTF-8", "B"); // pour que les car. accentués passent bien
+
+	$date = date('d/m/Y - H:i:s');
+
+	// message en version "TEXT" ...
+	$message =	$separateur . 
+				"Content-Type: text/plain; charset=\"UTF-8\"" . $rc .
+				"Content-Transfer-Encoding: 8bit" . $rc .
+				$date . $rc . $rc .
+				$messageTxt;
+
+	// ... et son alternative, message en version "HTML"
+	// NB : Attention : on le concatène avec le message précédent
+	$message .=	$separateur .
+				"Content-Type: text/html; charset=\"UTF-8\"" . $rc .
+				"Content-Transfer-Encoding: 8bit" . $rc .
+				nl2br($date . $rc . $rc .
+				$messageHtml);
+
+	// envoi du mail :
+	$envoi = mail( $destiMail, $objet, $message, $header );
+	return $envoi;
+}
+
 
 ?>

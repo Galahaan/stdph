@@ -68,7 +68,7 @@ define('PHIE_SIRET'      , "12345678900012");
 define('PHIE_APE'        , "4773Z");
 
 // URL de la pharmacie
-define('PHIE_URLC'       , "bigouig.fr");
+// cf § Infos hébergeur
 
 // Hébergeur du site
 define('PHIE_HBG_COORD'  , "OVH - 2 rue Kellermann - BP 80157 - 59053 Roubaix cedex 1");
@@ -131,6 +131,14 @@ define('USERPSWD_BDD_HBG' , "Mdp2bigouig");
 // nom de la table 'clients' pour cette BDD (inscription.php et connexion.php)
 define('TABLE_CLIENTS'    , "clientsBIG");
 
+// Pour la modification des données personnelles :
+
+// nombre de caractères du code aléatoire d'authentification
+// (pair, sinon ce sera l'entier pair inférieur)
+define('NB_CAR_CODE_MODIF', 24);
+// durée de validité du code (en minutes)
+define('DUREE_VALID_CODE_MODIF', 10);
+
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
 ///////////////                     Infos hébergeur                        ///////////////
@@ -149,6 +157,7 @@ define('LABEL_EXP'        , "Site pharmacie");
 define('LABEL_EXP_PIRATE' , "Site pharmacie - Attention");
 
 // adresse du site de la pharmacie :
+define('PHIE_URLC'                 , "bigouig.fr");
 define('ADRESSE_SITE_PHARMACIE'    , "http://bigouig.fr/");
 define('S_ADRESSE_SITE_PHARMACIE'  , "https://bigouig.fr/");
 define('W_ADRESSE_SITE_PHARMACIE'  , "http://www.bigouig.fr/");
