@@ -214,6 +214,41 @@ function filtrerNom( $nomPOST ){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
+//						mailValide(), telValide(), mdpValide()
+//
+// Fonctions qui servent à tester un mail, un tel, un mot de passe saisis par l'utilisateur.
+//
+// Les fonctions renvoient true ou false
+// 
+///////////////////////////////////////////////////////////////////////////////////////////////
+function mailValide( $mailSaisi ){
+
+	// 1- on le "nettoie" (des scripts malveillants par ex.)
+	$mail = filter_var($mailSaisi, FILTER_SANITIZE_EMAIL);
+
+	// 2- on teste la validité du format :
+	$mail = filter_var($mail, FILTER_VALIDATE_EMAIL);
+
+	// NB : la fonction filter_var() retourne la donnée filtrée ou 'false' si le filtre a échoué.
+
+	// 3- donc on vérifie juste que la valeur saisie est identique à la valeur filtrée
+	//    avant de répondre 'true'
+	if( $mail == $mailSaisi ){
+		$resultat = true;
+	}
+	return $resultat;
+}
+
+function telValide( $telSaisi ){
+	return true;
+}
+
+function mdpValide( $mdpSaisi ){
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
 //						getIpAdr()
 //
 // Fonction qui sert à obtenir l'adresse IP du client
