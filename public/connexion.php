@@ -59,12 +59,12 @@ if( isset( $_POST['valider'] ) ) {
 			<form method='POST'>
 				<div class='cChampForm'>
 					<label for='iMail'>mail</label>
-					<input type='text' id='iMail' name='mail' required autofocus>
+					<input type='text' id='iMail' name='mail' required autofocus placeholder='...'>
 				</div>
 
 				<div class='cChampForm'>
 					<label for='idPassword'>mot de passe</label>
-					<input type='password' id='idPassword' name='password' required>
+					<input type='password' id='idPassword' name='password' required placeholder='...'>
 				</div>
 
 				<div id='iValider'>

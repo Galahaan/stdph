@@ -448,7 +448,7 @@ if( isset($_POST['valider']) ){
 				<article>
 					<p id='iOrdoLienModeEmploi'>
 						<a href='#iOrdoModeEmploi'>Mode d'emploi</a>&nbsp;&nbsp;<img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''>
-						<a href='#iOrdoFinME' class='cBraille'>fin du mode d'emploi</a>
+						<a class='cBraille'>fin du mode d'emploi</a>
 					</p>
 					<div id='iOrdoModeEmploi'>
 						<div>Il suffit de suivre ces <span>4 étapes :</span></div>
@@ -478,7 +478,8 @@ if( isset($_POST['valider']) ){
 						Nous nous occupons de la suite !
 					</div>
 				</article>
-				<sup id='iOrdoFinME'>Veuillez renseigner tous les champs ci-dessous svp. (pièce jointe < <?= TAILLE_MAX_PJ / 1024 / 1024 ?> Mo)</sup>
+				<sup>Veuillez renseigner tous les champs ci-dessous svp.</sup>
+				<sup>(pièce jointe < <?= TAILLE_MAX_PJ / 1024 / 1024 ?> Mo)</sup>
 				<form method='POST' enctype='multipart/form-data'>
 					<div class='cChampForm'>
 						<input type='radio' id='iCiviliteMme'  name='civilite' value='Mme'  required
@@ -531,10 +532,10 @@ if( isset($_POST['valider']) ){
 						<?php if( isset($erreurs['pieceJointe']) ) { echo "<sub>" . $erreurs['pieceJointe'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
-							<p>Apportez-nous des précisions qui vous semblent utiles sur votre traitement.
-								<br>Peut-être avez-vous déjà certains produits qu'il serait donc inutile d'ajouter à la préparation ?..</p>
 						<label for='iMessageTextarea'>Message</label>
-								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required placeholder='>'
+								<p>Apportez-nous des précisions qui vous semblent utiles sur votre traitement.
+								<br>Peut-être avez-vous déjà certains produits qu'il serait donc inutile d'ajouter à la préparation ?..</p>
+								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required placeholder='...'
 									<?php	if( isset($erreurs['message']) && $focusErreurMis == false ) {
 												echo " autofocus";
 												$focusErreurMis = true;

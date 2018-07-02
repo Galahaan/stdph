@@ -27,9 +27,9 @@ body{
  	margin: auto;
 }
 
-/* Visiblement, le font-family du body n'est pas pris en compte dans le textarea, */
-/* et de plus, la taille n'est pas bonne pour les input ...                       */
-/* (cf autre fichier CSS pour les polices et les couleurs) */
+/* Visiblement, le font-family du body n'est pas pris en compte dans les input et le textarea, */
+/* (cf theme.css pour le font-family)                                                          */
+/* et la taille n'est pas bonne non plus ...                                                   */
 .cChampForm input, .cChampForm textarea{
 	font-size: 1em;
 }
@@ -71,7 +71,7 @@ sup, sub{
 	font-size: .7em; /* contact, ordo, comm et inscrip : 'saisie obligatoire' et 'mess. d'erreurs' */
 }
 .cSectionContour{
-	padding: 5% 2% 0; /* espace autour des sections principales du site */
+	padding: 5% 2% 2%; /* espace autour des sections principales du site */
 }
 /* affichés ou pas (validation W3C / braille), les titres */
 /* de toutes les sections ont un peu de marge dessous     */
@@ -380,38 +380,34 @@ nav#iNavigation{
 /* lignes fines entre les champs, taille des champs ...                                                        */
 .cChampForm{
 	/* cf theme.css pour le border-top: */
-	padding: 1.5rem 0;
-	width: 100%;
-	text-align: right;
+	padding: 2% 0;
 }
 /* pour positionner latéralement les civilités                                                                 */
 .cChampForm [for='iCiviliteM']{
 	padding-right: 20%;
 }
-/* proportions entre label et input pour les champs du formulaire                                              */
-.cChampForm input:not([type='radio']), .cChampForm .cInput{
-	width: 58%;
-	margin-left: 3%;
-	margin-right: 1.5%;
+/* position et marges autour des champs du formulaire (+1 petite exception sur le p spécifique ordonnance)     */
+.cChampForm label, .cChampForm .cLabel, .cChampForm p{
+	display: block;                             /*  ^--- le p c'est celui de l'ordonnance  */
+	text-align: left;
+	padding: 0 2% 3%;
 }
-.cChampForm .cLabel, .cChampForm .cInput{
-	display: inline-block;
+.cChampForm label[for='iCiviliteMme'], .cChampForm label[for='iCiviliteMlle'], .cChampForm label[for='iCiviliteM']{
+	display: inline-block; /* pour annuler le display: block ci-dessus, destiné aux 'label' en général */
+	padding: 2% 0;
+}
+.cChampForm input:not([type='radio']){
+	display: block;
+	width: 90%;
+	margin-left: 8%;
 }
 .cChampForm [type='radio']{
 	margin-left: 5%;
 }
-/* message dans le champ 'textarea'                                                                            */
+/* pour bloquer la largeur du champ 'textarea'                                                                 */
 .cChampForm textarea{
-	text-align: justify;
-	/* pour bloquer la largeur du champ texte                                                                  */
-	min-width: 59.5%; /* bizarrement, si on met 58%, ça n'est pas tout                                         */
-	max-width: 59.5%; /* à fait aligné avec les input situées au-dessus                                        */
-	margin-left: 3%;
-}
-
-/* label 'Message' calé en haut                                                                                */
-.cChampForm [for='iMessageTextarea']{
-	vertical-align: top;
+	min-width:   95%;
+	max-width:   95%;
 }
 
 /* mess. d'erreurs dans les form. contact, inscrip, ordo et comm             partie commune aux 5 formulaires  */
@@ -456,16 +452,20 @@ sub{
 /*                                                                                                             */
 /*                  petit § dédié aux messages de confirmation                                                 */
 /*                     (d'envoi, de création de compte, ...)                                                   */
-/*    communs aux pages contact, inscription, prepaCommande et prepaOrdonnance                                 */
+/*    communs aux pages contact, inscription, prepaCommande, prepaOrdonnance, mon-compte                       */
 /*                                                                                                             */
 
 /* espaces autour de la div des messages de confirmation                                                       */
 .cMessageConfirmation{
-	padding: 5% 0 18%;
+	padding: 5% 0 5%;
+	text-align: justify;
 }
-/* espace sous les 2 phrases du message de confirmation                                                        */
+/* espace sous les phrases du message de confirmation                                                          */
 .cMessageConfirmation p{
 	padding-bottom: 3%;
+}
+.cMessageConfirmation li{
+	margin-left:  15%;   /* sinon les puces disparaissent à gauche */
 }
 
 /*               fin du § sur les messages de confirmation                                                     */
@@ -531,9 +531,8 @@ sub{
 }
 
 /* blabla au dessus du champ 'textarea' */
-#iOrdoPrepaOrdo .cChampForm p:first-child{
+#iOrdoPrepaOrdo .cChampForm p{
 	text-align: justify;
-	padding: 0 4% 4% 4%;
 }
 
 /***************************************************************************************************************************************/
@@ -973,6 +972,11 @@ footer section:last-of-type{
 	#iTelBandeau img{
 		top: 2rem;
 	}
+
+	.cSectionContour{
+		padding: 5% 5% 2%; /* on n'a modifié que les latérales par rapport au media tel */
+	}
+
 	/* page Index : on affiche 2 vignettes en largeur */
 	#iIndex article{
 		width: 50%;
@@ -980,12 +984,6 @@ footer section:last-of-type{
 	}
 
 	/*     page prepaOrdonnance     */
-
-	/* blabla au dessus du champ 'textarea' */
-	#iOrdoPrepaOrdo .cChampForm p:first-child{
-		width: 58%;						/* aucune valeur */
-		margin-left: 33%;				/*     avant     */
-	}
 
 	/* icône du clicIndex */
 	#iOrdoLienModeEmploi img{
@@ -997,15 +995,6 @@ footer section:last-of-type{
 	/* icône de guidage GPS */
 	#iContactPlan p img, #iPdGplan img{
 		width: 4rem;					/* old 3   */
-	}
-
-	/* on arrange un peu le formulaire */
-	#iContactFormulaire .cChampForm input:not([type='radio']){
-		width: 64%;
-	}
-	#iContactFormulaire .cChampForm textarea{
-		min-width: 65.5%; /* bizarrement, si on met 62%, ça n'est pas tout  */
-		max-width: 65.5%; /* à fait aligné avec les input situées au-dessus */
 	}
 
 	/*      page gammesProduits      */
@@ -1082,10 +1071,7 @@ footer section:last-of-type{
 	#iContactTel img{
 		top: 2.5rem;
 	}
-	/* on décale un peu vers la droite le blabla */
-	#iContactPlan p{
-		padding-left: 10%;
-	}
+
 	/* icône de guidage GPS */
 	#iContactPlan p img, #iPdGplan img{
 		width: 4.5rem;
@@ -1141,6 +1127,46 @@ footer section:last-of-type{
 		width: 33.33%;
 	}
 
+/******************************          formulaires          *****************************/
+
+/* marges et position des champs des formulaires : label et input => sur une seule ligne */
+.cChampForm{
+	text-align: left; /* comme on va mettre label + input en inline, ça cale tout à gauche */
+}
+/* pour positionner latéralement les civilités  */
+.cChampForm input[id='iCiviliteMme']{
+	margin-left: 42%; /* comme tout est calé à gauche, ça permet de 'centrer' un peu les 3 radios */
+}
+.cChampForm label, .cChampForm .cLabel{
+	display: inline-block; /* pour aligner label et input */
+	width: 28%;
+	text-align: right;
+	padding: 0;
+}
+.cChampForm input:not([type='radio']){
+	display: inline-block; /* pour aligner label et input */
+	width: 65%;
+	margin-left: 3%;
+}
+.cChampForm label[for='iCiviliteMme'], .cChampForm label[for='iCiviliteMlle'], .cChampForm label[for='iCiviliteM']{
+	padding: 0; /* pour annuler les consignes initiales en taille tel */
+
+	width: 5%; /* pour annuler les pptés des label généraux ci-dessus */
+}
+/* pour le textarea + spécificité pour l'ordonnance (p) */
+.cChampForm textarea, #iOrdoPrepaOrdo .cChampForm p{
+	min-width: 68%;
+	max-width: 68%;
+	margin-left: 32%;
+	padding: 0 0 2%;
+}
+/* spécificité pour le mot de passe de mon-compte */
+#iMCDonneesPerso form p{
+	display: block;
+	padding-bottom: 2%;
+}
+/******************************************************************************************/
+
 	/* page Horaires */
 	/* pour recentrer l'ensemble du tableau */
 	#iHorairesTableau{
@@ -1150,6 +1176,8 @@ footer section:last-of-type{
 
 	/* page Contact */
 	#iContactInfosPratiques, #iContactCoordonnees{
+		padding-left:  2%; /* exceptionnellement, on modifie les marges de cSectionContour */
+		padding-right: 2%;
 		width: 45%;
 		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
 		vertical-align: top;

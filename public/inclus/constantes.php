@@ -155,8 +155,8 @@ define('HOME'             , "/home/bigouigfiy/"); // utilisé uniquement dans re
 define('ADR_EXP_HBG'      , "bigouigfiy@cluster020.hosting.ovh.net");
 
 // nom explicite pour l'expéditeur des mails : (possible avec accents !)
-define('LABEL_EXP'        , "Site pharmacie");
-define('LABEL_EXP_PIRATE' , "Site pharmacie - Attention");
+define('LABEL_EXP'        , "bigouig.fr");
+define('LABEL_EXP_PIRATE' , "bigouig.fr - Attention !");
 
 // adresse du site de la pharmacie :
 define('PHIE_URLC'                 , "bigouig.fr");

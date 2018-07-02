@@ -231,10 +231,6 @@ if( isset($_POST['valider']) ){
 						"#iContactInfosPratiques, #iContactCoordonnees, #iContactPlan," .
 						"#iContactFormulaire::before, #iContactFormulaire h2 { display: none }" .
 				"</style>";
-			$effaceContenuPage .=
-				"<style type='text/css'>" .
-						"#iContactFormulaire { width: 90% }" .
-				"</style>";
 			// puis on affichera le message de confirmation
 			// (on sait de quoi on parle puisque 'Contact' est souligné dans le menu de nav.)
 			//
@@ -373,7 +369,7 @@ if( isset($_POST['valider']) ){
 				</div>
 				<div class='cChampForm'>
 					<label for='iMessageTextarea'>Message</label>
-						<textarea rows='4' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required placeholder='>'
+						<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required placeholder='...'
 							<?php	if( isset($erreurs['message']) && $focusErreurMis == false ){
 										echo " autofocus";
 										$focusErreurMis = true;

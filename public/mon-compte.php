@@ -30,7 +30,7 @@ if( isset($_POST['demanderCode']) ){
     $codeModif   = bin2hex($codeBinaire);
 
     // date de validité du code (en secondes depuis le 01/01/1970)
-    $dateValid = time() + DUREE_VALID_CODE_MODIF * 60;
+    $codeDateV = time() + DUREE_VALID_CODE_MODIF * 60;
 
     $_SESSION['client']['nbEssaisCodeRestants'] = NB_MAX_ESSAIS_CODE;
 
@@ -43,7 +43,7 @@ if( isset($_POST['demanderCode']) ){
 
     // stockage en BDD du code + de la date de validité
     $erreurRequete = false;
-    $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='" . $codeModif . "', dateValid='" . $dateValid . "' WHERE id =" . $id;
+    $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='" . $codeModif . "', codeDateV='" . $codeDateV . "' WHERE id =" . $id;
     $requete = $dbConnex->prepare($phraseRequete);
     if( $requete->execute() != true ){ $erreurRequete = true; }
     //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
@@ -125,20 +125,20 @@ if( isset($_POST['validerCode']) ){
     $id = $res['id'];
 
     // récupération en BDD du code, et de sa date de validité
-    $phraseRequete = "SELECT codeModif, dateValid FROM " . TABLE_CLIENTS . " WHERE id='" . $id . "'";
+    $phraseRequete = "SELECT codeModif, codeDateV FROM " . TABLE_CLIENTS . " WHERE id='" . $id . "'";
     $requete = $dbConnex->prepare($phraseRequete);
     $requete->execute();
     $res = $requete->fetch();
     $codeBDD = $res['codeModif'];
-    $_SESSION['client']['dateValid'] = $res['dateValid'];
+    $_SESSION['client']['codeDateV'] = $res['codeDateV'];
 
-    if( (time() >= $_SESSION['client']['dateValid']) || ($_SESSION['client']['nbEssaisCodeRestants'] <= 0) ){
+    if( (time() >= $_SESSION['client']['codeDateV']) || ($_SESSION['client']['nbEssaisCodeRestants'] <= 0) ){
         // date validité expirée   ou   trop de tentatives
         // => non seulement on ne donne pas l'accès aux modifs
         // => mais en plus on réinitiliase code + date validité
 
         $erreurRequete = false;
-        $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', dateValid='0' WHERE id =" . $id;
+        $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $id;
         $requete = $dbConnex->prepare($phraseRequete);
         if( $requete->execute() != true ){ $erreurRequete = true; }
         //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
@@ -182,7 +182,7 @@ if( isset($_POST['validerModifs']) ){
     $id = $res['id'];
 
     // Avant toute chose, si le code est périmé, on sort !
-    if( (time() < $_SESSION['client']['dateValid']) ){
+    if( (time() < $_SESSION['client']['codeDateV']) ){
 
         // ********************************************        MAIL        *********************************************
 
@@ -378,7 +378,7 @@ if( isset($_POST['validerModifs']) ){
             $_SESSION['client']['mAutor'] = false;
 
             $erreurRequete = false;
-            $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', dateValid='0' WHERE id =" . $id;
+            $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $id;
             $requete = $dbConnex->prepare($phraseRequete);
             if( $requete->execute() != true ){ $erreurRequete = true; }
             //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
@@ -392,7 +392,7 @@ if( isset($_POST['validerModifs']) ){
         $_SESSION['client']['mAutor'] = false;
 
         $erreurRequete = false;
-        $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', dateValid='0' WHERE id =" . $id;
+        $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $id;
         $requete = $dbConnex->prepare($phraseRequete);
         if( $requete->execute() != true ){ $erreurRequete = true; }
         //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
@@ -422,35 +422,33 @@ if( isset($_POST['validerModifs']) ){
         <?= isset($confirmTestCode)  ? $confirmTestCode  : "" ?>
         <?= isset($confirmModifs)    ? $confirmModifs    : "" ?>
 
-        <form method='POST'>
+        <form method='POST' class='<?= ($_SESSION['client']['mAutor'] != true) ? "cReadOnly" : "" ?>'>
             <div class='cChampForm'>
                 <label for='iMail'>Adresse mail</label>
                 <input type='email' id='iMail' name='mail' value='<?= $_SESSION['client']['mail'] ?>'
-                                    placeholder='>' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                                    placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
             </div>
 
             <div class='cChampForm'>
                 <label for='iTel'>Téléphone</label>
                 <input type='tel' id='iTel' name='tel' value='<?= $_SESSION['client']['tel'] ?>'
-                                    placeholder='>' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                                    placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
             </div>
 
             <div class='cChampForm'>
                 <p class='cLabel'>Mot de passe</p>
-                <p class='cInput'></p>
-                <br><br>
                 <label for='iAmdp'>ancien</label>
-                <input type='password' id='iAmdp' name='amdp' placeholder='>' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                <input type='password' id='iAmdp' name='amdp' placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
             </div>
 
             <div class='cChampForm'>
                 <label for='iNmdp1'>nouveau</label>
-                <input type='password' id='iNmdp1' name='nmdp1' placeholder='>' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                <input type='password' id='iNmdp1' name='nmdp1' placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
             </div>
 
             <div class='cChampForm'>
                 <label for='iNmdp2'>nouveau (confirmation)</label>
-                <input type='password' id='iNmdp2' name='nmdp2' placeholder='>' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                <input type='password' id='iNmdp2' name='nmdp2' placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
             </div>
 
             <?php if( $_SESSION['client']['mAutor'] == true ) : ?>
@@ -463,7 +461,7 @@ if( isset($_POST['validerModifs']) ){
     </section>
 
     <section id='iMCProcedure' class='cSectionContour'>
-        <h2>Gérer ses données</h2>
+        <h2>Données personnelles</h2>
         <p>La modification ou la suppression des données personnelles est soumise à la procédure sécurisée suivante :</p>
         <ol>
             <li>demande d'un code d'authentification, reçu par mail</li>

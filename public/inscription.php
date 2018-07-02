@@ -86,7 +86,7 @@ if( isset($_POST['valider']) ){
 			// ie avec le bindValue, ça ajoute des guillemets autour du nom de la table ... et ça, ça ne passe pas en SQL !
 			// (mais il en faut autour des valeurs des champs)
 
-			// $requete = $dbConnex->prepare("INSERT INTO clients (dateCreation, civilite, nom, prenom, mail, password) VALUES (:dateB, :civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
+			// $requete = $dbConnex->prepare("INSERT INTO clients (dateCrea, civilite, nom, prenom, mail, password) VALUES (:dateB, :civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
 			// $requete->bindValue("dateB", $dateCrea, PDO::PARAM_STR);
 			// $requete->bindValue("civiliteB", $civilite, PDO::PARAM_STR);
 			// $requete->bindValue("nomB", $nom, PDO::PARAM_STR);
@@ -98,7 +98,7 @@ if( isset($_POST['valider']) ){
 			// (avant je délimitais les ch. de car. de la requête par des " et les variables par des ' mais
 			//  j'ai dû inverser le jour où j'ai décidé d'accepter le car. ' dans les noms : ex. Mc Kulloc'h )
 			$phraseRequete = 'INSERT INTO ' . TABLE_CLIENTS .
-							 ' (dateCreation, civilite, nom, prenom, mail, password) VALUES ("' .
+							 ' (dateCrea, civilite, nom, prenom, mail, password) VALUES ("' .
 							 $dateCrea . '", "' .
 							 $civilite . '", "' .
 							 $nom . '", "' .
@@ -113,8 +113,8 @@ if( isset($_POST['valider']) ){
 				// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
 			echo "<p id='iFocus'>Merci, votre compte a bien été créé.</p>";
 			echo "<p>Vous pouvez dorénavant vous connecter ...</p>";
-			echo "<a href='connexion.php'>>  connexion  <</a>";
 			echo "</div>";
+			echo "<a href='connexion.php'>>  connexion  <</a>";
 
 			?>
 
@@ -161,7 +161,7 @@ if( isset($_POST['valider']) ){
 										$focusErreurMis = true;
 									}
 							?>
-						>
+						placeholder='...'>
 					<?php if( isset($erreurs['prenom']) ) { echo "<sub>" . $erreurs['prenom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
@@ -172,7 +172,7 @@ if( isset($_POST['valider']) ){
 										$focusErreurMis = true;
 									}
 							?>
-						>
+						placeholder='...'>
 					<?php if( isset($erreurs['nom']) ) { echo "<sub>" . $erreurs['nom'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
@@ -183,7 +183,7 @@ if( isset($_POST['valider']) ){
 										$focusErreurMis = true;
 									}
 							?>
-						>
+						placeholder='...'>
 					<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
 					<?php if( $mailExisteDeja ) { echo "<sub>Aïe, cet identifiant est déjà pris, veuillez en choisir un autre svp ...</sub>"; } ?>
 				</div>
@@ -195,7 +195,7 @@ if( isset($_POST['valider']) ){
 										$focusErreurMis = true;
 									}
 							?>
-						>
+						placeholder='...'>
 					<?php if( isset($erreurs['password']) ) { echo "<sub>" . $erreurs['password'] . "</sub>"; } ?>
 				</div>
 				<div id='iValider'>
