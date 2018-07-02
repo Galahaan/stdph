@@ -28,6 +28,14 @@ if( isset( $_POST['valider'] ) ) {
 			$_SESSION['client']['mail'] = $client['mail'];
 			$_SESSION['client']['tel'] = $client['tel'];
 
+			// juste avant de retourner à l'accueil, on stocke en BDD la date de cette connexion
+			// => c'est la 1ère étape pour respecter la déclaration à la CNIL sur la durée de stockage des données
+			//    (la 2e étape consistera à détruire ces données quand elles auront dateConx + 1 an)
+			$phraseRequete = "UPDATE ". TABLE_CLIENTS . " SET dateConx = '" . date('Y-m-d') .  "' WHERE id = " . $client['id'];
+			$requete = $dbConnex->prepare($phraseRequete);
+			if( $requete->execute() != true ){ $erreurRequete = true; }
+			//pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
+
 			// on retourne à l'accueil :
 			// A noter : ici, la fonction header fonctionne bien parce qu'on est bien au dessus
 			//           du DOCTYPE et que la page HTML n'a pas encore commencé à être chargée.
