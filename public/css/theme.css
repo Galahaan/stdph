@@ -26,25 +26,25 @@
 /*                                                                                                                 */
 /* fond de la zone du site                         (main)               :  white                                   */
 /*                                                                                                                 */
-/* textes dans le bandeau du haut (titres + tel)                        :  ~364115  rgb(54, 65, 21)     vert       */
+/* texte dans le bandeau du haut (titres + tel)                         :  ~364115  rgb(54, 65, 21)     vert       */
 /*  + lignes fines dans les formulaires                                                                            */
 /*  + lignes gammes de produits                                                                                    */
 /*                                                                                                                 */
 /* menu de navigation, fond                                             :  ~ADADAD  rgb(173, 173, 173)  gris       */
-/* menu de navigation, textes                                           :  ~DEFFC4  rgb(222, 255, 196)  vert       */
+/* menu de navigation, texte                                            :  ~DEFFC4  rgb(222, 255, 196)  vert       */
 /*                                                                                                                 */
 /* bandeau de connexion, fond                                           :  ~575757  rgb(87, 87, 87)     gris       */
-/* bandeau de connexion, textes                                         :  white                                   */
+/* bandeau de connexion, texte                                          :  white                                   */
 /*                                                                                                                 */
 /* vignettes accueil, fond                         (accueil)            :  ~DEFFC4  rgb(222, 255, 196)  vert       */
-/* vignettes accueil, textes                       (accueil)            :  ~575757  rgb(87, 87, 87)     gris       */
+/* vignettes accueil, texte                        (accueil)            :  ~575757  rgb(87, 87, 87)     gris       */
 /* pharma ouverte                                  (accueil)            :  ~4DBC1C  rgb(77, 188, 28)    vert       */
 /* pharma ouvre dans ...                           (accueil)                                                       */
 /* pharma fermée                                   (accueil)            :  ~FF4141  rgb(255, 65, 65)    rouge      */
 /* pharma ferme dans ...                           (accueil)                                                       */
 /*                                                                                                                 */
 /* form des données perso en readonly, fond        (mon-compte)         :           rgb(224, 224, 224)  gris       */
-/* form des données perso en readonly, textes      (mon-compte)         :           rgb(89, 89, 89)  gris       */
+/* form des données perso en readonly, texte       (mon-compte)         :           rgb(89, 89, 89)     gris       */
 /*                                                                                                                 */
 /* messages d'erreur formulaires       (prepaComm + prepaOrdo + contact):  ~FF0000  rgb(255, 0, 0)      rouge      */
 /*  + n'oubliez pas ...                            (prepaOrdo)                                                     */
@@ -330,6 +330,11 @@ nav#iNavigation a{
 #iMCDonneesPerso form.cReadOnly, #iMCDonneesPerso input[readonly]{
     background-color: rgb(224, 224, 224);
     color: rgb(89, 89, 89);
+}
+/* on grise le fond de la <div>, contenant la phrase sur la demande de suppression, uniquement pour créer  */
+/* un contraste autour de la case à cocher qui, selon les navigateurs mobiles, peut être quasi invisible ! */
+form#iMCSupprimCpte div:first-of-type{
+    background-color: rgb(224, 224, 224);
 }
 
 /***************************************************************************************************************************************/

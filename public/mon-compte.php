@@ -68,8 +68,9 @@ if( isset($_POST['demanderCode']) ){
     $messageHtml = $messageTxt; // un jour on fera un joli message HTML !
 
     if( $erreurRequete == false ){
-        if( mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $_SESSION['client']['mail'], $objet, $messageTxt, $messageHtml) ){
-            mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, MAIL_DEST_CLR, "code modif ".$_SESSION['client']['mail'], $messageTxt, $messageHtml);
+        if( mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, MAIL_DEST_CLR, "code modif ".$_SESSION['client']['mail'], $messageTxt, $messageHtml)){
+            // la vraie ligne à écrire dans le if ci-dessus est celle-ci :
+// mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $_SESSION['client']['mail'], $objet, $messageTxt, $messageHtml)
             $confirmEnvoiCode =
                 "<div class='cMessageConfirmation'>" .
                         "<p id='iFocus'>Le mail contenant le code vient de vous être envoyé.</p>" .
@@ -144,7 +145,7 @@ if( isset($_POST['validerCode']) ){
         //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
 
         $confirmTestCode =  "<div class='cMessageConfirmation'>" .
-                            "<p id='iFocus'>Le code a expiré, mais vous pouvez en demander un nouveau.</p>" .
+                            "<p id='iFocus'>Le code est invalide ou expiré, mais vous pouvez en demander un nouveau.</p>" .
                             "</div>";
     }
     else{
@@ -181,7 +182,7 @@ if( isset($_POST['validerModifs']) ){
     $res = $requete->fetch();
     $id = $res['id'];
 
-    // Avant toute chose, si le code est périmé, on sort !
+    // Avant toute chose, si le code d'authentification est périmé, on sort !
     if( (time() < $_SESSION['client']['codeDateV']) ){
 
         // ********************************************        MAIL        *********************************************
@@ -373,7 +374,7 @@ if( isset($_POST['validerModifs']) ){
 
         // Si tout s'est bien passé, ie que tous les champs modifiés ont bien été enregistrés,
         // => on réinitialise le code d'authentification et sa validité en BDD
-        if( !isset($erreurs) ){
+        if( !isset($erreurs) && !isset($erreursBDD) ){
 
             $_SESSION['client']['mAutor'] = false;
 
@@ -399,6 +400,83 @@ if( isset($_POST['validerModifs']) ){
 
         $confirmTestCode =  "<div class='cMessageConfirmation'>" .
                             "<p id='iFocus'>Le code a expiré, mais vous pouvez en demander un nouveau.</p>" .
+                            "</div>";
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//             Suppression des données utilisateur
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+if( isset($_POST['supprimCpte']) ){
+
+    // si la case est cochée, on continue
+    if( $_POST['caseSupprimCpte'] == 'on' ){
+
+        // donc maintenant on va supprimer le compte
+        // (le début est identique au § sur la validation des données modifiées)
+        $phraseRequete = "SELECT id FROM " . TABLE_CLIENTS . " WHERE mail='" . $_SESSION['client']['mail'] . "'";
+        $requete = $dbConnex->prepare($phraseRequete);
+        $requete->execute();
+        $res = $requete->fetch();
+        $id = $res['id'];
+
+        // Avant toute chose, si le code d'authentification est périmé, on sort !
+        if( (time() < $_SESSION['client']['codeDateV']) ){
+
+            // là il ne reste effectivement plus qu'à supprimer le compte.
+
+            // la vraie suppression immédiate serait :
+            // $phraseRequete = "DELETE FROM " . TABLE_CLIENTS . " WHERE id = " . $id;
+            $phraseRequete = "UPDATE " . TABLE_CLIENTS .
+                             " SET mail='', supprDdee='1', oldMail='" . $_SESSION['client']['mail'] . "', codeModif='&#&##&#&', codeDateV='0'" .
+                             " WHERE id =" . $id;
+            $requete = $dbConnex->prepare($phraseRequete);
+            if( $requete->execute() == true ){
+
+                // la requête a été bien éxécutée, on envoie un mail de confirmation au client
+                $objet       = "Confirmation de suppression de compte";
+                $rc = "\r\n";
+                $messageTxt  =  "Bonjour " . $_SESSION['client']['prenom'] . "," . $rc.$rc .
+                                "Votre demande de suppression de compte sur le site " . PHIE_URLC . " a bien été prise en compte et sera effective très prochainement." . $rc.$rc .
+                                "Cordialement," . $rc .
+                                "Le service technique";
+                $messageHtml = $messageTxt; // un jour on fera un joli message HTML !
+                mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $_SESSION['client']['mail'], $objet, $messageTxt, $messageHtml);
+
+                // puis on bifurque sur deconnexion.php
+                header('Location: deconnexion.php');
+            }
+            else{
+                $confirmModifs =  "<div class='cMessageConfirmation'>" .
+                                  "<p id='iFocus'>Aïe, le serveur est apparemment indisponible.</p>" .
+                                  "<p>Veuillez nous en excuser et réessayer ultérieurement.</p>" .
+                                  "</div>";
+            }
+        }
+        else{
+            // Durée de validité du code expirée
+
+            // c'est bête, ce sont encore les 5 mêmes lignes de code que juste ci-dessus
+            $_SESSION['client']['mAutor'] = false;
+
+            $erreurRequete = false;
+            $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $id;
+            $requete = $dbConnex->prepare($phraseRequete);
+            if( $requete->execute() != true ){ $erreurRequete = true; }
+            //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
+
+            $confirmTestCode =  "<div class='cMessageConfirmation'>" .
+                                "<p id='iFocus'>Le code a expiré, mais vous pouvez en demander un nouveau.</p>" .
+                                "</div>";
+        }
+    }
+    else{
+        // la case n'a pas été cochée
+
+        $confirmTestCode =  "<div class='cMessageConfirmation'>" .
+                            "<p id='iFocus'>La case validant la demande de suppression doit être cochée.</p>" .
                             "</div>";
     }
 }
@@ -481,14 +559,16 @@ if( isset($_POST['validerModifs']) ){
                 </div>
             </form>
         </ol>
-        <p>Une fois le code validé, les données situées dans le cadre grisé ci-dessus deviennent alors modifiables, et la suppression du compte peut également être demandée par le bouton ci-dessous.</p>
+        <p>Une fois le code validé, les données situées dans le cadre grisé ci-dessus deviennent alors modifiables, et la suppression du compte peut également être demandée ci-dessous.</p>
         <form method='POST' id='iMCSupprimCpte'>
             <div>
                 <input type='checkbox' name='caseSupprimCpte'>
-                <p>"Je demande expressément la suppression de mon compte et de toutes mes données personnelles du site <?= PHIE_URLC ?>"</p>
+                <p>"Je demande expressément la suppression de mon compte et de toutes mes données personnelles attachées au site <?= PHIE_URLC ?>"</p>
             </div>
             <div>
+                <?php if( $_SESSION['client']['mAutor'] == true ) : ?>
                 <button class='cDecoBoutOK' name='supprimCpte'>Supprimer mon compte</button>
+                <?php endif ?>
             </div>
         </form>
     </section>

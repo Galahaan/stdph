@@ -233,6 +233,9 @@ nav#iNavigation{
     width: 18rem;
 }
 /* § de suppression du compte */
+form#iMCSupprimCpte div:first-of-type{
+    padding: 3% 0; /* la couleur du fond est dans theme.css */
+}
 form#iMCSupprimCpte div:last-of-type{
 	text-align: right; /* pour caler le bouton de suppression à droite et annuler le 'center' de #iMCProcedure form ci-dessus */
 	padding: 3% 3% 0 0;
@@ -243,6 +246,7 @@ form#iMCSupprimCpte div:last-of-type{
 #iMCSupprimCpte p{
 	width: 90%; /* pour aligner la case à cocher et la phrase (comme la phrase est trop longue) */
 	padding-left: 2%; /* un peu d'espace latéral entre la case et la phrase */
+	padding-bottom: 0; /* pour annuler le pad-bot de iMCProcedure p */
 }
 
 
