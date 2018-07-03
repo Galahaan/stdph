@@ -221,11 +221,30 @@ nav#iNavigation{
 	margin-left: 5%; /* sinon les n° des <li> sont trop à gauche, dans la marge */
 }
 #iMCProcedure form{
-	text-align: center; /* centrage du bouton de 'demande de code' */
+	text-align: center; /* centrage des boutons de 'demande', 'saisie et validation' du code */
 }
-#iMCProcedure div{
-	display: inline-block; /* centrage de 'saisie' et 'validation du code' */
+#iMCValiderCode div{
+	display: inline-block; /* alignement de 'saisie' et 'validation du code' */
 }
+/* champ de saisie du code de validation */
+#iMCValiderCode input{
+    padding: 1rem;
+    border-radius: 5px;  /* la couleur est dans theme.css */
+    width: 18rem;
+}
+/* § de suppression du compte */
+form#iMCSupprimCpte div:last-of-type{
+	text-align: right; /* pour caler le bouton de suppression à droite et annuler le 'center' de #iMCProcedure form ci-dessus */
+	padding: 3% 3% 0 0;
+}
+#iMCSupprimCpte input, #iMCSupprimCpte p{
+	display: inline-block; /* pour aligner la case à cocher et la phrase */
+}
+#iMCSupprimCpte p{
+	width: 90%; /* pour aligner la case à cocher et la phrase (comme la phrase est trop longue) */
+	padding-left: 2%; /* un peu d'espace latéral entre la case et la phrase */
+}
+
 
 /***************************************************************************************************************************************/
 /****************************************************           page index          ****************************************************/
@@ -372,14 +391,14 @@ nav#iNavigation{
 /* plus rien de spécial ... */
 
 /***************************************************************************************************************/
-/* Cette partie est commune aux 6 formulaires :                                                                */
+/* Cette partie est commune aux différents formulaires :                                                       */
 /*                                                                                                             */
 /*       => contact, connexion, inscription, ordonnance, commande et mon-compte                                */
 /*                                                                                                             */
 
 /* lignes fines entre les champs, taille des champs ...                                                        */
 .cChampForm{
-	/* cf theme.css pour le border-top: */
+	/* cf theme.css pour le border-top:                                                                        */
 	padding: 2% 0;
 }
 /* pour positionner latéralement les civilités                                                                 */
@@ -388,12 +407,12 @@ nav#iNavigation{
 }
 /* position et marges autour des champs du formulaire (+1 petite exception sur le p spécifique ordonnance)     */
 .cChampForm label, .cChampForm .cLabel, .cChampForm p{
-	display: block;                             /*  ^--- le p c'est celui de l'ordonnance  */
+	display: block;                             /*  ^--- le p c'est celui de l'ordonnance                      */
 	text-align: left;
 	padding: 0 2% 3%;
 }
 .cChampForm label[for='iCiviliteMme'], .cChampForm label[for='iCiviliteMlle'], .cChampForm label[for='iCiviliteM']{
-	display: inline-block; /* pour annuler le display: block ci-dessus, destiné aux 'label' en général */
+	display: inline-block; /* pour annuler le display: block ci-dessus, destiné aux 'label' en général         */
 	padding: 2% 0;
 }
 .cChampForm input:not([type='radio']){
@@ -410,7 +429,7 @@ nav#iNavigation{
 	max-width:   95%;
 }
 
-/* mess. d'erreurs dans les form. contact, inscrip, ordo et comm             partie commune aux 5 formulaires  */
+/* mess. d'erreurs dans les form. contact, inscrip, ordo, etc ...                                              */
 sub{
 	display: block;
 	padding-right: 1%;
@@ -422,7 +441,7 @@ sub{
 /* calage à droite des boutons de validation                                                                   */
 #iValider{
 	text-align: right;
-	padding-right: 2rem;
+	padding-right: 3%;
 }
 
 /* déco des boutons de validation et d'annulation                                                              */
@@ -438,14 +457,7 @@ sub{
 	margin-right: 2rem;
 }
 .cDecoBoutOK:hover, .cDecoBoutKO:hover{
-    text-decoration: underline;   /* et dans theme.css, on le met dans une autre couleur */
-}
-
-/* champ de saisie du code de validation */
-#iMCProcedure input{
-    padding: 1rem;
-    border-radius: 5px;  /* la couleur est dans theme.css */
-    width: 18rem;
+    text-decoration: underline;   /* et dans theme.css, on le met dans une autre couleur                       */
 }
 
 /*--------------------------------------------------------------------------------                             */
@@ -465,13 +477,13 @@ sub{
 	padding-bottom: 3%;
 }
 .cMessageConfirmation li{
-	margin-left:  15%;   /* sinon les puces disparaissent à gauche */
+	margin-left:  15%;   /* sinon les puces disparaissent à gauche                                             */
 }
 
 /*               fin du § sur les messages de confirmation                                                     */
 /*--------------------------------------------------------------------------------                             */
 
-/*               fin de la partie commune aux 5 formulaires                                                    */
+/*               fin de la partie commune aux formulaires                                                      */
 /***************************************************************************************************************/
 
 

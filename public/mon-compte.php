@@ -471,7 +471,7 @@ if( isset($_POST['validerModifs']) ){
                 </div>
             </form>
             <li>puis validation de ce code (actif pendant <?= DUREE_VALID_CODE_MODIF ?> mn)</li>
-            <form method='POST'>
+            <form method='POST' id='iMCValiderCode'>
                 <div>
                     <label for='iCode'></label>
                     <input type='text' id='iCode' name='code' placeholder='saisir ici le code (reçu par mail)'>
@@ -481,9 +481,16 @@ if( isset($_POST['validerModifs']) ){
                 </div>
             </form>
         </ol>
-        <p>(Dans le cas où plusieurs demandes sont faites, seul compte le dernier code reçu)</p>
-        <br>
-        <p>Si le code entré est validé, les données deviennent alors modifiables.</p>
+        <p>Une fois le code validé, les données situées dans le cadre grisé ci-dessus deviennent alors modifiables, et la suppression du compte peut également être demandée par le bouton ci-dessous.</p>
+        <form method='POST' id='iMCSupprimCpte'>
+            <div>
+                <input type='checkbox' name='caseSupprimCpte'>
+                <p>"Je demande expressément la suppression de mon compte et de toutes mes données personnelles du site <?= PHIE_URLC ?>"</p>
+            </div>
+            <div>
+                <button class='cDecoBoutOK' name='supprimCpte'>Supprimer mon compte</button>
+            </div>
+        </form>
     </section>
 
 </main>

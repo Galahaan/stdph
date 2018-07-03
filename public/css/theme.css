@@ -158,7 +158,7 @@ sub{
     background-color: rgb(88, 88, 88);
 }
 /* case de saisie du code de modification des données, reçu par mail */
-#iMCProcedure input{
+#iMCValiderCode input{
     border: 0.1rem solid rgb(165, 90, 165);
 }
 
