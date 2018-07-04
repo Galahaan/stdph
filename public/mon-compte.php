@@ -503,14 +503,14 @@ if( isset($_POST['supprimCpte']) ){
         <form method='POST' class='<?= ($_SESSION['client']['mAutor'] != true) ? "cReadOnly" : "" ?>'>
             <div class='cChampForm'>
                 <label for='iMail'>Adresse mail</label>
-                <input type='email' id='iMail' name='mail' value='<?= $_SESSION['client']['mail'] ?>'
+                <input type='email' id='iMail' name='mail' value='<?= isset($_POST['mail']) ? $_POST['mail'] : $_SESSION['client']['mail'] ?>'
                                     placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
             </div>
 
             <div class='cChampForm'>
                 <label for='iTel'>Téléphone</label>
-                <input type='tel' id='iTel' name='tel' value='<?= $_SESSION['client']['tel'] ?>'
-                                    placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                <input type='text' id='iTel' name='tel' value='<?= isset($_POST['tel']) ? $_POST['tel'] : $_SESSION['client']['tel'] ?>'
+                                    placeholder='-- -- -- -- --' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
             </div>
 
             <div class='cChampForm'>

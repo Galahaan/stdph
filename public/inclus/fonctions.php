@@ -223,6 +223,8 @@ function filtrerNom( $nomPOST ){
 ///////////////////////////////////////////////////////////////////////////////////////////////
 function mailValide( $mailSaisi ){
 
+	$resultat = false;
+
 	// 1- on le "nettoie" (des scripts malveillants par ex.)
 	$mail = filter_var($mailSaisi, FILTER_SANITIZE_EMAIL);
 
@@ -240,7 +242,20 @@ function mailValide( $mailSaisi ){
 }
 
 function telValide( $telSaisi ){
-	return true;
+
+	// on autorise :
+	// - soit une chaîne vide
+	// - soit une chaîne de la forme '0x xx xx xx xx' avec ou sans espaces
+
+	$resultat = false;
+
+	if( empty($telSaisi) ){
+		$resultat = true;
+	}
+	elseif( preg_match('#^(0[1-9]{1}\s?)([0-9]{2}\s?){3}([0-9]{2})$#', $telSaisi) ){
+		$resultat = true;
+	}
+	return $resultat;
 }
 
 function mdpValide( $mdpSaisi ){
