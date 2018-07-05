@@ -212,6 +212,10 @@ nav#iNavigation{
 /***************************************************************************************************************************************/
 /*******************************************                 page mon-compte                 *******************************************/
 /***************************************************************************************************************************************/
+/* pour espacer un peu les 2 boutons 'valider' et 'annuler' */
+#iMCDonneesPerso button:first-of-type{
+	margin-right: 3%;
+}
 /* description de la procédure sécurisée */
 #iMCProcedure p, #iMCProcedure li, #iMCProcedure form{
 	padding-bottom: 3%;
@@ -448,15 +452,15 @@ sub{
 	padding-right: 3%;
 }
 
-/* déco des boutons de validation et d'annulation                                                              */
-.cDecoBoutOK{
+/* déco des boutons (validation, annulation, etc ...)                                                          */
+.cDecoBouton{
 	padding: 1rem;
 	border: none;
 	border-radius: 5px;
 	font-size: 1.3rem;   /* si on ne précise pas la font-size ici, apparemment la balise <button> en a une     */
 	                     /* en "interne", autour de 1.2 rem, qui ne bouge pas avec la taille du body           */
 }
-.cDecoBoutOK:hover{
+.cDecoBouton:hover{
     text-decoration: underline;   /* et dans theme.css, on le met dans une autre couleur                       */
 }
 

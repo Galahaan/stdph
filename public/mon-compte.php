@@ -220,7 +220,7 @@ if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
                     }
                 }
                 else{
-                    $erreurs[] = "le mail est invalide";
+                    $erreurs[] = "le mail est invalide.";
                 }
             }
 
@@ -294,7 +294,7 @@ if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
                                     }
                                 }
                                 else{
-                                    $erreurs[] = "l'ancien mot de passe est incorrect";
+                                    $erreurs[] = "l'ancien mot de passe est incorrect.";
                                 }
                             }
                             else{
@@ -306,11 +306,11 @@ if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
                         }
                     }
                     else{
-                        $erreurs[] = "le nouveau mot de passe et sa confirmation sont différents";
+                        $erreurs[] = "le nouveau mot de passe et sa confirmation sont différents.";
                     }
                 }
                 else{
-                    $erreurs[] = "pour modifier le mot de passe, les 3 cases doivent être renseignées";
+                    $erreurs[] = "pour modifier le mot de passe, les 3 cases doivent être renseignées.";
                 }
             }
 
@@ -549,8 +549,11 @@ if( isset($_POST['supprimCpte']) ){
 
             <?php if( $_SESSION['client']['mAutor'] == true ) : ?>
             <div id='iValider'>
-                <button class='cDecoBoutOK' name='validerModifs'>Valider</button>
-                <button class='cDecoBoutOK' name='annulerModifs'>Annuler</button>
+                <button class='cDecoBouton' name='validerModifs'>Valider</button>
+                <button class='cDecoBouton' name='annulerModifs'>Annuler</button>
+                <?php // NB: en cas d'appui sur ENTER (au clavier), c'est le 1e bouton du 1e form de la page qui est validé.   ?>
+                <?php //     (ce n'est pas ce qui m'a guidé pour faire cette page :                                            ?>
+                <?php //      1°§ [modif données]    2°§ [dde code]    3°§ [supp données]    n'empêche que c'est bien tombé !) ?>
             </div>
             <?php endif ?>
         </form>
@@ -563,7 +566,7 @@ if( isset($_POST['supprimCpte']) ){
             <li>demande d'un code d'authentification, reçu par mail</li>
             <form method='POST'>
                 <div>
-                    <button class='cDecoBoutOK' name='demanderCode'>demander un code</button>
+                    <button class='cDecoBouton' name='demanderCode'>demander un code</button>
                 </div>
             </form>
             <li>puis validation de ce code (actif pendant <?= DUREE_VALID_CODE_MODIF ?> mn)</li>
@@ -573,7 +576,7 @@ if( isset($_POST['supprimCpte']) ){
                     <input type='text' id='iCode' name='code' placeholder='saisir ici le code (reçu par mail)'>
                 </div>
                 <div>
-                    <button class='cDecoBoutOK' name='validerCode'>Valider</button>
+                    <button class='cDecoBouton' name='validerCode'>Valider</button>
                 </div>
             </form>
         </ol>
@@ -585,7 +588,7 @@ if( isset($_POST['supprimCpte']) ){
             </div>
             <div>
                 <?php if( $_SESSION['client']['mAutor'] == true ) : ?>
-                <button class='cDecoBoutOK' name='supprimCpte'>Supprimer mon compte</button>
+                <button class='cDecoBouton' name='supprimCpte'>Supprimer mon compte</button>
                 <?php endif ?>
             </div>
         </form>

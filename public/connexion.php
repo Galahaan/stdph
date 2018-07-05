@@ -89,7 +89,7 @@ if( isset( $_POST['valider'] ) ) {
 				</div>
 
 				<div id='iValider'>
-					<button class='cDecoBoutOK' name='valider'>Connexion</button>
+					<button class='cDecoBouton' name='valider'>Connexion</button>
 				</div>
 			</form>
 		</section>

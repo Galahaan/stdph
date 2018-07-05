@@ -180,7 +180,7 @@ if( isset($_POST['valider']) ){
 					<?php if( isset($erreurs['password']) ) { echo "<sub>" . $erreurs['password'] . "</sub>"; } ?>
 				</div>
 				<div id='iValider'>
-					<button class='cDecoBoutOK' name='valider'>Valider</button>
+					<button class='cDecoBouton' name='valider'>Valider</button>
 				</div>
 			</form>
 		</section>

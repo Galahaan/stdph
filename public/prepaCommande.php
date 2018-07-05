@@ -348,7 +348,7 @@ if( isset($_POST['valider']) ){
 						<?php if( isset($erreurs['message']) ) { echo "<sub>" . $erreurs['message'] . "</sub>"; } ?>
 					</div>
 					<div id='iValider'>
-						<button class='cDecoBoutOK' name='valider'>Envoyer</button>
+						<button class='cDecoBouton' name='valider'>Envoyer</button>
 					</div>
 				</form>
 			<?php endif ?>
