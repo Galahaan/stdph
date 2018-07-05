@@ -205,7 +205,7 @@ $enteteSpecs = enteteSpecs($_SERVER['REQUEST_URI']);
                     echo "</div>";
 
                     echo "<div id='iLienConnex'>";
-                        echo "<a href='connexion.php'>connexion</a>";
+                        echo "<a href='connexion.php'>mon compte</a>";
                     echo "</div>";
                 }
             ?>

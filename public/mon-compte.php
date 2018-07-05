@@ -225,7 +225,7 @@ if( isset($_POST['validerModifs']) ){
                 }
             }
             else{
-                $erreurs[] = "le n° de téléphone est invalide.<br>Il doit être composé de 5 paires de chiffres séparées par des espaces.<br>ex. : 01 23 45 67 89";
+                $erreurs[] = "le n° de téléphone est invalide.<br>Il doit être composé de 5 paires de chiffres séparées ou non par des espaces.<br>ex. : 01 23 45 67 89";
             }
         }
 

@@ -9,8 +9,11 @@ $erreur = "";
 
 if( isset( $_POST['valider'] ) ) {
 
-	$mail = $_POST['mail'];
-	$password = $_POST['password'];
+	if( mailValide($_POST['mail']) ){ $mail = $_POST['mail']; }
+	else{ $mail = ''; }
+
+	if( mdpValide($_POST['password']) ){ $password = $_POST['password']; }
+	else{ $password = ''; }
 
 	// récupération du mot de passe crypté :
 	$phraseRequete = "SELECT * FROM " . TABLE_CLIENTS . " WHERE mail = '" . $mail . "'";
@@ -54,13 +57,11 @@ if( isset( $_POST['valider'] ) ) {
 			header("Location: index.php");
 		}
 		else{
-			// c'est le mauvais mot de passe
-			$erreur = "Aïe, erreur de connexion ...";
+			$erreur = "Mot de passe invalide ...";
 		}
 	}
 	else{
-		// client inconnu
-		$erreur = "Oups, erreur de connexion ...";
+		$erreur = "Identifiant inconnu ...";
 	}
 }
 ?>

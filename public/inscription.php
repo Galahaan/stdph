@@ -27,30 +27,15 @@ if( isset($_POST['valider']) ){
 
 	// Mail
 
-	// "nettoie" la valeur utilisateur :
-	$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
+	$adrMailClient = $_POST['adrMailClient'];
 
-	// teste la NON validité du format :
-	if( ! filter_var($adrMailClient, FILTER_VALIDATE_EMAIL) ){
-		$erreurs['adrMailClient'] = "(format incorrect)"; 
+	if( ! mailValide($adrMailClient) ){
+		$erreurs['adrMailClient'] = "(mail invalide)";
 	}
 	else{
 		// si toutes les infos sont ok, il faudra créer un nouvel enregistrement, à la condition
 		// que le mail, qui sert d'identifiant, ne soit pas déjà présent en BDD, d'où ce petit test :
 
-		// requête pour interroger la BDD :
-
-		// au début, je faisais ça, et ça marchait très bien, tant que le nom de la table
-		// était écrit en "dur" :
-		// le pb, c'est qu'on veut stocker le nom de la table dans une constante d'un fichier de config ...
-		// mais en utilisant la même technique pour le nom de la table que pour les valeurs des champs,
-		// ie avec le bindValue, ça ajoute des guillemets autour du nom de la table ... et ça, ça ne passe pas en SQL !
-		// (mais il en faut autour des valeurs des champs)
-
-		// $requete = $dbConnex->prepare("SELECT mail FROM clients WHERE mail = :mailB");
-		// $requete->bindValue("mailB", $adrMailClient, PDO::PARAM_STR);
-
-		// d'où la solution : construire une chaîne de caractères complète, avec des guillemets là où il en faut !
 		$phraseRequete = "SELECT mail FROM " . TABLE_CLIENTS . " WHERE mail = '" . $adrMailClient . "'";
 		$requete = $dbConnex->prepare($phraseRequete);
 		$requete->execute();
@@ -59,11 +44,10 @@ if( isset($_POST['valider']) ){
 
 	// Mot de passe :
 
-	$password = $_POST['password'];
-		if( (strlen($password) < NB_CAR_MIN_MDP) || (strlen($password) > NB_CAR_MAX_MDP ) ){
-		$erreurs['password'] = "(entre " . NB_CAR_MIN_MDP . " et " . NB_CAR_MAX_MDP . " caractères)";
+	if( ! mdpValide($_POST['password']) ){
+		$erreurs['password'] = "(de " . NB_CAR_MIN_MDP . " à " . NB_CAR_MAX_MDP . " car. dont 1 Maj., 1 min. et 1 chiffre)";
 	}
-	$passwordCrypte = password_hash($password, PASSWORD_DEFAULT);
+	$passwordCrypte = password_hash($_POST['password'], PASSWORD_DEFAULT);
 }
 ?>
 	<main id='iMain'>
@@ -88,10 +72,7 @@ if( isset($_POST['valider']) ){
 
 			// $requete = $dbConnex->prepare("INSERT INTO clients (dateCrea, civilite, nom, prenom, mail, password) VALUES (:dateB, :civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
 			// $requete->bindValue("dateB", $dateCrea, PDO::PARAM_STR);
-			// $requete->bindValue("civiliteB", $civilite, PDO::PARAM_STR);
-			// $requete->bindValue("nomB", $nom, PDO::PARAM_STR);
-			// $requete->bindValue("prenomB", $prenom, PDO::PARAM_STR);
-			// $requete->bindValue("mailB", $adrMailClient, PDO::PARAM_STR);
+			// ...
 			// $requete->bindValue("passwordB", $passwordCrypte, PDO::PARAM_STR);
 
 			// d'où la solution : construire une chaîne de caractères complète, avec des guillemets là où il en faut !

@@ -28,12 +28,10 @@ if( isset($_POST['valider']) ){
 
 	// Mail
 
-	// "nettoie" la valeur utilisateur :
-	$adrMailClient = filter_var($_POST['adrMailClient'], FILTER_SANITIZE_EMAIL);
+	$adrMailClient = $_POST['adrMailClient'];
 
-	// teste la NON validité du format :
-	if( ! filter_var($adrMailClient, FILTER_VALIDATE_EMAIL) ){
-		$erreurs['adrMailClient'] = "(format incorrect)"; 
+	if( ! mailValide($adrMailClient) ){
+		$erreurs['adrMailClient'] = "(mail invalide)"; 
 	};
 
 	// Message
@@ -47,7 +45,7 @@ if( isset($_POST['valider']) ){
 	//     quand même un retour chariot, ce qui ajoute 2 caractères ('invisibles').
 
 	if( (strlen($messageClientTxt) < NB_CAR_MIN_MESSAGE) || (strlen($messageClientTxt) > NB_CAR_MAX_MESSAGE ) ){
-		$erreurs['message'] = "(entre " . NB_CAR_MIN_MESSAGE . " et " . NB_CAR_MAX_MESSAGE . " caractères)";
+		$erreurs['message'] = "(de " . NB_CAR_MIN_MESSAGE . " à " . NB_CAR_MAX_MESSAGE . " caractères)";
 	}
 	// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
 	$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";

@@ -79,7 +79,7 @@ function require_onceCLR( $nomDuFichier ){
 //							Quelques variables globales
 //
 //		destinées aux 2 fonctions de remplacement de caractères ci-dessous
-//		(  filtrerPrenom() et filtrerNom()  )
+//		filtrerPrenom() et filtrerNom()
 //
 // - la 1ère utilise    str_replace()
 //
@@ -157,7 +157,7 @@ function filtrerPrenom( $prenomPOST ){
 
 	// test de la contrainte sur la longueur de la chaîne :
 	if( ($nbCar < NB_CAR_MIN) || ($nbCar > NB_CAR_MAX) ){
-		$erreur = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
+		$erreur = "(de " . NB_CAR_MIN . " à " . NB_CAR_MAX . " caractères)";
 	}
 	else{
 		// cf explications sur le remplacement de car. ci-dessus :
@@ -168,8 +168,8 @@ function filtrerPrenom( $prenomPOST ){
 		// en majuscule, les autres en minuscules :
 		$prenom = ucwords(strtolower($prenom), "- \t");
 		// on informe l'utilisateur en cas de modif de sa saisie :
-		if( $prenom != $prenomPOST ){
-			$erreur = "(orthographe modifiée => veuillez revalider)";
+		if( strlen($prenom) != $nbCar ){
+			$erreur = "(orthographe modifiée => veuillez revalider svp)";
 		}
 	}
 	return [$prenom, $erreur];
@@ -198,15 +198,15 @@ function filtrerNom( $nomPOST ){
 	$nom = strip_tags($nomPOST);
 
 	if( ($nbCar < NB_CAR_MIN) || ($nbCar > NB_CAR_MAX) ){
-		$erreur = "(entre " . NB_CAR_MIN . " et " . NB_CAR_MAX . " caractères)";
+		$erreur = "(de " . NB_CAR_MIN . " à " . NB_CAR_MAX . " caractères)";
 	}
 	else{
 		$nom = str_replace($trouverCar, $nouveauCar, $nom);
 		$nom = superTrim($nom);
 		$nom = strtoupper($nom);
 		$nom = strtr($nom, $minusAccMajus);
-		if( $nom != $nomPOST ){
-			$erreur = "(orthographe modifiée => veuillez revalider)";
+		if( strlen($nom) != $nbCar ){
+			$erreur = "(orthographe modifiée => veuillez revalider svp)";
 		}
 	}
 	return [$nom, $erreur];
