@@ -172,224 +172,19 @@ if( isset($_POST['validerCode']) ){
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if( isset($_POST['validerModifs']) ){
+if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
 
-    // a priori il devrait y avoir des infos à mettre à jour en BDD, on aura donc besoin de l'ID de l'utilisateur,
-    // alors autant le récupérer tout de suite (bon, c'est juste inutile dans le cas où il n'y a pas de modif ...)
+    // Dans les 2 cas : données utilisateur à mettre à jour (valider), ou le code et sa validité à réinitialiser (annuler),
+    // il y aura des infos à mettre à jour en BDD, on a donc besoin de l'ID de l'utilisateur.
     $phraseRequete = "SELECT id FROM " . TABLE_CLIENTS . " WHERE mail='" . $_SESSION['client']['mail'] . "'";
     $requete = $dbConnex->prepare($phraseRequete);
     $requete->execute();
     $res = $requete->fetch();
     $id = $res['id'];
 
-    // Avant toute chose, si le code d'authentification est périmé, on sort !
-    if( (time() < $_SESSION['client']['codeDateV']) ){
-
-        // ********************************************        MAIL        *********************************************
-
-        // Si le mail est différent => on modifie l'info en BDD, mais aussi, en cas de réussite, la globale SESSION
-        if( $_POST['mail'] != $_SESSION['client']['mail'] ){
-
-            // le mail est bien différent du précédent, mais, juste avant de le stocker, on vérifie qu'il est valide
-            if( mailValide($_POST['mail']) ){
-                $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET mail='" . $_POST['mail'] . "' WHERE id =" . $id;
-                $requete = $dbConnex->prepare($phraseRequete);
-                if( $requete->execute() == true ){
-                    $modifOK[] = "mail";
-                    $_SESSION['client']['mail'] = $_POST['mail'];
-                }
-                else{
-                    $erreursBDD[] = "mail";
-                }
-            }
-            else{
-                $erreurs[] = "le mail est invalide";
-            }
-        }
-
-        // ********************************************       N° TEL       *********************************************
-
-        // Si le n° de tel est différent => on modifie l'info en BDD, mais aussi, en cas de réussite, la globale SESSION
-        if( $_POST['tel'] != $_SESSION['client']['tel'] ){
-
-            // le n° est bien différent du précédent, mais, juste avant de le stocker, on vérifie qu'il est valide
-            if( telValide($_POST['tel']) ){
-                $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET tel='" . $_POST['tel'] . "' WHERE id =" . $id;
-                $requete = $dbConnex->prepare($phraseRequete);
-                if( $requete->execute() == true ){
-                    $modifOK[] = "n° de téléphone";
-                    $_SESSION['client']['tel'] = $_POST['tel'];
-                }
-                else{
-                    $erreursBDD[] = "n° de téléphone";
-                }
-            }
-            else{
-                $erreurs[] = "le n° de téléphone est invalide.<br>Il doit être composé de 5 paires de chiffres séparées ou non par des espaces.<br>ex. : 01 23 45 67 89";
-            }
-        }
-
-        // ********************************************    MOT DE PASSE    *********************************************
-
-        // Si les 3 champs du § 'Mot de passe' sont bien remplis, on lance les tests ...
-        // Si tous les tests sont OK => on modifie l'info en BDD
-        if( !empty($_POST['amdp']) || !empty($_POST['nmdp1']) || !empty($_POST['nmdp2']) ){
-            if( !empty($_POST['amdp']) && !empty($_POST['nmdp1']) && !empty($_POST['nmdp2']) ){
-
-                // ____________________ 1e étape ____________________
-
-                // pour éviter les A/R inutiles avec la BDD, on commence par comparer les 2 nouveaux mdp
-                if( $_POST['nmdp1'] == $_POST['nmdp2'] ){
-
-                    // ____________________ 2e étape ____________________
-
-                    // on teste le nouveau mot de passe (entre min et max car. dont 1 majuscule, 1 minuscule, 1 chiffre)
-                    if( mdpValide($_POST['nmdp1']) ){
-
-                        // ____________________ 3e étape ____________________
-
-                        // on récupère l'ancien mot de passe en BDD
-                        $phraseRequete = "SELECT password FROM " . TABLE_CLIENTS . " WHERE id='" . $id . "'";
-                        $requete = $dbConnex->prepare($phraseRequete);
-                        if( $requete->execute() == true ){
-
-                            $res = $requete->fetch();
-                            $mdpHash = $res['password'];
-
-                            // ____________________ 4e étape ____________________
-
-                            // on compare l'ancien mot de passe, saisi dans le formulaire, avec sa valeur récupérée en BDD
-                            if( password_verify($_POST['amdp'], $mdpHash) ){
-
-                                // ____________________ 5e étape ____________________
-
-                                // puisque tout est OK, on stocke le nouveau mot de passe en BDD
-                                $nvMdpCrypte = password_hash($_POST['nmdp1'], PASSWORD_DEFAULT);
-                                $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET password='" . $nvMdpCrypte . "' WHERE id =" . $id;
-                                $requete = $dbConnex->prepare($phraseRequete);
-
-                                // on remplit les 2 tableaux de messages (succès ou échec)
-                                if( $requete->execute() == true ){
-                                    $modifOK[] = "mot de passe";
-                                }
-                                else{
-                                    $erreursBDD[] = "mot de passe";
-                                }
-                            }
-                            else{
-                                $erreurs[] = "l'ancien mot de passe est incorrect";
-                            }
-                        }
-                        else{
-                            $erreursBDD[] = "mot de passe (l'ancien n'a pas pu être vérifié)";
-                        }
-                    }
-                    else{
-                        $erreurs[] = "le mot de passe est invalide.<br>Il doit contenir entre " . NB_CAR_MIN_MDP . " et " . NB_CAR_MAX_MDP . " caractères dont 1 majuscule, 1 minuscule et 1 chiffre.";
-                    }
-                }
-                else{
-                    $erreurs[] = "le nouveau mot de passe et sa confirmation sont différents";
-                }
-            }
-            else{
-                $erreurs[] = "pour modifier le mot de passe, les 3 cases doivent être renseignées";
-            }
-        }
-
-        // **************************    Mise en forme du message sur le bilan des modifs    ***************************
-
-        // si on est dans un des 3 cas ci-dessous, on doit écrire un message d'information (modif validée ou échec)
-        // => on peut donc déjà mettre les balises de début et de fin de ce message
-
-        if( isset($modifOK) || isset($erreurs) || isset($erreursBDD) ){
-
-            $confirmModifs = "<div class='cMessageConfirmation'><p id='iFocus'>";
-
-            // Message pour les modifs validées
-            if( isset($modifOK) ){
-                if( sizeof($modifOK) > 1 ){
-                    $confirmModifs .= "Les éléments suivants ont bien été mis à jour :</p>" .
-                                     "<ul>";
-                    for( $i = 0; $i < sizeof($modifOK); $i++ ){
-                        $confirmModifs .= "<li>" . $modifOK[$i] . "</li>";
-                    }
-                    $confirmModifs .= "</ul>";
-                }
-                else{
-                    $confirmModifs .= "Votre " . $modifOK[0] . " a bien été mis à jour.</p>";
-                }
-
-                // transition avec le § éventuel suivant
-                if( isset($erreurs) || isset($erreursBDD) ){
-                    $confirmModifs .= "<br><p>Mais attention : ";
-                }
-            }
-
-            // Message pour les erreurs utilisateur
-            if( isset($erreurs) ){
-
-                // transition avec le § éventuel précédent
-                if( !isset($modifOK) ){
-                    $confirmModifs .= "Attention : ";
-                }
-
-                if( sizeof($erreurs) > 1 ){
-                    $confirmModifs .= "</p><ul>";
-                    for( $i = 0; $i < sizeof($erreurs); $i++ ){
-                        $confirmModifs .= "<li>" . $erreurs[$i] . "</li>";
-                    }
-                    $confirmModifs .= "</ul>";
-                }
-                else{
-                    $confirmModifs .= $erreurs[0] . "</p>";
-                }
-            }
-
-            // Normalement très rare : message pour les erreurs serveur
-            if( isset($erreursBDD) ){
-
-                // transition avec le § éventuel précédent
-                if( !isset($modifOK) && !isset($erreurs) ){
-                    $confirmModifs .= "Aïe, le serveur est apparemment indisponible.</p>";
-                }
-                else{
-                    $confirmModifs .= "<br><p>Et le serveur est apparemment indisponible.</p>";
-                }
-
-                if( sizeof($erreursBDD) > 1 ){
-                    $confirmModifs .= "<ul>Les éléments suivants n'ont pas pu être enregistrés :";
-                    for( $i = 0; $i < sizeof($erreursBDD); $i++ ){
-                        $confirmModifs .= "<li>" . $erreursBDD[$i] . "</li>";
-                    }
-                    $confirmModifs .= "</ul>";
-                }
-                else{
-                    $confirmModifs .= "<p>Votre " . $erreursBDD[0] . " n'a pas pu être enregistré.</p>";
-                }
-                $confirmModifs .= "<p>Veuillez nous en excuser et réessayer ultérieurement.</p>";
-            }
-            $confirmModifs .= "</div>";
-        }
-
-        // Si tout s'est bien passé, ie que tous les champs modifiés ont bien été enregistrés,
-        // => on réinitialise le code d'authentification et sa validité en BDD
-        if( !isset($erreurs) && !isset($erreursBDD) ){
-
-            $_SESSION['client']['mAutor'] = false;
-
-            $erreurRequete = false;
-            $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $id;
-            $requete = $dbConnex->prepare($phraseRequete);
-            if( $requete->execute() != true ){ $erreurRequete = true; }
-            //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
-        }
-    }
-    else{
-        // Durée de validité du code expirée
-
-        // c'est bête, ce sont les 5 mêmes lignes de code que juste ci-dessus, mais je n'ai pas trouvé
-        // comment 'factoriser' ...
+    if( isset($_POST['annulerModifs']) ){
+        // on a cliqué sur 'annuler'.
+        // on réinitialise le code et sa durée de validité, pour la session, et en BDD
         $_SESSION['client']['mAutor'] = false;
 
         $erreurRequete = false;
@@ -398,9 +193,232 @@ if( isset($_POST['validerModifs']) ){
         if( $requete->execute() != true ){ $erreurRequete = true; }
         //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
 
-        $confirmTestCode =  "<div class='cMessageConfirmation'>" .
-                            "<p id='iFocus'>Le code a expiré, mais vous pouvez en demander un nouveau.</p>" .
-                            "</div>";
+        // et pour ré-afficher les bonnes données (ie celles actuellement valides) :
+        $_POST['mail'] = $_SESSION['client']['mail'];
+        $_POST['tel']  = $_SESSION['client']['tel'];
+    }
+    else{
+        // on a cliqué sur 'valider'.
+        // Avant toute chose, si le code d'authentification est périmé, on sort !
+        if( (time() < $_SESSION['client']['codeDateV']) ){
+
+            // ********************************************        MAIL        *********************************************
+
+            // Si le mail est différent => on modifie l'info en BDD, mais aussi, en cas de réussite, la globale SESSION
+            if( $_POST['mail'] != $_SESSION['client']['mail'] ){
+
+                // le mail est bien différent du précédent, mais, juste avant de le stocker, on vérifie qu'il est valide
+                if( mailValide($_POST['mail']) ){
+                    $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET mail='" . $_POST['mail'] . "' WHERE id =" . $id;
+                    $requete = $dbConnex->prepare($phraseRequete);
+                    if( $requete->execute() == true ){
+                        $modifOK[] = "mail";
+                        $_SESSION['client']['mail'] = $_POST['mail'];
+                    }
+                    else{
+                        $erreursBDD[] = "mail";
+                    }
+                }
+                else{
+                    $erreurs[] = "le mail est invalide";
+                }
+            }
+
+            // ********************************************       N° TEL       *********************************************
+
+            // Si le n° de tel est différent => on modifie l'info en BDD, mais aussi, en cas de réussite, la globale SESSION
+            if( $_POST['tel'] != $_SESSION['client']['tel'] ){
+
+                // le n° est bien différent du précédent, mais, juste avant de le stocker, on vérifie qu'il est valide
+                if( telValide($_POST['tel']) ){
+                    $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET tel='" . $_POST['tel'] . "' WHERE id =" . $id;
+                    $requete = $dbConnex->prepare($phraseRequete);
+                    if( $requete->execute() == true ){
+                        $modifOK[] = "n° de téléphone";
+                        $_SESSION['client']['tel'] = $_POST['tel'];
+                    }
+                    else{
+                        $erreursBDD[] = "n° de téléphone";
+                    }
+                }
+                else{
+                    $erreurs[] = "le n° de téléphone est invalide.<br>Il doit être composé de 5 paires de chiffres séparées ou non par des espaces.<br>ex. : 01 23 45 67 89";
+                }
+            }
+
+            // ********************************************    MOT DE PASSE    *********************************************
+
+            // Si les 3 champs du § 'Mot de passe' sont bien remplis, on lance les tests ...
+            // Si tous les tests sont OK => on modifie l'info en BDD
+            if( !empty($_POST['amdp']) || !empty($_POST['nmdp1']) || !empty($_POST['nmdp2']) ){
+                if( !empty($_POST['amdp']) && !empty($_POST['nmdp1']) && !empty($_POST['nmdp2']) ){
+
+                    // ____________________ 1e étape ____________________
+
+                    // pour éviter les A/R inutiles avec la BDD, on commence par comparer les 2 nouveaux mdp
+                    if( $_POST['nmdp1'] == $_POST['nmdp2'] ){
+
+                        // ____________________ 2e étape ____________________
+
+                        // on teste le nouveau mot de passe (de min à max car. dont 1 majuscule, 1 minuscule, 1 chiffre)
+                        if( mdpValide($_POST['nmdp1']) ){
+
+                            // ____________________ 3e étape ____________________
+
+                            // on récupère l'ancien mot de passe en BDD
+                            $phraseRequete = "SELECT password FROM " . TABLE_CLIENTS . " WHERE id='" . $id . "'";
+                            $requete = $dbConnex->prepare($phraseRequete);
+                            if( $requete->execute() == true ){
+
+                                $res = $requete->fetch();
+                                $mdpHash = $res['password'];
+
+                                // ____________________ 4e étape ____________________
+
+                                // on compare l'ancien mot de passe, saisi dans le formulaire, avec sa valeur récupérée en BDD
+                                if( password_verify($_POST['amdp'], $mdpHash) ){
+
+                                    // ____________________ 5e étape ____________________
+
+                                    // puisque tout est OK, on stocke le nouveau mot de passe en BDD
+                                    $nvMdpCrypte = password_hash($_POST['nmdp1'], PASSWORD_DEFAULT);
+                                    $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET password='" . $nvMdpCrypte . "' WHERE id =" . $id;
+                                    $requete = $dbConnex->prepare($phraseRequete);
+
+                                    // on remplit les 2 tableaux de messages (succès ou échec)
+                                    if( $requete->execute() == true ){
+                                        $modifOK[] = "mot de passe";
+                                    }
+                                    else{
+                                        $erreursBDD[] = "mot de passe";
+                                    }
+                                }
+                                else{
+                                    $erreurs[] = "l'ancien mot de passe est incorrect";
+                                }
+                            }
+                            else{
+                                $erreursBDD[] = "mot de passe (l'ancien n'a pas pu être vérifié)";
+                            }
+                        }
+                        else{
+                            $erreurs[] = "le mot de passe est invalide.<br>Il doit contenir entre " . NB_CAR_MIN_MDP . " et " . NB_CAR_MAX_MDP . " caractères dont 1 majuscule, 1 minuscule et 1 chiffre.";
+                        }
+                    }
+                    else{
+                        $erreurs[] = "le nouveau mot de passe et sa confirmation sont différents";
+                    }
+                }
+                else{
+                    $erreurs[] = "pour modifier le mot de passe, les 3 cases doivent être renseignées";
+                }
+            }
+
+            // **************************    Mise en forme du message sur le bilan des modifs    ***************************
+
+            // si on est dans un des 3 cas ci-dessous, on doit écrire un message d'information (modif validée ou échec)
+            // => on peut donc déjà mettre les balises de début et de fin de ce message
+
+            if( isset($modifOK) || isset($erreurs) || isset($erreursBDD) ){
+
+                $confirmModifs = "<div class='cMessageConfirmation'><p id='iFocus'>";
+
+                // Message pour les modifs validées
+                if( isset($modifOK) ){
+                    if( sizeof($modifOK) > 1 ){
+                        $confirmModifs .= "Les éléments suivants ont bien été mis à jour :</p>" .
+                                         "<ul>";
+                        for( $i = 0; $i < sizeof($modifOK); $i++ ){
+                            $confirmModifs .= "<li>" . $modifOK[$i] . "</li>";
+                        }
+                        $confirmModifs .= "</ul>";
+                    }
+                    else{
+                        $confirmModifs .= "Votre " . $modifOK[0] . " a bien été mis à jour.</p>";
+                    }
+
+                    // transition avec le § éventuel suivant
+                    if( isset($erreurs) || isset($erreursBDD) ){
+                        $confirmModifs .= "<br><p>Mais attention : ";
+                    }
+                }
+
+                // Message pour les erreurs utilisateur
+                if( isset($erreurs) ){
+
+                    // transition avec le § éventuel précédent
+                    if( !isset($modifOK) ){
+                        $confirmModifs .= "Attention : ";
+                    }
+
+                    if( sizeof($erreurs) > 1 ){
+                        $confirmModifs .= "</p><ul>";
+                        for( $i = 0; $i < sizeof($erreurs); $i++ ){
+                            $confirmModifs .= "<li>" . $erreurs[$i] . "</li>";
+                        }
+                        $confirmModifs .= "</ul>";
+                    }
+                    else{
+                        $confirmModifs .= $erreurs[0] . "</p>";
+                    }
+                }
+
+                // Normalement très rare : message pour les erreurs serveur
+                if( isset($erreursBDD) ){
+
+                    // transition avec le § éventuel précédent
+                    if( !isset($modifOK) && !isset($erreurs) ){
+                        $confirmModifs .= "Aïe, le serveur est apparemment indisponible.</p>";
+                    }
+                    else{
+                        $confirmModifs .= "<br><p>Et le serveur est apparemment indisponible.</p>";
+                    }
+
+                    if( sizeof($erreursBDD) > 1 ){
+                        $confirmModifs .= "<ul>Les éléments suivants n'ont pas pu être enregistrés :";
+                        for( $i = 0; $i < sizeof($erreursBDD); $i++ ){
+                            $confirmModifs .= "<li>" . $erreursBDD[$i] . "</li>";
+                        }
+                        $confirmModifs .= "</ul>";
+                    }
+                    else{
+                        $confirmModifs .= "<p>Votre " . $erreursBDD[0] . " n'a pas pu être enregistré.</p>";
+                    }
+                    $confirmModifs .= "<p>Veuillez nous en excuser et réessayer ultérieurement.</p>";
+                }
+                $confirmModifs .= "</div>";
+            }
+
+            // Si tout s'est bien passé, ie que tous les champs modifiés ont bien été enregistrés,
+            // => on réinitialise le code d'authentification et sa validité en BDD
+            if( !isset($erreurs) && !isset($erreursBDD) ){
+
+                $_SESSION['client']['mAutor'] = false;
+
+                $erreurRequete = false;
+                $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $id;
+                $requete = $dbConnex->prepare($phraseRequete);
+                if( $requete->execute() != true ){ $erreurRequete = true; }
+                //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
+            }
+        }
+        else{
+            // Durée de validité du code expirée
+
+            // c'est bête, ce sont les 5 mêmes lignes de code que juste ci-dessus, mais je n'ai pas trouvé
+            // comment 'factoriser' ...
+            $_SESSION['client']['mAutor'] = false;
+
+            $erreurRequete = false;
+            $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $id;
+            $requete = $dbConnex->prepare($phraseRequete);
+            if( $requete->execute() != true ){ $erreurRequete = true; }
+            //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
+
+            $confirmTestCode =  "<div class='cMessageConfirmation'>" .
+                                "<p id='iFocus'>Le code a expiré, mais vous pouvez en demander un nouveau.</p>" .
+                                "</div>";
+        }
     }
 }
 
@@ -531,8 +549,8 @@ if( isset($_POST['supprimCpte']) ){
 
             <?php if( $_SESSION['client']['mAutor'] == true ) : ?>
             <div id='iValider'>
-                <a class='cDecoBoutKO' href='index.php'>Annuler</a>
                 <button class='cDecoBoutOK' name='validerModifs'>Valider</button>
+                <button class='cDecoBoutOK' name='annulerModifs'>Annuler</button>
             </div>
             <?php endif ?>
         </form>

@@ -449,18 +449,14 @@ sub{
 }
 
 /* déco des boutons de validation et d'annulation                                                              */
-.cDecoBoutOK, .cDecoBoutKO{
+.cDecoBoutOK{
 	padding: 1rem;
 	border: none;
 	border-radius: 5px;
 	font-size: 1.3rem;   /* si on ne précise pas la font-size ici, apparemment la balise <button> en a une     */
 	                     /* en "interne", autour de 1.2 rem, qui ne bouge pas avec la taille du body           */
 }
-.cDecoBoutKO{
-	padding: 1.1rem 1rem 0.9rem 1rem; /* sinon (mais pourquoi ?!!), les 2 boutons sont très légèrement décalés */
-	margin-right: 2rem;
-}
-.cDecoBoutOK:hover, .cDecoBoutKO:hover{
+.cDecoBoutOK:hover{
     text-decoration: underline;   /* et dans theme.css, on le met dans une autre couleur                       */
 }
 

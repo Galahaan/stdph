@@ -149,12 +149,12 @@ sub{
     color: rgb(255, 0, 0); /* mess. d'erreurs */
 }
 /* déco des boutons (validation, annulation, ...) */
-.cDecoBoutOK, .cDecoBoutKO{
+.cDecoBoutOK{
     background-color: rgb(165, 90, 165);
     color: white;
     font-weight: 400;
 }
-.cDecoBoutOK:hover, .cDecoBoutKO:hover{
+.cDecoBoutOK:hover{
     background-color: rgb(88, 88, 88);
 }
 /* case de saisie du code de modification des données, reçu par mail */
