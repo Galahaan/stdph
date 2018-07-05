@@ -259,7 +259,24 @@ function telValide( $telSaisi ){
 }
 
 function mdpValide( $mdpSaisi ){
-	return true;
+
+	// Le mdp doit vérifier les conditions suivantes :
+	// - de  NB_CAR_MIN_MDP  à  NB_CAR_MAX_MDP  caractères
+	// - au moins 1 Maj, 1 min, 1 chiffre
+
+	$resultat = false;
+
+	// Idéalement, la regex aurait été celle-là :
+	// #^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{NB_CAR_MIN_MDP,NB_CAR_MAX_MDP}$#
+	// mais je ne sais pas comment intégrer des constantes dans la regex ...
+
+	$nbCar = strlen($mdpSaisi);
+	if( $nbCar >= NB_CAR_MIN_MDP && $nbCar <= NB_CAR_MAX_MDP ){
+		if( preg_match('#^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$#', $mdpSaisi) ){
+			$resultat = true;
+		}
+	}
+	return $resultat;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

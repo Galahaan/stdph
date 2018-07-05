@@ -225,7 +225,7 @@ if( isset($_POST['validerModifs']) ){
                 }
             }
             else{
-                $erreurs[] = "le n° de téléphone est invalide";
+                $erreurs[] = "le n° de téléphone est invalide.<br>Il doit être composé de 5 paires de chiffres séparées par des espaces.<br>ex. : 01 23 45 67 89";
             }
         }
 
@@ -243,7 +243,7 @@ if( isset($_POST['validerModifs']) ){
 
                     // ____________________ 2e étape ____________________
 
-                    // on teste le nouveau mot de passe qui doit contenir 8 car. min dont 1 majuscule, 1 minuscule, 1 chiffre
+                    // on teste le nouveau mot de passe (entre min et max car. dont 1 majuscule, 1 minuscule, 1 chiffre)
                     if( mdpValide($_POST['nmdp1']) ){
 
                         // ____________________ 3e étape ____________________
@@ -285,7 +285,7 @@ if( isset($_POST['validerModifs']) ){
                         }
                     }
                     else{
-                        $erreurs[] = "le mot de passe doit contenir au moins 8 caractères dont 1 majuscule, 1 minuscule et 1 chiffre";
+                        $erreurs[] = "le mot de passe est invalide.<br>Il doit contenir entre " . NB_CAR_MIN_MDP . " et " . NB_CAR_MAX_MDP . " caractères dont 1 majuscule, 1 minuscule et 1 chiffre.";
                     }
                 }
                 else{

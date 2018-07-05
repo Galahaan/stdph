@@ -192,7 +192,7 @@ define('NB_CAR_MIN_HTM'         , 1);
 define('NB_CAR_MAX_HTM'         , 45);
 
 // Nombre de caractères min et max pour le mot de passe :
-define('NB_CAR_MIN_MDP'         , 5);
+define('NB_CAR_MIN_MDP'         , 5); // min 3 (1 Maj + 1 min + 1 chiffre) sinon le mdp sera tjs invalide
 define('NB_CAR_MAX_MDP'         , 20);
 define('NB_CAR_MIN_MDP_HTM'     , 2);
 define('NB_CAR_MAX_MDP_HTM'     , 25);
