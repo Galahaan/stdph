@@ -74,7 +74,8 @@ if( isset($_POST['demanderCode']) ){
             $confirmEnvoiCode =
                 "<div class='cMessageConfirmation'>" .
                         "<p id='iFocus'>Le mail contenant le code vient de vous être envoyé.</p>" .
-                        "<p>Attention : selon les cas, il peut être dirigé dans les messages indésirables (spams).</p>" .
+                        "<p>Attention : selon les cas, il peut être dirigé dans les messages indésirables ('spams').</p>" .
+                        "<p>Si vous n'avez pas reçu le mail après avoir patienté, demandez un nouveau code.</p>" .
                 "</div>";
         }
         else{
@@ -549,8 +550,8 @@ if( isset($_POST['supprimCpte']) ){
 
             <?php if( $_SESSION['client']['mAutor'] == true ) : ?>
             <div id='iValider'>
-                <button class='cDecoBouton' name='validerModifs'>Valider</button>
-                <button class='cDecoBouton' name='annulerModifs'>Annuler</button>
+                <button class='cDecoBoutonValid' name='validerModifs'>Valider</button>
+                <button class='cDecoBoutonAutre' name='annulerModifs'>Annuler</button>
                 <?php // NB: en cas d'appui sur ENTER (au clavier), c'est le 1e bouton du 1e form de la page qui est validé.   ?>
                 <?php //     (ce n'est pas ce qui m'a guidé pour faire cette page :                                            ?>
                 <?php //      1°§ [modif données]    2°§ [dde code]    3°§ [supp données]    n'empêche que c'est bien tombé !) ?>
@@ -566,7 +567,7 @@ if( isset($_POST['supprimCpte']) ){
             <li>demande d'un code d'authentification, reçu par mail</li>
             <form method='POST'>
                 <div>
-                    <button class='cDecoBouton' name='demanderCode'>demander un code</button>
+                    <button class='cDecoBoutonValid' name='demanderCode'>demander un code</button>
                 </div>
             </form>
             <li>puis validation de ce code (actif pendant <?= DUREE_VALID_CODE_MODIF ?> mn)</li>
@@ -576,7 +577,7 @@ if( isset($_POST['supprimCpte']) ){
                     <input type='text' id='iCode' name='code' placeholder='saisir ici le code (reçu par mail)'>
                 </div>
                 <div>
-                    <button class='cDecoBouton' name='validerCode'>Valider</button>
+                    <button class='cDecoBoutonValid' name='validerCode'>Valider</button>
                 </div>
             </form>
         </ol>
@@ -588,7 +589,7 @@ if( isset($_POST['supprimCpte']) ){
             </div>
             <div>
                 <?php if( $_SESSION['client']['mAutor'] == true ) : ?>
-                <button class='cDecoBouton' name='supprimCpte'>Supprimer mon compte</button>
+                <button class='cDecoBoutonValid' name='supprimCpte'>Supprimer mon compte</button>
                 <?php endif ?>
             </div>
         </form>
