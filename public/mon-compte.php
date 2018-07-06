@@ -206,7 +206,7 @@ if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
             // ********************************************        MAIL        *********************************************
 
             // Si le mail est différent => on modifie l'info en BDD, mais aussi, en cas de réussite, la globale SESSION
-            if( $_POST['mail'] != $_SESSION['client']['mail'] ){
+            if( !empty($_POST['mail']) && $_POST['mail'] != $_SESSION['client']['mail'] ){
 
                 // le mail est bien différent du précédent, mais, juste avant de le stocker, on vérifie qu'il est valide
                 if( mailValide($_POST['mail']) ){
@@ -522,14 +522,18 @@ if( isset($_POST['supprimCpte']) ){
         <form method='POST' class='<?= ($_SESSION['client']['mAutor'] != true) ? "cReadOnly" : "" ?>'>
             <div class='cChampForm'>
                 <label for='iMail'>Adresse mail</label>
-                <input type='email' id='iMail' name='mail' value='<?= isset($_POST['mail']) ? $_POST['mail'] : $_SESSION['client']['mail'] ?>'
-                                    placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                <input type='email' id='iMail' name='mail' value='<?= !empty($_POST['mail']) ? $_POST['mail'] : $_SESSION['client']['mail'] ?>'
+                                    autofocus placeholder='...' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                <?php // il ne faut pas mettre 'required' :                                                             ?>
+                <?php // - il serait utile pour le bouton 'valider', mais c'est pas grave : on gère le cas en php       ?>
+                <?php // - en revanche, il est bloquant pour 'annuler' : on ne peut plus annuler si la case est vide !! ?>
             </div>
 
             <div class='cChampForm'>
                 <label for='iTel'>Téléphone</label>
                 <input type='text' id='iTel' name='tel' value='<?= isset($_POST['tel']) ? $_POST['tel'] : $_SESSION['client']['tel'] ?>'
                                     placeholder='-- -- -- -- --' <?= ($_SESSION['client']['mAutor'] != true) ? "readonly" : "" ?> >
+                <?php // le jour où le tel sera obligatoire, il faudra remplacer value = isset par !empty               ?>
             </div>
 
             <div class='cChampForm'>
