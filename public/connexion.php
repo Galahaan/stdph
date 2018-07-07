@@ -7,7 +7,7 @@ require_once("./inclus/initDB.php");
 
 $erreur = "";
 
-if( isset( $_POST['valider'] ) ) {
+if( isset($_POST['connexion']) && !empty($_POST['mail']) && !empty($_POST['password']) ){
 
 	if( mailValide($_POST['mail']) ){ $mail = $_POST['mail']; }
 	else{ $mail = ''; }
@@ -80,7 +80,7 @@ if( isset( $_POST['valider'] ) ) {
 			<form method='POST'>
 				<div class='cChampForm'>
 					<label for='iMail'>mail</label>
-					<input type='text' id='iMail' name='mail' required autofocus placeholder='...'>
+					<input type='text' id='iMail' name='mail' required placeholder='...' autofocus value='<?= isset($_POST['mail']) ? $_POST['mail'] : "" ?>' >
 				</div>
 
 				<div class='cChampForm'>
@@ -89,8 +89,8 @@ if( isset( $_POST['valider'] ) ) {
 				</div>
 
 				<div id='iValider'>
-					<button class='cDecoBoutonValid' name='valider'>Connexion</button>
-					<button class='cDecoBoutonAutre' name='mdpOublie'>mot de passe oublié</button>
+					<button class='cDecoBoutonValid' name='connexion'>Connexion</button>
+					<a href='reinitMdp.php<?= !empty($_POST['mail']) ? "?mail=".$_POST['mail'] : "" ?>' class='cDecoBoutonAutre' >mot de passe oublié</a>
 				</div>
 			</form>
 		</section>
