@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/entete.php');
+include('inclus/enteteP.php');
 
 // Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
 // courante n'a pas été usurpée; je suis donc, das ce cas, obligé de l'écrire EN DUR :
@@ -50,6 +50,8 @@ if( isset($_POST['valider']) ){
 	// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
 	$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
 }
+
+include('inclus/enteteH.php');
 ?>
 	<main id='iMain'>
 		<nav class='cBraille'>

@@ -1,13 +1,12 @@
 <?php
 
+include('inclus/enteteP.php');
+
 // Si le nom de la page est saisi directement dans la barre d'adresse, alors
 // que la personne ne s'est pas encore connectée => retour accueil direct !
-session_start();
 if( !isset($_SESSION['client']) ){
 	header('Location: index.php');
 }
-
-include('inclus/entete.php');
 
 // Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
 // courante n'a pas été usurpée; je suis donc, das ce cas, obligé de l'écrire EN DUR :
@@ -57,6 +56,8 @@ if( isset($_POST['valider']) ){
 	// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
 	$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
 }
+
+include("inclus/enteteH.php");
 ?>
 	<main id='iMain'>
 		<section id='iCommPrepaComm' class='cSectionContour'><h2>Préparation de commande</h2>

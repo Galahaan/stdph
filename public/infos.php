@@ -1,7 +1,8 @@
 <?php
 
-include('inclus/entete.php');
+include('inclus/enteteP.php');
 
+include('inclus/enteteH.php');
 ?>
 	<main id='iMain'>
 		<section id='iInfos' class='cSectionContour'><h2>Bon à savoir !..</h2>

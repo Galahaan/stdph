@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/entete.php');
+include('inclus/enteteP.php');
 
 // ici on est obligé d'utiliser la fonction native telle quelle, sinon elle ne peut pas jouer son rôle de "_once" :
 require_once("./inclus/initDB.php");
@@ -54,7 +54,7 @@ if( isset($_POST['connexion']) && !empty($_POST['mail']) && !empty($_POST['passw
 			// enfin, on retourne à l'accueil :
 			// A noter : ici, la fonction header fonctionne bien parce qu'on est bien au dessus
 			//           du DOCTYPE et que la page HTML n'a pas encore commencé à être chargée.
-			header("Location: index.php");
+			header('Location: index.php');
 		}
 		else{
 			$erreur = "Mot de passe invalide ...";
@@ -64,6 +64,8 @@ if( isset($_POST['connexion']) && !empty($_POST['mail']) && !empty($_POST['passw
 		$erreur = "Identifiant inconnu ...";
 	}
 }
+
+include('inclus/enteteH.php');
 ?>
 	<main id='iMain'>
 		<section id='iConnexionIDs' class='cSectionContour'>

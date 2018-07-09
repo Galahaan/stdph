@@ -1,13 +1,12 @@
 <?php
 
+include("inclus/enteteP.php");
+
 // Si le nom de la page est saisi directement dans la barre d'adresse, alors
 // que la personne ne s'est pas encore connectée => retour accueil direct !
-session_start();
 if( !isset($_SESSION['client']) ){
     header('Location: index.php');
 }
-
-include("inclus/entete.php");
 
 // pour les accès à la BDD
 require_once("./inclus/initDB.php");
@@ -506,6 +505,7 @@ if( isset($_POST['supprimCpte']) ){
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+include("inclus/enteteH.php");
 ?>
 <main id='iMain'>
 

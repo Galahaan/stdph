@@ -1,6 +1,6 @@
 <?php
 
-include('inclus/entete.php');
+include('inclus/enteteP.php');
 
 // ici on est obligé d'utiliser la fonction native telle quelle, sinon elle ne peut pas jouer son rôle de "_once" :
 require_once("./inclus/initDB.php");
@@ -49,6 +49,8 @@ if( isset($_POST['valider']) ){
 	}
 	$passwordCrypte = password_hash($_POST['password'], PASSWORD_DEFAULT);
 }
+
+include("inclus/enteteH.php");
 ?>
 	<main id='iMain'>
 		<section id='iInscription' class='cSectionContour'><h2>Création de votre compte</h2>

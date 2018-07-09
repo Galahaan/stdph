@@ -7,7 +7,7 @@
 //     - .htaccess de la racine      => vérifier que le .htaccess du serveur est bien identique
 //
 // 
-// et penser à supprimer l'affichage des erreyrs dans entete.php : ini_set('display_errors', 1);
+// et penser à supprimer l'affichage des erreurs dans enteteP.php : ini_set('display_errors', 1);
 //
 
 
@@ -292,12 +292,11 @@ define('CONTACT_INFOS_PRATIQUES' ,
 ///////////////                + <title>                                   ///////////////
 ///////////////                + <meta name='description'>                 ///////////////
 ///////////////                                                            ///////////////
-///////////////               (fonctions.php et entete.php)                ///////////////
+///////////////               (fonctions.php et enteteP.php)               ///////////////
 ///////////////                                                            ///////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // nom et <title> : dans 'fonctions / pageCourante()'
-//     (sauf NOM_INDEX qui est aussi dans entete.php, avec son flag associé)
 //
 // <meta description> : dans 'fonctions / enteteSpecs()'
 //

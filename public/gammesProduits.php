@@ -1,7 +1,8 @@
 <?php
 
-include('inclus/entete.php');
+include('inclus/enteteP.php');
 
+include('inclus/enteteH.php');
 ?>
 	<main id='iMain'>
 		<section id='iGammesProd' class='cSectionContour'><h2>Les Marques que vous trouverez à la pharmacie</h2>

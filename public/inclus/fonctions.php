@@ -706,7 +706,7 @@ function enteteSpecs( $request_uri ){
 	// pour les récupérer dans la page appelante en sortie de la fonction, ex. $enteteSpecs['refresh'] ...
 	// MAIS !.. quand je mets le '<' de début de balise, ça doit être interprété comme une faille potentielle,
 	// et rien ne passe, la chaîne transférée par la fonction est vide.
-	// => d'où l'ajout du '<' uniquement après l'appel de la fonction dans entete.php :-(
+	// => d'où l'ajout du '<' uniquement après l'appel de la fonction dans enteteH.php :-(
 
 	switch( $page ){
 
