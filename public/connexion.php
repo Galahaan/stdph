@@ -2,68 +2,92 @@
 
 include('inclus/enteteP.php');
 
-// ici on est obligé d'utiliser la fonction native telle quelle, sinon elle ne peut pas jouer son rôle de "_once" :
 require_once("./inclus/initDB.php");
 
 $erreur = "";
 
-if( isset($_POST['connexion']) && !empty($_POST['mail']) && !empty($_POST['password']) ){
+if( isset($_POST['connexion']) && !empty($_POST['mail']) ){
 
 	if( mailValide($_POST['mail']) ){ $mail = $_POST['mail']; }
 	else{ $mail = ''; }
 
-	if( mdpValide($_POST['password']) ){ $password = $_POST['password']; }
-	else{ $password = ''; }
+	if( !empty($_POST['password']) ){
 
-	// récupération du mot de passe crypté :
-	$phraseRequete = "SELECT * FROM " . TABLE_CLIENTS . " WHERE mail = '" . $mail . "'";
-	$requete = $dbConnex->prepare($phraseRequete);
-	$requete->execute();
-	$client = $requete->fetch();
+		if( mdpValide($_POST['password']) ){ $password = $_POST['password']; }
+		else{ $password = ''; }
 
-	if($client){
-		if( password_verify($password, $client['password']) ){
 
-			// c'est le bon mot de passe, on ouvre la session :
-			$_SESSION['client']['civilite'] = $client['civilite'];
-			$_SESSION['client']['nom'] = $client['nom'];
-			$_SESSION['client']['prenom'] = $client['prenom'];
-			$_SESSION['client']['mail'] = $client['mail'];
-			$_SESSION['client']['tel'] = $client['tel'];
+		// Petit aparté sur le fonctionnement du statut du mot de passe :
+		// - par défaut, ie à la création d'un compte, le statut est à 'on'
+		//   . qd le client se connecte, le statut n'est pas modifié et reste à 'on'
+		//   . si le client modifie son mdp, le statut est mis à 'on', donc inchangé dans ce cas
+		//
+		// - si le client déclenche 'mdp oublié' => le mdp est réinitialisé et le statut passe à 'reset'
+		//   . à la 1ère connexion, le statut est modifié et passe à 'off'
+		//   . si le client modifie son mdp (comme il le lui est demandé), le statut est mis à 'on', donc on repart en fonctionnement nominal
+		//   . si le client ne modifie pas son mdp, il ne pourra pas se reconnecter puisque le statut du mdp sera resté à 'off'
+		//     (il devra à nouveau cliquer sur 'mdp oublié')
 
-			// juste avant de retourner à l'accueil, on stocke en BDD la date de cette connexion
-			// => c'est la 1ère étape pour respecter la déclaration à la CNIL sur la durée de stockage des données
-			//    (la 2e étape consistera à détruire ces données quand elles auront dateConx + 1 an)
-			$erreurRequete = false;
-			$phraseRequete = "UPDATE ". TABLE_CLIENTS . " SET dateConx = '" . date('Y-m-d') .  "' WHERE id = " . $client['id'];
-			$requete = $dbConnex->prepare($phraseRequete);
-			if( $requete->execute() != true ){ $erreurRequete = true; }
-			//pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
 
-			// et en plus, si jamais le client avait, lors d'une session précédente, demandé un code
-			// d'authentification pour modifier ses données (mon-compte), sans s'en être servi => on initialise
-			// les variables de SESSION concernées, et on réinitialise aussi les valeurs restées intactes en BDD
-			$_SESSION['client']['nbEssaisCodeRestants'] = 0;
-			$_SESSION['client']['codeDateV']            = 0;
-			$_SESSION['client']['mAutor']               = false;
-			$phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $client['id'];
-			$requete = $dbConnex->prepare($phraseRequete);
-			if( $requete->execute() != true ){ $erreurRequete = true; }
-			//pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
+		// récupération des données du client, dont le mot de passe crypté :
+		$phraseRequete = "SELECT * FROM " . TABLE_CLIENTS . " WHERE mail = '" . $mail . "'";
+		$requete = $dbConnex->prepare($phraseRequete);
+		$requete->execute();
+		$client = $requete->fetch();
 
-			// enfin, on retourne à l'accueil :
-			// A noter : ici, la fonction header fonctionne bien parce qu'on est bien au dessus
-			//           du DOCTYPE et que la page HTML n'a pas encore commencé à être chargée.
-			header('Location: index.php');
+		if( ! empty($client) ){
+			if( password_verify($password, $client['pwd']) && (($client['pwdStatus'] == 'on') || ($client['pwdStatus'] == 'reset')) ){
+
+				// c'est le bon mot de passe, et son statut est valide, on ouvre donc la session
+				$_SESSION['client']['civilite'] = $client['civilite'];
+				$_SESSION['client']['nom'] = $client['nom'];
+				$_SESSION['client']['prenom'] = $client['prenom'];
+				$_SESSION['client']['mail'] = $client['mail'];
+				$_SESSION['client']['tel'] = $client['tel'];
+
+				// si c'est la 1ère connexion après un reset du mdp, on le 'désactive'
+				if( $client['pwdStatus'] == 'reset' ){
+					$phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET pwdStatus='off' WHERE id=" . $client['id'];
+					$requete = $dbConnex->prepare($phraseRequete);
+					$requete->execute();
+				}
+
+				// juste avant de retourner à l'accueil, on stocke en BDD la date de cette connexion
+				// => c'est la 1ère étape pour respecter la déclaration à la CNIL sur la durée de stockage des données
+				//    (la 2e étape consistera à détruire ces données quand elles auront dateConx + 1 an)
+				$erreurRequete = false;
+				$phraseRequete = "UPDATE ". TABLE_CLIENTS . " SET dateConx= '" . date('Y-m-d') .  "' WHERE id= " . $client['id'];
+				$requete = $dbConnex->prepare($phraseRequete);
+				if( $requete->execute() != true ){ $erreurRequete = true; }
+				//pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
+
+				// et en plus, si jamais le client avait, lors d'une session précédente, demandé un code
+				// d'authentification pour modifier ses données (mon-compte), sans s'en être servi => on initialise
+				// les variables de SESSION concernées, et on réinitialise aussi les valeurs restées intactes en BDD
+				$_SESSION['client']['nbEssaisCodeRestants'] = 0;
+				$_SESSION['client']['codeDateV']            = 0;
+				$_SESSION['client']['mAutor']               = false;
+				$phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET codeModif='&#&##&#&', codeDateV='0' WHERE id =" . $client['id'];
+				$requete = $dbConnex->prepare($phraseRequete);
+				if( $requete->execute() != true ){ $erreurRequete = true; }
+				//pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
+
+				// enfin, on retourne à l'accueil :
+				// A noter : ici, la fonction header fonctionne bien parce qu'on est bien au dessus
+				//           du DOCTYPE et que la page HTML n'a pas encore commencé à être chargée.
+				header('Location: index.php');
+			}
+			else{
+				$erreur = "Mot de passe invalide ...";
+			}
 		}
 		else{
-			$erreur = "Mot de passe invalide ...";
+			$erreur = "Identifiant inconnu ...";
 		}
 	}
-	else{
-		$erreur = "Identifiant inconnu ...";
-	}
+	// else : "il faut renseigner un MdP ..."
 }
+// else : "il faut renseigner un mail ..."
 
 include('inclus/enteteH.php');
 ?>
@@ -82,7 +106,7 @@ include('inclus/enteteH.php');
 			<form method='POST'>
 				<div class='cChampForm'>
 					<label for='iMail'>mail</label>
-					<input type='text' id='iMail' name='mail' required placeholder='...' autofocus value='<?= isset($_POST['mail']) ? $_POST['mail'] : "" ?>' >
+					<input type='text' id='iMail' name='mail' required placeholder='...' autofocus value='<?= isset($mail) ? $mail : "" ?>' >
 				</div>
 
 				<div class='cChampForm'>
@@ -92,7 +116,7 @@ include('inclus/enteteH.php');
 
 				<div id='iValider'>
 					<button class='cDecoBoutonValid' name='connexion'>Connexion</button>
-					<a href='reinitMdp.php<?= !empty($_POST['mail']) ? "?mail=".$_POST['mail'] : "" ?>' class='cDecoBoutonAutre' >mot de passe oublié</a>
+					<a href='reinitMdp.php<?= !empty($mail) ? "?mail=".$mail : "" ?>' class='cDecoBoutonAutre' >mot de passe oublié</a>
 				</div>
 			</form>
 		</section>

@@ -281,6 +281,31 @@ function mdpValide( $mdpSaisi ){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
+//						genererMdp()
+//
+// Cette fonction génère un mot de passe aléatoire contenant :
+// chiffre(s), lettre(s) min, lettre(s) MAJ et caractères spéciaux
+//
+// La longueur du mot de passe est déterminée par la constante NB_CAR_MDP_TMP
+//
+// 
+///////////////////////////////////////////////////////////////////////////////////////////////
+function genererMdp(){
+    $carAuto = ['Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A',
+			     1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+			    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+				'!', '#', '{', '@', '[', '&', '(', '-', ')', '+', ']', '/', '}', '*', '~', '=', '§', '%'];
+
+    for( $i=0; $i < NB_CAR_MDP_TMP; $i++ ){
+
+        $mdpAlea .= $carAuto[mt_rand(0, sizeof($carAuto))];
+    }
+
+    return $mdpAlea;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
 //						getIpAdr()
 //
 // Fonction qui sert à obtenir l'adresse IP du client
@@ -948,6 +973,8 @@ function racClavier( $http_user_agent ){
 // Fonction qui envoie un mail contenant 2 parties textuelles :
 // - la 1ère partie au format TXT brut
 // - la 2ème partie au format HTML
+//
+// La fonction renvoie 'true' si le mail est bien parti.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 function mailTxHt( $expeNom, $expeMailHbg, $expeMailReply, $destiMail, $objet, $messageTxt, $messageHtml ){

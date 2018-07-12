@@ -81,7 +81,7 @@ if( isset($_POST['demanderCode']) ){
             $confirmEnvoiCode =
                 "<div class='cMessageConfirmation'>" .
                         "<p id='iFocus'>Aïe, il y a eu un problème lors de l'envoi du code ...</p>" .
-                        "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>" .
+                        "<p>Veuillez nous en excuser et réessayer ultérieurement.</p>" .
                 "</div>";
         }
     }
@@ -89,7 +89,7 @@ if( isset($_POST['demanderCode']) ){
         $confirmEnvoiCode =
             "<div class='cMessageConfirmation'>" .
                     "<p id='iFocus'>Aïe, il y a eu un problème lors de la génération du code ...</p>" .
-                    "<p>Le serveur est probablement indisponible, veuillez réessayer ultérieurement, merci.</p>" .
+                    "<p>Veuillez nous en excuser et réessayer ultérieurement.</p>" .
             "</div>";
     }
 }
@@ -266,12 +266,12 @@ if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
                             // ____________________ 3e étape ____________________
 
                             // on récupère l'ancien mot de passe en BDD
-                            $phraseRequete = "SELECT password FROM " . TABLE_CLIENTS . " WHERE id='" . $id . "'";
+                            $phraseRequete = "SELECT pwd FROM " . TABLE_CLIENTS . " WHERE id='" . $id . "'";
                             $requete = $dbConnex->prepare($phraseRequete);
                             if( $requete->execute() == true ){
 
                                 $res = $requete->fetch();
-                                $mdpHash = $res['password'];
+                                $mdpHash = $res['pwd'];
 
                                 // ____________________ 4e étape ____________________
 
@@ -281,8 +281,10 @@ if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
                                     // ____________________ 5e étape ____________________
 
                                     // puisque tout est OK, on stocke le nouveau mot de passe en BDD
+                                    // sans oublier de mettre son statut à 'on' si jamais il avait été précédemment
+                                    // désactivé ('off'), suite à la 1ère connexion après une réinitialisation ('reset')
                                     $nvMdpCrypte = password_hash($_POST['nmdp1'], PASSWORD_DEFAULT);
-                                    $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET password='" . $nvMdpCrypte . "' WHERE id =" . $id;
+                                    $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET pwd='" . $nvMdpCrypte . "' , pwdStatus='on' WHERE id =" . $id;
                                     $requete = $dbConnex->prepare($phraseRequete);
 
                                     // on remplit les 2 tableaux de messages (succès ou échec)

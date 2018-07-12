@@ -72,7 +72,7 @@ include("inclus/enteteH.php");
 			// ie avec le bindValue, ça ajoute des guillemets autour du nom de la table ... et ça, ça ne passe pas en SQL !
 			// (mais il en faut autour des valeurs des champs)
 
-			// $requete = $dbConnex->prepare("INSERT INTO clients (dateCrea, civilite, nom, prenom, mail, password) VALUES (:dateB, :civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
+			// $requete = $dbConnex->prepare("INSERT INTO clients (dateCrea, civilite, nom, prenom, mail, pwd) VALUES (:dateB, :civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
 			// $requete->bindValue("dateB", $dateCrea, PDO::PARAM_STR);
 			// ...
 			// $requete->bindValue("passwordB", $passwordCrypte, PDO::PARAM_STR);
@@ -81,7 +81,7 @@ include("inclus/enteteH.php");
 			// (avant je délimitais les ch. de car. de la requête par des " et les variables par des ' mais
 			//  j'ai dû inverser le jour où j'ai décidé d'accepter le car. ' dans les noms : ex. Mc Kulloc'h )
 			$phraseRequete = 'INSERT INTO ' . TABLE_CLIENTS .
-							 ' (dateCrea, civilite, nom, prenom, mail, password) VALUES ("' .
+							 ' (dateCrea, civilite, nom, prenom, mail, pwd) VALUES ("' .
 							 $dateCrea . '", "' .
 							 $civilite . '", "' .
 							 $nom . '", "' .

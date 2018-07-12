@@ -135,11 +135,14 @@ define('TABLE_CLIENTS'    , "clientsBIG");
 
 // nombre de caractères du code aléatoire d'authentification
 // (pair, sinon ce sera l'entier pair inférieur)
-define('NB_CAR_CODE_MODIF', 6);
+define('NB_CAR_CODE_MODIF', 8);
 // durée de validité du code (en minutes)
 define('DUREE_VALID_CODE_MODIF', 5);
 // Nb max de tentatives de validation du code
 define('NB_MAX_ESSAIS_CODE', 3);
+
+// En cas de procédure 'Mot de passe oublié' => nb de car. du mdp aléatoire temporaire
+define('NB_CAR_MDP_TMP', 10);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
