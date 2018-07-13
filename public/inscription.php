@@ -60,8 +60,8 @@ include("inclus/enteteH.php");
 			<?php
 			//    le formulaire a été rempli  ET  il n'y a pas d'erreurs  ET  le mail n'existait pas encore en BDD
 
-			// en plus des données du formulaire, on stocke la date de création :
-			$dateCrea = date("d/m/Y - H\:i\:s");
+			// la date de création sera insérée automatiquement lors de la création de l'enregistrement
+			// avec comme valeur 'CURRENT_TIMESTAMP'
 
 			// requête pour créer un nouvel enregistrement :
 
@@ -72,8 +72,8 @@ include("inclus/enteteH.php");
 			// ie avec le bindValue, ça ajoute des guillemets autour du nom de la table ... et ça, ça ne passe pas en SQL !
 			// (mais il en faut autour des valeurs des champs)
 
-			// $requete = $dbConnex->prepare("INSERT INTO clients (dateCrea, civilite, nom, prenom, mail, pwd) VALUES (:dateB, :civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
-			// $requete->bindValue("dateB", $dateCrea, PDO::PARAM_STR);
+			// $requete = $dbConnex->prepare("INSERT INTO clients (civilite, nom, prenom, mail, pwd) VALUES (:civiliteB, :nomB, :prenomB, :mailB, :passwordB)");
+			// $requete->bindValue("civiliteB", $civilite, PDO::PARAM_STR);
 			// ...
 			// $requete->bindValue("passwordB", $passwordCrypte, PDO::PARAM_STR);
 
@@ -81,8 +81,7 @@ include("inclus/enteteH.php");
 			// (avant je délimitais les ch. de car. de la requête par des " et les variables par des ' mais
 			//  j'ai dû inverser le jour où j'ai décidé d'accepter le car. ' dans les noms : ex. Mc Kulloc'h )
 			$phraseRequete = 'INSERT INTO ' . TABLE_CLIENTS .
-							 ' (dateCrea, civilite, nom, prenom, mail, pwd) VALUES ("' .
-							 $dateCrea . '", "' .
+							 ' (civilite, nom, prenom, mail, pwd) VALUES ("' .
 							 $civilite . '", "' .
 							 $nom . '", "' .
 							 $prenom . '", "' .
@@ -91,7 +90,6 @@ include("inclus/enteteH.php");
 			$requete = $dbConnex->prepare($phraseRequete);
 			$requete->execute();
 
-			$nouvelId = $dbConnex->lastInsertId();
 			echo "<div class='cMessageConfirmation'>";
 				// NB: pour le braille, on positionne le focus (merci HTML5 !) comme ça ils n'ont pas à relire tout le début de la page pour accéder au message de confirmation.
 			echo "<p id='iFocus'>Merci, votre compte a bien été créé.</p>";

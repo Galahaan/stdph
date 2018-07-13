@@ -459,7 +459,7 @@ if( isset($_POST['supprimCpte']) ){
                 $objet       = "Confirmation de suppression de compte";
                 $rc = "\r\n";
                 $messageTxt  =  "Bonjour " . $_SESSION['client']['prenom'] . "," . $rc.$rc .
-                                "Votre demande de suppression de compte sur le site " . PHIE_URLC . " a bien été prise en compte et sera effective très prochainement." . $rc.$rc .
+                                "Votre demande de suppression de compte sur le site " . PHIE_URLC . " a bien été traitée." . $rc.$rc .
                                 "Cordialement," . $rc .
                                 "Le service technique";
                 $messageHtml = $messageTxt; // un jour on fera un joli message HTML !

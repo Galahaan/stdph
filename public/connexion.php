@@ -56,7 +56,7 @@ if( isset($_POST['connexion']) && !empty($_POST['mail']) ){
 				// => c'est la 1ère étape pour respecter la déclaration à la CNIL sur la durée de stockage des données
 				//    (la 2e étape consistera à détruire ces données quand elles auront dateConx + 1 an)
 				$erreurRequete = false;
-				$phraseRequete = "UPDATE ". TABLE_CLIENTS . " SET dateConx= '" . date('Y-m-d') .  "' WHERE id= " . $client['id'];
+				$phraseRequete = "UPDATE ". TABLE_CLIENTS . " SET dateConx= '" . date('Y-m-d H-i-s') .  "' WHERE id= " . $client['id'];
 				$requete = $dbConnex->prepare($phraseRequete);
 				if( $requete->execute() != true ){ $erreurRequete = true; }
 				//pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...
