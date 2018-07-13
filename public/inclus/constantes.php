@@ -1,14 +1,22 @@
 <?php
 
-// il y a aussi des constantes dans :
+// - penser qu'il y a aussi des constantes dans :
 //
-//     - tapette.php
-//     - /erreurs/erreur-....php     (401, 403, 404, 500, index)
-//     - .htaccess de la racine      => vérifier que le .htaccess du serveur est bien identique
+//       - tapette.php
+//       - /erreurs/erreur-....php     (401, 403, 404, 500, index)
+//       - .htaccess de la racine      => vérifier que le .htaccess du serveur est bien identique
 //
 // 
-// et penser à supprimer l'affichage des erreurs dans enteteP.php : ini_set('display_errors', 1);
+// - penser à supprimer l'affichage des erreurs dans enteteP.php : ini_set('display_errors', 1);
 //
+// - penser à créer les 3 tâches 'cron' sur ovh.fr :
+//                  https://www.ovh.com/manager/web/index.html#/configuration/hosting/bigouig.fr?tab=CRON
+//
+//       - ./www/cron/cronCnilPreSupp.php
+//       - ./www/cron/cronCnilSupp.php
+//       - ./www/cron/cronSuppDdee.php
+//
+
 
 
 // code de validation, pour pouvoir utiliser, grâce à un compte Google, ses outils de suivi de référencement
@@ -143,6 +151,9 @@ define('NB_MAX_ESSAIS_CODE', 3);
 
 // En cas de procédure 'Mot de passe oublié' => nb de car. du mdp aléatoire temporaire
 define('NB_CAR_MDP_TMP', 10);
+
+// Délai avant suppression automatique (cron) d'un compte inactif (en jours)
+define('DELAI_AV_SUPPR', 30);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
