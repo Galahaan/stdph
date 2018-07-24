@@ -287,11 +287,15 @@ function mdpValide( $mdpSaisi ){
 // chiffre(s), lettre(s) min, lettre(s) MAJ et caractères spéciaux
 // DONT AU MOINS 1 chiffre, 1 min, 1 MAJ et 1 car. spécial
 //
-// La longueur du code est déterminée par la constante NB_CAR_CODE_ALEA
+// Le paramètre d'entrée sert à déterminer le nombre de caractères constituant le code.
+// (mais les caractéristiques du code imposent un minimum de 4 caractères)
 //
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function genCode(){
+function genCode( $nbCarCode ){
+
+	if( $nbCarCode < 4){ $nbCarCode = 4; }
+
     $carMaj = ['Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
     $carNum = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
     $carMin = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -306,7 +310,7 @@ function genCode(){
     $codeAlea .= $carMaj[mt_rand(0, sizeof($carMaj)-1)];  //
     $codeAlea .= $carSpe[mt_rand(0, sizeof($carSpe)-1)];  //
 
-    for( $i=0; $i < (NB_CAR_CODE_ALEA - 4); $i++ ){
+    for( $i=0; $i < ($nbCarCode - 4); $i++ ){
 
         $codeAlea .= $car[mt_rand(0, sizeof($car)-1)];
     }

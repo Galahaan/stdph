@@ -76,7 +76,7 @@ if( isset($_POST['validerMail']) && !empty($_POST['mail']) ){
                 // - stocker le mail en $_SESSION de façon à identifier l'utilisateur au moment du test de son code
 
                 // génération aléatoire du code
-                $codeGene = genCode();
+                $codeGene = genCode(NB_CAR_CODE_ALEA);
 
                 // cryptage
                 $codeCrypte = password_hash($codeGene, PASSWORD_DEFAULT);
