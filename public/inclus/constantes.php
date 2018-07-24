@@ -152,8 +152,14 @@ define('NB_MAX_ESSAIS_CODE', 3);
 // En cas de procédure 'Mot de passe oublié' => nb de car. du mdp aléatoire temporaire
 define('NB_CAR_MDP_TMP', 10);
 
+// Durée de conservation maximale des données personnelles, définie lors de la déclaration CNIL
+define('DUREE_MAX_DONNEES_PERSO', 365);
+
 // Délai avant suppression automatique (cron) d'un compte inactif (en jours)
 define('DELAI_AV_SUPPR', 30);
+
+// Délai entre la demande de suppression de son compte par l'utilisateur, et la suppression effective (en jours)
+define('DELAI_AP_DDE_SUPPR', 30);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////

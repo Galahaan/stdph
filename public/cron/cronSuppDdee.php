@@ -9,7 +9,7 @@ require_once(__DIR__ . '/../inclus/initDB.php');
 
 // clients ayant explicitement demandé la suppression de leur compte :
 // au bout de XX jours => on les supprime effectivement de la BDD
-$phraseRequete = "SELECT id, prenom, nom, mail FROM " . TABLE_CLIENTS . " WHERE supprDdee=1 AND DATE_ADD(dateConx, INTERVAL 30 DAY) <= now()";
+$phraseRequete = "SELECT id, prenom, nom, oldMail FROM " . TABLE_CLIENTS . " WHERE supprDdee=1 AND DATE_ADD(dateConx, INTERVAL " . intval(DELAI_AP_DDE_SUPPR) . " DAY) <= now()";
 $requete = $dbConnex->prepare($phraseRequete);
 if( $requete->execute() != true ){ $erreurRequete = true; }
 //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD
@@ -26,7 +26,7 @@ foreach ($clients as $client) {
 
     // ... et je laisse une trace dans le journal (log) accessible sur OVH
     // (https://logs.cluster020.hosting.ovh.net/bigouig.fr/)
-    echo $rc . "Suppression du compte (demandee par le client) - " .
-          $client['prenom'] . " " . $client['nom'] . " (" . $client['mail'] . ")" . $rc;
+    echo "\r\nSuppression du compte (demandee par le client) - " .
+          $client['prenom'] . " " . $client['nom'] . " (" . $client['oldMail'] . ")\r\n";
 }
 ?>

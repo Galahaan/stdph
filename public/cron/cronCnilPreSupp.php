@@ -8,7 +8,12 @@ require_once(__DIR__ . '/../inclus/initDB.php');
 
 
 // clients dont la dernière connexion remonte à au moins [1 an - DELAI_AV_SUPPR jours] : on envoie un mail de pré-suppression
-$phraseRequete = "SELECT mail, prenom, nom, DATE_FORMAT(dateConx, '%d/%m/%Y') AS date FROM " . TABLE_CLIENTS . " WHERE DATE_ADD(dateConx, INTERVAL " . intval(365 - DELAI_AV_SUPPR) . " DAY) <= now()";
+$phraseRequete = "SELECT mail, prenom, nom, DATE_FORMAT(dateConx, '%d/%m/%Y') AS date FROM " . TABLE_CLIENTS .
+                 " WHERE " .
+                 "DATE_FORMAT( DATE_ADD(dateConx, INTERVAL " . intval(DUREE_MAX_DONNEES_PERSO - DELAI_AV_SUPPR) . " DAY), '%d/%m/%Y' )" .
+                 " = " .
+                 "DATE_FORMAT( now(), '%d/%m/%Y' )";
+
 $requete = $dbConnex->prepare($phraseRequete);
 if( $requete->execute() != true ){ $erreurRequete = true; }
 //pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD
@@ -27,9 +32,7 @@ foreach ($clients as $client) {
                    "Cordialement," . $rc .
                    "Le service technique";
     $messageHtml = $messageTxt; // un jour on fera un joli message HTML !
-//    mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $client['mail'], $objet, $messageTxt, $messageHtml);
-    mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, MAIL_DEST_CLR, $objet, $messageTxt, $messageHtml);
-
+    mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $client['mail'], $objet, $messageTxt, $messageHtml);
 
     // ... et je laisse une trace dans le journal (log) accessible sur OVH
     // (https://logs.cluster020.hosting.ovh.net/bigouig.fr/)
