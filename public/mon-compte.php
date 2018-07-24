@@ -67,9 +67,7 @@ if( isset($_POST['demanderCode']) ){
     $messageHtml = $messageTxt; // un jour on fera un joli message HTML !
 
     if( $erreurRequete == false ){
-        if( mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, MAIL_DEST_CLR, "code modif ".$_SESSION['client']['mail'], $messageTxt, $messageHtml)){
-            // la vraie ligne à écrire dans le if ci-dessus est celle-ci :
-// mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $_SESSION['client']['mail'], $objet, $messageTxt, $messageHtml)
+        if( mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $_SESSION['client']['mail'], $objet, $messageTxt, $messageHtml)){
             $confirmEnvoiCode =
                 "<div class='cMessageConfirmation'>" .
                         "<p id='iFocus'>Le mail contenant le code vient de vous être envoyé.</p>" .
@@ -281,10 +279,8 @@ if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
                                     // ____________________ 5e étape ____________________
 
                                     // puisque tout est OK, on stocke le nouveau mot de passe en BDD
-                                    // sans oublier de mettre son statut à 'on' si jamais il avait été précédemment
-                                    // désactivé ('off'), suite à la 1ère connexion après une réinitialisation ('reset')
                                     $nvMdpCrypte = password_hash($_POST['nmdp1'], PASSWORD_DEFAULT);
-                                    $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET pwd='" . $nvMdpCrypte . "' , pwdStatus='on' WHERE id =" . $id;
+                                    $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET pwd='" . $nvMdpCrypte . "' WHERE id =" . $id;
                                     $requete = $dbConnex->prepare($phraseRequete);
 
                                     // on remplit les 2 tableaux de messages (succès ou échec)

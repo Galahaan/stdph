@@ -16,19 +16,6 @@ if( isset($_POST['connexion']) && !empty($_POST['mail']) ){
 		if( mdpValide($_POST['password']) ){ $password = $_POST['password']; }
 		else{ $password = ''; }
 
-
-		// Petit aparté sur le fonctionnement du statut du mot de passe :
-		// - par défaut, ie à la création d'un compte, le statut est à 'on'
-		//   . qd le client se connecte, le statut n'est pas modifié et reste à 'on'
-		//   . si le client modifie son mdp, le statut est mis à 'on', donc inchangé dans ce cas
-		//
-		// - si le client déclenche 'mdp oublié' => le mdp est réinitialisé et le statut passe à 'reset'
-		//   . à la 1ère connexion, le statut est modifié et passe à 'off'
-		//   . si le client modifie son mdp (comme il le lui est demandé), le statut est mis à 'on', donc on repart en fonctionnement nominal
-		//   . si le client ne modifie pas son mdp, il ne pourra pas se reconnecter puisque le statut du mdp sera resté à 'off'
-		//     (il devra à nouveau cliquer sur 'mdp oublié')
-
-
 		// récupération des données du client, dont le mot de passe crypté :
 		$phraseRequete = "SELECT * FROM " . TABLE_CLIENTS . " WHERE mail = '" . $mail . "'";
 		$requete = $dbConnex->prepare($phraseRequete);
@@ -36,27 +23,29 @@ if( isset($_POST['connexion']) && !empty($_POST['mail']) ){
 		$client = $requete->fetch();
 
 		if( ! empty($client) ){
-			if( password_verify($password, $client['pwd']) && (($client['pwdStatus'] == 'on') || ($client['pwdStatus'] == 'reset')) ){
 
-				// c'est le bon mot de passe, et son statut est valide, on ouvre donc la session
+			if( password_verify($password, $client['pwd']) ){
+
+
+				// c'est le bon mot de passe, on peut donc ouvrir la session, mais juste avant,
+				// on supprime toute trace d'une éventuelle procédure 'mot de passe oublié' qui
+				// aurait pu être en cours, cf reinitMdp.php
+				// - la variable de session 'mailProcMdp'
+				// - le champ 'rst' en BDD (on l'intègre à l'autre requête ci-dessous)
+				unset($_SESSION['mailProcMdp']);
+
+				// maintenant j'ouvre la session !
 				$_SESSION['client']['civilite'] = $client['civilite'];
 				$_SESSION['client']['nom'] = $client['nom'];
 				$_SESSION['client']['prenom'] = $client['prenom'];
 				$_SESSION['client']['mail'] = $client['mail'];
 				$_SESSION['client']['tel'] = $client['tel'];
 
-				// si c'est la 1ère connexion après un reset du mdp, on le 'désactive'
-				if( $client['pwdStatus'] == 'reset' ){
-					$phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET pwdStatus='off' WHERE id=" . $client['id'];
-					$requete = $dbConnex->prepare($phraseRequete);
-					$requete->execute();
-				}
-
 				// juste avant de retourner à l'accueil, on stocke en BDD la date de cette connexion
 				// => c'est la 1ère étape pour respecter la déclaration à la CNIL sur la durée de stockage des données
-				//    (la 2e étape consistera à détruire ces données quand elles auront dateConx + 1 an)
+				//    (la 2e étape consiste à détruire ces données quand elles ont dateConx + 1 an, cf tâches 'cron')
 				$erreurRequete = false;
-				$phraseRequete = "UPDATE ". TABLE_CLIENTS . " SET dateConx= '" . date('Y-m-d H-i-s') .  "' WHERE id= " . $client['id'];
+				$phraseRequete = "UPDATE ". TABLE_CLIENTS . " SET rst='', dateConx= '" . date('Y-m-d H-i-s') .  "' WHERE id= " . $client['id'];
 				$requete = $dbConnex->prepare($phraseRequete);
 				if( $requete->execute() != true ){ $erreurRequete = true; }
 				//pour l'instant je ne fais, ni n'affiche rien, en cas d'erreur BDD ...

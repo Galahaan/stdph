@@ -235,7 +235,7 @@ function mailValide( $mailSaisi ){
 
 	// 3- donc on vérifie juste que la valeur saisie est identique à la valeur filtrée
 	//    avant de répondre 'true'
-	if( $mail == $mailSaisi ){
+	if( ! empty($mailSaisi) && $mail == $mailSaisi ){
 		$resultat = true;
 	}
 	return $resultat;
@@ -281,27 +281,39 @@ function mdpValide( $mdpSaisi ){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-//						genererMdp()
+//						genCode()
 //
-// Cette fonction génère un mot de passe aléatoire contenant :
+// Cette fonction génère un code aléatoire contenant :
 // chiffre(s), lettre(s) min, lettre(s) MAJ et caractères spéciaux
+// DONT AU MOINS 1 chiffre, 1 min, 1 MAJ et 1 car. spécial
 //
-// La longueur du mot de passe est déterminée par la constante NB_CAR_MDP_TMP
+// La longueur du code est déterminée par la constante NB_CAR_CODE_ALEA
 //
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-function genererMdp(){
-    $carAuto = ['Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A',
-			     1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
-			    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-				'!', '#', '{', '@', '[', '&', '(', '-', ')', '+', ']', '/', '}', '*', '~', '=', '§', '%'];
+function genCode(){
+    $carMaj = ['Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
+    $carNum = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+    $carMin = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    $carSpe = ['!', '#', '{', '@', '[', '&', '(', '-', ')', '+', ']', '/', '}', '*', '~', '=', '$', '%', '<', '>', '?', '^'];
+    // NB: je me suis limité aux car. spéciaux codés en UTF-8 sur 1 seul octet, car sinon la fonction str_shuffle() ne fonctionne pas bien :
+    //     => elle remplace les caractères sur 2 octets (ex. '§' ou 'µ' ...) par '��'
 
-    for( $i=0; $i < NB_CAR_MDP_TMP; $i++ ){
+    $car = array_merge($carMaj, $carNum, $carMin, $carSpe);
 
-        $mdpAlea .= $carAuto[mt_rand(0, sizeof($carAuto))];
+    $codeAlea  = $carNum[mt_rand(0, sizeof($carNum)-1)];  //
+    $codeAlea .= $carMin[mt_rand(0, sizeof($carMin)-1)];  //      AU MOINS 1 chiffre, 1 min, 1 MAJ, 1 car. spé.
+    $codeAlea .= $carMaj[mt_rand(0, sizeof($carMaj)-1)];  //
+    $codeAlea .= $carSpe[mt_rand(0, sizeof($carSpe)-1)];  //
+
+    for( $i=0; $i < (NB_CAR_CODE_ALEA - 4); $i++ ){
+
+        $codeAlea .= $car[mt_rand(0, sizeof($car)-1)];
     }
 
-    return $mdpAlea;
+    $codeAlea = str_shuffle($codeAlea); // surtout pour mélanger les 4 1ers car., sinon le schéma est trop prévisible ^^
+
+    return $codeAlea;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

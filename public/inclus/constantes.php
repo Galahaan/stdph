@@ -149,8 +149,8 @@ define('DUREE_VALID_CODE_MODIF', 5);
 // Nb max de tentatives de validation du code
 define('NB_MAX_ESSAIS_CODE', 3);
 
-// En cas de procédure 'Mot de passe oublié' => nb de car. du mdp aléatoire temporaire
-define('NB_CAR_MDP_TMP', 10);
+// En cas de procédure 'Mot de passe oublié' => nb de car. du code généré aléatoirement
+define('NB_CAR_CODE_ALEA', 10);
 
 // Durée de conservation maximale des données personnelles, définie lors de la déclaration CNIL
 define('DUREE_MAX_DONNEES_PERSO', 365);
