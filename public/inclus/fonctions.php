@@ -303,6 +303,10 @@ function genCode( $nbCarCode ){
     // NB: je me suis limité aux car. spéciaux codés en UTF-8 sur 1 seul octet, car sinon la fonction str_shuffle() ne fonctionne pas bien :
     //     => elle remplace les caractères sur 2 octets (ex. '§' ou 'µ' ...) par '��'
 
+    // NB: j'ai aussi supprimé les caractères spéciaux '<' et '>' parce qu'ils pouvaient perturber la fonction strip_tags
+    //     qui croyait parfois détecter de vraies balises HTML ou JS; ceci a été constaté dans la procédure
+    //     'mot de passe oublié' au moment du test du code (généré ici même !) reçu de l'utilisateur ...
+
     $car = array_merge($carMaj, $carNum, $carMin, $carSpe);
 
     $codeAlea  = $carNum[mt_rand(0, sizeof($carNum)-1)];  //
