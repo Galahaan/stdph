@@ -12,32 +12,32 @@ require_once('./inclus/initDB.php');
 //
 // - l'utilisateur saisit alors le mail qu'il avait choisi le jour de la création de son compte
 //
-// - si le mail est bien dans la BDD, on l'utilise pour lui envoyer un lien de réinitialisation,
-//   tout en conservant ce mail dans la $_SESSION !!
-//   C'est très important, sinon on ne pourra pas identifier l'utilisateur au moment où il voudra soumettre
-//   son code de réinitialisation.
-//   Cela veut aussi dire que l'utilisateur ne doit pas s'interrompre au cours de la procédure
-//   (durée max = durée de la $_SESSION)
+// - si le mail est bien dans la BDD, on l'utilise pour lui envoyer un code de réinitialisation,
+//   ainsi qu'un lien vers la page où il devra saisir son mail et ce code.
+//   (plus besoin de variable de session pour identifier l'utilisateur !)
 //
-// - lorsque l'utilisateur clique sur le lien qu'on lui a fourni dans le mail, cela déclenche l'ouverture
-//   de cette même page avec, dans l'URL, le code de réinitialisation.
+// - lorsque l'utilisateur clique sur le lien fourni dans le mail, il peut alors saisir son mail et son code
 //
 // - si le code correspond bien à celui stocké en BDD, on affiche alors un nouveau formulaire dans lequel
 //   le client doit saisir et confirmer son nouveau mdp
+//   (c'est le seul moment où l'on utilise une petite variable de session, juste pour garder le mail d'un
+//    formulaire à l'autre, pour enregistrer le nouveau mdp au bon utilisateur)
 //
-// On n'oublie pas non plus d'intercaler un test, pour être sûr qu'au moment où l'on souhaite utiliser
-// la $_SESSION, ie en cliquant sur le lien du mail, il n'y a pas déjà une session d'un (autre) user en cours.
-// Si c'est le cas, on arrête la procédure de 'mot de passe oublié' et on remet les variables à 0.
+// On n'oublie pas, en cas de connexion réussie, (qui reste possible, même en cours de procédure
+// 'mot de passe oublié'), d'annuler les infos liées à cette procédure : la petite variable de session et
+// le code de réinitialisation.
+//
+// On n'oublie pas non plus, lorsque l'utilisateur va suivre le lien du mail pour saisir son code,
+// d'interrompre la procédure 'mot de passe oublié' dans le cas où, au même moment, un autre utilisateur
+// a déjà une session en cours.
 //
 //
-//
-// Variante :
-//
-// On aurait aussi pu, lors de l'envoi du mail au user étourdi, joindre un code et un lien vers cette
-// même page, avec une variable en paramètre GET, pour déclencher l'affichage d'un formulaire dans lequel
-// il aurait fallu saisir le mail + le code
-// => en cas de match, on ouvrait le formulaire avec les 2 mdp
-// Ca évite d'utiliser la $_SESSION, mais c'est plus long pour le user
+// Variante (initiale) :
+// Lors de l'envoi du mail au user étourdi, on lui donnait un simple lien à suivre, contenant en
+// paramètre GET un code de réinitialisation. MAIS, il fallait aussi, à partir de ce moment, être
+// toujours dans la même session, dans laquelle on avait stocké le mail de l'utilisateur, pour
+// pouvoir l'identifier et le relier au code.
+// C'était donc plus rapide pour lui, mais moins sécurisé ...
 //
 // ============================================================================================================
 
@@ -73,16 +73,12 @@ if( isset($_POST['validerMail']) && !empty($_POST['mail']) ){
                 // OK, le mail correspondait bien à qqn de connu en BDD, le but est maintenant de :
                 // - générer, puis stocker en BDD, un code aléatoire qui permettra à l'utilisateur de re-définir son mot de passe
                 // - envoyer un mail, contenant ce code, à l'utilisateur
-                // - stocker le mail en $_SESSION de façon à identifier l'utilisateur au moment du test de son code
 
                 // génération aléatoire du code
-                $codeGene = genCode(NB_CAR_CODE_ALEA);
-
-                // cryptage
-                $codeCrypte = password_hash($codeGene, PASSWORD_DEFAULT);
+                $code = genCode(NB_CAR_CODE_ALEA);
 
                 // stockage en BDD
-                $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET rst='" . $codeCrypte . "' WHERE id=" . $id;
+                $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET rst='" . $code . "' WHERE id=" . $id;
                 $requete = $dbConnex->prepare($phraseRequete);
 
                 // si la requête s'est bien passée, on prévient l'utilisateur par mail
@@ -92,23 +88,15 @@ if( isset($_POST['validerMail']) && !empty($_POST['mail']) ){
                     $objet       = "procédure \"mot de passe oublié\"";
                     $rc = "\r\n";
                     $messageTxt  =  "Bonjour " . $prenom . "," . $rc.$rc .
-                                    "Suite à votre demande sur " . PHIE_URLC . " , vous pouvez maintenant définir un nouveau mot de passe " . $rc .
-                                    "en cliquant sur le lien ci-dessous :" . $rc.$rc .
-                                    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .
-                                    "<a href='" . SW_ADRESSE_SITE_PHARMACIE . "reinitMdp.php?rst=" . $codeCrypte . "'>" .
-                                    "- définir un nouveau mot de passe -" .
-                                    "</a>". $rc.$rc.$rc .
-                                    "Si le lien ne fonctionne pas, copiez-collez la ligne ci-dessous dans votre navigateur :" . $rc .
-                                    SW_ADRESSE_SITE_PHARMACIE . "reinitMdp.php?rst=" . $codeCrypte . $rc.$rc .
+                                    "Suite à votre demande sur " . PHIE_URLC . " , nous vous communiquons " . $rc .
+                                    "le code qui vous permettra de définir un nouveau mot de passe : &nbsp;&nbsp;&nbsp;" .
+                                    "<b>" . $code . "</b>" . $rc.$rc .
+                                    "Veuillez le saisir, ainsi que votre mail, dans le formulaire d'" .
+                                    "<a href='" . SW_ADRESSE_SITE_PHARMACIE . "reinitMdp.php?mc=code'><u>identification</u></a>.". $rc.$rc .
                                     "Cordialement," . $rc .
                                     "Le service technique";
                     $messageHtml = $messageTxt; // un jour on fera un joli message HTML !
                     if( mailTxHt(PHIE_URLC, ADR_EXP_HBG, ADR_MAIL_PHARMA, $mail, $objet, $messageTxt, $messageHtml) ){
-
-                        // en tout dernier point, comme tout s'est bien passé, on sait que l'utilisateur
-                        // va revenir soumettre le code qu'il aura reçu par mail ...
-                        // on aura donc besoin de l'identifier, ce que l'on fera grâce à la $_SESSION :
-                        $_SESSION['mailProcMdp'] = $mail;
 
                         $confirmation = "<div class='cMessageConfirmation'>" .
                                             "<p id='iFocus'>Votre demande a bien été prise en compte.</p>" .
@@ -133,7 +121,7 @@ if( isset($_POST['validerMail']) && !empty($_POST['mail']) ){
             }
             else{
                 // le mail n'existe pas en base
-                $erreur = "Désolé, ce mail est inconnu.";
+                $erreur = "ce mail est inconnu";
             }
         }
         else{
@@ -145,6 +133,10 @@ if( isset($_POST['validerMail']) && !empty($_POST['mail']) ){
                             "</div>";
         }
     }
+    else{
+        // le mail est invalide
+        $erreur = "le mail est invalide";
+    }
 }
 
 
@@ -154,82 +146,53 @@ if( isset($_POST['validerMail']) && !empty($_POST['mail']) ){
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// on passe par ici dès que l'utilisateur a suivi le lien (contenant le code 'rst') qu'on lui a envoyé par mail.
-// (et même après validation du formulaire 'validerMdp', contenant le mdp et sa confirm, on repasse par ici)
-if( isset($_GET['rst']) && !empty($_GET['rst']) ){
+if( isset($_POST['validerCode']) && !empty($_POST['mail']) && !empty($_POST['code']) ){
 
-    // le but est d'identifier l'utilisateur, de façon à lui proposer de saisir son nouveau mdp,
-    // donc, par défaut, on initialise le résultat à false :
-    $userOk = false;
+    if( mailValide($_POST['mail']) ){
+        $mail = $_POST['mail'];
 
-    // si, en arrivant en provenance du lien du mail, on interfère dans une session en cours d'un autre user,
-    // on est stoppé :
-    if( ! isset($_SESSION['client']) ){
+        if( strlen($_POST['code']) == strlen(strip_tags($_POST['code'])) ){
+            $codeUser = strip_tags($_POST['code']);
 
-        // on récupère le code envoyé dans l'URL :
-        if( strlen(strip_tags($_GET['rst'])) == strlen($_GET['rst']) ){
+            // on veut vérifier que le code est bien associé au mail
+            $phraseRequete = 'SELECT rst FROM ' . TABLE_CLIENTS . " WHERE mail='" . $mail . "'";
+            $requete = $dbConnex->prepare($phraseRequete);
+            if( $requete->execute() ){
 
-            $codeUser = strip_tags($_GET['rst']);
+                $res = $requete->fetch();
+                if( isset($res['rst']) && !empty($res['rst']) ){
 
-            // on le compare à celui stocké en BDD, grâce à la variable de session qui contient le mail du user !
-            // et si jamais la session a expiré, pour éviter une erreur SQL, on teste la validité du mail
-            if( mailValide($_SESSION['mailProcMdp']) ){
-
-                $phraseRequete = 'SELECT rst FROM ' . TABLE_CLIENTS . " WHERE mail='" . $_SESSION['mailProcMdp'] . "'";
-                $requete = $dbConnex->prepare($phraseRequete);
-                if( $requete->execute() ){
-
-                    $res = $requete->fetch();
+                    // on n'a plus qu'à comparer les 2 codes
                     if( $codeUser == $res['rst'] ){
-
-                        // c'est le bon user :
-                        $userOk = true;
+                        // l'utilisateur est bien identifié, on le renvoie sur le formulaire 'mdp'
+                        $_SESSION['tmp']['mail']  = $mail;
+                        header('Location: reinitMdp.php?mc=mdp');
                     }
                     else{
                         // les codes sont différents
-                        // - soit il y a tentative de piratage
-                        // - soit, plus probablement, la procédure a été déclenchée plusieurs fois et on a utilisé un mail précédent
-                        $confirmation = "<div class='cMessageConfirmation'>" .
-                                            "<p id='iFocus'>Le code est invalide ou expiré ... (il faut utiliser le lien du dernier mail reçu)</p>" .
-                                        "</div>";
+                        $erreur = "code incorrect";
                     }
                 }
                 else{
-                    // le code 'rst' n'a pas pu être lu en BDD
-                    $confirmation = "<div class='cMessageConfirmation'>" .
-                                        "<p id='iFocus'>Aïe, le serveur est apparemment indisponible.</p>" .
-                                        "<p>Veuillez nous en excuser et réessayer ultérieurement.</p>" .
-                                        "<p>(code inconnu)</p>" .
-                                    "</div>";
+                    // aucun code 'rst' n'est défini pour ce mail, mais on fait un message plus évasif
+                    $erreur = "aucune correspondance entre ce mail et ce code";
                 }
             }
             else{
-                // a priori la session a expiré, mais on fait un message plus évasif :
+                // le code 'rst' n'a pas pu être lu en BDD
                 $confirmation = "<div class='cMessageConfirmation'>" .
-                                    "<p id='iFocus'>Le code a expiré ... veuillez renouveler la procédure.</p>" .
+                                    "<p id='iFocus'>Aïe, le serveur est apparemment indisponible.</p>" .
+                                    "<p>Veuillez nous en excuser et réessayer ultérieurement.</p>" .
+                                    "<p>(code invérifiable)</p>" .
                                 "</div>";
             }
         }
         else{
-            // le code est erroné, on ne va pas plus loin
-            $confirmation = "<div class='cMessageConfirmation'>" .
-                                "<p id='iFocus'>Erreur d'identification ... veuillez renouveler la procédure.</p>" .
-                            "</div>";
+            $erreur = "code invalide";
         }
     }
     else{
-        // une session est déjà en cours
-        $confirmation = "<div class='cMessageConfirmation'>" .
-                            "<p id='iFocus'>" . $_SESSION['client']['prenom'] . " a actuellement une session en cours. La procédure ne peut aboutir, il faudra la renouveler ...</p>" .
-                        "</div>";
-        // dans un souci de sécurité, on supprime le code en BDD, et on termine la session
-        $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET rst='' WHERE mail='" . $_SESSION['mailProcMdp'] . "'";
-        $requete = $dbConnex->prepare($phraseRequete);
-        $requete->execute();
-        // je ne fais pas de test de succès, parce qu'au pire, c'est pas très grave
-
-        // enfin, je termine la session :
-        unset($_SESSION['mailProcMdp']);
+        $erreur = "mail invalide";
     }
 }
 
@@ -240,7 +203,7 @@ if( isset($_GET['rst']) && !empty($_GET['rst']) ){
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if( isset($_POST['validerMdp']) && !empty($_POST['mdp']) && !empty($_POST['mdpc']) && $userOk == true ){
+if( isset($_POST['validerMdp']) && !empty($_POST['mdp']) && !empty($_POST['mdpc']) && !empty($_SESSION['tmp']['mail']) ){
 
     if( mdpValide($_POST['mdp']) && mdpValide($_POST['mdpc']) ){
         $mdp  = $_POST['mdp'];
@@ -252,7 +215,7 @@ if( isset($_POST['validerMdp']) && !empty($_POST['mdp']) && !empty($_POST['mdpc'
             $mdpCrypte = password_hash($mdp, PASSWORD_DEFAULT);
 
             // on le stocke
-            $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET pwd='" . $mdpCrypte . "' WHERE mail='" . $_SESSION['mailProcMdp'] . "'";
+            $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET pwd='" . $mdpCrypte . "' WHERE mail='" . $_SESSION['tmp']['mail'] . "'";
             $requete = $dbConnex->prepare($phraseRequete);
             if( $requete->execute() ){
                 $confirmation = "<div class='cMessageConfirmation'>" .
@@ -260,13 +223,13 @@ if( isset($_POST['validerMdp']) && !empty($_POST['mdp']) && !empty($_POST['mdpc'
                                 "</div>";
 
                 // dans un souci de sécurité, on supprime le code en BDD, et on termine la session
-                $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET rst='' WHERE mail='" . $_SESSION['mailProcMdp'] . "'";
+                $phraseRequete = 'UPDATE ' . TABLE_CLIENTS . " SET rst='' WHERE mail='" . $_SESSION['tmp']['mail'] . "'";
                 $requete = $dbConnex->prepare($phraseRequete);
                 $requete->execute();
                 // je ne fais pas de test de succès, parce qu'au pire, c'est pas très grave
 
                 // enfin, je termine la session :
-                unset($_SESSION['mailProcMdp']);
+                unset($_SESSION['tmp']);
                 session_destroy();
             }
             else{
@@ -279,38 +242,59 @@ if( isset($_POST['validerMdp']) && !empty($_POST['mdp']) && !empty($_POST['mdpc'
             }
         }
         else{
-            $erreur = "Les 2 mots de passe sont différents.";
+            $erreur = "les 2 mots de passe sont différents";
         }
     }
     else{
-        $erreur = "Mot de passe invalide (de " . NB_CAR_MIN_MDP . " à " . NB_CAR_MAX_MDP . " car. dont 1 chiffre, 1 majuscule, 1 minuscule)";
+        $erreur = "mot de passe invalide (de " . NB_CAR_MIN_MDP . " à " . NB_CAR_MAX_MDP . " car. dont 1 chiffre, 1 majuscule, 1 minuscule)";
     }
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//             Procédure interférant dans une session en cours
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// on a suivi le lien contenu dans le mail (avec le code de réinitialisation), mais ...
+// une session est déjà en cours !
+if( isset($_GET['mc']) && $_GET['mc'] == 'code' && isset($_SESSION['client']) ){
+
+    $confirmation = "<div class='cMessageConfirmation'>" .
+                        "<p id='iFocus'>" . $_SESSION['client']['prenom'] . " a actuellement une session en cours. La procédure ne pourra se poursuivre qu'après sa déconnexion ...</p>" .
+                    "</div>";
+}
+
 
 include('inclus/enteteH.php');
 ?>
 	<main id='iMain'>
         <section id='iRMdP' class='cSectionContour'><h2>Mot de passe oublié</h2>
 
-            <?php if( isset($confirmation) ) : // ce sont tous les cas où l'on a validé l'un ou l'autre des 2 formulaires ?>
+            <?php if( isset($confirmation) ) : // ce sont tous les cas où l'on a validé l'un ou l'autre des formulaires ?>
 
                 <?= $confirmation; ?>
 
-            <?php elseif( ! isset($_GET['rst']) ) : // ce sont tous les cas où l'on arrive sur la page sans venir du lien du mail ?>
+            <?php elseif( isset($_GET['mc']) && $_GET['mc'] == 'code' ) : // on arrive sur la page depuis le lien du mail ?>
 
-            <p>Veuillez saisir le mail que vous aviez utilisé lors de votre inscription ...</p>
+            <p>Veuillez saisir votre mail et le code que vous avez reçu ...</p>
             <form method='POST'>
                 <div class='cChampForm'>
                     <label for='iMail'>mail</label>
-                    <input type='email' id='iMail' name='mail' required placeholder='...' autofocus value='<?= isset($mail) ? $mail : "" ?>'>
+                    <input type='email' id='iMail' name='mail' required placeholder='...' autofocus >
+                </div>
+                <div class='cChampForm'>
+                    <label for='iCode'>code</label>
+                    <input type='text' id='iCode' name='code' required placeholder='...' >
                     <?= isset($erreur) ? "<sub>".$erreur."</sub>" : "" ?>
                 </div>
                 <div id='iValider'>
-                    <button class='cDecoBoutonValid' name='validerMail'>valider</button>
+                    <button class='cDecoBoutonValid' name='validerCode'>valider</button>
                 </div>
             </form>
 
-            <?php elseif( $userOk == true ) : // c'est l'unique cas où l'on vient du mail et que le code est valide ?>
+            <?php elseif( isset($_GET['mc']) && $_GET['mc'] == 'mdp' && !empty($_SESSION['tmp']['mail'])) : // l'utilisteur a bien été identifié ?>
 
             <p>Veuillez définir votre nouveau mot de passe ...</p>
             <form method='POST'>
@@ -325,6 +309,20 @@ include('inclus/enteteH.php');
                 </div>
                 <div id='iValider'>
                     <button class='cDecoBoutonValid' name='validerMdp'>valider</button>
+                </div>
+            </form>
+
+            <?php else : ?>
+
+            <p>Veuillez saisir le mail que vous aviez utilisé lors de votre inscription ...</p>
+            <form method='POST'>
+                <div class='cChampForm'>
+                    <label for='iMail'>mail</label>
+                    <input type='email' id='iMail' name='mail' required placeholder='...' autofocus value='<?= isset($mail) ? $mail : "" ?>'>
+                    <?= isset($erreur) ? "<sub>".$erreur."</sub>" : "" ?>
+                </div>
+                <div id='iValider'>
+                    <button class='cDecoBoutonValid' name='validerMail'>valider</button>
                 </div>
             </form>
 

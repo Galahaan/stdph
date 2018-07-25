@@ -30,9 +30,9 @@ if( isset($_POST['connexion']) && !empty($_POST['mail']) ){
 				// c'est le bon mot de passe, on peut donc ouvrir la session, mais juste avant,
 				// on supprime toute trace d'une éventuelle procédure 'mot de passe oublié' qui
 				// aurait pu être en cours, cf reinitMdp.php
-				// - la variable de session 'mailProcMdp'
+				// - la variable de session
 				// - le champ 'rst' en BDD (on l'intègre à l'autre requête ci-dessous)
-				unset($_SESSION['mailProcMdp']);
+				unset($_SESSION['tmp']['mail']);
 
 				// maintenant j'ouvre la session !
 				$_SESSION['client']['civilite'] = $client['civilite'];

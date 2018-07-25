@@ -299,7 +299,7 @@ function genCode( $nbCarCode ){
     $carMaj = ['Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
     $carNum = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
     $carMin = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    $carSpe = ['!', '#', '{', '@', '[', '&', '(', '-', ')', '+', ']', '/', '}', '*', '~', '=', '$', '%', '<', '>', '?', '^'];
+    $carSpe = ['!', '#', '{', '@', '[', '&', '(', '-', ')', '+', ']', '/', '}', '*', '~', '=', '$', '%', '?', '^'];
     // NB: je me suis limité aux car. spéciaux codés en UTF-8 sur 1 seul octet, car sinon la fonction str_shuffle() ne fonctionne pas bien :
     //     => elle remplace les caractères sur 2 octets (ex. '§' ou 'µ' ...) par '��'
 
