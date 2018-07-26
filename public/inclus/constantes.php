@@ -371,19 +371,18 @@ define('NOM_AIDE'      , "Aide");
 define('TTL_AIDE'      , "Aide - " . NOM_PHARMA);
 define('DESC_AIDE'     , "Page dédiée à l accessibilité : synthèse sur la navigation dans le site de la pharmacie des Tilleuls : architecture, menus et raccourcis clavier.");
 
-define('NOM_CONNEX'    , "Connexion");
-define('TTL_CONNEX'    , "Connexion - " . NOM_PHARMA);
-define('BOTS_CONNEX'   , "noindex, nofollow, none");  // on ne référence pas la page connexion
+// on ne définit ni NOM, ni TTL, ni DESC pour les pages suivantes, puisqu'on ne les référence pas
+// (on leur donne par défaut ceux de index.php)
+// connexion.php
+// inscription.php
+// mon-compte.php
+// reinitMdp.php
 
-define('NOM_INSCRIP'   , "Inscription");
-define('TTL_INSCRIP'   , "Inscription - " . NOM_PHARMA);
-define('BOTS_INSCRIP'  , "noindex, nofollow, none");  // on ne référence pas la page inscription
+// instructions par défaut destinées aux robots d'indexation pour les pages du site
+define('BOTS_DEFAULT'  , "noindex, nofollow, none"); // pour bigouig, c'est 'no ...', mais pour les autres sites c'est : "index, follow, all"
 
-define('NOM_COMPTE'    , "Mon compte");
-define('TTL_COMPTE'    , "Mon compte - " . NOM_PHARMA);
-define('BOTS_COMPTE'   , "noindex, nofollow, none");  // on ne référence pas la page mon-compte
-
-define('BOTS_DEFT'     , "noindex, nofollow, none");  // ou   "index, follow, all"   par défaut, pour les pages du site
+// pour les pages qu'on ne veut pas référencer
+define('BOTS_NO'       , "noindex, nofollow, none");
 
 define('MC_NOM_PHARMA' , "tilleuls");
 define('MC_QUARTIER'   , "gaël");

@@ -609,8 +609,8 @@ function pageCourante( $request_uri ){
 	// on extrait le nom de la page courante :
 	$page = ltrim($request_uri, '/');
 
-	// on enlève l'extension '.php' :
-	$page = rtrim($page, 'hp.');
+	// on enlève l'extension '.php' et tout ce qui suit (ex. '?mc=code' ...)
+	$page = stristr($page, '.php', true);
 
 	// on initialise la chaîne de la page courante à 4 x '0' en respectant
 	// l'ordre suivant : Index / Horaires / Equipe / Contact :
@@ -678,19 +678,12 @@ function pageCourante( $request_uri ){
 			break;
 
 		case "connexion":
-			$nomPage   = NOM_CONNEX;
-			$titrePage = TTL_CONNEX;
-			break;
-
 		case "inscription":
-			$nomPage   = NOM_INSCRIP;
-			$titrePage = TTL_INSCRIP;
-			break;
-
 		case "mon-compte":
-			$nomPage   = NOM_COMPTE;
-			$titrePage = TTL_COMPTE;
-			break;
+        case "reinitMdp":
+            $nomPage   = NOM_INDEX;
+            $titrePage = TTL_INDEX;
+            break;
 
 		default :
 			$flagPC    = "1000";         // si ce n'est aucun des cas précédents, ou si la page '/index.php'
@@ -737,11 +730,11 @@ function enteteSpecs( $request_uri ){
 	// on extrait le nom de la page courante :
 	$page = ltrim($request_uri, '/');
 
-	// on enlève l'extension '.php' :
-	$page = rtrim($page, 'hp.');
+	// on enlève l'extension '.php' et tout ce qui suit (ex. '?mc=code' ...)
+	$page = stristr($page, '.php', true);
 
 	$description = "";
-	$robots      = BOTS_DEFT;
+	$robots      = BOTS_DEFAULT;
 	$refresh     = "";                        // initialisations
 	$focus       = "";
 	$cdn         = "";
@@ -805,17 +798,21 @@ function enteteSpecs( $request_uri ){
 			break;
 
 		case "connexion":
-			$robots      = BOTS_CONNEX;
+			$robots      = BOTS_NO;
 			break;
 
 		case "inscription":
-			$robots      = BOTS_INSCRIP;
+			$robots      = BOTS_NO;
 			$focus       = " onload='placerFocus(\"iFocus\")'";
 			break;
 
 		case "mon-compte":
-			$robots      = BOTS_COMPTE;
+			$robots      = BOTS_NO;
 			break;
+
+        case "reinitMdp":
+            $robots      = BOTS_NO;
+            break;
 
 		default :                        // si ce n'est aucun des cas précédents, ou si la page '/index.php'
 			$description = DESC_INDEX;   // n'est pas précisée dans l'URL => on est sur la page index !
