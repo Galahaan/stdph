@@ -209,9 +209,14 @@ nav#iNavigation{
 /* la petite ligne de séparation avec le § sur l'inscription     */
 /* est codée dans la partie 'page contact' ci-dessous            */
 
-/* on met un peu d'espace au-dessus du lien 'inscription'        */
+/* on espace un peu les 3 § */
+#iConnexionInscription p{
+	padding-bottom: 3%;
+	text-align: justify;
+}
+/* on recentre le lien, à cause du justify ci-dessus */
 #iConnexionInscription p:nth-of-type(2){
-	padding-bottom: 5%;
+	text-align: center;
 }
 
 /***************************************************************************************************************************************/

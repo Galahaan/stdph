@@ -41,7 +41,7 @@ include("inclus/enteteH.php");
                     <p><img src='img/menleg/CNIL.png' alt=''></p>
                     <p class='cDroite'><?= str_replace(" - ","<br>",CNIL_COORD) ?></p>
                     <p class='cDroite'><a href=<?= CNIL_URL ?>><?= CNIL_URLC ?></a></p>
-                    <p>En respect de la réglementation, vous pouvez à tout moment demander la modification ou la suppression de vos données personnelles, par mail ou par courrier, à la <?= NOM_PHARMA ?> dont vous trouverez les coordonnées à la rubrique 'Contact' du site.</p>
+                    <p>Votre pharmacie s'est engagée à respecter et protéger vos données personnelles. Après connexion à votre compte, l'accès à vos données, leur modification et leur suppression sont possibles en cliquant sur votre nom dans le bandeau de connexion.</p>
                 </article>
             </section>
             <section><h3>Pharmacie</h3>

@@ -111,9 +111,9 @@ include('inclus/enteteH.php');
 		</section>
 
 		<section id='iConnexionInscription'  class='cSectionContour'><h2>(*) Création d'un compte</h2>
-			<p>Si vous ne disposez pas encore d'identifiants, vous pouvez vous inscrire en suivant le lien : </p>
-			<p>(La CNIL protège vos données, cf mentions légales ci-dessous)</p>
+			<p>Si vous ne disposez pas encore d'identifiants, vous pourrez les définir en suivant le lien ci-dessous : </p>
 			<p><a href='inscription.php'>>  inscription  <</a></p>
+			<p>Conformément à sa déclaration auprès de la CNIL, dont vous trouverez les coordonnées dans les mentions légales ci-dessous, votre pharmacie s'est engagée à respecter et protéger vos données personnelles. Après la création de votre compte, et dès votre première connexion, l'accès à vos données, leur modification et leur suppression sont possibles en cliquant sur votre nom dans le bandeau de connexion.</p>
 		</section>
 	</main>
 
