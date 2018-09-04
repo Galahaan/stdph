@@ -9,8 +9,8 @@ include('inclus/enteteH.php');
 			$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
 			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne
 
-			$heure  = heureActuelle("");		// heure au format "décimal"
-			$heureH = heureActuelle("H");		// heure au format "horaire", ie non décimal !
+			$heure  = heureActuelle('');		// heure au format "décimal"
+			$heureH = heureActuelle('H');		// heure au format "horaire", ie non décimal !
 
 			// getDeltaP( $heure ) retourne la valeur en % dont il faut décaler (left: ) la div représentant le trait vertical
 			// (en fonction de l'heure de la journée) mais également l'information s'il faut ou non afficher le trait.
