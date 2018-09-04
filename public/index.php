@@ -9,7 +9,7 @@ include('inclus/enteteH.php');
 			$aujourdhui = dateFr();				// fonction qui génère une date de la forme : vendredi 2 juillet 2017
 			$auj = substr($aujourdhui, 0, 3);	// on garde les 3 1ères lettres de la chaîne (en vue de l'appel de 'ouverturePharmacie')
 
-			$heure  = heureActuelle("");		// heure au format "décimal"
+			$heure  = heureActuelle('');		// heure au format "décimal"
 		?>
 		<section id='iIndex' class='cSectionContour'>
 			<p><?= ouverturePharmacie( $auj, $heure ) ?></p>
@@ -21,12 +21,12 @@ include('inclus/enteteH.php');
 			<br><br><?php // je sais, ces <br> sont affreux, mais depuis le 'inline' des p et h2 ci-dessus, je n'ai pas mieux ! ?>
 
 			<article>
-				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Préparation d'ordonnance</h3></a>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Ordonnance en ligne</h3></a>
 				<img src='img/index/prepaOrdonnance.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaCommande.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Préparation de commande</h3></a>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaCommande.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Commande en ligne</h3></a>
 				<img src='img/index/prepaCommande.jpg' alt=''>
 			</article>
 
