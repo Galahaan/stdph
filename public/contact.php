@@ -124,7 +124,7 @@ include('inclus/enteteH.php');
 			// sauf que comme on est sur un serveur mutualisé, on ne peut pas modifier 'locale', donc ça restait en anglais !
 			//
 			// d'où l'utilisation d'une fonction à moi :
-			$date = "Semaine " . date("W") . " - " . dateFr() . " - " . heureActuelle(H);
+			$date = "Semaine " . date('W') . " - " . dateFr() . " - " . heureActuelle('H');
 
 			// ===============  IP du client  =============== //     (3 possibilités)
 

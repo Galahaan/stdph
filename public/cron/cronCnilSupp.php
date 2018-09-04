@@ -7,7 +7,8 @@ require_once(__DIR__ . '/../inclus/fonctions.php');
 require_once(__DIR__ . '/../inclus/initDB.php');
 
 
-// clients dont la dernière connexion remonte à 1 an ou plus : on les prévient, et on les supprime
+// clients dont la dernière connexion remonte à 1 an ou plus :
+// après les avoir prévenus, 30 jours plus tôt, maintenant on les supprime
 $phraseRequete = "SELECT id, mail, prenom, nom, DATE_FORMAT(dateConx, '%d/%m/%Y') AS date FROM " . TABLE_CLIENTS . " WHERE DATE_ADD(dateConx, INTERVAL 1 YEAR) <= now()";
 $requete = $dbConnex->prepare($phraseRequete);
 if( $requete->execute() != true ){ $erreurRequete = true; }

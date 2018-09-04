@@ -5,7 +5,7 @@ include('inclus/enteteP.php');
 include("inclus/enteteH.php");
 ?>
 	<main id='iMain'>
-		<?php $heure = heureActuelle('d'); ?>
+		<?php $heure = heureActuelle(''); ?>
 
 		<section id='iPdG3237' class='cSectionContour'>
 
