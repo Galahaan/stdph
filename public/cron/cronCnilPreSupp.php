@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../inclus/fonctions.php');
 require_once(__DIR__ . '/../inclus/initDB.php');
 
 
-// clients dont la dernière connexion remonte à au moins [1 an - DELAI_AV_SUPPR jours] : on envoie un mail de pré-suppression
+// clients dont la dernière connexion remonte à au moins [1 an - 30 jours] : on envoie un mail de pré-suppression
 $phraseRequete = "SELECT mail, prenom, nom, DATE_FORMAT(dateConx, '%d/%m/%Y') AS date FROM " . TABLE_CLIENTS .
                  " WHERE " .
                  "DATE_FORMAT( DATE_ADD(dateConx, INTERVAL " . intval(DUREE_MAX_DONNEES_PERSO - DELAI_AV_SUPPR) . " DAY), '%d/%m/%Y' )" .
@@ -28,7 +28,9 @@ foreach ($clients as $client) {
                    "à ne pas conserver les données personnelles d'un compte inactif pendant plus d'un an." . $rc .
                    "(c'est à dire sans connexion durant cette période)" . $rc .
                    "Or votre dernière connexion sur <b>&nbsp;&nbsp;" . PHIE_URLC . "&nbsp;&nbsp;</b> remonte au " . $client['date'] . "." . $rc .
-                   "Sans nouvelle connexion de votre part, votre compte sera donc supprimé dans " . DELAI_AV_SUPPR . " jours." . $rc.$rc.
+                   "Sans nouvelle connexion de votre part, votre compte sera donc supprimé dans " . DELAI_AV_SUPPR . " jours." . $rc.$rc .
+                   "&nbsp;&nbsp;&nbsp;&nbsp;" .
+                   "<a href='" . SW_ADRESSE_SITE_PHARMACIE . "connexion.php'>connexion</a>" . $rc.$rc .
                    "Cordialement," . $rc .
                    "Le service technique";
     $messageHtml = $messageTxt; // un jour on fera un joli message HTML !
