@@ -226,7 +226,8 @@ function mailValide( $mailSaisi ){
 	$resultat = false;
 
 	// 1- on le "nettoie" (des scripts malveillants par ex.)
-	$mail = filter_var($mailSaisi, FILTER_SANITIZE_EMAIL);
+    $mailStrip = strip_tags($mailSaisi);
+	$mail = filter_var($mailStrip, FILTER_SANITIZE_EMAIL);
 
 	// 2- on teste la validité du format :
 	$mail = filter_var($mail, FILTER_VALIDATE_EMAIL);
