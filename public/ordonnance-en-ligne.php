@@ -11,7 +11,7 @@ if( !isset($_SESSION['client']) ){
 // Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
 // courante n'a pas été usurpée; je suis donc, das ce cas, obligé de l'écrire EN DUR :
 // (et non pas, justement, en m'appuyant sur $_SERVER)
-define("PAGE_EN_COURS", "prepaCommande.php");
+define("PAGE_EN_COURS", "ordonnance-en-ligne.php");
 
 // Si le formulaire vient d'être validé, et avant de savoir si on va envoyer le mail, on "nettoie" les champs :
 if( isset($_POST['valider']) ){
@@ -42,6 +42,9 @@ if( isset($_POST['valider']) ){
 
 	// Message
 
+	// on traite volontairement le cas du message AVANT celui de la pièce jointe pour
+	// ne conserver la pièce jointe QUE si AUCUNE erreur n'a été détectée dans les tests.
+
 	$messageClientTxt = chunk_split(htmlspecialchars(strip_tags($_POST['message'])));
 	// NB: chunk_split est utilisée ici pour respecter la RFC 2045.
 	//     utilisée de cette façon, sans param. optionnels, elle
@@ -55,12 +58,111 @@ if( isset($_POST['valider']) ){
 	}
 	// on se donne une version du message en format HTML (plus sympa à lire pour la pharmacie)
 	$messageClientHtml = "<b style='font-size: 16px;'>" . nl2br($messageClientTxt) . "</b>";
+
+	// Fichier joint
+
+	$fichierInitial = $_FILES['pieceJointe'];
+	$taille         = $fichierInitial['size']; 	   // en OCTETS
+	$nomInitial     = $fichierInitial['name'];     // de la forme "fichier.txt"
+	// on extrait l'extension (que l'on force en minuscules) :
+	$extension      = strtolower( pathinfo($nomInitial, PATHINFO_EXTENSION) );
+	$nomTemporaire  = $fichierInitial['tmp_name']; // de la forme "/tmp/phpxxxxxx", ie que cela inclut le chemin
+	$type           = $fichierInitial['type'];
+	// ex. image/gif ou image/jpeg ou application/pdf ou text/plain ou application/vnd.ms-excel ou application/octet-stream
+
+	// => on vérifie que l'extension du fichier joint fait partie de celles autorisées,
+	//    ET on prépare dès maintenant le "Content-type" de la pièce jointe du mail :
+	switch ($extension) {
+		case 'jpe' :
+		case 'jpg' :
+		case 'jpeg': $ContentType = "image/jpeg";      break;
+		case 'png' : $ContentType = "image/png";       break;
+		case 'gif' : $ContentType = "image/gif";       break;
+		case 'pdf' : $ContentType = "application/pdf"; break;
+		default:
+			$erreurs['pieceJointe'] .= " [PJ extension invalide]";
+	}
+
+
+	// pour contrer au mieux les failles de sécurité, et s'il n'y a pas d'erreurs jusqu'ici,
+	// on procède à une série de tests imbriqués portant sur la PJ, de façon à sortir de la série
+	// dès la première erreur, et ne pas faire inutilement les tests suivants :
+	if( ! isset($erreurs) ){
+
+	// 1° => on choisit et on protège l'emplacement de stockage sur le serveur :
+	//       (penser à bien définir les droits d'accès en lecture / écriture
+	//       ainsi qu'un solide .htaccess qui interdira de voir l'index-of du répertoire en question)
+		$repFinal = "../ordonnances_jointes";
+
+	// 2° => on vérifie que la taille est bien positive mais ne dépasse pas X Mo :
+		if( ! $taille > 0 ){
+			$erreurs['pieceJointe'] .= " [PJ vide]";
+		}
+		else{
+
+			if( $taille > TAILLE_MAX_PJ ){
+				$erreurs['pieceJointe'] .= " [PJ trop volumineuse]";
+			}
+			else{
+
+	// 3° => avant de stocker le fichier joint, s'il avait bien un nom, on lui en donne un nouveau,
+	//          constitué de la date, du nom du client, suivi de caractères aléatoires :
+				if( $nomInitial == "" ){
+					$erreurs['pieceJointe'] .= " [PJ anonyme]";  // le fichier n'avait pas de nom :
+				}
+				else{
+
+					// avant d'écrire la date dans le nom du fichier, on définit le fuseau horaire par défaut à utiliser :
+					( date_default_timezone_set("Europe/Paris") ) ? $fuseau = "" : $fuseau = " (fuseau horaire invalide)";
+
+					// si on veut que le nom de la PJ ne soit pas tronqué lors de l'envoi du mail,
+					// il ne faut pas laisser d'espaces dedans :
+					$prenomSE = str_replace(" ", "_", $prenom);
+					$nomSE    = str_replace(" ", "_", $nom);
+					$nouveauNom = date("Y-m-d__H-i-s__") . $prenomSE . "__" . $nomSE . "__" . bin2hex(random_bytes(16));
+
+	// 4° => on vérifie qu'un fichier portant le même nom n'est pas déjà présent sur le serveur :
+					if( file_exists($repFinal."/".$nouveauNom.".".$extension)) {
+						// ce message là, qui ne devrait pas arriver, écrase les précédents :
+						$erreurs['pieceJointe'] = "PJ - Erreur serveur, veuillez renvoyer le formulaire svp.";
+					}
+					else{
+
+	// 5° => au final, comme il n'y a pas d'erreurs, alors on déplace le fichier à son emplacement définitif tout en le renommant :
+						$succes = move_uploaded_file($nomTemporaire , $repFinal.'/'.$nouveauNom.'.'.$extension);
+
+						if( ! $succes ){
+							$erreurs['pieceJointe'] = "[PJ - erreur de transfert ". $_FILES['pieceJointe']['error']. "]";
+							// la valeur de l'erreur renseigne sur sa signification :
+							// 0 = a priori ce sont les droits d'accès en écriture qui ne sont pas conformes ...
+							//	 ou des caractères non autorisés dans le nom du fichier : ex. "/" ...
+							// 1 = UPLOAD_ERR_INI_SIZE - Taille du fichier téléchargé > upload_max_filesize dans le php.ini.
+							// 2 = UPLOAD_ERR_FORM_SIZE - Taille du fichier téléchargé > MAX_FILE_SIZE définie dans le formulaire HTML.
+							// 3 = UPLOAD_ERR_PARTIAL - Le fichier n'a été que partiellement téléchargé.
+							// 4 = UPLOAD_ERR_NO_FILE - Aucun fichier n'a été téléchargé.
+							// 6 = UPLOAD_ERR_NO_TMP_DIR - Un dossier temporaire est manquant. (introduit en PHP 5.0.3)
+							// 7 = UPLOAD_ERR_CANT_WRITE - Échec de l'écriture du fichier sur le disque. (introduit en PHP 5.1.0)
+							// 8 = UPLOAD_ERR_EXTENSION - Une extension PHP a arrêté l'envoi de fichier.
+							//		PHP ne propose aucun moyen de déterminer quelle extension est en cause.
+							//		L'examen du phpinfo() peut aider. (introduit en PHP 5.2.0)
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// si, à un quelconque endroit dans la série de tests ci-dessus,
+	// il y a eu au moins une erreur, on supprime le fichier du serveur :
+	if( isset($erreurs) ){
+		    unlink($nomTemporaire);
+	}
 }
 
 include("inclus/enteteH.php");
 ?>
 	<main id='iMain'>
-		<section id='iCommPrepaComm' class='cSectionContour'><h2>Préparation de commande</h2>
+		<section id='iOrdoPrepaOrdo' class='cSectionContour'><h2>Ordonnance en ligne</h2>
  
 			<?php if( isset($_POST['valider']) && !isset($erreurs)) : ?>
 
@@ -152,13 +254,22 @@ include("inclus/enteteH.php");
 
 					// L'objet du message est constitué d'un préfixe (les 4 derniers car. de l'IP) suivi des prénom et nom de l'expéditeur :
 					// (la fonction mb... sert à autoriser les caractères accentués)
-					$objet = mb_encode_mimeheader("Commande - [" .
+					$objet = mb_encode_mimeheader("Ordonnance - [" .
 													substr($ipClient, -4, 4) . "]  " .
 													$civilite . " " .
 													$prenom . " " .
 													$nom, "UTF-8", "B");
 
-					// ===============  Création du header  ============== //
+					// =============  Création du séparateur  ============ //
+
+					// ici il nous en faut 2 puisque nous devons séparer les 2 alternatives text : plain et html,
+					// ainsi que le message proprement dit et la pièce jointe
+					$boundary_A = md5(rand());
+					$boundary_B = md5(rand());
+					$separateur_A = $rc . "--" . $boundary_A . $rc; // on intègre les 2 "--" obligatoires et les CRLF
+					$separateur_B = $rc . "--" . $boundary_B . $rc;
+
+					// ==============  Création du header  =============== //
 
 					// cf dossier "envoi de mails en PHP"
 					$header =	"From: " .
@@ -167,16 +278,57 @@ include("inclus/enteteH.php");
 								"Reply-To: $adrMailClient" . $rc .
 								"MIME-Version: 1.0" . $rc .
 								"X-Mailer: PHP/" . phpversion() . $rc .
-								"Content-type: text/html; charset=UTF-8" . $rc .
-			           			"Content-Transfer-Encoding: 8bit";
+								"Content-Type: multipart/mixed; boundary=" . $boundary_A;
 
 					// =============== Création du message =============== //
 
-					// version HTML seule
-					$message =	$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br>" . "<br>" .
-								$messageClientHtml . "<br><br><br><br>" .
+					// Texte placé entre le header et le message proprement dit,
+					// pour les clients mails ne supportant pas le type MIME (ça ne doit pas être très fréquent !..)
+	           		$message = $rc . "Type MIME non pris en charge par votre client mail ..." . $rc;
+
+					// on introduit les 2 versions alternatives :
+					$message .=	$separateur_A . 
+								"Content-Type: multipart/alternative; boundary=" . $boundary_B;
+
+					// version "TEXT"
+					$message .=	$separateur_B .
+								"Content-Type: text/plain; charset='UTF-8'" . $rc .
+								"Content-Transfer-Encoding: 8bit" . $rc .
+								$date . " - " . $civilite . " " . $prenom . " " . $nom . "  -  " . $adrMailClient . $rc . $rc .
+								$messageClientTxt . $rc . $rc. $rc . $rc .
+								"IP  client     = " . $ipClient . $rc .
+								"FAI client     = " . $faiClientBrut;
+
+					// version "HTML"
+					$message .=	$separateur_B .
+								"Content-Type: text/html; charset='UTF-8'" . $rc .
+								"Content-Transfer-Encoding: 8bit" . $rc .
+								$date . " - <b>" . $civilite . " " . $prenom . " " . $nom . "</b>  -  " . $adrMailClient . "<br><br>" .
+								$messageClientHtml . "<br>" .
 								"IP  client     = " . $ipClient . "<br>" .
 								"FAI client     = " . $faiClientBrut;
+
+					// ========== Insertion de la pièce jointe =========== //
+
+					// 1- on ouvre le fichier en lecture seule :
+					$flux = fopen($repFinal."/".$nouveauNom.".".$extension, "r") or die("impossible à ouvrir !");
+
+					// 2- on parcourt l'ensemble du fichier :
+					$pieceJointe = fread( $flux, filesize($repFinal."/".$nouveauNom.".".$extension) );
+
+					// 3- on referme le fichier :
+					fclose($flux);
+
+					// 4- on encode la pièce jointe :
+					$pieceJointe = chunk_split(base64_encode($pieceJointe));
+
+					// 5- on ajoute la PJ dans le mail :
+					//    (le Content-type a été préparé au moment des vérifications sur la pièce jointe)
+					$message .= $separateur_A .
+								"Content-Type: " . $ContentType . "; name=" . $nouveauNom . "." . $extension . $rc . // ex. "image/jpeg"
+								"Content-Transfer-Encoding: base64" . $rc .
+								"Content-Disposition: attachment; filename=" . $nouveauNom . "." . $extension . $rc .
+								$pieceJointe;
 
 					// ================== Envoi du mail ================== //
 
@@ -187,11 +339,11 @@ include("inclus/enteteH.php");
 					// Mais dans les 2 cas, on enverra la même confirmation d'envoi du mail,
 					// d'où le stockage de cette confirmation dans une variable (bon 2 en fait !) :
 
-					// on effacera le titre de la page : "Préparation de commande"
+					// on effacera le titre de la page : "Ordonnance en ligne"
 					// puisque le message est suffisamment explicite :
 					$effaceContenuPage =
 						"<style type='text/css'>" .
-								"#iCommPrepaComm h2 { display: none }" .
+								"#iOrdoPrepaOrdo h2 { display: none }" .
 						"</style>";
 
 					// puis on affichera le message de confirmation
@@ -201,7 +353,7 @@ include("inclus/enteteH.php");
 					//      on utilise du javascript)
 					$messageConfirmation =
 						"<div class='cMessageConfirmation'>" .
-								"<p id='iFocus'>Merci, votre commande a bien été envoyée.</p>" .
+								"<p id='iFocus'>Merci, votre ordonnance a bien été envoyée.</p>" .
 								"<p>Nous vous répondrons dans les meilleurs délais, " .
 									"sous réserve qu'il n'y ait pas d'erreur dans l'adresse mail fournie.</p>" .
 						"</div>";
@@ -230,12 +382,13 @@ include("inclus/enteteH.php");
 						$messageAlerte =	"<br><b>&nbsp;&nbsp;ATTENTION !<br>" .
 											"Ce formulaire a été envoyé à partir d'un site web DIFFERENT de celui de la pharmacie : " . "<br>" .
 											$_SERVER['HTTP_REFERER'] . "</b><br>" .
+											"(par sécurité, la pièce jointe a été supprimée de cet envoi)<br>" .
 											"_______________________________________________________________________________" . "<br><br>" .
 											$date . " - " . $civilite . " " . $prenom . " " . $nom . "  -  " . $adrMailClient . "<br><br>" .
 											$messageClientTxt . "<br><br>" .
 											"IP  client     = " . $ipClient . "<br>" .
 											"FAI client     = " . $faiClientBrut;
-						if( mail(MAIL_DEST_PHARMA, "Commande - Tentative de piratage ?", $messageAlerte, $headerAlerte) ){
+						if( mail(MAIL_DEST_PHARMA, "Ordonnance - Tentative de piratage ?", $messageAlerte, $headerAlerte) ){
 							echo $effaceContenuPage;
 							echo $messageConfirmation;
 						}
@@ -284,15 +437,49 @@ include("inclus/enteteH.php");
 				?>
 
 				<div id='iBlablaIntro'>
-					<p>Envoyez-nous votre commande via le formulaire ci-dessous.</p>
-					<p>Écrivez librement les produits dont vous avez besoin.</p>
-					<p>Seuls les produits ne nécessitant pas d'ordonnance médicale peuvent être commandés.</p>
-					<p>Vous serez prévenu(e) par mail dès la mise à disposition de votre commande.</p>
+					<p>Envoyez-nous votre ordonnance via le formulaire ci-dessous.</p>
+					<p>Les produits seront alors aussitôt préparés et vous serez prévenu(e) par mail de leur mise à disposition.</p>
+					<p><span class='cCouleurRouge'>Attention</span>, venez à la pharmacie <span class='cCouleurRouge'>avec l'original de l'ordonnance</span>.</p>
+					<p>Pensez aussi à la <span class='cCouleurRouge'>carte vitale</span> et à la <span class='cCouleurRouge'>carte de mutuelle</span>.</p>
 					<p>Si tous les produits sont en stock, le délai moyen de préparation est d'environ 2 h, sinon une demi-journée suffit en général.</p>
 				</div>
 
+				<article>
+					<p id='iOrdoLienModeEmploi'>
+						<a href='#iOrdoModeEmploi'>Mode d'emploi</a>&nbsp;&nbsp;<img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''>
+						<a class='cBraille'>fin du mode d'emploi</a>
+					</p>
+					<div id='iOrdoModeEmploi'>
+						<div>Il suffit de suivre ces <span>4 étapes :</span></div>
+						<ol>
+							<li><span>numériser l'ordonnance :</span>
+								<ul>
+									<li>si vous sortez de chez le médecin avec votre document papier,
+									    vous pouvez simplement le photographier avec votre smartphone.
+									    Attention, prenez garde à bien cadrer l'ordonnance qui doit être visible en totalité.</li>
+									<li>de chez vous, si vous disposez d'une imprimante-scanner, vous pouvez numériser le document.</li>
+									<li>si l'ordonnance est déjà sous forme de document PDF, il n'y a rien de plus à faire.</li>
+								</ul>
+							</li>
+
+							<li><span>remplir tous les champs du formulaire.</span></li>
+
+							<li><span>joindre le document numérisé de votre ordonnance :</span>
+								<ul>
+									<li><p>cliquer sur "Parcourir ..."</p>
+										<p>NB: il est possible que certains smartphones ne permettent pas l'accès aux fichiers du téléphone</p></li>
+									<li>sélectionner le document créé à l'étape 1)</li>
+								</ul>
+							</li>
+
+							<li><span>cliquer sur "Envoyer".</span></li>
+						</ol>
+						Nous nous occupons de la suite !
+					</div>
+				</article>
 				<sup>Veuillez renseigner tous les champs ci-dessous svp.</sup>
-				<form method='POST'>
+				<sup>(pièce jointe < <?= TAILLE_MAX_PJ / 1024 / 1024 ?> Mo)</sup>
+				<form method='POST' enctype='multipart/form-data'>
 					<div class='cChampForm'>
 						<input type='radio' id='iCiviliteMme'  name='civilite' value='Mme'  required
 							<?= $civilite == "Mme"  ? "checked" : ""?> >
@@ -329,7 +516,7 @@ include("inclus/enteteH.php");
 					<div class='cChampForm'>
 						<label for='iMail'>Mail</label>
 								<input type='email' id='iMail' name='adrMailClient' required <?= isset($adrMailClient) ? "value=" . $adrMailClient : ""?>
-									<?php	if( isset($erreurs['adrMailClient'])  && $focusErreurMis == false ){
+									<?php	if( (isset($erreurs['adrMailClient']) || isset($erreurs['pieceJointe'])) && $focusErreurMis == false ){
 												echo " autofocus";
 												$focusErreurMis = true;
 											}
@@ -338,7 +525,15 @@ include("inclus/enteteH.php");
 						<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
 					</div>
 					<div class='cChampForm'>
-						<label for='iMessageTextarea'>Commande</label>
+						<label for='iPJ'>Ordonnance</label>
+								<input type='file' id='iPJ' name='pieceJointe' accept=<?= LISTE_EXT_AUTORISEES ?> required >
+								<?php // visiblement l'autofocus n'a pas d'effet sur un <input type='file'>, donc on le met ci-dessus :( ?>
+						<?php if( isset($erreurs['pieceJointe']) ) { echo "<sub>" . $erreurs['pieceJointe'] . "</sub>"; } ?>
+					</div>
+					<div class='cChampForm'>
+						<label for='iMessageTextarea'>Message</label>
+								<p>Apportez-nous des précisions qui vous semblent utiles sur votre traitement.
+								<br>Peut-être avez-vous déjà certains produits qu'il serait donc inutile d'ajouter à la préparation ?..</p>
 								<textarea rows='8' minlength='<?= NB_CAR_MIN_MESSAGE_HTM ?>' maxlength='<?= NB_CAR_MAX_MESSAGE_HTM ?>' id='iMessageTextarea' name='message' required placeholder='...'
 									<?php	if( isset($erreurs['message']) && $focusErreurMis == false ) {
 												echo " autofocus";

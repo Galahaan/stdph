@@ -42,7 +42,7 @@ body, h2, p.cJour{
 }
 /* icône du clicIndex */
 /* on l'exprime en 'rem' pour qu'elle ait la même taille à tous les endroits où             */
-/* l'on s'en sert (bandeau du haut, contact, mode d'emploi de prepaOrdo ...)                */
+/* l'on s'en sert (bandeau du haut, contact, mode d'emploi de ordonnance-      ...)      */
 /* cette classe ne sert d'ailleurs QUE pour définir la taille de l'icône dans tout le site. */
 /* pour ce qui est de sa position, il ne faudrait surtout pas utiliser cette classe, étant  */
 /* donné qu'il peut y avoir plusieurs fois cette icône dans la page ...                      */
@@ -340,7 +340,7 @@ form#iMCSupprimCpte div:last-of-type{
 /* page contact et page connexion :         */
 /* petit trait horizontal au dessus du §    */
 /* (en version mobile uniquement !)         */
-#iContactCoordonnees:before, #iContactPlan:before, #iContactFormulaire:before, #iConnexionInscription:before{
+#iContactCoordonnees::before, #iContactPlan::before, #iContactFormulaire::before, #iConnexionInscription::before{
 	content: '';
 	display: block;
 	height: .2rem;
@@ -487,7 +487,7 @@ sub{
 /*                                                                                                             */
 /*                  petit § dédié aux messages de confirmation                                                 */
 /*                     (d'envoi, de création de compte, ...)                                                   */
-/*    communs aux pages contact, inscription, prepaCommande, prepaOrdonnance, mon-compte                       */
+/*    communs aux pages contact, inscription, commande-, ordonnance-, mon-compte                               */
 /*                                                                                                             */
 
 /* espaces autour de la div des messages de confirmation                                                       */
@@ -511,7 +511,7 @@ sub{
 
 
 /***************************************************************************************************************************************/
-/**************************************       page prepaOrdonnance   +   page prepaCommande       **************************************/
+/**************************************       page ordonnance-    +   page commande-...        **************************************/
 /***************************************************************************************************************************************/
 
 /* marges autour du § d'introduction situé au dessus du formulaire */
@@ -825,7 +825,6 @@ sub{
 /* petite mise en page */
 #iMenLeg h3{
 	text-align: center;
-	text-decoration: underline;
 	padding: 8% 0;
 }
 /* entité */
@@ -850,6 +849,18 @@ sub{
 	text-align: justify;
 	padding: 0 2% 4%;
 }
+/* petite ligne sous chaque § */
+#iMenLegOP article::after{
+	content: '';
+	display: block;
+	height: .2rem;
+	width: 100%;
+	margin: 0 auto 1rem;
+}
+#iMenLegOP article:last-of-type::after{
+	content: none;
+}
+
 
 /***************************************************************************************************************************************/
 /****************************************************             Footer            ****************************************************/
@@ -1018,7 +1029,7 @@ footer section:last-of-type{
 		float: left;
 	}
 
-	/*     page prepaOrdonnance     */
+	/*     page ordonnance-     */
 
 	/* icône du clicIndex */
 	#iOrdoLienModeEmploi img{
@@ -1125,19 +1136,16 @@ footer section:last-of-type{
 
 	/******************************  page mentions légales  *******************************/
 
-	#iMenLeg h4{
-		padding-left: 15%;
-	}
 	#iMenLeg img{
-		padding-left: 15%;
+		padding-left: 8%;
 		width: 15%;
 	}
 	#iMenLeg .cDroite{
-		padding-right: 15%;
+		padding-right: 8%;
 	}
 	#iMenLegOP p:last-of-type{
-		padding-left: 15%;
-		padding-right: 15%;
+		padding-left: 8%;
+		padding-right: 8%;
 	}
 }
 
@@ -1217,7 +1225,7 @@ footer section:last-of-type{
 		display: inline-block; /* c'est là qu'on passe en 2 colonnes */
 		vertical-align: top;
 	}
-	#iContactCoordonnees:before{
+	#iContactCoordonnees::before{
 		content: none; /* on annule le trait avec le § précédent puisqu'on passe sur 2 colonnes */
 	}
 	/* FB et G+ */
@@ -1282,7 +1290,7 @@ footer section:last-of-type{
 	}
 
 	/* ça ne me sert pas, mais c'est juste bon à savoir ! */
-/*	a[href]:after{
+/*	a[href]::after{
 		content: " (" attr(href) ")"; /* affichage des url des liens
 	}*/
 

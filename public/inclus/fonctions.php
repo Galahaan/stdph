@@ -638,12 +638,12 @@ function pageCourante( $request_uri ){
 			$titrePage = TTL_CONTACT;
 			break;
 
-		case "prepaOrdonnance":
+		case "ordonnance-en-ligne":
 			$nomPage   = NOM_ORDO;
 			$titrePage = TTL_ORDO;
 			break;
 
-		case "prepaCommande":
+		case "commande-en-ligne":
 			$nomPage   = NOM_COMM;
 			$titrePage = TTL_COMM;
 			break;
@@ -740,7 +740,7 @@ function enteteSpecs( $request_uri ){
 	$focus       = "";
 	$cdn         = "";
 
-	// NB: pour les pages horaires, contact, inscription, prepaOrdo et prepaComm, idéalement,
+	// NB: pour les pages horaires, contact, inscription, ordo- et comm-, idéalement,
 	// j'aurais voulu écrire les lignes d'instructions HTML complètes entre guillemets "",
 	// pour les récupérer dans la page appelante en sortie de la fonction, ex. $enteteSpecs['refresh'] ...
 	// MAIS !.. quand je mets le '<' de début de balise, ça doit être interprété comme une faille potentielle,
@@ -764,12 +764,12 @@ function enteteSpecs( $request_uri ){
 			$cdn         = "link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'>";
 			break;
 
-		case "prepaOrdonnance":
+		case "ordonnance-en-ligne":
 			$description = DESC_PREP_O;
 			$focus       = " onload='placerFocus(\"iFocus\")'";
 			break;
 
-		case "prepaCommande":
+		case "commande-en-ligne":
 			$description = DESC_PREP_C;
 			$focus       = " onload='placerFocus(\"iFocus\")'";
 			break;

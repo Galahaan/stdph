@@ -21,13 +21,13 @@ include('inclus/enteteH.php');
 			<br><br><?php // je sais, ces <br> sont affreux, mais depuis le 'inline' des p et h2 ci-dessus, je n'ai pas mieux ! ?>
 
 			<article>
-				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaOrdonnance.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Ordonnance en ligne</h3></a>
-				<img src='img/index/prepaOrdonnance.jpg' alt=''>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'ordonnance-en-ligne.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Ordonnance en ligne</h3></a>
+				<img src='img/index/ordonnance-en-ligne.jpg' alt=''>
 			</article>
 
 			<article>
-				<a href= <?= ( isset($_SESSION['client']) ) ? "'prepaCommande.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Commande en ligne</h3></a>
-				<img src='img/index/prepaCommande.jpg' alt=''>
+				<a href= <?= ( isset($_SESSION['client']) ) ? "'commande-en-ligne.php'" : "'connexion.php' rel='nofollow'" ?> ><h3>Commande en ligne</h3></a>
+				<img src='img/index/commande-en-ligne.jpg' alt=''>
 			</article>
 
 			<article>

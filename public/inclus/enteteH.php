@@ -87,7 +87,7 @@
                 else{
 
                     // si le client n'est pas connecté, on affiche le lien pour se connecter :
-                    // (normalement, pour prepaOrdo et prepaCom, on ne peut arriver là sans être déjà connecté)
+                    // (normalement, pour ordo- et comm-, on ne peut arriver là sans être déjà connecté)
                     echo "<div id='iClientConnecte'>";
                         echo " ";
                     echo "</div>";
