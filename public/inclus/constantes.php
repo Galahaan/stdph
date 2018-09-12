@@ -141,7 +141,8 @@ define('TABLE_CLIENTS'    , "clientsBIG");
 
 // Pour la modification des données personnelles :
 
-// nombre de caractères du code aléatoire d'authentification
+// nombre de caractères du code de validation généré aléatoirement
+// pour pouvoir modifier ou supprimer ses données
 // (pair, sinon ce sera l'entier pair inférieur)
 define('NB_CAR_CODE_MODIF', 8);
 // durée de validité du code (en minutes)
@@ -170,7 +171,7 @@ define('DELAI_AP_DDE_SUPPR', 30);
 // 'home' du site sur le serveur de l'hébergeur (fonctions.php)
 define('HOME'             , "/home/bigouigfiy/"); // utilisé uniquement dans require_onceCLR qui n'est utilisée nulle part !
 
-// pour l'envoi de mails : pages prepaOrdonnance, prepaCommande et contact
+// pour l'envoi de mails : pages ordonnance-, commande- et contact
 // adresse de l'expéditeur des mails via l'hébergeur du site :
 define('ADR_EXP_HBG'      , "bigouigfiy@cluster020.hosting.ovh.net");
 
@@ -194,14 +195,14 @@ define('MAIL_DEST_CLR'             , "clr.tstph@use.startmail.com");
 // taille max de la pièce jointe : 5 Mo = 5242880 octets
 define('TAILLE_MAX_PJ'             , 5242880);
 
-// extensions autorisées pour la pièce jointe : cf aussi ligne : " switch ($extension) " en ligne ~ 180 de prepaCommande
+// extensions autorisées pour la pièce jointe : cf aussi ligne : " switch ($extension) " en ligne ~ 180 de commande-
 define('LISTE_EXT_AUTORISEES'      , "'.jpe, .jpg, .jpeg, .png, .gif, .pdf'");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////                                                            ///////////////
 ///////////////       Nb caractères min et max dans les formulaires        ///////////////
 ///////////////                                                            ///////////////
-///////////////      (pages prepaOrdonnance, prepaCommande et contact)     ///////////////
+///////////////        (pages ordonnance-  commande-  et  contact)         ///////////////
 ///////////////                                                            ///////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 

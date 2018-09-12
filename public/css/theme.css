@@ -46,8 +46,8 @@
 /* form des données perso en readonly, fond        (mon-compte)         :           rgb(224, 224, 224)  gris       */
 /* form des données perso en readonly, texte       (mon-compte)         :           rgb(89, 89, 89)     gris       */
 /*                                                                                                                 */
-/* messages d'erreur formulaires       (prepaComm + prepaOrdo + contact):  ~FF0000  rgb(255, 0, 0)      rouge      */
-/*  + n'oubliez pas ...                            (prepaOrdo)                                                     */
+/* messages d'erreur formulaires             (comm-  ordo-  contact)    :  ~FF0000  rgb(255, 0, 0)      rouge      */
+/*  + n'oubliez pas ...                             (ordo-)                                                        */
 /*                                                                                                                 */
 /* boutons de validation, texte                                         :           white                          */
 /*  + boutons 'autres', fond                                                                                       */
@@ -58,7 +58,7 @@
 /*      - tel + mail                               (contact)                                                       */
 /*      - inscription                              (connexion)                                                     */
 /*      - connexion                                (inscription)                                                   */
-/*      - mode d'emploi                            (prepaOrdo)                                                     */
+/*      - mode d'emploi                            (ordo-)                                                         */
 /*      - organismes partenaires                   (menleg)                                                        */
 /* bouton de validation, hover                                          :  ~585858  rgb(88, 88, 88)     gris       */
 /*  + hover sur tous les liens 'normaux' du site                                                                   */
@@ -69,8 +69,8 @@
 /* créneaux ouverture, fond                        (horaires)           :  rgba(148, 193, 29, .2)       vert       */
 /* créneau actuel ouverture, fond                  (horaires)           :  rgba(148, 193, 29, .5)       vert       */
 /*                                                                                                                 */
-/* ordo en ligne, mode emploi, fond                (prepaOrdo)          :  ~5B5B5B  rgb(91, 91, 91)     gris       */
-/* ordo en ligne, mode emploi, Nota Bene           (prepaOrdo)          :  ~F29200  rgb(242, 146, 0)    orange     */
+/* ordo en ligne, mode emploi, fond                (ordo-)              :  ~5B5B5B  rgb(91, 91, 91)     gris       */
+/* ordo en ligne, mode emploi, Nota Bene           (ordo-)              :  ~F29200  rgb(242, 146, 0)    orange     */
 /*                                                                                                                 */
 /* § alternés                                                                                                      */
 /*      - 1 produit sur 2                          (gammesProduits)     :  ~F8F8F8  rgb(248, 248, 248)  gris       */
@@ -121,7 +121,7 @@ main{
 
 /***************************************************************************************************************************************/
 /*********************************                    tous les liens 'normaux' du site                **********************************/
-/*********************************      pages connexion, inscription, contact, prepaOrdo, menleg      **********************************/
+/*********************************        pages connexion, inscription, contact, ordo-, menleg        **********************************/
 /***************************************************************************************************************************************/
 #iConnexionInscription a, #iInscription a, #iContactTel a, #iContactMail a, #iOrdoLienModeEmploi a, #iMenLeg a{
     color: rgb(165, 90, 165);
@@ -138,7 +138,7 @@ main{
 /******************************                                6 formulaires                              ******************************/
 /******************************    contact, connexion, inscription, ordonnance, commande et mon-compte    ******************************/
 /***************************************************************************************************************************************/
-#iContactCoordonnees:before, #iContactPlan:before, #iContactFormulaire:before, #iConnexionInscription:before{
+#iContactCoordonnees::before, #iContactPlan::before, #iContactFormulaire::before, #iConnexionInscription::before, #iMenLegOP article::after{
     background-color: rgb(54, 65, 21); /* petit trait horizontal entre les § */
 }
 .cChampForm{
@@ -304,7 +304,7 @@ nav#iNavigation a{
 }
 
 /***************************************************************************************************************************************/
-/**************************************                  page prepaOrdonnance                     **************************************/
+/**************************************                    page ordonnance-                       **************************************/
 /***************************************************************************************************************************************/
 .cCouleurRouge{
     color: rgb(255, 0, 0); /* N'oubliez pas l'original de l'ordonnance ... */

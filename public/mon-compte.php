@@ -13,7 +13,7 @@ require_once("./inclus/initDB.php");
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//             Demande d'envoi d'un code de validation
+//             Demande d'envoi d'un code de validation (modification ou suppression des données)
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,6 +25,7 @@ require_once("./inclus/initDB.php");
 if( isset($_POST['demanderCode']) ){
 
     // génération aléatoire du code
+    // (la div. entière par 2 dans openssl_... est due à bin2hex qui 'multiplie par 2' le nb de car. initial)
     $codeBinaire = openssl_random_pseudo_bytes( intdiv(NB_CAR_CODE_MODIF, 2) );
     $codeModif   = bin2hex($codeBinaire);
 
