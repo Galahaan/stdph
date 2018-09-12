@@ -304,6 +304,7 @@ form#iMCSupprimCpte div:last-of-type{
 /*      (pour que visited n'écrase pas hover, et que la navigation au clavier se passe bien sous IE : hover > focus > active)*/
 #iIndex article a:hover, #iIndex article a:focus, #iIndex article a:active{
 	opacity: .85;
+	transition: all .4s ease-in-out;
 }
 
 #iIndex article h3{
