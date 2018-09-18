@@ -214,6 +214,28 @@ function filtrerNom( $nomPOST ){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
+//                      formaterTel()
+//
+// Fonction qui sert à formater un n° de tel à 10 chiffres selon le schéma : 0x xx xx xx xx
+//
+// Elle prend en entrée une variable comportant 10 chiffres et 0 ou x espaces.
+//
+// Elle renvoie en sortie le tel formaté par paires
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+function formaterTel( $telPOST ){
+
+    $tel = str_replace(' ', '', $telPOST);          // on enlève les espaces
+    $tel = preg_replace('#(\d{2})#', '$1 ', $tel);  // on remet 1 espace entre chaque paire
+
+    // autre façon de faire : (je n'ai pas testé la plus rapide)
+    // $tel = str_replace("\r\n", " ", chunk_split($tel, 2));
+
+    return $tel;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//
 //						mailValide(), telValide(), mdpValide()
 //
 // Fonctions qui servent à tester un mail, un tel, un mot de passe saisis par l'utilisateur.

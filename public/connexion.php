@@ -39,7 +39,7 @@ if( isset($_POST['connexion']) && !empty($_POST['mail']) ){
 				$_SESSION['client']['nom'] = $client['nom'];
 				$_SESSION['client']['prenom'] = $client['prenom'];
 				$_SESSION['client']['mail'] = $client['mail'];
-				$_SESSION['client']['tel'] = $client['tel'];
+				$_SESSION['client']['telMobile'] = $client['telMobile'];
 
 				// juste avant de retourner à l'accueil, on stocke en BDD la date de cette connexion
 				// => c'est la 1ère étape pour respecter la déclaration à la CNIL sur la durée de stockage des données
