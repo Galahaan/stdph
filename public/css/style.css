@@ -42,7 +42,7 @@ body, h2, p.cJour{
 }
 /* icône du clicIndex */
 /* on l'exprime en 'rem' pour qu'elle ait la même taille à tous les endroits où             */
-/* l'on s'en sert (bandeau du haut, contact, mode d'emploi de ordonnance-      ...)      */
+/* l'on s'en sert (bandeau du haut, contact, mode d'emploi de ordonnance-   ...)            */
 /* cette classe ne sert d'ailleurs QUE pour définir la taille de l'icône dans tout le site. */
 /* pour ce qui est de sa position, il ne faudrait surtout pas utiliser cette classe, étant  */
 /* donné qu'il peut y avoir plusieurs fois cette icône dans la page ...                      */
