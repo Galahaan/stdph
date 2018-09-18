@@ -244,16 +244,11 @@ function mailValide( $mailSaisi ){
 
 function telValide( $telSaisi ){
 
-	// on autorise :
-	// - soit une chaîne vide
-	// - soit une chaîne de la forme '0x xx xx xx xx' avec ou sans espaces
+	// on autorise une chaîne de la forme '0 x x x x x x x x x' avec ou sans espaces
 
 	$resultat = false;
 
-	if( empty($telSaisi) ){
-		$resultat = true;
-	}
-	elseif( preg_match('#^(0[1-9]{1}\s?)([0-9]{2}\s?){3}([0-9]{2})$#', $telSaisi) ){
+    if( preg_match('#^(0\s?)([1-9]{1}\s?)([0-9]{1}\s?){7}([0-9]{1})$#', $telSaisi) ){
 		$resultat = true;
 	}
 	return $resultat;

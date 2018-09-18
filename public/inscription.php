@@ -42,6 +42,23 @@ if( isset($_POST['valider']) ){
 		$mailExisteDeja = $requete->fetchAll();
 	}
 
+	// N° de tel mobile
+
+	$telMobile = $_POST['telMobile'];
+
+	if( ! telValide($telMobile) ){
+		$erreurs['telMobile'] = "(n° invalide)";
+	}
+	else{
+		// ex. de saisie (pourrie) initiale : 0 6 123 4 5678
+		// or on veut stocker               : 06 12 34 56 78
+		$telMobile = str_replace(' ', '', $telMobile);// on enlève les espaces
+		$telMobile = preg_replace('#(\d{2})#', '$1 ', $telMobile);// on remet 1 espace entre chaque paire
+
+		// autre façon de faire : (je n'ai pas testé la plus rapide)
+		// $telMobile = str_replace("\r\n", " ", chunk_split($telMobile, 2));
+	}
+
 	// Mot de passe :
 
 	if( ! mdpValide($_POST['password']) ){
@@ -81,11 +98,12 @@ include("inclus/enteteH.php");
 			// (avant je délimitais les ch. de car. de la requête par des " et les variables par des ' mais
 			//  j'ai dû inverser le jour où j'ai décidé d'accepter le car. ' dans les noms : ex. Mc Kulloc'h )
 			$phraseRequete = 'INSERT INTO ' . TABLE_CLIENTS .
-							 ' (civilite, nom, prenom, mail, pwd) VALUES ("' .
+							 ' (civilite, nom, prenom, mail, tel, pwd) VALUES ("' .
 							 $civilite . '", "' .
 							 $nom . '", "' .
 							 $prenom . '", "' .
 							 $adrMailClient . '", "' .
+							 $telMobile . '", "' .
 							 $passwordCrypte . '")';
 			$requete = $dbConnex->prepare($phraseRequete);
 			$requete->execute();
@@ -167,6 +185,17 @@ include("inclus/enteteH.php");
 						placeholder='...'>
 					<?php if( isset($erreurs['adrMailClient']) ) { echo "<sub>" . $erreurs['adrMailClient'] . "</sub>"; } ?>
 					<?php if( $mailExisteDeja ) { echo "<sub>Aïe, cet identifiant est déjà pris, veuillez en choisir un autre svp ...</sub>"; } ?>
+				</div>
+				<div class='cChampForm'>
+					<label for='iTelMobile'>n° de mobile</label>
+						<input type='text' id='iTelMobile' name='telMobile' required <?= isset($telMobile) ? "value=" . $telMobile : ""?>
+							<?php	if( isset($erreurs['telMobile']) && $focusErreurMis == false ){
+										echo " autofocus";
+										$focusErreurMis = true;
+									}
+							?>
+						placeholder='...'>
+					<?php if( isset($erreurs['telMobile']) ) { echo "<sub>" . $erreurs['telMobile'] . "</sub>"; } ?>
 				</div>
 				<div class='cChampForm'>
 					<label for='idPassword'>Mot de passe</label>

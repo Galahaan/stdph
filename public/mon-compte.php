@@ -230,7 +230,15 @@ if( isset($_POST['validerModifs']) || isset($_POST['annulerModifs']) ){
 
                 // le n° est bien différent du précédent, mais, juste avant de le stocker, on vérifie qu'il est valide
                 if( telValide($_POST['tel']) ){
-                    $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET tel='" . $_POST['tel'] . "' WHERE id =" . $id;
+
+                    $telMobile = str_replace(' ', '', $_POST['tel']);// on enlève les espaces
+                    $telMobile = preg_replace('#(\d{2})#', '$1 ', $telMobile);// on remet 1 espace entre chaque paire (cf inscription.php lig 58)
+
+                    // pour présenter à l'utilisateur le n° sous sa forme 'propre' (ie avec un espace / 2 chiffres) :
+                    $_POST['tel'] = $telMobile;
+
+                    // stockage en BDD
+                    $phraseRequete = "UPDATE " . TABLE_CLIENTS . " SET tel='" . $telMobile . "' WHERE id =" . $id;
                     $requete = $dbConnex->prepare($phraseRequete);
                     if( $requete->execute() == true ){
                         $modifOK[] = "n° de téléphone";
