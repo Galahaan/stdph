@@ -44,7 +44,9 @@ define('VIL_PHARMA'        , "Gaël");
 define('TEL_PHARMA_DECO'   , "01 23 45 67 89");
 define('TEL_PHARMA_UTIL'   , "+33123456789");
 define('FAX_PHARMA_DECO'   , "00 12 34 56 78");
+define('AFF_MAIL_PHARMA'   , "non"); // 'oui' affiche ADR_MAIL_PHARMA, sinon c'est NON_MAIL_PHARMA
 define('ADR_MAIL_PHARMA'   , "contact@pharmaciedestilleuls.fr");
+define('NON_MAIL_PHARMA'   , "mail : cf formulaire ci-dessous");
 define('ADR_FB_PHARMA'     , "https://www.facebook.com/Pharmacie-Le-Reste-700447003388902");
 define('ADR_GG_PHARMA'     , "https://plus.google.com/113407799173132476603/about");
 define('IFRAME_MAPS_PHARMA', "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.86958984165!2d-2.225360184281275!3d48.132038259525736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480e4df918267fb7%3A0xc0ed000930b8151c!2sPlace+du+Monument%2C+35290+Ga%C3%ABl!5e0!3m2!1sfr!2sfr!4v1518614624523");

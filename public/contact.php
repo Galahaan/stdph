@@ -3,7 +3,7 @@
 include('inclus/enteteP.php');
 
 // Pour des raisons de sécurité, dans le cas de l'envoi d'un mail, je teste si la page
-// courante n'a pas été usurpée; je suis donc, das ce cas, obligé de l'écrire EN DUR :
+// courante n'a pas été usurpée; je suis donc, dans ce cas, obligé de l'écrire EN DUR :
 // (et non pas, justement, en m'appuyant sur $_SERVER)
 define("PAGE_EN_COURS", "contact.php");
 
@@ -73,7 +73,12 @@ include('inclus/enteteH.php');
 			<p><?= CP_PHARMA ?> <?= VIL_PHARMA ?></p>
 			<p id='iContactTel'><a href='tel:<?= TEL_PHARMA_UTIL ?>'><i class='fa fa-phone' aria-hidden='true'></i><?= TEL_PHARMA_DECO ?></a>&nbsp;<img class='cClicIndexTaille' src='img/icones/clicIndex.png' alt=''></p>
 			<p><i class='fa fa-fax' aria-hidden='true'></i><?= FAX_PHARMA_DECO ?></p>
+		<?php if( AFF_MAIL_PHARMA == "oui" ) : ?>
 			<p id='iContactMail'><a href='mailto:<?= ADR_MAIL_PHARMA ?>'><i class='fa fa-envelope' aria-hidden='true'></i><?= ADR_MAIL_PHARMA ?></a></p>
+		<?php else : ?>
+			<p><?= NON_MAIL_PHARMA ?></p>
+		<?php endif ?>
+
 			<?php
 /*			<p>
 				<a href='<?= ADR_FB_PHARMA ?>'>
